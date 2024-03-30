@@ -11,8 +11,8 @@ import {DsButton, DsImages, DsInput, DsLink, DsSelect, DsTypography} from "~/com
           :option="[{value:1, text:'Intranet'},{value:1, text:'Biblioteca'},{value:1, text:'Personas'},{value:1, text:'Conectados'},{value:1, text:'Sach'}]"
           label="Selecciona un ambiente de trabajo"/>
       <div class="flex mt-5 justify-between items-center">
-        <DsLink href="#">¿Olvidó su usuario / contraseña?</DsLink>
-        <DsButton>Ingresar</DsButton>
+        <DsButton color="tertiary">Cerrar Sesión</DsButton>
+        <DsButton>Continuar</DsButton>
       </div>
     </div>
   </div>
