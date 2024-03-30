@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import {DsButton, DsImages, DsInput, DsLink, DsSelect, DsTypography} from "~/components/DesignSystem";
+import {DsButton, DsImages, DsSelect, DsTypography} from "~/components/DesignSystem";
 </script>
 
 <template>
