@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 
-import {DsImages, DsInput, DsTypography} from "~/components/DesignSystem";
+import {DsButton, DsImages, DsInput, DsLink, DsTypography} from "~/components/DesignSystem";
 </script>
 
 <template>
@@ -10,6 +10,10 @@ import {DsImages, DsInput, DsTypography} from "~/components/DesignSystem";
       <DsTypography class="mb-5" variant="h2">Bienvenid@ nuevamente :)</DsTypography>
       <DsInput label="Usuario" size="full" type="text"/>
       <DsInput label="Contraseña" size="full" type="text"/>
+      <div class="flex mt-5 justify-between items-center">
+        <DsLink href="#">¿Olvidó su usuario / contraseña?</DsLink>
+        <DsButton>Ingresar</DsButton>
+      </div>
     </div>
   </div>
 </template>
