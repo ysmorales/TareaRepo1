@@ -1,14 +1,14 @@
 <script lang="ts" setup>
-import type { ISizeText } from "../../../interfaces/elements";
-import { sizeSelect } from "./library";
-import type { ISelect } from "./interfaces";
-import { predefinedClasses } from "../../../common/propsStyle";
-import { filterClass } from "../../../utils/filterClass";
+import type {ISizeText} from "../../../interfaces/elements";
+import {sizeSelect} from "./library";
+import type {ISelect} from "./interfaces";
+import {predefinedClasses} from "../../../common/propsStyle";
+import {filterClass} from "../../../utils/filterClass";
 import generateUniqueId from "../../../utils/generateUniqueId";
 import useFocus from "../../../composables/useFocus";
-import { translateError } from "../../../utils/translateErrorMessage";
+import {translateError} from "../../../utils/translateErrorMessage";
 import buildAriaLabels from "../../../utils/buildAriaLabels";
-import {computed,ref,onMounted} from "vue"
+import {computed, ref, onMounted} from "vue"
 
 const props = defineProps({
   modelValue: {
@@ -72,9 +72,9 @@ const props = defineProps({
   option: {
     type: Array as () => ISelect[],
     default: [
-      { value: 1, text: "option 1" },
-      { value: 2, text: "option 2" },
-      { value: 3, text: "option 3" },
+      {value: 1, text: "option 1"},
+      {value: 2, text: "option 2"},
+      {value: 3, text: "option 3"},
     ],
   },
 
@@ -88,9 +88,9 @@ const elementSizeComputed = computed(() => {
   return sizeSelect[size];
 });
 
-const { elementRef: selectRef } = useFocus(
-  () => props.focus,
-  () => props.error,
+const {elementRef: selectRef} = useFocus(
+    () => props.focus,
+    () => props.error,
 );
 
 const uniqueID = ref("");
@@ -125,11 +125,11 @@ const hasError = computed(() => !!props.error);
 const errorMessage = computed(() => translateError(props.error));
 
 const ariaLabels = computed(() =>
-  buildAriaLabels(props, {
-    label: labelId.value,
-    error: errorMessageId.value,
-    helpMessage: helpMessageId.value,
-  }),
+    buildAriaLabels(props, {
+      label: labelId.value,
+      error: errorMessageId.value,
+      helpMessage: helpMessageId.value,
+    }),
 );
 </script>
 
@@ -140,13 +140,13 @@ const ariaLabels = computed(() =>
   </label>
 
   <select
-    :id="id ?? uniqueID"
-    ref="selectRef"
-    v-model="model"
-    :aria-invalid="hasError"
-    :aria-labelledby="ariaLabels"
-    :aria-required="required"
-    :class="[
+      :id="id ?? uniqueID"
+      ref="selectRef"
+      v-model="model"
+      :aria-invalid="hasError"
+      :aria-labelledby="ariaLabels"
+      :aria-required="required"
+      :class="[
       filterClassComp,
       { error: hasError },
       'block',
@@ -154,11 +154,11 @@ const ariaLabels = computed(() =>
       elementSizeComputed,
       { rounded: rounded },
     ]"
-    :disabled="disabled"
-    @input="handleInput"
+      :disabled="disabled"
+      @input="handleInput"
   >
     <slot>
-      <option :value="!modelValue ? null : 0" disabled>
+      <option :value="0" disabled>
         {{ exampleText ? placeholder : "" }}
       </option>
       <option v-for="el in option" :key="el.value" :value="el.value">
