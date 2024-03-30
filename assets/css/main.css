@@ -1,0 +1,356 @@
+@import 'line-awesome.css';
+@import './roboto.css';
+
+@tailwind base;
+
+body {
+    @apply font-roboto text-base text-left text-dark-500
+}
+
+a {
+    @apply font-roboto text-base text-dark-500 underline hover:text-primary-500 hover:no-underline
+}
+
+/*Estados*/
+a:focus,
+.btn:focus,
+button:focus,
+button.is-focused,
+button:focus:not(:active),
+button.btn-primary:focus:not(:active),
+button.btn-primary.is-focused:not(:active),
+input:focus,
+textarea:focus,
+select:focus,
+input[type="checkbox"]:focus,
+input[type="radio"]:focus {
+    @apply z-0 outline-pink-500 outline-2 outline-offset-0
+    /* border-lime-300 outline-none outline-lime-400 outline-1 outline-offset-0*/
+}
+
+/*typography*/
+
+.font-bold strong,
+.font-bold.font-roboto,
+h1.font-roboto, h2.font-roboto, h3.font-roboto, h4.font-roboto, h5.font-roboto {
+    font-family: 'Roboto Bold';
+}
+
+.font-robotoSlab strong,
+.font-bold.font-robotoSlab,
+h1.font-robotoSlab, h2.font-robotoSlab, h3.font-robotoSlab, h4.font-robotoSlab, h5.font-robotoSlab {
+    font-family: 'Roboto Slab Bold';
+}
+
+h1.font-roboto.font-normal, h2.font-roboto.font-normal, h3.font-roboto.font-normal, h4.font-roboto.font-normal, h5.font-roboto.font-normal, span.font-normal {
+    font-family: 'Roboto';
+}
+
+h1.font-robotoSlab.font-normal, h2.font-robotoSlab.font-normal, h3.font-robotoSlab.font-normal, h4.font-robotoSlab.font-normal, h5.font-robotoSlab.font-normal, span.font-normal {
+    font-family: 'Roboto Slab';
+}
+
+h1 {
+    @apply text-3xl font-robotoBold mb-2;
+}
+
+
+h2 {
+    @apply text-2xl font-robotoBold mb-2;
+}
+
+h3 {
+    @apply text-xl font-robotoBold mb-2;
+}
+
+h4 {
+    @apply text-base font-robotoBold mb-2;
+}
+
+h5 {
+    @apply text-base font-robotoBold mb-2;
+}
+
+h6 {
+    @apply text-base font-robotoBold mb-2;
+}
+
+p {
+    @apply mb-2
+}
+
+ul.ul {
+    @apply font-roboto text-base list-disc ml-4
+}
+
+ol.ol {
+    @apply font-roboto text-base list-decimal ml-4
+}
+
+/*Forms*/
+label {
+    @apply mb-3
+}
+
+input, select, textarea {
+    @apply font-roboto text-base border p-2 block hover:border-dark-500 rounded border-neutral-300 w-full
+}
+
+input.error, select.error, textarea.error {
+    @apply hover:border-danger-900 border-dashed border-2 border-danger-500
+}
+
+.error-message {
+    @apply text-danger-500
+}
+
+.help-message {
+    @apply block text-primary-500
+}
+
+input[readonly], select[readonly], textarea[readonly],
+input[disabled], select[disabled], textarea[disabled] {
+    @apply cursor-not-allowed opacity-70
+}
+
+textarea {
+    @apply p-2 block w-full
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+    @apply w-auto rounded mr-1 inline-block mb-2
+}
+
+/*Tags*/
+.tag-default {
+    @apply bg-neutral-100 rounded inline-block text-primary-500 text-xs px-2 py-1 mb-2
+}
+
+.tag-primary {
+    @apply bg-primary-500 rounded inline-block text-white text-xs px-2 py-1 mb-2
+}
+
+.tag-dark {
+    @apply bg-neutral-800 rounded inline-block text-white text-xs px-2 py-1 mb-2
+}
+
+.tag-danger {
+    @apply bg-danger-500 rounded inline-block text-white text-xs px-2 py-1 mb-2
+}
+
+.tag-success {
+    @apply bg-success-500 rounded inline-block text-white text-xs px-2 py-1 mb-2
+}
+
+.tag-dark-alpha {
+    @apply bg-[#00000078] rounded inline-block text-white text-xs px-2 py-1 mb-2
+}
+
+@tailwind components;
+
+/*Botones*/
+button, .btn {
+    @apply cursor-pointer px-3 py-2 border rounded no-underline hover:ring
+}
+
+.btn-primary, a.btn-primary {
+    @apply hover:text-white bg-primary-500 border-primary-500 text-white hover:bg-primary-900
+}
+
+.btn-secondary, a.btn-secondary {
+    @apply bg-cyan-500 border-primary-500 text-primary-500 hover:bg-cyan-900
+}
+
+.btn-tertiary, a.btn-tertiary {
+    @apply bg-white border-neutral-300 text-primary-500 hover:bg-primary-900 hover:text-white
+}
+
+.btn-danger, a.btn-danger {
+    @apply bg-danger-500 border-danger-500 text-white hover:text-white hover:bg-danger-900
+}
+
+.btn-success, a.btn-success {
+    @apply bg-success-500 border-success-500 text-white hover:text-white hover:bg-success-900
+}
+
+button[disabled], .btn[disabled],
+button[readonly], .btn[readonly] {
+    @apply cursor-not-allowed opacity-70
+}
+
+.btn-small, a.btn-small {
+    @apply text-sm
+}
+
+.btn-medium, a.btn-medium {
+    @apply text-base
+}
+
+.btn-large, a.btn-large {
+    @apply text-xl
+}
+
+.btn-modal-close {
+    @apply border py-1 px-2 rounded h-fit  block hover:bg-primary-500 hover:text-white
+}
+
+.btn-file {
+    @apply rounded-s-none
+}
+
+/*Alertas*/
+.alert-primary {
+    @apply p-4 bg-cyan-500 rounded-lg
+}
+
+.alert-primary h2 {
+    @apply text-primary-500
+}
+
+.alert-danger {
+    @apply p-4 bg-danger-100 rounded-lg
+}
+
+.alert-danger h2 {
+    @apply text-danger-500
+}
+
+.alert-warning {
+    @apply p-4 bg-yellow-50 rounded-lg
+}
+
+.alert-warning h2 {
+    @apply text-yellow-500
+}
+
+.alert-success {
+    @apply p-4 bg-success-100 rounded-lg
+}
+
+.alert-success h2 {
+    @apply text-success-500
+}
+
+/*Menú horizontal*/
+nav.menu-horizontal ul {
+    @apply flex justify-around
+}
+
+nav.menu-horizontal {
+    @apply border-s border-neutral-300
+}
+
+nav.menu-horizontal li {
+    @apply border-s border-neutral-300 w-full
+}
+
+nav.menu-horizontal li:first-child {
+    @apply border-0
+}
+
+nav.menu-horizontal ul li button {
+    @apply px-3 border-none border-e-2 border-neutral-300 w-full
+}
+
+nav.menu-horizontal ul li .relative .dropdownlv1 {
+    @apply absolute top-full left-0 w-48 rounded-md shadow-lg bg-white
+}
+
+nav.menu-horizontal ul li .relative .dropdownlv1 button {
+    @apply block border-none w-full text-left rounded-none px-3
+}
+
+nav.menu-horizontal ul li .relative .dropdownlv1 .dropdownlv2 {
+    @apply top-full left-0  w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5
+}
+
+nav.menu-horizontal ul li .relative .dropdownlv1 .dropdownlv2 button {
+    @apply block bg-primary-500 text-white  border-none w-full text-left rounded-none hover:bg-primary-900 px-3
+}
+
+nav.menu-horizontal ul li .relative .dropdownlv1 .dropdownlv2 button.subDropdownButton {
+    @apply flex justify-between
+}
+
+@tailwind utilities;
+
+.fade-enter-active,
+.fade-leave-active {
+    @apply transition-opacity duration-1000;
+}
+
+.fade-enter,
+.fade-leave-to {
+    @apply opacity-0;
+}
+
+.container {
+    @apply m-auto p-4 max-w-[1200px] md:p-6
+}
+
+.input-info {
+    @apply block text-primary-500
+}
+
+.cont-form-sector {
+    @apply p-4 rounded-lg md:p-7 bg-neutral-100
+}
+
+.cont-form-sector h2 {
+    @apply text-stone-600
+}
+
+.cont-form-btn {
+    @apply flex flex-col items-center sm:text-right sm:justify-start sm:flex-row-reverse my-6 sm:my-8
+}
+
+.cont-form-btn button {
+    @apply w-fit inline-flex justify-center  mb-0 sm:mb-2 sm:ml-2 min-w-[200px] sm:min-w-0
+}
+
+.cont-form-group {
+    @apply mb-4
+}
+
+.cont-gr {
+    @apply mb-2
+}
+
+.sr-only {
+    border: 0;
+    clip: rect(0, 0, 0, 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+
+.icon-blue {
+    filter: invert(26%) sepia(95%) saturate(1191%) hue-rotate(184deg) brightness(101%) contrast(91%);
+}
+
+a:hover .icon-blue,
+button:hover .icon-blue {
+    filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(238deg) brightness(104%) contrast(101%);
+}
+
+.icon-white {
+    filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(238deg) brightness(104%) contrast(101%);
+}
+
+.breadcrumb ol li::after {
+    content: "|";
+    font-size: inherit;
+    margin: 0 5px
+}
+
+p.ellipsis-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
