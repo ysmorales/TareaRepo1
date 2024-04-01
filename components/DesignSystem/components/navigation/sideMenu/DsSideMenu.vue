@@ -152,7 +152,7 @@ export default {
                 >
                   <NuxtLink
                       :class="[
-                      'block text-base py-3 px-3 border-b border-primary-900 w-full text-left bg-primary-500 text-white hover:bg-primary-900',
+                      'block text-base py-3 px-3 border-b border-primary-900 w-full text-left bg-primary-500 text-white hover:bg-primary-900 hover:text-white',
                       { underline: subSubItem?.isUnderline },
                     ]"
                       :target="subSubItem?.isTargetBlank ? '_blank' : '_self'"
