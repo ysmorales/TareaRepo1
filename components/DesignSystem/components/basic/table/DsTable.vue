@@ -19,6 +19,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  addButtonLabel: {
+    type: String,
+    default: "Nueva Fila",
+  },
   striped: {
     type: Boolean,
     default: false,
@@ -106,6 +110,7 @@ const emit = defineEmits([
   "filter",
   "parent-clicked",
   "sort",
+  "addRow",
 ]);
 
 watch(
@@ -158,14 +163,20 @@ function handleSortClick(value: string) {
   emit("sort", value);
 }
 
+function handleAddRow() {
+  emit("addRow");
+}
+
 const hasFilter = computed(() => props.columns.some((column) => column.filter));
 </script>
 <template>
   <TableFilter v-if="hasFilter" :columns="columns" @filter="handleFilter" />
   <TableMultiAction
     v-if="checkboxSelection"
+    :add-button-label="addButtonLabel"
     :rows-selected="rowsSelected"
     @multiDelete="handleMultiDelete"
+    @add-row="handleAddRow"
   />
   <table class="w-full divide-y divide-gray-300 border border-gray-300">
     <thead class="bg-gray-50">
