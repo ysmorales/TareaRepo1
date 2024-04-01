@@ -1,9 +1,10 @@
 <script lang="ts" setup>
 
+import MainLayout from "~/layouts/MainLayout.vue";
 </script>
 
 <template>
-  <h1>Home</h1>
+  <MainLayout/>
 </template>
 
 <style scoped>
