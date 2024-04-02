@@ -3,7 +3,6 @@
 import DsSideMenu from "~/components/DesignSystem/components/navigation/sideMenu/DsSideMenu.vue";
 import DsImage from "../../DesignSystem/components/media/images/imagesHtml/DsImages.vue";
 import {menuItemsVerticalMenu} from "~/components/builder-components/verticalMenu/data";
-import {DsIcon} from "~/components/DesignSystem";
 </script>
 
 <template>

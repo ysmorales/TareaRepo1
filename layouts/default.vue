@@ -7,9 +7,14 @@ import NavBar from "~/components/builder-components/NavBar/NavBar.vue";
 <template>
   <div class="flex">
     <VerticalMenu/>
-    <div class="flex flex-col w-full">
-      <NavBar/>
-      <slot/>
+    <div class="flex flex-col w-full h-[67px]">
+      <div>
+        <NavBar/>
+      </div>
+      <div>
+        <slot/>
+      </div>
+
     </div>
   </div>
 </template>
