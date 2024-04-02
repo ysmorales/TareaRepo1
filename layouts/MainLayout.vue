@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 
-import VerticalMenu from "~/layouts/VerticalMenu.vue";
+import VerticalMenu from "~/layouts/verticalMenu/VerticalMenu.vue";
 </script>
 
 <template>

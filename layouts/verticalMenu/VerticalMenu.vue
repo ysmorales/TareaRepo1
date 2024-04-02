@@ -1,11 +1,16 @@
 <script lang="ts" setup>
 
 import DsSideMenu from "~/components/DesignSystem/components/navigation/sideMenu/DsSideMenu.vue";
+import DsImage from "../../components/DesignSystem/components/media/images/imagesHtml/DsImages.vue";
+import {menuItemsVerticalMenu} from "~/layouts/verticalMenu/data";
+import {DsIcon} from "~/components/DesignSystem";
 </script>
 
 <template>
-  <div class="w-[200px]">
-    <DsSideMenu/>
+  <div class="w-[250px] p-3 pl-0">
+    <DsIcon name="clock"/>
+    <DsImage src="images/back-office/creador-logotipo.jpg"/>
+    <DsSideMenu :data-side-menu="menuItemsVerticalMenu"/>
   </div>
   <!--  <div class="column is-2 is-bordered-right">-->
   <!--    <div class="main-menu">-->
