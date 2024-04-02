@@ -1,10 +1,11 @@
 <script lang="ts" setup>
 
+import {DsSelect} from "~/components/DesignSystem";
 </script>
 
 <template>
-  <div class="border-b border-gray-300 h-[67px]">
-    <h1>My navBar</h1>
+  <div class="flex justify-end border-b border-gray-300 h-[67px] p-3">
+    <DsSelect size="small"/>
   </div>
 </template>
 
