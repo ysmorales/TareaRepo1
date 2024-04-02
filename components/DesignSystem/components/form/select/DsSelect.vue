@@ -2,8 +2,6 @@
 import type {ISizeText} from "../../../interfaces/elements";
 import {sizeSelect} from "./library";
 import type {ISelect} from "./interfaces";
-import {predefinedClasses} from "../../../common/propsStyle";
-import {filterClass} from "../../../utils/filterClass";
 import generateUniqueId from "../../../utils/generateUniqueId";
 import useFocus from "../../../composables/useFocus";
 import {translateError} from "../../../utils/translateErrorMessage";
@@ -15,7 +13,10 @@ const props = defineProps({
     type: Number,
     default: 0,
   },
-
+  labelStyle: {
+    type: String,
+    default: "mb-2"
+  },
   error: {
     type: String,
     default: null,
@@ -102,7 +103,8 @@ const errorMessageId = computed(() => `${uniqueID.value}-error-message`);
 const helpMessageId = computed(() => `${uniqueID.value}-help-message`);
 
 const filterClassComp = computed(() => {
-  return filterClass(predefinedClasses, props.class);
+  // return filterClass(predefinedClasses, props.class);
+  return props.class
 });
 
 const emit = defineEmits(["update:modelValue", "select"]);
@@ -134,7 +136,7 @@ const ariaLabels = computed(() =>
 </script>
 
 <template>
-  <label v-if="label" :id="labelId" :for="uniqueID" class="mb-2">
+  <label v-if="label" :id="labelId" :class="labelStyle" :for="uniqueID">
     {{ label }}
     <span v-if="required" aria-hidden="true" class="required-marker">*</span>
   </label>
