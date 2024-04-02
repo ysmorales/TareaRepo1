@@ -4,5 +4,8 @@ import VerticalMenu from "~/components/builder-components/verticalMenu/VerticalM
 </script>
 
 <template>
-  <VerticalMenu/>
+  <div class="flex">
+    <VerticalMenu/>
+    <slot/>
+  </div>
 </template>

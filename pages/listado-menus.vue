@@ -1,10 +1,9 @@
 <script lang="ts" setup>
 
-import MainLayout from "~/layouts/default.vue";
 </script>
 
 <template>
-  <h1>Listado de prototipos</h1>
+
 </template>
 
 <style scoped>

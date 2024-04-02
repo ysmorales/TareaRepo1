@@ -6,11 +6,13 @@ export const menuItemsVerticalMenu: ISideMenuData[] = [
         id: "sect1",
         label: "Mis prototipos",
         icon: "las la-clock",
+        link: "/"
     },
     {
         id: "sect2",
         label: "Categorías",
         icon: "las la-tags",
+        link: "/listado-categorias"
     }, {
         id: "sect3",
         label: "Menús",
