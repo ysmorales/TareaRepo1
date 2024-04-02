@@ -78,7 +78,7 @@ export default {
         <li v-for="item in dataSideMenu" :key="item.id" class="block">
           <NuxtLink
               :class="[
-              'block text-base py-3 px-3 border-b border-gray-300 w-full text-left hover:text-primary-500',
+              'block text-base py-3 px-3 border-b border-gray-300 w-full text-left hover:text-primary-500 cursor-pointer',
               {
                 'text-primary-900 border-primary-500': isSubMenuVisible(
                   item.id,
@@ -87,7 +87,7 @@ export default {
               { underline: item.isUnderline },
             ]"
               :target="item.isTargetBlank ? '_blank' : '_self'"
-              :to="item.link || '#'"
+              :to="item.link"
               @click="toggleSubMenu(item.id)"
           >
             <DsIcon
@@ -114,12 +114,12 @@ export default {
             <li v-for="subItem in item.subMenu" :key="subItem?.id">
               <NuxtLink
                   :class="[
-                  'block text-base py-3 px-3 border-b border-primary-500 w-full text-left  hover:text-primary-900',
+                  'block text-base py-3 px-3 border-b border-primary-500 w-full text-left  hover:text-primary-900 cursor-pointer',
                   { 'text-primary-900': isSubMenuVisible(item.id) },
                   { underline: subItem?.isUnderline },
                 ]"
                   :target="subItem.isTargetBlank ? '_blank' : '_self'"
-                  :to="subItem.link || '#'"
+                  :to="subItem.link"
                   @click="toggleSubSubMenu(subItem.id!)"
               >
                 <DsIcon class="mr-1" name="angle-right" size="base"/>
