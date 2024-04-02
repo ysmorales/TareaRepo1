@@ -122,7 +122,7 @@ export default {
                   :to="subItem.link"
                   @click="toggleSubSubMenu(subItem.id!)"
               >
-                <DsIcon class="mr-1" name="angle-right" size="base"/>
+                <!--                <DsIcon class="mr-1" name="angle-right" size="base"/>-->
 
                 <DsIcon
                     v-if="subItem?.icon"

@@ -27,6 +27,7 @@ export const menuItemsVerticalMenu: ISideMenuData[] = [
             {
                 id: "sect3-1",
                 label: "Galerías",
+                icon: "las la-images",
                 subMenu: [
                     {
                         id: "sect3-1-1",
@@ -43,6 +44,7 @@ export const menuItemsVerticalMenu: ISideMenuData[] = [
             {
                 id: "sect3-2",
                 label: "Documentos",
+                icon: "las la-file-alt",
                 subMenu: [
                     {
                         id: "sect3-1-1",
@@ -59,6 +61,7 @@ export const menuItemsVerticalMenu: ISideMenuData[] = [
             {
                 id: "sect3-3",
                 label: "Aplicaciones",
+                icon: "las la-mobile-alt",
                 subMenu: [
                     {
                         id: "sect3-1-1",
@@ -95,11 +98,13 @@ export const menuItemsVerticalMenu: ISideMenuData[] = [
                 id: "sect3-1-1",
                 label: "Roles",
                 link: "/listado-usuarios-roles",
+                icon: "las la-users",
             },
             {
                 id: "sect3-1-2",
                 label: "Miembros",
                 link: "/listado-usuarios",
+                icon: "las la-user",
             }
         ],
     },
