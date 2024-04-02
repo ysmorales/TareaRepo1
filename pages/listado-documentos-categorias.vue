@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <h1>Listado de Menús</h1>
+  <h1>Listado documentos categorías</h1>
 </template>
 
 <style scoped>

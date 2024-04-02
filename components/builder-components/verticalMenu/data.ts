@@ -17,6 +17,7 @@ export const menuItemsVerticalMenu: ISideMenuData[] = [
         id: "sect3",
         label: "Menús",
         icon: "las la-bars",
+        link: "/listado-menus"
     },
     {
         id: "sect4",
@@ -30,12 +31,12 @@ export const menuItemsVerticalMenu: ISideMenuData[] = [
                     {
                         id: "sect3-1-1",
                         label: "Listado",
-                        link: "/sect2",
+                        link: "/listado-galerias",
                     },
                     {
                         id: "sect3-1-2",
                         label: "Categorías",
-                        link: "/sect2",
+                        link: "/listado-galerias-categorias",
                     }
                 ],
             },
@@ -46,12 +47,12 @@ export const menuItemsVerticalMenu: ISideMenuData[] = [
                     {
                         id: "sect3-1-1",
                         label: "Listado",
-                        link: "/sect2",
+                        link: "/listado-documentos",
                     },
                     {
                         id: "sect3-1-2",
                         label: "Categorías",
-                        link: "/sect2",
+                        link: "/listado-documentos-categorias",
                     }
                 ],
             },
@@ -62,12 +63,12 @@ export const menuItemsVerticalMenu: ISideMenuData[] = [
                     {
                         id: "sect3-1-1",
                         label: "Listado",
-                        link: "/sect2",
+                        link: "/listado-aplicaciones",
                     },
                     {
                         id: "sect3-1-2",
                         label: "Instituciones",
-                        link: "/sect2",
+                        link: "/listado-aplicaciones-instituciones",
                     }
                 ],
             },
@@ -77,11 +78,13 @@ export const menuItemsVerticalMenu: ISideMenuData[] = [
         id: "sect5",
         label: "Widgets",
         icon: "las la-cogs",
+        link: "/listado-widgets",
     },
     {
         id: "sect6",
         label: "Subsitios",
         icon: "las la-sitemap",
+        link: "/listado-subsitios",
     },
     {
         id: "sect7",
@@ -91,12 +94,12 @@ export const menuItemsVerticalMenu: ISideMenuData[] = [
             {
                 id: "sect3-1-1",
                 label: "Roles",
-                link: "/sect2",
+                link: "/listado-usuarios-roles",
             },
             {
                 id: "sect3-1-2",
                 label: "Miembros",
-                link: "/sect2",
+                link: "/listado-usuarios",
             }
         ],
     },
