@@ -8,7 +8,6 @@ import {DsIcon} from "~/components/DesignSystem";
 
 <template>
   <div class="w-[250px] p-3 pl-0">
-    <DsIcon name="clock"/>
     <DsImage src="images/back-office/creador-logotipo.jpg"/>
     <DsSideMenu :data-side-menu="menuItemsVerticalMenu"/>
   </div>
