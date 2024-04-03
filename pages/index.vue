@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-
-import MainLayout from "~/layouts/default.vue";
+import DsTable from "~/components/DesignSystem/components/basic/table/DsTable.vue";
 </script>
 
 <template>
   <h1>Listado de prototipos</h1>
+  <DsTable/>
 </template>
 
 <style scoped>

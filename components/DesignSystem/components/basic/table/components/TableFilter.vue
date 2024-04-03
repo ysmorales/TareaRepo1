@@ -1,12 +1,13 @@
 <script lang="ts" setup>
-import { ref, defineEmits } from "vue";
-import { ITableColumn } from "../interface.ts";
+import {ref} from "vue";
+
 import DsInput from "../../../form/input/DsInput.vue";
 import DsButton from "../../button/DsButton.vue";
+import type {ITableColumnData} from "../interface";
 
 defineProps({
   columns: {
-    type: Array as () => ITableColumn[],
+    type: Array as () => ITableColumnData[],
     default: () => [],
   },
 });
@@ -30,29 +31,29 @@ function handleClean() {
     <div class="flex justify-between">
       <div class="flex p-2">
         <div
-          v-for="(column, index) in columns"
-          :key="'filter' + index"
-          class="mr-2"
+            v-for="(column, index) in columns"
+            :key="'filter' + index"
+            class="mr-2"
         >
           <div v-if="column.filter">
             <DsInput
-              :id="column.key"
-              v-model="searchValues[column.key as string]"
-              :label="column.title"
-              type="text"
+                :id="column.key"
+                v-model="searchValues[column.key as string]"
+                :label="column.title"
+                type="text"
             />
           </div>
         </div>
       </div>
       <div class="flex justify-end items-center">
         <DsButton
-          class="m-1 max-h-[50px]"
-          color="tertiary"
-          @click="handleSearch"
-          >Buscar
+            class="m-1 max-h-[50px]"
+            color="tertiary"
+            @click="handleSearch"
+        >Buscar
         </DsButton>
         <DsButton class="m-1 max-h-[50px]" color="tertiary" @click="handleClean"
-          >Limpiar
+        >Limpiar
         </DsButton>
       </div>
     </div>

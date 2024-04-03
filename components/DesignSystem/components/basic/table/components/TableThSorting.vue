@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref } from "vue";
+import {ref} from "vue";
 import DsIcon from "../../icon/DsIcon.vue";
 
 defineProps({
@@ -41,22 +41,22 @@ function handleClick() {
 
 <template>
   <th
-    :key="'col' + index"
-    :class="[
+      :key="'col' + index"
+      :class="[
       'px-2 py-2 text-left text-sm uppercase group cursor-pointer',
       { 'text-white': striped },
       { 'text-gray-500': !striped },
     ]"
-    @click="handleClick"
+      @click="handleClick"
   >
     {{ title }}
     <DsIcon
-      v-if="sort"
-      :class="{
-        'opacity-0 group-hover:opacity-50': stateSort === 'default',
-        'opacity-100': stateSort === 'up' || stateSort === 'down',
-      }"
-      :name="
+        v-if="sort"
+        :class="{
+  'opacity-0 group-hover:opacity-50': stateSort === 'default',
+  'opacity-100': stateSort === 'up' || stateSort === 'down',
+}"
+        :name="
         {
           default: 'arrow-up',
           up: 'arrow-up',

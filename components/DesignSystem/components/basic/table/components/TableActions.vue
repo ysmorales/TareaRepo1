@@ -1,11 +1,11 @@
 <script lang="ts" setup>
-import { DsButton } from "../../../../index.ts";
-import { ITableColumn } from "../interface.ts";
-import { exampleColumn } from "../exampleColumn.ts";
+import type {ITableColumnData} from "~/components/DesignSystem/components/basic/table/interface";
+import {exampleColumn} from "~/components/DesignSystem/components/basic/table/exampleColumn";
+import {DsButton} from "~/components/DesignSystem";
 
 defineProps({
   column: {
-    type: Object as () => ITableColumn,
+    type: Object as () => ITableColumnData,
     default: () => [...exampleColumn],
   },
   row: {
@@ -32,25 +32,25 @@ function handleClick(type: "edit" | "view" | "delete") {
 <template>
   <div class="flex justify-end">
     <DsButton
-      v-if="column.actions?.view"
-      class="mr-1"
-      color="tertiary"
-      @click="handleClick('view')"
-      >Ver
+        v-if="column.actions?.view"
+        class="mr-1"
+        color="tertiary"
+        @click="handleClick('view')"
+    >Ver
     </DsButton>
     <DsButton
-      v-if="column.actions?.edit"
-      class="mr-1"
-      color="tertiary"
-      @click="handleClick('edit')"
-      >Editar
+        v-if="column.actions?.edit"
+        class="mr-1"
+        color="tertiary"
+        @click="handleClick('edit')"
+    >Editar
     </DsButton>
     <DsButton
-      v-if="column.actions?.delete"
-      class="mr-1"
-      color="tertiary"
-      @click="handleClick('delete')"
-      >Borrar
+        v-if="column.actions?.delete"
+        class="mr-1"
+        color="tertiary"
+        @click="handleClick('delete')"
+    >Borrar
     </DsButton>
   </div>
 </template>
