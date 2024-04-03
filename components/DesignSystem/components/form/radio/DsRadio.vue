@@ -1,13 +1,14 @@
 <script lang="ts" setup>
-import { elementSizes, predefinedClasses } from "../../../common/propsStyle";
-import type { ISize } from "../../../interfaces/elements";
-import { filterClass } from "../../../utils/filterClass";
+import {elementSizes, predefinedClasses} from "../../../common/propsStyle";
+import type {ISize} from "../../../interfaces/elements";
+import {filterClass} from "../../../utils/filterClass";
 import generateUniqueId from "../../../utils/generateUniqueId";
-import { translateError } from "../../../utils/translateErrorMessage";
+import {translateError} from "../../../utils/translateErrorMessage";
 import buildAriaLabels from "../../../utils/buildAriaLabels";
-import { type PropType, ref } from "vue";
+import {type PropType, ref} from "vue";
 import useFocus from "../../../composables/useFocus";
-import {onMounted,computed} from "vue";
+import {onMounted, computed} from "vue";
+
 
 const props = defineProps({
   modelValue: {
@@ -66,9 +67,9 @@ const props = defineProps({
     default: false,
   },
 });
-const { elementRef: selectRef } = useFocus(
-  () => props.focus,
-  () => props.error,
+const {elementRef: selectRef} = useFocus(
+    () => props.focus,
+    () => props.error,
 );
 const uniqueID = ref("");
 onMounted(() => {
@@ -108,11 +109,11 @@ const hasError = computed(() => !!props.error);
 const errorMessage = computed(() => translateError(props.error));
 
 const ariaLabels = computed(() =>
-  buildAriaLabels(props, {
-    label: labelId.value,
-    error: errorMessageId.value,
-    helpMessage: helpMessageId.value,
-  }),
+    buildAriaLabels(props, {
+      label: labelId.value,
+      error: errorMessageId.value,
+      helpMessage: helpMessageId.value,
+    }),
 );
 </script>
 
@@ -120,32 +121,32 @@ const ariaLabels = computed(() =>
   <div :class="filterClassComp">
     <div class="flex items-center">
       <input
-        :id="id ?? uniqueID"
-        ref="selectRef"
-        v-model="model"
-        :aria-checked="model"
-        :aria-invalid="hasError"
-        :aria-labelledby="ariaLabels"
-        :aria-required="required"
-        :class="cssClasses"
-        :disabled="disabled"
-        :name="group"
-        :value="value"
-        type="radio"
+          :id="id ?? uniqueID"
+          ref="selectRef"
+          v-model="model"
+          :aria-checked="model"
+          :aria-invalid="hasError"
+          :aria-labelledby="ariaLabels"
+          :aria-required="required"
+          :class="cssClasses"
+          :disabled="disabled"
+          :name="group"
+          :value="value"
+          type="radio"
       />
 
       <label v-if="label" :id="labelId" :for="uniqueID" class="mb-2">
         {{ label }}
         <span v-if="required" aria-hidden="true" class="required-marker"
-          >*</span
+        >*</span
         >
       </label>
     </div>
 
     <label
-      v-if="hasError"
-      :id="errorMessageId"
-      class="error-message block mb-0"
+        v-if="hasError"
+        :id="errorMessageId"
+        class="error-message block mb-0"
     >
       {{ errorMessage }}
     </label>

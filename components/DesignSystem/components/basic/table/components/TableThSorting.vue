@@ -52,16 +52,16 @@ function handleClick() {
     {{ title }}
     <DsIcon
         v-if="sort"
-        :class="{
-  'opacity-0 group-hover:opacity-50': stateSort === 'default',
-  'opacity-100': stateSort === 'up' || stateSort === 'down',
-}"
+        :class="[{
+  'opacity-0 group-hover:opacity-50': stateSort === 'default'},
+  {'opacity-100': stateSort === 'up' || stateSort === 'down',
+}].toString()"
         :name="
         {
           default: 'arrow-up',
           up: 'arrow-up',
           down: 'arrow-down',
-        }[stateSort]
+        }[stateSort]|| 'default'
       "
     />
   </th>
