@@ -1,13 +1,14 @@
 <script lang="ts" setup>
 import DsTable from "~/components/DesignSystem/components/basic/table/DsTable.vue";
 import {dataTable} from "./data";
+import {prototipeColumns} from "~/pages/index/prototipoColumns";
 </script>
 
 <template>
   <div class="flex flex-col">
     <h1>Listado de prototipos</h1>
     <DsTable
-        :columns="[{title:'Name',key:'name',filter:true},{title:'Email',key:'email'},{title:'RUN',key:'run',filter:true},{title:'Actions',actions:{edit:true,delete:true,view:true}}]"
+        :columns="prototipeColumns"
         :data="dataTable"
         :pagination="{
           totalItems: 200,
