@@ -6,7 +6,7 @@ import {menuItemsVerticalMenu} from "~/components/builder-components/verticalMen
 </script>
 
 <template>
-  <div class="w-[350px] border-r border-gray-300 h-full p-3 pl-0">
+  <div class="w-[350px] border-r border-b border-gray-300 h-full p-3 pl-0">
     <DsImage src="images/back-office/creador-logotipo.jpg"/>
     <DsSideMenu :data-side-menu="menuItemsVerticalMenu"/>
   </div>
