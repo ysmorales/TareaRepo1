@@ -1,12 +1,12 @@
 <script lang="ts" setup>
-import type { IIconColor, IIconSize } from "../../../interfaces/elements";
+import type {IIconColor, IIconSize} from "../../../interfaces/elements";
 import {
   predefinedClasses,
   textColorClasses,
   iconSizeClasses,
 } from "../../../common/propsStyle";
-import { filterClass } from "../../../utils/filterClass";
-import { computed } from "vue";
+import {filterClass} from "../../../utils/filterClass";
+import {computed} from "vue";
 
 const props = defineProps({
   name: {
@@ -76,17 +76,17 @@ const iconClasses = computed(() => `${props.prefix} la-${props.name}`);
 
 <template>
   <i
-    v-if="!isImageUrl"
-    :class="[cssClasses, iconClasses]"
-    @click="handleClick"
+      v-if="!isImageUrl"
+      :class="[cssClasses, iconClasses]"
+      @click="handleClick"
   />
 
   <img
-    v-else
-    :class="['w-6 mr-2 icon-blue', cssClasses]"
-    :src="name"
-    alt="icon image"
-    aria-hidden="true"
-    @click="handleClick"
+      v-else
+      :class="['w-6 mr-2 icon-blue', cssClasses]"
+      :src="name"
+      alt="icon image"
+      aria-hidden="true"
+      @click="handleClick"
   />
 </template>

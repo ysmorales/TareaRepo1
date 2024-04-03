@@ -37,6 +37,14 @@ function handleClick() {
       break;
   }
 }
+
+const computedClass = computed(() => {
+  return stateSort.value === 'default'
+      ? 'opacity-0 group-hover:opacity-50'
+      : (stateSort.value === 'up' || stateSort.value === 'down')
+          ? 'opacity-100'
+          : '';
+});
 </script>
 
 <template>
@@ -52,10 +60,7 @@ function handleClick() {
     {{ title }}
     <DsIcon
         v-if="sort"
-        :class="[{
-  'opacity-0 group-hover:opacity-50': stateSort === 'default'},
-  {'opacity-100': stateSort === 'up' || stateSort === 'down',
-}].toString()"
+        :class="computedClass"
         :name="
         {
           default: 'arrow-up',
