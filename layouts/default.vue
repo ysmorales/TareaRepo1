@@ -11,7 +11,7 @@ import NavBar from "~/components/builder-components/NavBar/NavBar.vue";
       <div>
         <NavBar/>
       </div>
-      <div>
+      <div class="container">
         <slot/>
       </div>
 
