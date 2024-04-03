@@ -231,7 +231,7 @@ const hasFilter = computed(() => props.columns.some((column) => column.filter));
         <div v-if="!column.actions">
           {{ row[column.key!] }}
         </div>
-        <div v-else class="flex">
+        <div v-else class="flex justify-center">
           <TableActions
               :column="column"
               :row="row"
