@@ -10,6 +10,7 @@ import TableActions from "./components/TableActions.vue";
 import TableThSorting from "./components/TableThSorting.vue";
 import type {IPagination, ITableColumnData} from "./interface";
 import {exampleColumn} from "~/components/DesignSystem/components/basic/table/exampleColumn";
+import {DsLink} from "~/components/DesignSystem";
 
 const props = defineProps({
   columns: {
@@ -229,9 +230,10 @@ const hasFilter = computed(() => props.columns.some((column) => column.filter));
           class="px-2 py-2 text-sm font-medium text-gray-900"
       >
         <div v-if="!column.actions">
-          {{ row[column.key!] }}
+          {{ column.type !== 'link' ? row[column.key!] : '' }}
+          <DsLink v-if="column.type==='link'">{{ row[column.key!] }}</DsLink>
         </div>
-        <div v-else class="flex justify-center">
+        <div v-else class="flex justify-end">
           <TableActions
               :column="column"
               :row="row"

@@ -51,7 +51,7 @@ const computedClass = computed(() => {
   <th
       :key="'col' + index"
       :class="[
-      'px-2 py-2  text-sm uppercase group cursor-pointer',{'text-center':title==='Actions'},
+      'px-2 py-2  text-sm uppercase group cursor-pointer',{'text-end':(title==='Acciones')},
       { 'text-white': striped },
       { 'text-gray-500': !striped },
     ]"
