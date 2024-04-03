@@ -40,6 +40,7 @@ function handleClean() {
                 :id="column.key"
                 v-model="searchValues[column.key as string]"
                 :label="column.title"
+                size="full"
                 type="text"
             />
           </div>
