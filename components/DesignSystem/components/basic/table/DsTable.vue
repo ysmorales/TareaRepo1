@@ -201,10 +201,10 @@ const hasFilter = computed(() => props.columns.some((column) => column.filter));
     </tr>
     </thead>
     <tbody class="divide-y divide-gray-300 relative">
-    <tr v-if="data.length>0">
+    <tr v-if="!(data.length>0)">
       <td
           :colspan="columns.length"
-          class="px-2 py-2 text-sm font-medium text-gray-900"
+          class=" px-2 py-2 text-sm font-medium text-gray-900 w-full"
       >
         <DsEmptyComponent :loading="loading" @reload="handleReload"/>
       </td>
