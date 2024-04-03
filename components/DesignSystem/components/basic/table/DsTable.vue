@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import {computed, onMounted, onUpdated, ref, watch, watchEffect} from "vue";
-
 import DsPagination from "../pagination/DsPagination.vue";
 import DsEmptyComponent from "../empty-component/DsEmptyComponent.vue";
 import TableFilter from "./components/TableFilter.vue";
@@ -231,7 +230,7 @@ const hasFilter = computed(() => props.columns.some((column) => column.filter));
       >
         <div v-if="!column.actions">
           {{ column.type !== 'link' ? row[column.key!] : '' }}
-          <DsLink v-if="column.type==='link'">{{ row[column.key!] }}</DsLink>
+          <DsLink v-if="column.type==='link'" :href="row['url']">{{ row[column.key!] }}</DsLink>
         </div>
         <div v-else class="flex justify-end">
           <TableActions
