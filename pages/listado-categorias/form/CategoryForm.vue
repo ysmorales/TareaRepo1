@@ -8,9 +8,7 @@ function handleClick() {
   emit('cancelar')
 }
 
-function onTabChange() {
 
-}
 </script>
 
 <template>
