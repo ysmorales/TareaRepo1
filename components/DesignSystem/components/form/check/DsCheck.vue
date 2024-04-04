@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import { elementSizes, predefinedClasses } from "../../../common/propsStyle";
-import type { ISize } from "../../../interfaces/elements";
-import { filterClass } from "../../../utils/filterClass";
+import {elementSizes, predefinedClasses} from "../../../common/propsStyle";
+import type {ISize} from "../../../interfaces/elements";
+import {filterClass} from "../../../utils/filterClass";
 import generateUniqueId from "../../../utils/generateUniqueId";
-import { translateError } from "../../../utils/translateErrorMessage";
+import {translateError} from "../../../utils/translateErrorMessage";
 import buildAriaLabels from "../../../utils/buildAriaLabels";
 import {computed} from "vue";
 
@@ -11,7 +11,6 @@ const props = defineProps({
   modelValue: {
     type: Boolean,
     default: false,
-    required: true,
   },
   id: {
     type: String,
@@ -95,27 +94,27 @@ const hasError = computed(() => !!props.error);
 const errorMessage = computed(() => translateError(props.error));
 
 const ariaLabels = computed(() =>
-  buildAriaLabels(props, {
-    label: labelId.value,
-    error: errorMessageId.value,
-    helpMessage: helpMessageId.value,
-  }),
+    buildAriaLabels(props, {
+      label: labelId.value,
+      error: errorMessageId.value,
+      helpMessage: helpMessageId.value,
+    }),
 );
 </script>
 
 <template>
   <div class="flex items-center">
     <input
-      :id="id ?? inputId"
-      v-model="model"
-      :aria-invalid="hasError"
-      :aria-labelledby="ariaLabels"
-      :aria-required="required"
-      :checked="modelValue"
-      :class="cssClasses"
-      :disabled="disabled"
-      class="w-auto mr-1"
-      type="checkbox"
+        :id="id ?? inputId"
+        v-model="model"
+        :aria-invalid="hasError"
+        :aria-labelledby="ariaLabels"
+        :aria-required="required"
+        :checked="modelValue"
+        :class="cssClasses"
+        :disabled="disabled"
+        class="w-auto mr-1"
+        type="checkbox"
     />
 
     <label v-if="label" :id="labelId" :for="inputId" class="mb-2">

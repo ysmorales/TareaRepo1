@@ -1,19 +1,20 @@
 <script lang="ts" setup>
 import DsButton from "../../basic/button/DsButton.vue";
 import generateUniqueId from "../../../utils/generateUniqueId";
-import { filterClass } from "../../../utils/filterClass";
-import { predefinedClasses } from "../../../common/propsStyle";
-import type { ISizeText } from "../../../interfaces/elements";
-import { sizeSelect } from "../select/library";
+import {filterClass} from "../../../utils/filterClass";
+import {predefinedClasses} from "../../../common/propsStyle";
+import type {ISizeText} from "../../../interfaces/elements";
+import {sizeSelect} from "../select/library";
 import useFocus from "../../../composables/useFocus";
-import type { IButtonColor } from "../../basic/button/interfaces";
-import { translateError } from "../../../utils/translateErrorMessage";
+import type {IButtonColor} from "../../basic/button/interfaces";
+import {translateError} from "../../../utils/translateErrorMessage";
 import buildAriaLabels from "../../../utils/buildAriaLabels";
-import type { Ref } from "vue";
-import { computed, ref, onMounted } from "vue";
+import type {Ref} from "vue";
+import {computed, ref, onMounted} from "vue";
 
 //new change defile
-interface FileInputRef extends Ref<HTMLInputElement | null> {}
+interface FileInputRef extends Ref<HTMLInputElement | null> {
+}
 
 const props = defineProps({
   modelValue: {
@@ -107,9 +108,9 @@ const emit = defineEmits(["fileSelected", "update:modelValue"]);
 const selectedFileName = ref<string | null>(null);
 const refFileName: FileInputRef = ref(null);
 
-const { elementRef: fileRef } = useFocus(
-  () => props.focus,
-  () => props.error,
+const {elementRef: fileRef} = useFocus(
+    () => props.focus,
+    () => props.error,
 );
 
 const openFilePicker = () => {
@@ -135,16 +136,15 @@ const hasError = computed(() => !!props.error);
 const errorMessage = computed(() => translateError(props.error));
 
 const ariaLabels = computed(() =>
-  buildAriaLabels(props, {
-    label: labelId.value,
-    error: errorMessageId.value,
-    helpMessage: helpMessageId.value,
-  }),
+    buildAriaLabels(props, {
+      label: labelId.value,
+      error: errorMessageId.value,
+      helpMessage: helpMessageId.value,
+    }),
 );
 </script>
 
 <template>
-  <h1>Holaaaa!!!</h1>
   <div :class="filterClassComp">
     <label v-if="!hideLabel" :id="labelId" :for="uniqueID" class="block mb-1">
       {{ label }}
@@ -153,49 +153,49 @@ const ariaLabels = computed(() =>
 
     <div class="flex">
       <input
-        ref="refFileName"
-        :disabled="disabled"
-        class="hidden"
-        name="file"
-        type="file"
-        @change="handleFileChange"
+          ref="refFileName"
+          :disabled="disabled"
+          class="hidden"
+          name="file"
+          type="file"
+          @change="handleFileChange"
       />
       <div class="w-full">
         <input
-          :id="id ?? uniqueID"
-          ref="fileRef"
-          :aria-invalid="hasError"
-          :aria-labelledby="ariaLabels"
-          :aria-required="required"
-          :class="[
+            :id="id ?? uniqueID"
+            ref="fileRef"
+            :aria-invalid="hasError"
+            :aria-labelledby="ariaLabels"
+            :aria-required="required"
+            :class="[
             'rounded rounded-e-none mb-0',
             { error: hasError },
             elementSizeComputed,
           ]"
-          :placeholder="showPlaceholder ? placeholder : ''"
-          :value="modelValue?.name"
-          tabindex="0"
-          @click="openFilePicker"
-          @keydown="handleKeyEvent"
-          @keydown.enter.prevent="openFilePicker"
+            :placeholder="showPlaceholder ? placeholder : ''"
+            :value="modelValue?.name"
+            tabindex="0"
+            @click="openFilePicker"
+            @keydown="handleKeyEvent"
+            @keydown.enter.prevent="openFilePicker"
         />
       </div>
 
       <DsButton
-        :color="buttonColor"
-        :rounded="false"
-        :text="buttonText"
-        startImage="file"
-        text-color="white"
-        variant="buttonFile"
-        @click="openFilePicker"
+          :color="buttonColor"
+          :rounded="false"
+          :text="buttonText"
+          startImage="file"
+          text-color="white"
+          variant="buttonFile"
+          @click="openFilePicker"
       />
     </div>
 
     <label
-      v-if="hasError"
-      :id="errorMessageId"
-      class="error-message block mb-0"
+        v-if="hasError"
+        :id="errorMessageId"
+        class="error-message block mb-0"
     >
       {{ errorMessage }}
     </label>
