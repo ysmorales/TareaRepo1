@@ -2,7 +2,7 @@ export interface ITableColumnData {
     title: string;
     key?: string;
     filter?: boolean;
-    type?: 'link' | 'default'
+    type?: 'link' | 'default' | 'avatar'
     actions?: {
         delete?: boolean;
         edit?: boolean;
