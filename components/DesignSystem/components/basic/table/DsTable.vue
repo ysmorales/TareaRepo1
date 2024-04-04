@@ -230,7 +230,7 @@ const hasFilter = computed(() => props.columns.some((column) => column.filter));
       >
         <div v-if="!column.actions">
           {{ column.type !== 'link' ? row[column.key!] : '' }}
-          <DsLink v-if="column.type==='link'" :href="row['url']">{{ row[column.key!] }}</DsLink>
+          <DsLink v-if="column.type==='link'" :href="row[column.key!].url">{{ row[column.key!].name }}</DsLink>
         </div>
         <div v-else class="flex justify-end">
           <TableActions

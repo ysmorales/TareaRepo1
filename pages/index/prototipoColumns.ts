@@ -2,7 +2,7 @@ import type {ITableColumnData} from "~/components/DesignSystem/components/basic/
 
 export const prototipeColumns: ITableColumnData[] = [{title: 'Id', key: 'id'}, {
     title: 'Nombre',
-    key: 'name',
+    key: 'link',
     type: 'link',
     filter: true
 }, {
