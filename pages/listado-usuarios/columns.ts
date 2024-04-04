@@ -3,10 +3,11 @@ import type {ITableColumnData} from "~/components/DesignSystem/components/basic/
 export const columns: ITableColumnData[] = [{
     title: 'Nombre',
     key: 'name',
-    filter: true
+    type: 'avatar'
 }, {
     title: 'Correo electrónico',
-    key: 'mail'
+    key: 'mail',
+    filter: true
 }, {
     title: 'Rol',
     key: 'rol'

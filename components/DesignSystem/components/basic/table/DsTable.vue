@@ -229,8 +229,9 @@ const hasFilter = computed(() => props.columns.some((column) => column.filter));
           class="px-2 py-2 text-sm font-medium text-gray-900"
       >
         <div v-if="!column.actions">
-          {{ column.type !== 'link' ? row[column.key!] : '' }}
+          {{ !column.type ? row[column.key!] : '' }}
           <DsLink v-if="column.type==='link'" :href="row[column.key!].url">{{ row[column.key!].name }}</DsLink>
+          {{ column.type === 'avatar' ? row[column.key!].name : '' }}
         </div>
         <div v-else class="flex justify-end">
           <TableActions
