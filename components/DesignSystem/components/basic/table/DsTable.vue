@@ -232,7 +232,7 @@ const hasFilter = computed(() => props.columns.some((column) => column.filter));
           {{ !column.type ? row[column.key!] : '' }}
           <DsLink v-if="column.type==='link'" :href="row[column.key!].url">{{ row[column.key!].name }}</DsLink>
           <div v-if="column.type === 'avatar'" class="flex items-center">
-            <DsAvatar size="small"/>
+            <DsAvatar :src="row[column.key!].url" size="small"/>
             {{ row[column.key!].name }}
           </div>
         </div>
