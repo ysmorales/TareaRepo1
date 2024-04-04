@@ -10,10 +10,14 @@ const view = ref<'table' | 'form'>('table')
 function handleAdd() {
   view.value = 'form'
 }
+
+function handleCancelForm() {
+  view.value = 'table'
+}
 </script>
 
 <template>
-  <h1>Listado de categorías</h1>
+  <h1>{{ view == 'table' ? 'Listado de categorías' : 'Nueva categoría' }}</h1>
   <DsTable
       v-if="view=='table'"
       :columns="columns"
@@ -27,7 +31,7 @@ function handleAdd() {
       add-button-label="Nueva categoría"
       checkboxSelection sort striped @add-row="handleAdd"/>
   <div v-if="view=='form'">
-    <CategoryForm/>
+    <CategoryForm @cancelar="handleCancelForm"/>
   </div>
 </template>
 
