@@ -9,7 +9,7 @@ import TableActions from "./components/TableActions.vue";
 import TableThSorting from "./components/TableThSorting.vue";
 import type {IPagination, ITableColumnData} from "./interface";
 import {exampleColumn} from "~/components/DesignSystem/components/basic/table/exampleColumn";
-import {DsLink} from "~/components/DesignSystem";
+import {DsAvatar, DsLink} from "~/components/DesignSystem";
 
 const props = defineProps({
   columns: {
@@ -231,7 +231,10 @@ const hasFilter = computed(() => props.columns.some((column) => column.filter));
         <div v-if="!column.actions">
           {{ !column.type ? row[column.key!] : '' }}
           <DsLink v-if="column.type==='link'" :href="row[column.key!].url">{{ row[column.key!].name }}</DsLink>
-          {{ column.type === 'avatar' ? row[column.key!].name : '' }}
+          <div v-if="column.type === 'avatar'" class="flex items-center">
+            <DsAvatar size="small"/>
+            {{ row[column.key!].name }}
+          </div>
         </div>
         <div v-else class="flex justify-end">
           <TableActions
