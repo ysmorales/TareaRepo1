@@ -17,7 +17,7 @@ function handleCancelForm() {
 </script>
 
 <template>
-  <h1>Listado proyectos</h1>
+  <h1>{{ view == 'table' ? 'Listado proyectos' : 'Nuevo proyecto' }}</h1>
   <DsTable
       v-if="view=='table'"
       :columns="columns"
