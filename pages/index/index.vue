@@ -5,17 +5,18 @@ import {prototipeColumns} from "~/pages/index/prototipeColumns";
 </script>
 
 <template>
-  <div class="flex flex-col">
-    <h1>Listado de prototipos</h1>
-    <DsTable
-        :columns="prototipeColumns"
-        :data="dataTable"
-        :pagination="{
+    <div class="flex flex-col">
+        <h1>Listado de prototipos</h1>
+        <DsTable
+            :columns="prototipeColumns"
+            :data="dataTable"
+            :pagination="{
           totalItems: 200,
           currentPage: 1,
           itemsPerPage: 5,
           itemsPerPageOptions: [5, 10, 50],
-          }" checkboxSelection sort striped/>
-  </div>
+          }"
+            border checkboxSelection pagination-border sort striped/>
+    </div>
 </template>
 
