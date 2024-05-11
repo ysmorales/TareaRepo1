@@ -93,14 +93,12 @@ async function handleCloseSession() {
                         <div class="mx-auto max-w-[650px] hidden md:flex">
                             <div class="flex w-full flex-wrap justify-between">
                                 <slot name="center-navBar">
-                                    <h1>Here slot content </h1>
                                 </slot>
                             </div>
                         </div>
                         <div class="h-[65px] w-auto lg:w-1/3">
                             <div class="flex justify-end items-center">
                                 <slot name="final-navBar">
-                                    <h1>Here slot content</h1>
                                 </slot>
                                 <DsButtonAvatar
                                     :userData="user ?? { name: 'invitado', email: 'invitado@invitado.com' }"
