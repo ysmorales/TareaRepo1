@@ -4,12 +4,12 @@ export const prototipeColumns: ITableColumnData[] = [{title: 'Id', key: 'id'}, {
     title: 'Nombre',
     key: 'link',
     type: 'link',
-    filter: true
+    filter: {filterType: 'text'}
 }, {
     title: 'Fecha',
     key: 'date'
 }, {
     title: 'Categoría Padre',
     key: 'category',
-    filter: true
+    filter: {filterType: 'text'}
 }, {title: 'Acciones', actions: {edit: true, delete: true, view: true}}]
