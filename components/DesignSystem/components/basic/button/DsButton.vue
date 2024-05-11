@@ -1,12 +1,12 @@
 <script lang="ts" setup>
-import { filterClass } from "../../../utils/filterClass";
-import { predefinedClasses } from "../../../common/propsStyle";
 import type { IButtonColor, IButtonSize, IButtonType } from "./interfaces";
 import { colorButtonClass, sizeButtonClass } from "./library";
 import useFocus from "../../../composables/useFocus";
 import DsIcon from "../../basic/icon/DsIcon.vue";
 import DsSpinner from "../spinner/DsSpinner.vue";
 import { computed } from "vue";
+import type { IIconColor, IIconSize } from "../../../interfaces/elements";
+
 //resolve conflict and refactor
 const props = defineProps({
   text: {
@@ -39,7 +39,18 @@ const props = defineProps({
     type: String,
     default: "",
   },
-
+  iconColor: {
+    type: String as () => IIconColor,
+    default: null,
+  },
+  iconStyle: {
+    type: String,
+    default: null,
+  },
+  iconSize: {
+    type: String as () => IIconSize,
+    default: "base",
+  },
   endImage: {
     type: String,
     default: "",
@@ -74,7 +85,8 @@ const emit = defineEmits<{
   (event: "click", value: MouseEvent): void;
 }>();
 const filterClassComp = computed(() => {
-  return filterClass(predefinedClasses, props.class, ["max-h-[50px]"]);
+  // return filterClass(predefinedClasses, props.class, ["max-h-[50px]"]);
+  return props.class;
 });
 
 const { elementRef: buttonRef } = useFocus(
@@ -115,10 +127,22 @@ const buttonClasses = computed(() => {
     :type="type"
     @click="$emit('click', $event)"
   >
-    <DsIcon v-if="startImage" :name="startImage" class="mr-1" size="base" />
+    <DsIcon
+      v-if="startImage"
+      :class="[{ 'mr-1': !iconStyle }, iconStyle]"
+      :color="iconColor"
+      :name="startImage"
+      :size="iconSize"
+    />
 
     <slot>{{ text }}</slot>
     <DsSpinner v-if="loading" :color="loadingColor" />
-    <DsIcon v-if="endImage" :name="endImage" class="ml-1" size="base" />
+    <DsIcon
+      v-if="endImage"
+      :class="[{ 'ml-1': !iconStyle }, iconStyle]"
+      :color="iconColor"
+      :name="endImage"
+      :size="iconSize"
+    />
   </button>
 </template>

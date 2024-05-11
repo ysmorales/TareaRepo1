@@ -31,5 +31,10 @@ export { default as DsTabItem } from "./components/navigation/tabs/DsTabItem.vue
 export { default as DsBreadcrumb } from "./components/navigation/breadcrumb/DsBreadcrumb.vue";
 export { default as DsTopMenu } from "./components/navigation/topMenu/DsTopMenu.vue";
 export { default as DsSideMenu } from "./components/navigation/sideMenu/DsSideMenu.vue";
-export { default as DsFormValidatorPanel } from "./components/form/formValidatorPanel/DsFormValidatorPanel.vue";
+export { default as DsFormValidatorPanel } from "./components/form/form-validator-panel/DsFormValidatorPanel.vue";
 export { default as DsCard } from "./components/container/card/DsCard.vue";
+export { default as DsTable } from "./components/basic/table/DsTable.vue";
+export { default as DsImage } from "./components/media/images/imagesHtml/DsImages.vue";
+export { default as DsUserMenu } from "./components/navigation/user-menu/DsUserMenu.vue";
+export { default as DsButtonAvatar } from "./components/basic/button-avatar/DsButtonAvatar.vue";
+export { default as DsSimpleSideMenu} from "./components/navigation/simple-side-menu/DsSimpleSideMenu.vue";

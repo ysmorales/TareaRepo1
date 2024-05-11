@@ -1,10 +1,6 @@
 <script lang="ts" setup>
-import {
-  predefinedClasses,
-  sizeImagesClasses,
-} from "../../../../common/propsStyle";
-import { filterClass } from "../../../../utils/filterClass";
-import {computed} from "vue";
+import { sizeImagesClasses } from "../../../../common/propsStyle";
+import { computed } from "vue";
 
 type ISize =
   | "xSmall"
@@ -36,11 +32,12 @@ const props = defineProps({
   },
 });
 const elementSize = computed(() => {
-  const size = props.size || 'normal'; // Si props.size es undefined, usamos 'normal'
+  const size = props.size || "normal"; // Si props.size es undefined, usamos 'normal'
   return sizeImagesClasses[size];
 });
 const filterClassComp = computed(() => {
-  return filterClass(predefinedClasses, props.class, ["max-h-[200px]"]);
+  // return filterClass(predefinedClasses, props.class, ["max-h-[200px]"]);
+  return props.class;
 });
 const imageSrc = computed(() => {
   return props.src;

@@ -1,7 +1,10 @@
 <script lang="ts" setup>
-import DsAlert from "../../../components/basic/alert/DsAlert.vue";
-import DsTypography from "../../../components/basic/typography/DsTypography.vue";
-import DsButton from "../../../components/basic/button/DsButton.vue";
+// import DsAlert from "../../../components/basic/alert/DsAlert.vue";
+// import DsTypography from "../../../components/basic/typography/DsTypography.vue";
+// import DsButton from "../../../components/basic/button/DsButton.vue";
+import { DsTypography } from "../../../basic/typography";
+import DsButton from "../../../basic/button/DsButton.vue";
+import DsAlert from "../../../basic/alert/DsAlert.vue";
 </script>
 
 <template>

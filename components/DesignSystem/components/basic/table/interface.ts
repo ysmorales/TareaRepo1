@@ -1,7 +1,8 @@
 export interface ITableColumnData {
     title: string;
     key?: string;
-    filter?: boolean;
+    filter?: { filterType: 'date' | 'select' | 'text' | 'number' | 'run', config?: any };
+    size?: string;
     type?: 'link' | 'default' | 'avatar'
     actions?: {
         delete?: boolean;

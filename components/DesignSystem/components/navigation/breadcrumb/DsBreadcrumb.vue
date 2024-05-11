@@ -3,7 +3,7 @@ import DsIcon from "../../basic/icon/DsIcon.vue";
 import type { IBreadcrumbItem } from "./interface";
 import { filterClass } from "../../../utils/filterClass";
 import { predefinedClasses } from "../../../common/propsStyle";
-import {computed,ref} from "vue";
+import { computed, ref } from "vue";
 
 const props = defineProps({
   items: {
@@ -51,10 +51,10 @@ const isLastItem = (item: IBreadcrumbItem) => {
   return item.id === props.items[props.items.length - 1].id;
 };
 
-const itemIconClass = (item: IBreadcrumbItem) =>
-  `las la-${item.icon} ${
-    item !== selectedItem.value ? "text-base text-primary-500" : ""
-  }`;
+// const itemIconClass = (item: IBreadcrumbItem) =>
+//   `las la-${item.icon} ${
+//     item !== selectedItem.value ? "text-base text-primary-500" : ""
+//   }`;
 
 const itemLinkClass = (item: IBreadcrumbItem) => [
   " font-roboto px-3 ",

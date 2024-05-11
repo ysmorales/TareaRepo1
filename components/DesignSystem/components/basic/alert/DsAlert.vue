@@ -3,8 +3,9 @@ import DsTypography from "../typography/DsTypography.vue";
 import DsIcon from "../icon/DsIcon.vue";
 import { predefinedClasses } from "../../../common/propsStyle";
 import { filterClass } from "../../../utils/filterClass";
-import { alertConfig } from "../alert/library";
+
 import { computed } from "vue";
+import { alertConfig } from "./library";
 
 const props = defineProps({
   type: {

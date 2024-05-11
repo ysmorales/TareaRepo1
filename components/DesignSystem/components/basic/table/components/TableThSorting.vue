@@ -1,10 +1,14 @@
 <script lang="ts" setup>
-import {ref} from "vue";
+import {ref,computed} from "vue";
 import DsIcon from "../../icon/DsIcon.vue";
 
 defineProps({
   title: {
     type: String,
+  },
+  columnWith: {
+    type: String,
+    default: 'w-[10%]'
   },
   index: {
     type: Number,
@@ -50,8 +54,8 @@ const computedClass = computed(() => {
 <template>
   <th
       :key="'col' + index"
-      :class="[
-      'px-2 py-2  text-sm uppercase group cursor-pointer',{'text-end':(title==='Acciones')},
+      :class="[columnWith,
+      'px-2 py-2   group cursor-pointer',{'text-end':(title==='Acciones')},
       { 'text-white': striped },
       { 'text-gray-500': !striped },
     ]"

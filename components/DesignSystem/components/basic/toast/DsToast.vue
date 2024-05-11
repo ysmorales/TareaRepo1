@@ -36,7 +36,7 @@ const getPositionClass = () => {
 let timerRef: ReturnType<typeof setTimeout> | null = null; // reference to the timeout for auto-dismiss
 
 const showToast = () => {
-  clearTimeout(timerRef as NodeJS.Timeout); // Clear previous timer if any
+  clearTimeout(timerRef as ReturnType<typeof setTimeout>);
   timerRef = setTimeout(() => {
     emit("update:modelValue", false);
   }, props.time);
@@ -46,7 +46,7 @@ watchEffect(() => {
   if (props.modelValue) {
     showToast();
   } else {
-    clearTimeout(timerRef as NodeJS.Timeout);
+    clearTimeout(timerRef as ReturnType<typeof setTimeout>);
   }
 });
 const closeToast = () => {

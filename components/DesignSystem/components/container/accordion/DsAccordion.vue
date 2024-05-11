@@ -2,10 +2,8 @@
 import DsIcon from "../../basic/icon/DsIcon.vue";
 import DsTypography from "../../../components/basic/typography/DsTypography.vue";
 import generateUniqueId from "../../../utils/generateUniqueId";
-import { predefinedClasses } from "../../../common/propsStyle";
-import { filterClass } from "../../../utils/filterClass";
-import { loremItsum } from "../../../utils/loremItsum";
-import { ref, computed,onMounted } from "vue";
+import {loremItsum} from "../../../utils/loremItsum";
+import {ref, computed, onMounted} from "vue";
 
 const props = defineProps({
   class: {
@@ -55,7 +53,8 @@ const defaultClasses = computed(() => {
 });
 
 const filterClassComp = computed(() => {
-  return filterClass(predefinedClasses, props.class);
+  // return filterClass(predefinedClasses, props.class);
+  return props.class
 });
 
 const cssClasses = computed(() => [
@@ -128,22 +127,22 @@ onMounted(() => {
   <div :class="[cssClasses, 'w-full']">
     <div class="collapse-trigger">
       <button
-        :id="uniqueID"
-        :aria-controls="uniqueId"
-        :aria-expanded="!isCollapsed"
-        :class="[triggerClass, { 'rounded-b-none': !isCollapsed }]"
-        type="button"
-        @click="toggleCollapse"
+          :id="uniqueID"
+          :aria-controls="uniqueId"
+          :aria-expanded="!isCollapsed"
+          :class="[triggerClass, { 'rounded-b-none': !isCollapsed }]"
+          type="button"
+          @click="toggleCollapse"
       >
         <h2 :class="collapseTitleCssClass">
           {{ title }}
         </h2>
 
         <DsIcon
-          v-if="isStandard"
-          :rotate="isCollapsed ? 0 : 180"
-          name="angle-down"
-          size="small"
+            v-if="isStandard"
+            :rotate="isCollapsed ? 0 : 180"
+            name="angle-down"
+            size="small"
         />
         <span v-if="isCard" class="text-primary-500">
           {{ triggerText }}

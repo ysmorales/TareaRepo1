@@ -1,13 +1,12 @@
 <script lang="ts" setup>
-import {inputSizes, predefinedClasses} from "../../../common/propsStyle";
-import type {ISize, ITextType} from "../../../interfaces/elements";
-import {filterClass} from "../../../utils/filterClass";
+import { inputSizes } from "../../../common/propsStyle";
+import type { ISize, ITextType } from "../../../interfaces/elements";
 import generateUniqueId from "../../../utils/generateUniqueId";
 import useFocus from "../../../composables/useFocus";
-import {translateError} from "../../../utils/translateErrorMessage";
+import { translateError } from "../../../utils/translateErrorMessage";
 import buildAriaLabels from "../../../utils/buildAriaLabels";
-import {type PropType, ref} from "vue";
-import {onMounted, computed} from "vue";
+import { computed, ref, onMounted  } from "vue";
+import type{ PropType ,Ref} from "vue";
 
 const props = defineProps({
   modelValue: {
@@ -25,7 +24,7 @@ const props = defineProps({
 
   size: {
     type: String as () => ISize,
-    default: "normal",
+    default: "full",
   },
 
   rounded: {
@@ -69,7 +68,7 @@ const props = defineProps({
   },
 
   error: {
-    type: String,
+    type: String as () => string | null | undefined | Ref<string>,
     default: null,
   },
 
@@ -90,11 +89,11 @@ const helpMessageId = computed(() => `${uniqueID.value}-help-message`);
 const defaultClasses = "hover:border-dark-500 border p-2 block ";
 
 const filterClassComp = computed(() => {
-  return filterClass(predefinedClasses, props.class);
+  // return filterClass(predefinedClasses, props.class);
+  return props.class;
 });
 
 const cssClasses = computed(() => [
-  filterClassComp.value,
   inputSizes[props.size],
   {
     rounded: props.rounded,
@@ -103,12 +102,12 @@ const cssClasses = computed(() => [
   defaultClasses,
 ]);
 
-const {elementRef: inputRef} = useFocus(
-    () => props.focus,
-    () => props.error,
+const { elementRef: inputRef } = useFocus(
+  () => props.focus,
+  () => props.error,
 );
 
-const emit = defineEmits(["update:modelValue"]);
+const emit = defineEmits(["update:modelValue", "blur"]);
 
 const model = computed({
   get() {
@@ -122,42 +121,51 @@ const model = computed({
 
 const placeholderText = computed(() => props.placeholder ?? "");
 const hasError = computed(() => !!props.error);
-const errorMessage = computed(() => translateError(props.error));
+const errorMessage = computed(() => translateError(props.error as any));
 
 const ariaLabels = computed(() =>
-    buildAriaLabels(props, {
-      label: labelId.value,
-      error: errorMessageId.value,
-      helpMessage: helpMessageId.value,
-    }),
+  buildAriaLabels(props, {
+    label: labelId.value,
+    error: errorMessageId.value,
+    helpMessage: helpMessageId.value,
+  }),
 );
+
+function handleBlur() {
+  emit("blur");
+}
+
+const containerSize = computed(() => {
+  return inputSizes[props.size];
+});
 </script>
 
 <template>
-  <div :class="['mb-4',inputSizes[size]]">
+  <div :class="['mb-4', containerSize, filterClassComp]">
     <label v-if="label" :id="labelId" :for="uniqueID" class="mb-2">
       {{ label }}
       <span v-if="required" aria-hidden="true" class="required-marker">*</span>
     </label>
 
     <input
-        :id="id ?? uniqueID"
-        ref="inputRef"
-        v-model="model"
-        :aria-invalid="hasError"
-        :aria-labelledby="ariaLabels"
-        :aria-required="required"
-        :class="cssClasses"
-        :disabled="disabled"
-        :placeholder="placeholderText"
-        :readonly="readOnly"
-        :type="`${type}`"
+      :id="id ?? uniqueID"
+      ref="inputRef"
+      v-model="model"
+      :aria-invalid="hasError"
+      :aria-labelledby="ariaLabels"
+      :aria-required="required"
+      :class="cssClasses"
+      :disabled="disabled"
+      :placeholder="placeholderText"
+      :readonly="readOnly"
+      :type="`${type}`"
+      @blur="handleBlur"
     />
 
     <label
-        v-if="hasError"
-        :id="errorMessageId"
-        class="error-message block mb-0"
+      v-if="hasError"
+      :id="errorMessageId"
+      class="error-message block mb-0"
     >
       {{ errorMessage }}
     </label>

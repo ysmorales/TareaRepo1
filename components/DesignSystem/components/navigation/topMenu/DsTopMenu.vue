@@ -1,20 +1,25 @@
 <script lang="ts" setup>
 import DsIcon from "../../basic/icon/DsIcon.vue";
 import vClickOutside from "../../../directives/clickOutsideDirective";
-import type { IMenuItem } from "../../../components/navigation/topMenu/interfaces";
-import { filterClass } from "../../../utils/filterClass";
-import { predefinedClasses } from "../../../common/propsStyle";
-import {computed,ref} from "vue";
+import type {IMenuItem} from "../../../components/navigation/topMenu/interfaces";
+import {filterClass} from "../../../utils/filterClass";
+import {predefinedClasses} from "../../../common/propsStyle";
+import {computed, ref} from "vue";
+import {data} from "./data";
 
 const props = defineProps({
   items: {
     type: Array as () => IMenuItem[],
-    required: true,
+    default: data
   },
   class: {
     type: String,
     default: "",
   },
+  noText: {
+    type: Boolean,
+    default: false,
+  }
 });
 
 const filterClassComp = computed(() => {
@@ -24,11 +29,14 @@ const filterClassComp = computed(() => {
 const emit = defineEmits(["itemClick"]);
 
 const fixItems = (items: IMenuItem[]) => {
+  if (!Array.isArray(items)) {
+    return [];
+  }
   let i = 0;
 
   const result: IMenuItem[] = [];
 
-  items.forEach((item1: IMenuItem) => {
+  items?.forEach((item1: IMenuItem) => {
     const destItem1: IMenuItem = {
       id: ++i + "",
       text: item1.text,
@@ -43,7 +51,7 @@ const fixItems = (items: IMenuItem[]) => {
       destItem1.items = [];
 
       // Second level
-      item1.items.forEach((item2: IMenuItem) => {
+      item1.items?.forEach((item2: IMenuItem) => {
         const destItem2: IMenuItem = {
           id: ++i + "",
           text: item2.text,
@@ -58,7 +66,7 @@ const fixItems = (items: IMenuItem[]) => {
         if (item2.items) {
           destItem2.items = [];
 
-          item2.items.forEach((item3: IMenuItem) => {
+          item2.items?.forEach((item3: IMenuItem) => {
             const destItem3: IMenuItem = {
               id: ++i + "",
               text: item3.text,
@@ -125,85 +133,85 @@ const itemClick = (item: IMenuItem) => {
 
 <template>
   <nav
-    v-click-outside="onClickOutside"
-    :class="['menu-horizontal', filterClassComp]"
+      v-click-outside="onClickOutside"
+      :class="['menu-horizontal', filterClassComp]"
   >
     <ul>
       <li v-for="item1 in normalizedItems">
         <!-- Root items -->
         <button v-if="!item1.items" @click="itemClick(item1)">
-          <DsIcon v-if="item1.icon" :name="item1.icon" class="mr-3" />
-          {{ item1.text }}
+          <DsIcon v-if="item1.icon" :name="item1.icon" class="mr-3"/>
+          {{ noText ? '' : item1.text }}
         </button>
 
         <div v-if="item1.items" class="relative w-full">
           <!-- Second-level items -->
           <button
-            :id="item1.id"
-            :aria-controls="'dropdownMenu-' + item1.id"
-            aria-expanded="false"
-            aria-haspopup="true"
-            @click="toggleItem(item1)"
+              :id="item1.id"
+              :aria-controls="'dropdownMenu-' + item1.id"
+              aria-expanded="false"
+              aria-haspopup="true"
+              @click="toggleItem(item1)"
           >
             {{ item1.text }}
-            <DsIcon :name="angleIcon(item1)" class="ml-2" size="base" />
+            <DsIcon :name="angleIcon(item1)" class="ml-2" size="base"/>
           </button>
 
           <div
-            v-if="item1.open"
-            :id="'dropdownMenu-' + item1.id"
-            class="dropdownlv1"
+              v-if="item1.open"
+              :id="'dropdownMenu-' + item1.id"
+              class="dropdownlv1"
           >
             <div
-              :aria-labelledby="item1.id"
-              aria-orientation="vertical"
-              role="menu"
+                :aria-labelledby="item1.id"
+                aria-orientation="vertical"
+                role="menu"
             >
               <template v-for="item2 in item1.items">
                 <button
-                  v-if="!item2.items"
-                  role="menuitem"
-                  @click="itemClick(item2)"
+                    v-if="!item2.items"
+                    role="menuitem"
+                    @click="itemClick(item2)"
                 >
-                  <DsIcon name="angle-right" size="base" />
+                  <DsIcon name="angle-right" size="base"/>
                   {{ item2.text }}
                 </button>
 
                 <div v-if="item2.items" class="relative">
                   <!-- Third-level items -->
                   <button
-                    :id="'dropdownMenu-' + item1.id"
-                    aria-controls="accordionMenu"
-                    aria-expanded="false"
-                    aria-haspopup="true"
-                    class="subDropdownButton"
-                    role="menuitem"
-                    @click="toggleItem(item2)"
+                      :id="'dropdownMenu-' + item1.id"
+                      aria-controls="accordionMenu"
+                      aria-expanded="false"
+                      aria-haspopup="true"
+                      class="subDropdownButton"
+                      role="menuitem"
+                      @click="toggleItem(item2)"
                   >
                     <span>
-                      <DsIcon name="angle-right" size="base" />
+                      <DsIcon name="angle-right" size="base"/>
                       {{ item2.text }}
                     </span>
 
                     <DsIcon
-                      :name="angleIcon(item2)"
-                      class="ml-1"
-                      size="small"
+                        :name="angleIcon(item2)"
+                        class="ml-1"
+                        size="small"
                     />
                   </button>
 
                   <div v-if="item2.open" id="accordionMenu" class="dropdownlv2">
                     <div
-                      aria-labelledby="options-menu"
-                      aria-orientation="vertical"
-                      role="menu"
+                        aria-labelledby="options-menu"
+                        aria-orientation="vertical"
+                        role="menu"
                     >
                       <button
-                        v-for="item3 in item2.items"
-                        role="menuitem"
-                        @click="itemClick(item3)"
+                          v-for="item3 in item2.items"
+                          role="menuitem"
+                          @click="itemClick(item3)"
                       >
-                        <DsIcon name="arrow-right" size="base" />
+                        <DsIcon name="arrow-right" size="base"/>
                         {{ item3.text }}
                       </button>
                     </div>

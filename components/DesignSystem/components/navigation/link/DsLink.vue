@@ -1,8 +1,6 @@
 <script lang="ts" setup>
-import { otherStyle, variantLinkClasses } from "./library";
-import type { ILinkSize, ILinkVariant } from "./interface";
-import { filterClass } from "../../../utils/filterClass";
-import { predefinedClasses } from "../../../common/propsStyle";
+import {variantLinkClasses} from "./library";
+import type {ILinkSize, ILinkVariant} from "./interface";
 import {computed} from "vue";
 
 const props = defineProps({
@@ -23,7 +21,6 @@ const props = defineProps({
 
   href: {
     type: String,
-    default: "#",
   },
 
   class: {
@@ -39,7 +36,8 @@ const props = defineProps({
 });
 
 const filterClassComp = computed(() => {
-  return filterClass(predefinedClasses, props.class, otherStyle);
+  // return filterClass(predefinedClasses, props.class, otherStyle);
+  return props.class;
 });
 
 const cssClasses = computed(() => [
@@ -53,7 +51,7 @@ const cssClasses = computed(() => [
 </script>
 
 <template>
-  <NuxtLink :class="cssClasses" :target="target" :title="title" :to="href">
+  <NuxtLink :class="['cursor-pointer',cssClasses]" :target="target" :title="title" :to="href">
     <slot>
       {{ text }}
     </slot>

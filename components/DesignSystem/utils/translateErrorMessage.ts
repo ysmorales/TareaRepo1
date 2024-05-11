@@ -1,7 +1,7 @@
 import type { Ref } from "vue";
 
 export function translateError(
-  errorCode: string | Ref<string> | undefined,
+  errorCode: string | null | undefined | Ref<string>,
 ): string | Ref<string> | null {
   // Define your custom error messages
   if (errorCode) {
@@ -13,9 +13,17 @@ export function translateError(
     };
 
     // Determine whether errorCode is a Ref or a string
-    let key = typeof errorCode === "string" ? errorCode : errorCode.value;
-
     // Return the custom message for the given error code
-    return errorMessages[key] || errorCode;
+    return errorMessages[errorCode as any] || errorCode;
   } else return null;
 }
+
+export const getErrorMessage = (error: any): string | undefined => {
+  if (error && error.$message) {
+    const msg = translateError(error.$message);
+    if (typeof msg === "string") {
+      return msg;
+    }
+  }
+  return undefined;
+};

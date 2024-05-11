@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import DsCard from "../../../container/card/DsCard.vue";
 import type { INewsData } from "./interface";
 import { newsData } from "./data";
+import DsCard from "../../container/card/DsCard.vue";
 
 defineProps({
   title: {
@@ -22,6 +22,7 @@ defineProps({
       <div class="grid gap-3 md:grid-cols-3 sm:grid-cols-1">
         <DsCard
           v-for="card in newsData"
+          :key="card.id"
           :has-tag="false"
           text-top="News"
         ></DsCard>

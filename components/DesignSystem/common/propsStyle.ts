@@ -97,8 +97,8 @@ export const sizeImagesClasses = {
 };
 
 export const sizeAvatarClasses = {
-    xSmall: "w-4 titles-4",
-    small: "w-8 titles-8",
+    xSmall: "w-4 h-4 titles-4",
+    small: "w-8 h-8 titles-8",
     normal: "w-12 titles-12",
     medium: "w-24 titles-24",
     large: "w-32 titles-32",
@@ -146,6 +146,14 @@ export const textColorClasses = {
     success: "text-success-500",
     gray: "text-gray-500",
     neutral: "text-white",
+};
+export const imageColorClassesSvg = {
+    primary: "icon-blue",
+    dark: "icon-black",
+    danger: "icon-danger",
+    success: "icon-success",
+    gray: "icon-gray",
+    neutral: "icon-white",
 };
 export const textSizeClasses = {
     small: "text-sm",

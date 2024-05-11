@@ -1,8 +1,7 @@
 <script lang="ts" setup>
 import { variantCard } from "./library";
-import { computed } from "vue";
 
-const props = defineProps({
+defineProps({
   mainText: {
     type: String,
     default:

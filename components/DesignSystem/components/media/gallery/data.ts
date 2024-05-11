@@ -1,5 +1,3 @@
-import { ref } from "vue";
-
 const description =
   "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut ante nisl. " +
   "Sed placerat, tortor ac accumsan ultrices, mauris nibh fermentum elit, eu ";

@@ -1,13 +1,10 @@
 <script lang="ts" setup>
 import { inject, type Ref } from "vue";
 import { filterClass } from "../../../utils/filterClass";
-import {
-  elementSizes,
-  predefinedClasses,
-} from "../../../common/propsStyle";
+import { elementSizes, predefinedClasses } from "../../../common/propsStyle";
 import type { ISize } from "../../../interfaces/elements";
 import useFocus from "../../../composables/useFocus";
-import {computed} from "vue";
+import { computed } from "vue";
 
 const props = defineProps({
   value: {
@@ -67,7 +64,7 @@ const cssClasses = computed(() => [
   <label :class="filterClassComp">
     <input
       ref="radioRef"
-      :checked="value == (selectedRadio ?? initialValue)"
+      :checked="value == initialValue"
       :class="cssClasses"
       :disabled="disabled || disabledParent"
       :name="name"

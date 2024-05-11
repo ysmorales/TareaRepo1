@@ -5,8 +5,8 @@ import { days, years } from "./utils";
 import type { InputType } from "./interface";
 import { filterClass } from "../../../utils/filterClass";
 import { predefinedClasses } from "../../../common/propsStyle";
-import type { Ref} from "vue";
-import {computed,ref,watch,onMounted} from "vue";
+import type { Ref, PropType } from "vue";
+import { computed, ref, watch, onMounted } from "vue";
 import generateUniqueId from "../../../utils/generateUniqueId";
 
 type DateKind = "finalDay" | "finalMonth" | "finalYear";
@@ -18,7 +18,7 @@ const props = defineProps({
   },
 
   error: {
-    type: String,
+    type: String as () => string | null | undefined | Ref<string>,
     default: null,
   },
   id: {
@@ -165,6 +165,16 @@ function handleSelectDay(e: any) {
 function handleSelectMonth(e: any) {
   emitCompleteDate(e, "month");
 }
+
+const formatDay = computed(() => {
+  return day.value?.toString();
+});
+const formatMonth = computed(() => {
+  return month.value?.toString();
+});
+const formatYear = computed(() => {
+  return year.value?.toString();
+});
 </script>
 
 <template>
@@ -182,14 +192,14 @@ function handleSelectMonth(e: any) {
     <div class="grid grid-cols-3 gap-2">
       <div class="w-full">
         <DsSelect
-          v-model="day"
+          v-model="formatDay"
           :disabled="disabled"
           :error="dayError"
           :focus="focus"
           :required="required"
           :rounded="rounded"
           label="Día"
-          @select="handleSelectYear"
+          @select="handleSelectDay"
         >
           <option :value="0" disabled selected>Selecciona</option>
           <option
@@ -205,7 +215,7 @@ function handleSelectMonth(e: any) {
 
       <div class="w-full">
         <DsSelect
-          v-model="month"
+          v-model="formatMonth"
           :disabled="disabled"
           :error="monthError"
           :focus="focus"
@@ -229,14 +239,14 @@ function handleSelectMonth(e: any) {
 
       <div class="w-full">
         <DsSelect
-          v-model="year"
+          v-model="formatYear"
           :disabled="disabled"
           :error="yearError"
           :focus="focus"
           :required="required"
           :rounded="rounded"
           label="Año"
-          @select="handleSelectDay"
+          @select="handleSelectYear"
         >
           <option :value="0" disabled selected>Selecciona</option>
           <option

@@ -2,16 +2,19 @@
 import DsTypography from "../../basic/typography/DsTypography.vue";
 import DsInput from "../../form/input/DsInput.vue";
 import DsSelect from "../../form/select/DsSelect.vue";
-import type { IForm2State } from "../../../components/form-example/pensionerResidency/interface";
-import {
-  comunaOption,
-  regionOption,
-} from "../../../components/form-example/pensionerResidency/library";
-import type { IVualidateFormAttorneyState } from "../../../components/form-example/pensionerResidency/vualidate";
+import { computed, defineEmits } from "vue";
+// import {
+//   comunaOption,
+//   regionOption,
+// } from "../../../components/form-example/pensionerResidency/library";
+// import type { IVualidateFormAttorneyState } from "../../../components/form-example/pensionerResidency/vualidate";
 import { translateError } from "../../../utils/translateErrorMessage";
-import FormValidatorPanel from "../../../components/form/formValidatorPanel/DsFormValidatorPanel.vue";
+import FormValidatorPanel from "../../form/form-validator-panel/DsFormValidatorPanel.vue";
 import type { ComputedRef } from "vue";
-import type { errorPanelInterface } from "../../../components/form/formValidatorPanel/interface";
+import type { errorPanelInterface } from "../../form/form-validator-panel/interface";
+import type{ IForm2State } from "./interface";
+import { comunaOption, regionOption } from "./library";
+import type{ IVualidateFormAttorneyState } from "./vualidate";
 
 const props = defineProps({
   modelValue: {
@@ -25,15 +28,15 @@ const props = defineProps({
 
 const emit = defineEmits(["update:modelValue"]);
 
-const model = computed({
-  get() {
-    return props.modelValue;
-  },
-
-  set(value) {
-    emit("update:modelValue", value);
-  },
-});
+// const model = computed({
+//   get() {
+//     return props.modelValue;
+//   },
+//
+//   set(value) {
+//     emit("update:modelValue", value);
+//   },
+// });
 const errors = computed(() => ({
   name: props.validate?.name.$errors[0]?.$message,
   run: props.validate?.run.$errors[0]?.$message,
@@ -199,5 +202,3 @@ const errorPanel: ComputedRef<errorPanelInterface[]> = computed(() => [
     </div>
   </div>
 </template>
-
-<style scoped></style>

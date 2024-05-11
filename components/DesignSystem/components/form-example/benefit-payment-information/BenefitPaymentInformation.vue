@@ -5,21 +5,22 @@ import DsAlert from "../../../components/basic/alert/DsAlert.vue";
 import DsInput from "../../../components/form/input/DsInput.vue";
 import DsButton from "../../../components/basic/button/DsButton.vue";
 import { required } from "@vuelidate/validators";
-import { isValidRUT } from "../../../utils/isValidRut";
+// import { isValidRUT } from "../../../utils/isValidRut";
 import { useVuelidate } from "@vuelidate/core";
 import { translateError } from "../../../utils/translateErrorMessage";
 import TablePaymentInfo from "./components/TablePaymentInfo.vue";
 import ImportantInfoPage from "../../../components/form-example/benefit-payment-information/components/ImportantInfoPage.vue";
-import { nextTick } from "vue";
+import { nextTick, reactive, ref } from "vue";
+import { rutValidate } from "../../../utils/isValidRut";
 
 const step = ref(1);
 const form = reactive({ rut: "" });
 const loading = ref(false);
 
-const rutValidate = {
-  $message: "No es un RUN valido",
-  $validator: isValidRUT,
-};
+// const rutValidate = {
+//   $message: "No es un RUN valido",
+//   $validator: isValidRUT,
+// };
 const formRules = reactive({
   rut: { required, rutValidate },
 });
@@ -125,7 +126,9 @@ function handleSubmit() {
         <div class="cont-form-sector">
           <DsInput
             v-model="form.rut"
-            :error="translateError(validateForm?.rut.$errors[0]?.$message)"
+            :error="
+              translateError(validateForm?.rut.$errors[0]?.$message as any)
+            "
             :focus="validateForm.rut.$invalid && validateForm.rut.$dirty"
             help-message="Ejemplo: 17.231.182-4"
             label="Ingresa el RUN del beneficiario"

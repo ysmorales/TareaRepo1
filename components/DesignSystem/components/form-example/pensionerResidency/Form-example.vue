@@ -8,15 +8,13 @@ import { useVuelidate } from "@vuelidate/core";
 import { required, email, numeric } from "@vuelidate/validators";
 import DsLink from "../../../components/navigation/link/DsLink.vue";
 import DsTypography from "../../../components/basic/typography/DsTypography.vue";
-import { isValidRUT } from "../../../utils/isValidRut";
-import { nextTick } from "vue";
+
+import { nextTick, reactive, ref } from "vue";
 import { scrollToSection } from "../../../utils/scrollToSection";
+import { rutValidate } from "../../../utils/isValidRut";
 
 const step = ref(1);
-const rucValidate = {
-  $message: "No es un run valido",
-  $validator: isValidRUT,
-};
+
 const formApplicantState = reactive({
   applicant: "",
   reason: null,
@@ -67,7 +65,7 @@ const formApplicantRules = {
 };
 const formAttorneyStateRules = reactive({
   name: { required },
-  run: { required, rucValidate },
+  run: { required, rutValidate },
   region: { required },
   community: { required },
   address: { required },
@@ -186,11 +184,15 @@ function handleChangeStep(value: number, type: string) {
       >
         <Form1
           v-if="step == 1"
-          v-model="formApplicantState"
-          :validate="form1"
+          v-model="formApplicantState as any"
+          :validate="form1 as any"
         />
-        <Form2 v-if="step == 2" v-model="formAttorneyState" :validate="form2" />
-        <Form3 v-if="step == 3" v-model="totalData" />
+        <Form2
+          v-if="step == 2"
+          v-model="formAttorneyState as any"
+          :validate="form2 as any"
+        />
+        <Form3 v-if="step == 3" v-model="totalData as any" />
         <Form4 v-if="step == 4" />
       </DsStepper>
     </div>

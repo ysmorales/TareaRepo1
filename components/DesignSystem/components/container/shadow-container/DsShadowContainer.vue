@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import { loremItsum } from "../../../utils/loremItsum.ts";
+import { loremItsum } from "../../../utils/loremItsum";
 import { computed } from "vue";
-import { filterClass } from "../../../utils/filterClass.ts";
-import { predefinedClasses } from "../../../common/propsStyle.ts";
+import { filterClass } from "../../../utils/filterClass";
+import { predefinedClasses } from "../../../common/propsStyle";
 
 const props = defineProps({
   class: {

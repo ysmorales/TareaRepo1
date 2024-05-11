@@ -1,25 +1,3 @@
-export type IFont = "roboto" | "robotoSlab";
-export type IFontSize =
-  | "s0"
-  | "s1"
-  | "s2"
-  | "s3"
-  | "s4"
-  | "s5"
-  | "s6"
-  | "s7"
-  | "s8"
-  | "s9";
-export type IFontWeight =
-  | "w1"
-  | "w2"
-  | "w3"
-  | "w4"
-  | "w5"
-  | "w6"
-  | "w7"
-  | "w8"
-  | "w9";
 export type ITextType =
   | "text"
   | "number"
@@ -35,7 +13,6 @@ export type IColor =
   | "dark"
   | "danger"
   | "success"
-  | "strongGreen"
   | "gray"
   | "neutral";
 export type IIconColor = "primary" | "dark" | "danger" | "success" | "neutral";
@@ -63,3 +40,28 @@ export type IIconSize =
 
 export type ISizeText = "small" | "normal" | "medium" | "large" | "full";
 export type ITextAlignment = "left" | "center" | "right" | "justify";
+
+export interface IUser {
+  name?: string | null;
+  password?: string | null;
+  role?: string | null;
+  token?: string | null;
+  id?: number | null;
+  email?: string | null;
+  email_verified_at?: string | null;
+  roles?: string | null;
+  first_name?: string | null;
+  last_name?: string | null;
+  auth_token?: string | null;
+  auth_refresh_token?: string | null;
+  auth_expiration_at?: string | null;
+}
+
+export interface MenuItem {
+  name: string;
+  icon: string;
+  title: string;
+  url?: string;
+}
+
+export type role = "USER" | "OPERATOR" | "ADMIN";

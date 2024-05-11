@@ -7,6 +7,11 @@ defineProps({
     type: String,
     default: "Te puede interesar:",
   },
+  border: {
+    type: Boolean,
+    default: false,
+  },
+
   linkList: {
     type: Array as () => {
       textTitle: string;
@@ -33,13 +38,13 @@ defineProps({
 </script>
 
 <template>
-  <article class="border overflow-hidden rounded-lg md:flex flex-col">
+  <article :class="[ 'overflow-hidden rounded-lg md:flex flex-col',{'border':border}]">
     <header class="p-4 pb-0">
-      <DsTypography :text="textTitle" class="mb-4" variant="h4" />
+      <DsTypography :text="textTitle" class="mb-4" variant="h4"/>
     </header>
     <div class="p-4 pt-0">
       <ul>
-        <li v-for="item in linkList" class="mb-2">
+        <li v-for="item in linkList" class="mb-2 border border-gray-300 p-4 rounded-lg">
           <DsLink :href="item.href" :target="item.target" :title="item.title">
             <i class="las la-arrow-right mr-1 no-underline"></i
             >{{ item.textTitle }}

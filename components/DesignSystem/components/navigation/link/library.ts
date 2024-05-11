@@ -1,5 +1,6 @@
 export const variantLinkClasses = {
   dark: "font-bold text-dark-500 hover:text-primary-500",
+  gray: "text-gray-700 hover:text-gray-900",
   primary: "text-primary-500 hover:text-primary-900",
   white:
     "font-robotoSlab px-4 py-1.5 bg-primary-500 block hover:bg-primary-900 hover:text-white text-white",
@@ -10,6 +11,7 @@ export const variantTypographyClasses = {
   primary: "text-primary-500 ",
   white: "text-white",
   danger: "text-danger-500",
+  gray: "text-gray-700",
 };
 
 // export const sizeLinkClasses = {

@@ -1,11 +1,11 @@
 <!-- @vue-docgen-ignore -->
 <script lang="ts" setup>
-import {  ref } from "vue";
+import { ref } from "vue";
 import generateUniqueId from "../../../utils/generateUniqueId";
 import useFocus from "../../../composables/useFocus";
 import { filterClass } from "../../../utils/filterClass";
 import { predefinedClasses } from "../../../common/propsStyle";
-import {computed,onMounted,provide,watch} from "vue";
+import { computed, onMounted, provide, watch } from "vue";
 
 const props = defineProps({
   modelValue: {

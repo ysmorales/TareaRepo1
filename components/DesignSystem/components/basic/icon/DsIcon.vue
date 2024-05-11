@@ -1,19 +1,22 @@
 <script lang="ts" setup>
-import type {IIconColor, IIconSize} from "../../../interfaces/elements";
+import type { IIconColor, IIconSize } from "../../../interfaces/elements";
 import {
-  predefinedClasses,
   textColorClasses,
   iconSizeClasses,
+  imageColorClassesSvg,
 } from "../../../common/propsStyle";
-import {filterClass} from "../../../utils/filterClass";
-import {computed} from "vue";
+import { computed } from "vue";
+import { iconSizeClass, imagenIconSizeClass } from "./library";
 
 const props = defineProps({
   name: {
     type: String,
     required: true,
   },
-
+  iconStyle: {
+    type: String,
+    default: "",
+  },
   prefix: {
     type: String,
     default: "las",
@@ -35,7 +38,7 @@ const props = defineProps({
   },
 
   class: {
-    type: String,
+    type: String as () => string | (string | any)[],
     default: "",
   },
 });
@@ -46,19 +49,16 @@ function handleClick() {
 }
 
 const filterClassComp = computed(() => {
-  return filterClass(predefinedClasses, props.class, [
-    "cursor-pointer",
-    "opacity-0",
-    "group-hover:opacity-50",
-  ]);
+  // return filterClass(predefinedClasses, props.class, [
+  //   "cursor-pointer",
+  //   "opacity-0",
+  //   "group-hover:opacity-50",
+  // ]);
+  return props.class;
 });
 
 const cssClasses = computed(() => {
   let result = [filterClassComp.value, iconSizeClasses[props.size]];
-
-  if (props.color) {
-    result.push(textColorClasses[props.color]);
-  }
 
   if (props.rotate) {
     result.push(`transform la-rotate-${props.rotate}`);
@@ -76,17 +76,28 @@ const iconClasses = computed(() => `${props.prefix} la-${props.name}`);
 
 <template>
   <i
-      v-if="!isImageUrl"
-      :class="[cssClasses, iconClasses]"
-      @click="handleClick"
+    v-if="!isImageUrl"
+    :class="[
+      iconStyle,
+      cssClasses,
+      iconClasses,
+      textColorClasses[props.color],
+      iconSizeClass[size],
+    ]"
+    @click="handleClick"
   />
 
   <img
-      v-else
-      :class="['w-6 mr-2 icon-blue', cssClasses]"
-      :src="name"
-      alt="icon image"
-      aria-hidden="true"
-      @click="handleClick"
+    v-else
+    :class="[
+      'w-6 icon-blue',
+      cssClasses,
+      imageColorClassesSvg[props.color],
+      imagenIconSizeClass[size],
+    ]"
+    :src="name"
+    alt="icon image"
+    aria-hidden="true"
+    @click="handleClick"
   />
 </template>

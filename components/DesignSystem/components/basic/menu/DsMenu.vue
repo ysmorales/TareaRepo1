@@ -16,7 +16,7 @@ const props = defineProps({
 
   color: {
     type: String as () => IColor,
-    default: null,
+    default: "primary",
   },
 
   size: {
@@ -32,6 +32,10 @@ const props = defineProps({
   class: {
     type: String,
     default: "",
+  },
+  isMenuVisible: {
+    type: Boolean,
+    default: false,
   },
 });
 

@@ -1,9 +1,8 @@
 <script lang="ts" setup>
 import DsTag from "../../basic/tag/DsTag.vue";
-import DsImage from "../../media/images/imagesHtml/DsImages.vue";
 import DsTypography from "../../basic/typography/DsTypography.vue";
 import DsLink from "../../navigation/link/DsLink.vue";
-import { cardBackgroundColorClasses } from "../../container/high-lights-card/library";
+import { cardBackgroundColorClasses } from "./library";
 
 defineProps({
   cardColor: {
@@ -57,8 +56,8 @@ defineProps({
       <img :alt="imageAlt" :src="imageSrc" class="max-h-[200px]" />
     </figure>
     <footer class="p-4 flex justify-start w-full">
-      <DsTag :text="textFirstTab" class="mr-2" color="strongGreen" />
-      <DsTag :text="textSecondTab" color="strongGreen" />
+      <DsTag :text="textFirstTab" class="mr-2" color="primary" />
+      <DsTag :text="textSecondTab" color="primary" />
     </footer>
   </article>
 </template>

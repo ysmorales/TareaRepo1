@@ -1,9 +1,5 @@
 <script lang="ts" setup>
-import {
-  predefinedClasses,
-  sizeAvatarClasses,
-} from "../../../common/propsStyle";
-import { filterClass } from "../../../utils/filterClass";
+import { sizeAvatarClasses } from "../../../common/propsStyle";
 import { computed } from "vue";
 
 type ISize = "xSmall" | "small" | "medium" | "large";
@@ -27,14 +23,15 @@ const props = defineProps({
   },
 });
 const filterClassComp = computed(() => {
-  return filterClass(predefinedClasses, props.class);
+  // return filterClass(predefinedClasses, props.class);
+  return props.class;
 });
 </script>
 
 <template>
   <img
     :alt="alt"
-    :class="['mr-3 rounded-full', filterClassComp, sizeAvatarClasses[size]]"
+    :class="['rounded-full', filterClassComp, sizeAvatarClasses[size]]"
     :src="src"
   />
 </template>

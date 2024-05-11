@@ -4,7 +4,7 @@ import { spinnerColor } from "./library";
 defineProps({
   color: {
     type: String as () => "white" | "red" | "blue" | "gray",
-    default: "white",
+    default: "blue",
   },
 });
 </script>
@@ -17,5 +17,3 @@ defineProps({
     ]"
   ></div>
 </template>
-
-<style scoped></style>

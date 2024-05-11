@@ -1,8 +1,9 @@
-import { ref, watch, onMounted, nextTick } from "vue";
+import { ref, watch, onMounted, nextTick} from "vue";
+import type{ Ref } from "vue";
 
 export default function useFocus(
   initialState: () => boolean,
-  errorState?: () => string,
+  errorState?: () => string | Ref<string> | undefined | null,
 ) {
   const elementRef = ref<HTMLTextAreaElement | null>(null);
 

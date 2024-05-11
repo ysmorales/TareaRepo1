@@ -1,10 +1,11 @@
 <script lang="ts" setup>
-import { type PropType, ref } from "vue";
+import {  ref } from "vue";
+import type{PropType, Ref } from "vue";
 import generateUniqueId from "../../../utils/generateUniqueId";
 import useFocus from "../../../composables/useFocus";
 import { filterClass } from "../../../utils/filterClass";
 import { predefinedClasses } from "../../../common/propsStyle";
-import {computed,onMounted,toRefs,provide,watch} from "vue";
+import { computed, onMounted, toRefs, provide, watch } from "vue";
 
 const props = defineProps({
   modelValue: {
@@ -23,7 +24,7 @@ const props = defineProps({
     default: "Default label",
   },
   error: {
-    type: String,
+    type: String as () => string | null | undefined | Ref<string>,
     default: null,
   },
   helpMessage: {
@@ -63,6 +64,7 @@ const emit = defineEmits(["update:modelValue"]);
 watch(selectedRadio, (newValue) => {
   emit("update:modelValue", newValue);
 });
+
 const hasError = computed(() => !!props.error);
 </script>
 

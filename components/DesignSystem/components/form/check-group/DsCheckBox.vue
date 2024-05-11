@@ -1,11 +1,8 @@
 <!-- @vue-docgen-ignore -->
 <script lang="ts" setup>
-import {computed, inject, type Ref,ref } from "vue";
+import { computed, inject, type Ref, ref } from "vue";
 import { filterClass } from "../../../utils/filterClass";
-import {
-  elementSizes,
-  predefinedClasses,
-} from "../../../common/propsStyle";
+import { elementSizes, predefinedClasses } from "../../../common/propsStyle";
 import type { ISize } from "../../../interfaces/elements";
 import useFocus from "../../../composables/useFocus";
 
@@ -61,7 +58,7 @@ const defaultClasses = "hover:border-dark-500 border p-2 mb-2 w-auto mr-1";
 const hasError = computed(() => !!props.error);
 
 const elementSizeComputed = computed(() => {
-  const size = props.size || 'normal'; // Si props.size es undefined, usamos 'normal'
+  const size = props.size || "normal"; // Si props.size es undefined, usamos 'normal'
   return elementSizes[size];
 });
 

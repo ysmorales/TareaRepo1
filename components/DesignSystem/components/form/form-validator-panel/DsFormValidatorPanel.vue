@@ -1,12 +1,12 @@
 <script lang="ts" setup>
-import type { errorPanelInterface } from "../../../components/form/formValidatorPanel/interface";
+import type { errorPanelInterface } from ".//interface";
 import { ref } from "vue";
 import generateUniqueId from "../../../utils/generateUniqueId";
 
 import { filterClass } from "../../../utils/filterClass";
 import { predefinedClasses } from "../../../common/propsStyle";
 import { DsTypography } from "../../../components/basic/typography";
-import {computed,onMounted} from "vue";
+import { computed, onMounted } from "vue";
 // update repo
 const props = defineProps({
   errors: {

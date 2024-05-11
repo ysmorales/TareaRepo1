@@ -1,15 +1,10 @@
 <script lang="ts" setup>
-import {elements, otherStyle} from "./data";
-import type {
-  DsElementNameType,
-  IDsTypographyElement,
-} from "../../basic/typography/interfaces";
-import {filterClass} from "../../../utils/filterClass";
-import {predefinedClasses} from "../../../common/propsStyle";
+import { elements } from "./data";
 import generateUniqueId from "../../../utils/generateUniqueId";
-import type {ILinkVariant} from "../../navigation/link/interface";
-import {variantTypographyClasses} from "../../navigation/link/library";
-import {computed, ref, onMounted} from "vue";
+import type { ILinkVariant } from "../../navigation/link/interface";
+import { variantTypographyClasses } from "../../navigation/link/library";
+import { computed, ref, onMounted } from "vue";
+import type{ DsElementNameType, IDsTypographyElement } from "./interfaces";
 
 const props = defineProps({
   text: {
@@ -53,15 +48,15 @@ const element = computed((): IDsTypographyElement => {
 
 const filterClassComp = computed(() => {
   // return filterClass(predefinedClasses, props.class, otherStyle);
-  return props.class
+  return props.class;
 });
 </script>
 
 <template>
   <component
-      :is="element.component"
-      :id="id ?? uniqueID"
-      :class="[filterClassComp, variantTypographyClasses[color]]"
+    :is="element.component"
+    :id="id ?? uniqueID"
+    :class="[filterClassComp, variantTypographyClasses[color]]"
   >
     <slot>
       {{ text }}

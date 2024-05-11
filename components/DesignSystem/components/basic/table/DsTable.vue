@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import {computed, onMounted, onUpdated, ref, watch, watchEffect} from "vue";
 import DsPagination from "../pagination/DsPagination.vue";
 import DsEmptyComponent from "../empty-component/DsEmptyComponent.vue";
 import TableFilter from "./components/TableFilter.vue";
@@ -7,14 +6,22 @@ import TableMultiAction from "./components/TableMultiAction.vue";
 import TableLoading from "./components/TableLoading.vue";
 import TableActions from "./components/TableActions.vue";
 import TableThSorting from "./components/TableThSorting.vue";
-import type {IPagination, ITableColumnData} from "./interface";
-import {exampleColumn} from "~/components/DesignSystem/components/basic/table/exampleColumn";
-import {DsAvatar, DsLink} from "~/components/DesignSystem";
+import type { IPagination, ITableColumnData } from "./interface";
+
+import DsAvatar from "../avatar/DsAvatar.vue";
+import DsLink from "../../navigation/link/DsLink.vue";
+
+import { onMounted, onUpdated, ref, watch, watchEffect, computed } from "vue";
+import {exampleColumn} from "./exampleColumn";
 
 const props = defineProps({
   columns: {
     type: Array as () => ITableColumnData[],
     default: () => [...exampleColumn],
+  },
+  border: {
+    type: Boolean,
+    default: false,
   },
   loading: {
     type: Boolean,
@@ -54,9 +61,17 @@ const props = defineProps({
   pagination: {
     type: Object as () => IPagination,
   },
+  paginationBorder: {
+    type: Boolean,
+    default: false,
+  },
   checkboxSelection: {
     type: Boolean,
     default: false,
+  },
+  deleteAllButtonLabel: {
+    type: Object,
+    default: () => ({ one: "Eliminar", many: "Eliminar todas" }),
   },
 });
 const totalItems = ref(props.pagination?.totalItems);
@@ -78,14 +93,14 @@ watchEffect(() => {
   rowsSelected.value = new Array(props.data.length).fill(false);
 });
 watch(
-    rowsSelected,
-    (newRowsSelected) => {
-      const allSelected = newRowsSelected.every(Boolean);
-      const someSelected = newRowsSelected.some(Boolean);
-      allRowsSelected.value = someSelected ? (allSelected ? true : null) : false;
-      indeterminate.value = someSelected && !allSelected;
-    },
-    {deep: true},
+  rowsSelected,
+  (newRowsSelected) => {
+    const allSelected = newRowsSelected.every(Boolean);
+    const someSelected = newRowsSelected.some(Boolean);
+    allRowsSelected.value = someSelected ? (allSelected ? true : null) : false;
+    indeterminate.value = someSelected && !allSelected;
+  },
+  { deep: true },
 );
 const checkboxRef = ref<HTMLInputElement | null>(null);
 
@@ -109,19 +124,20 @@ const emit = defineEmits([
   "delete",
   "multiDelete",
   "filter",
-  "parent-clicked",
   "sort",
   "addRow",
+  "checkboxChange",
+  "parentAllCheckBoxChange",
 ]);
 
 watch(
-    () => props.pagination,
-    (newVal) => {
-      totalItems.value = newVal?.totalItems;
-      currentPage.value = newVal?.currentPage;
-      itemsPerPage.value = newVal?.itemsPerPage;
-      itemsPerPageOptions.value = newVal?.itemsPerPageOptions;
-    },
+  () => props.pagination,
+  (newVal) => {
+    totalItems.value = newVal?.totalItems;
+    currentPage.value = newVal?.currentPage;
+    itemsPerPage.value = newVal?.itemsPerPage;
+    itemsPerPageOptions.value = newVal?.itemsPerPageOptions;
+  },
 );
 
 function itemsPerPageChange(value: number) {
@@ -155,8 +171,8 @@ function handleFilter(value: number) {
 
 function handleMultiDelete() {
   emit(
-      "multiDelete",
-      props.data.filter((_: any, index: number) => rowsSelected.value[index]),
+    "multiDelete",
+    props.data.filter((_: any, index: number) => rowsSelected.value[index]),
   );
 }
 
@@ -169,47 +185,69 @@ function handleAddRow() {
 }
 
 const hasFilter = computed(() => props.columns.some((column) => column.filter));
+
+function handleCheckChange() {
+  emit(
+    "checkboxChange",
+    props.data.filter((_: any, index: number) => rowsSelected.value[index]),
+  );
+}
+
+function handleHeadCheckChange() {
+  emit(
+    "parentAllCheckBoxChange",
+    props.data.filter((_: any, index: number) => rowsSelected.value[index]),
+  );
+}
 </script>
 <template>
-  <TableFilter v-if="hasFilter" :columns="columns" @filter="handleFilter"/>
+  <TableFilter v-if="hasFilter" :columns="columns" @filter="handleFilter" />
   <TableMultiAction
-      v-if="checkboxSelection"
-      :add-button-label="addButtonLabel"
-      :rows-selected="rowsSelected"
-      @multiDelete="handleMultiDelete"
-      @add-row="handleAddRow"
+    v-if="checkboxSelection"
+    :add-button-label="addButtonLabel"
+    :delete-all-button-label="deleteAllButtonLabel"
+    :rows-selected="rowsSelected"
+    @multiDelete="handleMultiDelete"
+    @add-row="handleAddRow"
   />
-  <table class="w-full divide-y divide-gray-300 border border-gray-300">
+  <table
+    :class="[
+      'w-full divide-y divide-gray-300',
+      { 'border border-gray-300': border },
+    ]"
+  >
     <thead class="bg-gray-50">
-    <tr :class="['h-[60px]', { 'bg-gray-500': striped }]">
-      <th v-if="checkboxSelection" class="px-2 py-2">
-        <input
+      <tr :class="['h-[60px]', { 'bg-gray-500': striped }]">
+        <th v-if="checkboxSelection" class="px-2 py-2 w-[2%]">
+          <input
             ref="checkboxRef"
             v-model="allRowsSelected"
             type="checkbox"
+            @change="handleHeadCheckChange"
             @click="handleClickCheckbox"
-        />
-      </th>
-      <TableThSorting
+          />
+        </th>
+        <TableThSorting
           v-for="(column, index) in columns"
+          :column-with="column.size"
           :index="index"
           :sort="sort"
           :striped="striped"
           :title="column.title"
           @click="handleSortClick"
-      />
-    </tr>
+        />
+      </tr>
     </thead>
     <tbody class="divide-y divide-gray-300 relative">
-    <tr v-if="!(data.length>0)">
-      <td
+      <tr v-if="!(data.length > 0)">
+        <td
           :colspan="columns.length"
-          class=" px-2 py-2 text-sm font-medium text-gray-900 w-full"
-      >
-        <DsEmptyComponent :loading="loading" @reload="handleReload"/>
-      </td>
-    </tr>
-    <tr
+          class="px-2 py-2 text-sm font-medium text-gray-900 w-full"
+        >
+          <DsEmptyComponent :loading="loading" @reload="handleReload" />
+        </td>
+      </tr>
+      <tr
         v-for="(row, i) in data"
         :key="'row' + i"
         :class="[
@@ -219,46 +257,58 @@ const hasFilter = computed(() => props.columns.some((column) => column.filter));
             'bg-white': i % 2 === 0 && striped,
           },
         ]"
-    >
-      <td v-if="checkboxSelection" class="px-2 py-2">
-        <input v-model="rowsSelected[i]" type="checkbox"/>
-      </td>
-      <td
+      >
+        <td v-if="checkboxSelection" class="px-2 py-2">
+          <input
+            v-model="rowsSelected[i]"
+            type="checkbox"
+            @change="handleCheckChange"
+          />
+        </td>
+        <td
           v-for="(column, j) in columns"
           :key="'cell' + i + '-' + j"
-          class="px-2 py-2 text-sm font-medium text-gray-900"
-      >
-        <div v-if="!column.actions">
-          {{ !column.type ? row[column.key!] : '' }}
-          <DsLink v-if="column.type==='link'" :href="row[column.key!].url">{{ row[column.key!].name }}</DsLink>
-          <div v-if="column.type === 'avatar'" class="flex items-center">
-            <DsAvatar :src="row[column.key!].url" size="small"/>
-            {{ row[column.key!].name }}
+          :class="['px-1', 'py-1', 'text-sm', 'font-medium', 'text-gray-900']"
+        >
+          <div v-if="!column.actions">
+            {{ !column.type ? row[column.key!] : "" }}
+            <DsLink v-if="column.type === 'link'" :href="row[column.key!].url"
+              >{{ row[column.key!].name }}
+            </DsLink>
+            <div v-if="column.type === 'avatar'" class="flex items-center">
+              <DsAvatar :src="row[column.key!].url" size="small" />
+              {{ row[column.key!].name }}
+            </div>
           </div>
-        </div>
-        <div v-else class="flex justify-end">
-          <TableActions
+          <div v-else class="flex justify-end">
+            <TableActions
               :column="column"
               :row="row"
               @delete="handleDelete(row)"
               @edit="handleEdit(row)"
               @view="handleView(row)"
-          />
-          <slot :row="row" name="actions"></slot>
-        </div>
-      </td>
-    </tr>
-    <TableLoading v-if="loading"/>
+            />
+            <slot :row="row" name="actions"></slot>
+          </div>
+        </td>
+      </tr>
+      <TableLoading v-if="loading" />
     </tbody>
   </table>
-  <div v-if="pagination" class="flex p-2 justify-end border border-gray-300">
+  <div
+    v-if="pagination"
+    :class="[
+      'flex p-2 justify-end ',
+      { 'border border-gray-300': paginationBorder },
+    ]"
+  >
     <DsPagination
-        :current-page="currentPage"
-        :items-per-page="itemsPerPage"
-        :items-per-page-options="itemsPerPageOptions"
-        :total-items="totalItems"
-        @change="handlePage"
-        @itemsPerPageChange="itemsPerPageChange"
+      :current-page="currentPage"
+      :items-per-page="itemsPerPage"
+      :items-per-page-options="itemsPerPageOptions"
+      :total-items="totalItems"
+      @change="handlePage"
+      @itemsPerPageChange="itemsPerPageChange"
     />
   </div>
 </template>

@@ -1,10 +1,15 @@
 <script lang="ts" setup>
-import DsTypography from "../../../components/basic/typography/DsTypography.vue";
-import { dataTable } from "../../../components/form-example/benefit-payment-information/components/mock-data-sarver/data";
-import DsButton from "../../../components/basic/button/DsButton.vue";
-import useFocus from "../../../composables/useFocus";
+// import DsTypography from "../../../components/basic/typography/DsTypography.vue";
+// import { dataTable } from "../../../components/form-example/benefit-payment-information/components/mock-data-sarver/data";
+// import DsButton from "../../../components/basic/button/DsButton.vue";
+// import useFocus from "../../../composables/useFocus";
+import { computed, ref } from "vue";
+// import useFocus from "../../../../composables/useFocus.ts";
+import { dataTable } from "./mock-data-sarver/data";
+import DsButton from "../../../basic/button/DsButton.vue";
+import { DsTypography } from "../../../basic/typography";
 
-const props = defineProps({
+defineProps({
   focus: {
     type: Boolean,
     default: true,
@@ -19,7 +24,7 @@ function handleClick() {
   tableExpanded.value = true;
 }
 
-const { elementRef: inputRef } = useFocus(() => props.focus);
+// const { elementRef: inputRef } = useFocus(() => props.focus);
 </script>
 
 <template>

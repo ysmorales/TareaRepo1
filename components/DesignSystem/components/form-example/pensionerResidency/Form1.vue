@@ -5,8 +5,27 @@ import DsSelect from "../../../components/form/select/DsSelect.vue";
 import DsFile from "../../../components/form/file/DsFile.vue";
 import DsDatePicker from "../../../components/form/datePicker/DsDatePicker.vue";
 import DsInput from "../../../components/form/input/DsInput.vue";
-import type { IForm1State } from "../../../components/form-example/pensionerResidency/interface";
+// import type { IForm1State } from "../../../components/form-example/pensionerResidency/interface";
 import { translateError } from "../../../utils/translateErrorMessage";
+// import {
+//   comunaOption,
+//   healthStatusOption,
+//   reasonOption,
+//   regionOption,
+//   residenceOption,
+//   userProfile,
+// } from "../../../components/form-example/pensionerResidency/library";
+// import type { IVualidateApplicantState } from "../../../components/form-example/pensionerResidency/vualidate";
+import DsModal from "../../../components/container/modal/DsModal.vue";
+import FormModal from "../../../components/form-example/pensionerResidency/form1Components/FormModal.vue";
+import UserCardProfile from "../../../components/form-example/pensionerResidency/form1Components/UserCardProfile.vue";
+import UserInfo from "../../../components/form-example/pensionerResidency/form1Components/UserInfo.vue";
+import FormValidatorPanel from "../../form/form-validator-panel/DsFormValidatorPanel.vue";
+import type { errorPanelInterface } from "../../form/form-validator-panel/interface";
+import { computed,  ref } from "vue";
+import type{ ComputedRef } from "vue";
+import DsRadioGroup from "../../../components/form/radio-group/DsRadioGroup.vue";
+import type{ IForm1State } from "./interface";
 import {
   comunaOption,
   healthStatusOption,
@@ -14,16 +33,8 @@ import {
   regionOption,
   residenceOption,
   userProfile,
-} from "../../../components/form-example/pensionerResidency/library";
-import type { IVualidateApplicantState } from "../../../components/form-example/pensionerResidency/vualidate";
-import DsModal from "../../../components/container/modal/DsModal.vue";
-import FormModal from "../../../components/form-example/pensionerResidency/form1Components/FormModal.vue";
-import UserCardProfile from "../../../components/form-example/pensionerResidency/form1Components/UserCardProfile.vue";
-import UserInfo from "../../../components/form-example/pensionerResidency/form1Components/UserInfo.vue";
-import FormValidatorPanel from "../../../components/form/formValidatorPanel/DsFormValidatorPanel.vue";
-import type { errorPanelInterface } from "../../../components/form/formValidatorPanel/interface";
-import type { ComputedRef } from "vue";
-import DsRadioGroup from "../../../components/form/radio-group/DsRadioGroup.vue";
+} from "./library";
+import type{ IVualidateApplicantState } from "./vualidate";
 
 const props = defineProps({
   modelValue: {
@@ -35,7 +46,7 @@ const props = defineProps({
   },
 });
 
-const date = ref(new Date());
+// const date = ref(new Date());
 const showModal = ref(false);
 
 function handleClick() {

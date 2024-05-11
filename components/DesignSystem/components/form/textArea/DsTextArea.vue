@@ -9,7 +9,8 @@ import generateUniqueId from "../../../utils/generateUniqueId";
 import useFocus from "../../../composables/useFocus";
 import { translateError } from "../../../utils/translateErrorMessage";
 import buildAriaLabels from "../../../utils/buildAriaLabels";
-import {computed} from "vue";
+import { computed } from "vue";
+import type{  PropType } from "vue";
 
 const props = defineProps({
   modelValue: {
@@ -80,7 +81,7 @@ const labelId = computed(() => `${inputId.value}-label`);
 const errorMessageId = computed(() => `${inputId.value}-error-message`);
 const helpMessageId = computed(() => `${inputId.value}-help-message`);
 const elementSizeComputed = computed(() => {
-  const size = props.size || 'normal'; // Si props.size es undefined, usamos 'normal'
+  const size = props.size || "normal"; // Si props.size es undefined, usamos 'normal'
   return sizeTextAreaClasses[size];
 });
 const emit = defineEmits(["update:modelValue"]);
@@ -129,9 +130,8 @@ const ariaLabels = computed(() =>
       'border',
       'block',
       { rounded: radius },
-      elementSizeComputed
+      elementSizeComputed,
     ]"
-
     :disabled="disabled"
     :placeholder="placeholder ?? 'Textarea'"
     :readonly="readOnly"

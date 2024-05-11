@@ -1,7 +1,9 @@
 <script lang="ts" setup>
-import type {ITableColumnData} from "~/components/DesignSystem/components/basic/table/interface";
-import {exampleColumn} from "~/components/DesignSystem/components/basic/table/exampleColumn";
-import {DsButton} from "~/components/DesignSystem";
+
+
+import type {ITableColumnData} from "../interface";
+import {exampleColumn} from "../exampleColumn";
+import DsButton from "../../button/DsButton.vue";
 
 defineProps({
   column: {

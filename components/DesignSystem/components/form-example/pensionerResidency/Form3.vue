@@ -1,16 +1,23 @@
 <script lang="ts" setup>
 import DsAccordion from "../../container/accordion/DsAccordion.vue";
-import DataPanel from "components/DesignSystem/components/container/data-panel/DsDataPanel.vue";
-import sampleData from "./form3-data";
-import type { ITotalData } from "../../../components/form-example/pensionerResidency/interface";
+// import DataPanel from "components/DesignSystem/components/container/data-panel/DsDataPanel.vue";
+// import sampleData from "./form3-data";
+// import type { ITotalData } from "../../../components/form-example/pensionerResidency/interface";
+// import {
+//   proxyConfigData,
+//   solicitorConfigData,
+//   warrantConfigData,
+// } from "../../../components/form-example/pensionerResidency/form3Component/library";
+import DsTypography from "../../../components/basic/typography/DsTypography.vue";
+import { reactive } from "vue";
+import type{ ITotalData } from "./interface";
 import {
   proxyConfigData,
   solicitorConfigData,
   warrantConfigData,
-} from "../../../components/form-example/pensionerResidency/form3Component/library";
-import DsTypography from "../../../components/basic/typography/DsTypography.vue";
+} from "./form3Component/library";
 
-const props = defineProps({
+defineProps({
   modelValue: {
     type: Object as () => ITotalData,
   },
@@ -18,17 +25,17 @@ const props = defineProps({
 
 const emit = defineEmits(["update:modelValue"]);
 
-const model = computed({
-  get() {
-    return props.modelValue;
-  },
+// const model = computed({
+//   get() {
+//     return props.modelValue;
+//   },
+//
+//   set(value) {
+//     emit("update:modelValue", value);
+//   },
+// });
 
-  set(value) {
-    emit("update:modelValue", value);
-  },
-});
-
-const data = reactive(sampleData);
+// const data = reactive(sampleData);
 
 const solicitorConfig = reactive(solicitorConfigData);
 
