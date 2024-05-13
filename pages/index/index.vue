@@ -2,6 +2,7 @@
 import DsTable from "~/components/DesignSystem/components/basic/table/DsTable.vue";
 import {dataTable} from "./data";
 import {prototipeColumns} from "~/pages/index/prototipeColumns";
+
 </script>
 
 <template>
@@ -16,7 +17,8 @@ import {prototipeColumns} from "~/pages/index/prototipeColumns";
           itemsPerPage: 5,
           itemsPerPageOptions: [5, 10, 50],
           }"
-            border checkboxSelection pagination-border sort striped/>
+            border
+            checkboxSelection pagination-border sort striped/>
     </div>
 </template>
 

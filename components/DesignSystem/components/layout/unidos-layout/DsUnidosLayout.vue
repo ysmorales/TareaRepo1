@@ -9,6 +9,7 @@ import {
 } from "../../../../DesignSystem";
 import {loremItsum} from "../../../utils/loremItsum";
 import type {ISimpleSideMenu} from "../../../../DesignSystem/interfaces/elements";
+import DsAccesibility from "~/components/DesignSystem/components/basic/accesibility/DsAccessibility.vue";
 
 const emit = defineEmits(["logout"]);
 
@@ -56,47 +57,7 @@ async function handleCloseSession() {
                     </DsLink>
                 </div>
                 <div class="md:w-4/5">
-                    <div class="flex-wrap justify-end h-[31px] hidden lg:flex">
-                        <DsButton
-                            color="simple"
-                            icon-color="dark"
-                            icon-size="small"
-                            icon-style="mr-0"
-                            size="small"
-                            start-image="/images/accessibility/icon-disminuir.svg"
-                        >Disminuir textos
-                        </DsButton>
-                        <DsButton
-                            class="text-black"
-                            color="simple"
-                            icon-color="dark"
-                            icon-size="small"
-                            icon-style="mr-0"
-                            size="small"
-                            start-image="/images/accessibility/icon-aumentar.svg"
-                        >Aumentar textos
-                        </DsButton>
-                        <DsButton
-                            class="text-black"
-                            color="simple"
-                            icon-color="dark"
-                            icon-size="small"
-                            icon-style="mr-0"
-                            size="small"
-                            start-image="/images/accessibility/icon-gris.svg"
-                        >Ver sitio en gris
-                        </DsButton>
-                        <DsButton
-                            class="text-black"
-                            color="simple"
-                            icon-color="dark"
-                            icon-size="small"
-                            icon-style="mr-0"
-                            size="small"
-                            start-image="/images/accessibility/icon-restablecer.svg"
-                        >Restablecer
-                        </DsButton>
-                    </div>
+                    <DsAccesibility/>
                     <div class="flex justify-between items-center">
                         <div class="mx-auto max-w-[650px] hidden md:flex">
                             <div class="flex w-full flex-wrap justify-between">
