@@ -8,6 +8,7 @@ import {
     DsSimpleSideMenu,
 } from "../../../../DesignSystem";
 import {loremItsum} from "../../../utils/loremItsum";
+import type {ISimpleSideMenu} from "../../../../DesignSystem/interfaces/elements";
 
 const emit = defineEmits(["logout"]);
 
@@ -23,6 +24,14 @@ defineProps({
     styleLogoTailwind: {
         type: String,
         default: "",
+    },
+    menuData: {
+        type: Array as () => ISimpleSideMenu[],
+        default: () => [
+            {id: 1, text: "Ingresar solicitud"},
+            {id: 2, text: "Consultar"},
+            {id: 3, text: "Bandeja de entrada"},
+        ],
     },
 
 });
@@ -144,11 +153,7 @@ async function handleCloseSession() {
         <div class="flex">
             <slot name="menu">
                 <DsSimpleSideMenu
-                    :data="[
-          { id: 1, text: 'Ingresar solicitud' },
-          { id: 2, text: 'Consultar' },
-          { id: 3, text: 'Bandeja de entrada' },
-        ]"
+                    :data="menuData"
                 />
             </slot>
             <slot>

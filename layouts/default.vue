@@ -21,6 +21,9 @@ import {DsSelect} from "~/components/DesignSystem";
     </div>
     <div class="mt-56">
         <DsUnidosLayout logo="images/builder/creador-logotipo.jpg">
+            <template v-slot:menu>
+                <VerticalMenu/>
+            </template>
             <template v-slot:final-navBar>
                 <DsSelect
                     :option='[{value:"1", text:"Intranet"}, {value:"2", text:"Conectados"}, {value:"3", text:"Aplicaciones"},{value:"4", text:"Personas"},{value:"5", text:"SACH"}]'
