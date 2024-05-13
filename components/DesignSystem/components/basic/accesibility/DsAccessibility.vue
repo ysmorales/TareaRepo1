@@ -3,14 +3,18 @@
 import {DsButton} from "~/components/DesignSystem";
 
 const zoomLevel = ref(1);
+const grayscale = ref(false);
 
-function adjustFontSize(adjust: "increase" | "decrease" | "default") {
+function adjustFontSize(adjust: "increase" | "decrease" | "default" | "gray") {
     switch (adjust) {
         case "increase":
             zoomLevel.value += 0.1;
             break;
         case "decrease":
             zoomLevel.value -= 0.1;
+            break;
+        case "gray":
+            grayscale.value = !grayscale.value;
             break;
         case "default":
             zoomLevel.value = 1;
@@ -21,6 +25,7 @@ function adjustFontSize(adjust: "increase" | "decrease" | "default") {
 onMounted(() => {
     watchEffect(() => {
         (document.body.style as any).zoom = zoomLevel.value;
+        document.body.style.filter = grayscale.value ? 'grayscale(100%)' : '';
     });
 });
 
@@ -57,6 +62,7 @@ onMounted(() => {
             icon-style="mr-0"
             size="small"
             start-image="/images/accessibility/icon-gris.svg"
+            @click="adjustFontSize('gray')"
         >Ver sitio en gris
         </DsButton>
         <DsButton
