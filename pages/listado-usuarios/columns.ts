@@ -7,7 +7,7 @@ export const columns: ITableColumnData[] = [{
 }, {
     title: 'Correo electrónico',
     key: 'mail',
-    filter: true
+    filter: {filterType: 'text'}
 }, {
     title: 'Rol',
     key: 'rol'

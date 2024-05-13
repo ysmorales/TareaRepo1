@@ -4,7 +4,7 @@ export const columns: ITableColumnData[] = [{title: 'Id', key: 'id'}, {
     title: 'Nombre',
     key: 'link',
     type: 'link',
-    filter: true
+    filter: {filterType: 'text'}
 }, {
     title: 'Fecha',
     key: 'date'
