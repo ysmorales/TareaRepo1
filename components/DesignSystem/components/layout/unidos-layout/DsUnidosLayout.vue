@@ -4,7 +4,6 @@ import {
     DsIcon,
     DsLink,
     DsImage,
-    DsUserMenu,
     DsButtonAvatar,
     DsSimpleSideMenu,
 } from "../../../../DesignSystem";
@@ -143,14 +142,15 @@ async function handleCloseSession() {
             </div>
         </div>
         <div class="flex">
-            <DsSimpleSideMenu
-                :data="[
+            <slot name="menu">
+                <DsSimpleSideMenu
+                    :data="[
           { id: 1, text: 'Ingresar solicitud' },
           { id: 2, text: 'Consultar' },
           { id: 3, text: 'Bandeja de entrada' },
         ]"
-            />
-
+                />
+            </slot>
             <slot>
                 <div class="px-10">
                     <h1>Here slot content</h1>
