@@ -1,28 +1,16 @@
 <script lang="ts" setup>
-
-import VerticalMenu from "~/components/builder-components/verticalMenu/VerticalMenu.vue";
-import NavBar from "~/components/builder-components/NavBar/NavBar.vue";
 import DsUnidosLayout from "~/components/DesignSystem/components/layout/unidos-layout/DsUnidosLayout.vue";
 import {DsSelect} from "~/components/DesignSystem";
+import {menuItemsVerticalMenu} from "~/components/builder-components/verticalMenu/data";
+import DsSideMenu from "~/components/DesignSystem/components/navigation/sideMenu/DsSideMenu.vue";
 </script>
-
 <template>
-    <div class="flex">
-        <VerticalMenu/>
-        <div class="flex flex-col w-full h-[67px]">
-            <div>
-                <NavBar/>
-            </div>
-            <div class="container">
-                <slot/>
-            </div>
-
-        </div>
-    </div>
-    <div class="mt-56">
+    <div>
         <DsUnidosLayout logo="images/builder/creador-logotipo.jpg">
             <template v-slot:menu>
-                <VerticalMenu/>
+                <div class="w-[350px] border-r border-b border-gray-300 h-full p-3 pl-0">
+                    <DsSideMenu :data-side-menu="menuItemsVerticalMenu"/>
+                </div>
             </template>
             <template v-slot:final-navBar>
                 <DsSelect
