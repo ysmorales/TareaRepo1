@@ -8,7 +8,7 @@ const store = useCounterStore()
 const {changeCurrentDragItem, currentDragItem} = toRefs(store)
 
 function dragStart(type: string) {
-    changeCurrentDragItem.value(components.find(component => component.name === type) ?? components[0])
+    changeCurrentDragItem.value(components.find(component => component.name === type) || {name: 'DsInput'})
 }
 </script>
 
