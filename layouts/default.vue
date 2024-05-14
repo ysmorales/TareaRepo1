@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 import DsUnidosLayout from "~/components/DesignSystem/components/layout/unidos-layout/DsUnidosLayout.vue";
 import {DsSelect} from "~/components/DesignSystem";
-import {menuItemsVerticalMenu} from "~/components/builder-components/verticalMenu/data";
+import {menuItemsVerticalMenu} from "~/components/builder-components/vertical-menu/data";
 import DsSideMenu from "~/components/DesignSystem/components/navigation/sideMenu/DsSideMenu.vue";
 import {useCounterStore} from "~/stores/builderStore";
-import BuilderMenu from "~/components/builder-components/BuilderMenu.vue";
+import BuilderMenu from "~/components/builder-components/builder-menu/BuilderMenu.vue";
 
 const store = useCounterStore()
 const {sideMenuType} = toRefs(store)
