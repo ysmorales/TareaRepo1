@@ -1,18 +1,18 @@
 <script lang="ts" setup>
-import {DsIcon} from "~/components/DesignSystem";
+import {DsIcon, DsInput, DsTextArea, DsButton} from "~/components/DesignSystem";
 import {useCounterStore} from "~/stores/builderStore";
 
 const store = useCounterStore()
 const {builderItems, addItemToForm} = toRefs(store)
 
-
-// const dragStart = (event: DragEvent, item: string) => {
-//     draggedItem = item
-// }
+const components: { [key: string]: any } = {
+    DsInput,
+    DsTextArea,
+    DsButton
+}
 
 const drop = () => {
     addItemToForm.value()
-
 }
 </script>
 
@@ -27,13 +27,12 @@ const drop = () => {
             <p class="mb-2">Drag elements here</p>
             <p>Grab an element from the left and drop it here</p>
         </div>
-        <div
+        <component
+            :is="components[item.name]"
             v-for="(item, index) in builderItems"
             :key="index"
             class="mt-4"
             draggable="true"
-        >
-            {{ item.name }}
-        </div>
+        />
     </div>
 </template>
