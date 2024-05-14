@@ -1,6 +1,11 @@
 <script lang="ts" setup>
 
 import {DsIcon} from "~/components/DesignSystem";
+
+function dragStart(type: string) {
+    alert('huyyy me atraparon soy un ' + type)
+
+}
 </script>
 
 <template>
@@ -10,7 +15,8 @@ import {DsIcon} from "~/components/DesignSystem";
 
             <div
                 class="flex transition duration-500 ease-in-out cursor-pointer transform hover:-translate-y-1 hover:scale-105 shadow-lg rounded-lg bg-white hover:shadow-2xl"
-                draggable="true" role="option" tabindex="-1">
+                draggable="true"
+                role="option" tabindex="-1" @dragstart="dragStart( 'DsInput')">
                 <div class=" p-2 ">
                     <DsIcon name="keyboard" size="medium"/>
                 </div>
@@ -22,7 +28,8 @@ import {DsIcon} from "~/components/DesignSystem";
 
             <div
                 class="flex transition duration-500 ease-in-out cursor-pointer transform hover:-translate-y-1 hover:scale-105 shadow-lg rounded-lg bg-white hover:shadow-2xl"
-                draggable="true" role="option" tabindex="-1">
+                draggable="true"
+                role="option" tabindex="-1" @dragstart="dragStart( 'DsTextArea')">
                 <div class=" p-2 ">
                     <DsIcon name="align-left" size="medium"/>
                 </div>
@@ -33,7 +40,8 @@ import {DsIcon} from "~/components/DesignSystem";
             </div>
             <div
                 class="flex transition duration-500 ease-in-out cursor-pointer transform hover:-translate-y-1 hover:scale-105 shadow-lg rounded-lg bg-white hover:shadow-2xl"
-                draggable="true" role="option" tabindex="-1">
+                draggable="true"
+                role="option" tabindex="-1" @dragstart="dragStart( 'DsButton')">
                 <div class=" p-2 ">
                     <DsIcon name="hand-pointer" size="medium"/>
                 </div>
