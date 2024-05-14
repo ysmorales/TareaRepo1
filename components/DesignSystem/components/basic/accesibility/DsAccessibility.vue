@@ -18,6 +18,7 @@ function adjustFontSize(adjust: "increase" | "decrease" | "default" | "gray") {
             break;
         case "default":
             zoomLevel.value = 1;
+            grayscale.value = false;
             break;
     }
 }
