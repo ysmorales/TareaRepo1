@@ -114,7 +114,7 @@ const ariaLabels = computed(() =>
 </script>
 
 <template>
-    <div class="w-full">
+    <div class="w-full filterClassComp">
         <label v-if="label" :id="labelId" :for="inputId">
             {{ label }}
             <span v-if="required" aria-hidden="true" class="required-marker">*</span>
@@ -128,7 +128,6 @@ const ariaLabels = computed(() =>
             :aria-required="required"
             :class="[
       { error: hasError },
-      filterClassComp,
       'border',
       'block',
       { rounded: radius },
