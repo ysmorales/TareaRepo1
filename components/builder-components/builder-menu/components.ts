@@ -1,5 +1,5 @@
 export const components = [{
-    name: 'DsButton'
+    name: 'DsInput'
 },
     {
         name: 'DsTextArea'

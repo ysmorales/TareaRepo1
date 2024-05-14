@@ -5,7 +5,7 @@ import {useCounterStore} from "~/stores/builderStore";
 import {components} from "~/components/builder-components/builder-menu/components";
 
 const store = useCounterStore()
-const {changeCurrentDragItem} = toRefs(store)
+const {changeCurrentDragItem, currentDragItem} = toRefs(store)
 
 function dragStart(type: string) {
     changeCurrentDragItem.value(components.find(component => component.name === type) ?? components[0])
@@ -13,6 +13,7 @@ function dragStart(type: string) {
 </script>
 
 <template>
+    {{ currentDragItem }}
     <div class="flex flex-col ">
         <div aria-describedby="vfb-elements-description" aria-label="Elements" class="flex flex-col space-y-1"
              tabindex="0">

@@ -15,5 +15,5 @@ export const useCounterStore = defineStore('counter', () => {
 
     }
 
-    return {builderItems, sideMenuType, changeSideMenuType, changeCurrentDragItem}
+    return {builderItems, sideMenuType, changeSideMenuType, changeCurrentDragItem, currentDragItem}
 })
