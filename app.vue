@@ -1,28 +1,23 @@
+<script lang="ts" setup>
+import {useCounterStore} from "~/stores/builderStore";
+import {DsButton} from "~/components/DesignSystem";
+
+const store = useCounterStore()
+const {count, increment, changeName, name} = toRefs(store)
+
+function handleIncrement() {
+    increment.value()
+}
+</script>
 <template>
 
     <NuxtLayout>
+        <h1>{{ name }}</h1>
+        <h2>{{ count }}</h2>
+        <DsButton @click="changeName('pedro')">Change</DsButton>
+        <DsButton @click="handleIncrement">Increment</DsButton>
         <NuxtPage/>
     </NuxtLayout>
 
 
 </template>
-<script lang="ts" setup>
-import axios from 'axios';
-import {DsTable} from "~/components/DesignSystem";
-
-
-function postData() {
-    axios.post('http://localhost:8000/api/register', {
-        "name": "Jorge Toño",
-        "email": "toñito@gmail.com",
-        "password": "password",
-        "password_confirmation": "password"
-    })
-}
-
-
-function handleButton() {
-    postData();
-}
-
-</script>
