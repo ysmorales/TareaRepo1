@@ -3,13 +3,19 @@ import DsUnidosLayout from "~/components/DesignSystem/components/layout/unidos-l
 import {DsSelect} from "~/components/DesignSystem";
 import {menuItemsVerticalMenu} from "~/components/builder-components/verticalMenu/data";
 import DsSideMenu from "~/components/DesignSystem/components/navigation/sideMenu/DsSideMenu.vue";
+import {useCounterStore} from "~/stores/builderStore";
+import BuilderMenu from "~/components/builder-components/BuilderMenu.vue";
+
+const store = useCounterStore()
+const {sideMenuType} = toRefs(store)
 </script>
 <template>
     <div>
         <DsUnidosLayout logo="images/builder/creador-logotipo.jpg">
             <template v-slot:menu>
                 <div class="w-[350px] border-r border-b border-gray-300 h-full p-3 pl-0">
-                    <DsSideMenu :data-side-menu="menuItemsVerticalMenu"/>
+                    <DsSideMenu v-if="sideMenuType=='default'" :data-side-menu="menuItemsVerticalMenu"/>
+                    <BuilderMenu v-else-if="sideMenuType=='builder'"/>
                 </div>
             </template>
             <template v-slot:final-navBar>
