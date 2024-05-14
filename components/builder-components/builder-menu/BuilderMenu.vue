@@ -13,7 +13,6 @@ function dragStart(type: string) {
 </script>
 
 <template>
-    {{ currentDragItem }}
     <div class="flex flex-col ">
         <div aria-describedby="vfb-elements-description" aria-label="Elements" class="flex flex-col space-y-1"
              tabindex="0">

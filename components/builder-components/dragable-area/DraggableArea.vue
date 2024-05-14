@@ -3,26 +3,23 @@ import {DsIcon} from "~/components/DesignSystem";
 import {useCounterStore} from "~/stores/builderStore";
 
 const store = useCounterStore()
-const {builderItems} = toRefs(store)
+const {builderItems, addItemToForm} = toRefs(store)
 
 
 // const dragStart = (event: DragEvent, item: string) => {
 //     draggedItem = item
 // }
 
-const drop = (event: DragEvent) => {
-    // const index = items.value.indexOf(draggedItem)
-    // if (index > -1) {
-    //     items.value.splice(index, 1)
-    // }
-    // items.value.push(draggedItem)
+const drop = () => {
+    addItemToForm.value()
+
 }
 </script>
 
 <template>
     <div
         class="w-full h-full flex  border border-gray-300 shadow-md rounded-md p-5  flex-col justify-center items-center"
-        @drop="drop($event)"
+        @drop="drop"
         @dragover.prevent
     >
         <div v-if="builderItems.length==0" class="flex flex-col justify-center items-center">
@@ -36,7 +33,7 @@ const drop = (event: DragEvent) => {
             class="mt-4"
             draggable="true"
         >
-            {{ item.type }}
+            {{ item.name }}
         </div>
     </div>
 </template>
