@@ -1,19 +1,19 @@
 import type {IItemBuilder} from "~/interfaces/interfaces";
 
 export const useCounterStore = defineStore('counter', () => {
-    const builderItems = reactive([{type: 'input-text', name: 'valor'}])
+    const builderItems = reactive([])
     const sideMenuType = ref<'default' | 'builder'>('default')
-    const currentDragItem = ref<null | { type: string, name: string }>(null)
+    const currentDragItem = ref<null | { name: string }>(null)
 
 
     function changeSideMenuType(newName: 'default' | 'builder') {
         sideMenuType.value = newName;
     }
 
-    function changeCurrentDragItem(item: IItemBuilder) {
+    function changeCurrentDragItem(item: { name: string }) {
         currentDragItem.value = item;
 
     }
 
-    return {builderItems, sideMenuType, changeSideMenuType}
+    return {builderItems, sideMenuType, changeSideMenuType, changeCurrentDragItem}
 })

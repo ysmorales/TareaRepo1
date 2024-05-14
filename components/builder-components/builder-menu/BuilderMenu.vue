@@ -1,10 +1,14 @@
 <script lang="ts" setup>
 
 import {DsIcon} from "~/components/DesignSystem";
+import {useCounterStore} from "~/stores/builderStore";
+import {components} from "~/components/builder-components/builder-menu/components";
+
+const store = useCounterStore()
+const {changeCurrentDragItem} = toRefs(store)
 
 function dragStart(type: string) {
-    alert('huyyy me atraparon soy un ' + type)
-
+    changeCurrentDragItem.value(components.find(component => component.name === type) ?? components[0])
 }
 </script>
 
