@@ -78,38 +78,38 @@ async function handleCloseSession() {
                     </div>
                 </div>
             </div>
-            <div class="w-full">
-                <div class="mx-auto max-w-[650px] md:hidden py-2 px-1">
-                    <div class="flex w-full flex-wrap justify-between">
-                        <DsLink
-                            class="flex items-center btn btn-secondary no-underline px-4 mb-1 bg-white mx-1 rounded-none"
-                        >
-                            <DsIcon class="mr-1" name="home"/>
-                        </DsLink>
-                        <DsLink
-                            class="flex items-center btn btn-secondary no-underline px-4 mb-1 bg-white mx-1 rounded-none"
-                        >
-                            <DsIcon class="mr-1" name="users"/>
-                        </DsLink>
-                        <DsLink
-                            class="flex items-center btn btn-secondary no-underline px-4 mb-1 bg-white mx-1 rounded-none"
-                        >
-                            <DsIcon class="mr-1" name="book"/>
-                        </DsLink>
-                        <DsLink
-                            class="flex items-center btn btn-secondary no-underline px-4 mb-1 bg-white mx-1 rounded-none"
-                            href="/aplicaciones/cambio-hora"
-                        >
-                            <DsIcon class="mr-1" name="th"/>
-                        </DsLink>
-                        <DsLink
-                            class="flex items-center btn btn-secondary no-underline px-4 mb-1 bg-white mx-1 rounded-none"
-                        >
-                            <DsIcon class="mr-1" name="folder"/>
-                        </DsLink>
-                    </div>
-                </div>
-            </div>
+            <!--            <div class="w-full">-->
+            <!--                <div class="mx-auto max-w-[650px] md:hidden py-2 px-1">-->
+            <!--                    <div class="flex w-full flex-wrap justify-between">-->
+            <!--                        <DsLink-->
+            <!--                            class="flex items-center btn btn-secondary no-underline px-4 mb-1 bg-white mx-1 rounded-none"-->
+            <!--                        >-->
+            <!--                            <DsIcon class="mr-1" name="home"/>-->
+            <!--                        </DsLink>-->
+            <!--                        <DsLink-->
+            <!--                            class="flex items-center btn btn-secondary no-underline px-4 mb-1 bg-white mx-1 rounded-none"-->
+            <!--                        >-->
+            <!--                            <DsIcon class="mr-1" name="users"/>-->
+            <!--                        </DsLink>-->
+            <!--                        <DsLink-->
+            <!--                            class="flex items-center btn btn-secondary no-underline px-4 mb-1 bg-white mx-1 rounded-none"-->
+            <!--                        >-->
+            <!--                            <DsIcon class="mr-1" name="book"/>-->
+            <!--                        </DsLink>-->
+            <!--                        <DsLink-->
+            <!--                            class="flex items-center btn btn-secondary no-underline px-4 mb-1 bg-white mx-1 rounded-none"-->
+            <!--                            href="/aplicaciones/cambio-hora"-->
+            <!--                        >-->
+            <!--                            <DsIcon class="mr-1" name="th"/>-->
+            <!--                        </DsLink>-->
+            <!--                        <DsLink-->
+            <!--                            class="flex items-center btn btn-secondary no-underline px-4 mb-1 bg-white mx-1 rounded-none"-->
+            <!--                        >-->
+            <!--                            <DsIcon class="mr-1" name="folder"/>-->
+            <!--                        </DsLink>-->
+            <!--                    </div>-->
+            <!--                </div>-->
+            <!--            </div>-->
         </div>
         <div class="flex">
             <slot name="menu">
