@@ -43,7 +43,6 @@ function handlePropertyInput(event: Event) {
 </script>
 
 <template>
-    {{ builderItems }}
     <div
         class="w-full h-full flex  border border-gray-300 shadow-md rounded-md p-5  flex-col justify-center items-center"
         @drop="drop"
