@@ -6,7 +6,6 @@ import {ref} from 'vue';
 const store = useCounterStore()
 const {builderItems, addItemToForm} = toRefs(store)
 
-
 const {removeItemFromForm} = toRefs(store)
 
 const components: { [key: string]: any } = {
@@ -25,9 +24,11 @@ const removeItem = (index: number) => {
 
 const viewProperties = (item: any) => {
     console.log(item)
+    showModal.value = true
 }
 
 const showIcons = ref(false)
+const showModal = ref(false)
 </script>
 
 <template>
@@ -56,6 +57,17 @@ const showIcons = ref(false)
                 </div>
             </div>
             <component :is="components[item.name]"/>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div v-show="showModal" class="fixed inset-0 flex items-center justify-end z-50">
+        <div class="fixed inset-0 bg-black opacity-50"></div>
+        <div class="bg-white w-64 h-full p-4 overflow-auto transform transition-transform duration-200 ease-in-out">
+            <button class="mb-4" @click="showModal = false">
+                <DsIcon name="x" title="Close"/>
+            </button>
+            <!-- Aquí puedes agregar el contenido del modal -->
         </div>
     </div>
 </template>
