@@ -1,10 +1,8 @@
 <script lang="ts" setup>
 import {
-    predefinedClasses,
     sizeTextAreaClasses,
 } from "../../../common/propsStyle";
 import type {ISizeText} from "../../../interfaces/elements";
-import {filterClass} from "../../../utils/filterClass";
 import generateUniqueId from "../../../utils/generateUniqueId";
 import useFocus from "../../../composables/useFocus";
 import {translateError} from "../../../utils/translateErrorMessage";

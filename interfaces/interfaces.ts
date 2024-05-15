@@ -1,3 +1,4 @@
 export interface IItemBuilder {
-    name: string
+    name: string,
+    props?: { label?: string }
 }

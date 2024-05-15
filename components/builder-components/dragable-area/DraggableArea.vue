@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import {DsIcon, DsInput, DsTextArea, DsButton} from "~/components/DesignSystem";
+import {DsIcon, DsInput, DsTextArea, DsButton, DsTypography} from "~/components/DesignSystem";
 import {useCounterStore} from "~/stores/builderStore";
 import {ref} from 'vue';
 
 const store = useCounterStore()
-const {builderItems, addItemToForm} = toRefs(store)
+const {builderItems, addItemToForm, addItemToEdit, currentEditItem, updateItemInForm} = toRefs(store)
 
 const {removeItemFromForm} = toRefs(store)
 
@@ -23,12 +23,23 @@ const removeItem = (index: number) => {
 }
 
 const viewProperties = (item: any) => {
-    console.log(item)
+    addItemToEdit.value(item)
     showModal.value = true
 }
 
 const showIcons = ref(false)
 const showModal = ref(false)
+
+function handlePropertyInput(event: Event) {
+    const target = event.target as HTMLInputElement;
+    if (currentEditItem.value) {
+        if (!currentEditItem.value.props) {
+            currentEditItem.value.props = {};
+        }
+        currentEditItem.value.props.label = target.value;
+    }
+    updateItemInForm.value(currentEditItem.value!)
+}
 </script>
 
 <template>
@@ -56,18 +67,41 @@ const showModal = ref(false)
                     <DsIcon color="danger" name="trash" title="Remover" @click="removeItem(index)"/>
                 </div>
             </div>
-            <component :is="components[item.name]"/>
+            <component :is="components[item.name]" v-bind="item.props"/>
         </div>
     </div>
 
-    <!-- Modal -->
-    <div v-show="showModal" class="fixed inset-0 flex items-center justify-end z-50">
-        <div class="fixed inset-0 bg-black opacity-50"></div>
-        <div class="bg-white w-64 h-full p-4 overflow-auto transform transition-transform duration-200 ease-in-out">
-            <button class="mb-4" @click="showModal = false">
-                <DsIcon name="x" title="Close"/>
-            </button>
-            <!-- Aquí puedes agregar el contenido del modal -->
+    <transition name="slide">
+        <div v-show="showModal" class="fixed h-full flex items-center justify-end z-50 w-[400px] right-0">
+            <div
+                :class="showModal ? 'translate-x-0' : 'translate-x-full'"
+                class="bg-white w-[400px] h-full p-4 overflow-auto transform transition-all duration-500 ease-in-out border border-blue-500"
+            >
+                <div class="flex items-center space-x-1">
+                    <button class="mb-4" @click="showModal = false">
+                        x
+                    </button>
+                    <DsTypography>{{ currentEditItem?.name }}</DsTypography>
+                </div>
+                <DsInput label="label" @input="handlePropertyInput"/>
+            </div>
         </div>
-    </div>
+    </transition>
 </template>
+<style scoped>
+.slide-enter-active {
+    transition: all .5s ease;
+}
+
+.slide-leave-active {
+    transition: all .5s ease;
+}
+
+.slide-enter, .slide-leave-to {
+    transform: translateX(100%);
+}
+
+.slide-leave, .slide-enter-to {
+    transform: translateX(0);
+}
+</style>
