@@ -44,7 +44,7 @@ function handlePropertyInput(event: Event) {
 
 <template>
     <div
-        class="w-full h-full flex  border border-gray-300 shadow-md rounded-md p-5  flex-col justify-center items-center"
+        class="w-full flex  border border-gray-300 shadow-md rounded-md p-5  flex-col  items-center"
         @drop="drop"
         @dragover.prevent
     >

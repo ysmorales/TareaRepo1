@@ -24,7 +24,7 @@ const {sideMenuType} = toRefs(store)
                     label="Proyecto" label-style="m-0"
                     size="small"/>
             </template>
-            <div class="container">
+            <div class="p-5 w-full">
                 <slot/>
             </div>
         </DsUnidosLayout>
