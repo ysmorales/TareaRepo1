@@ -1,9 +1,13 @@
 <script lang="ts" setup>
 import {DsIcon, DsInput, DsTextArea, DsButton} from "~/components/DesignSystem";
 import {useCounterStore} from "~/stores/builderStore";
+import {ref} from 'vue';
 
 const store = useCounterStore()
 const {builderItems, addItemToForm} = toRefs(store)
+
+
+const {removeItemFromForm} = toRefs(store)
 
 const components: { [key: string]: any } = {
     DsInput,
@@ -14,6 +18,16 @@ const components: { [key: string]: any } = {
 const drop = () => {
     addItemToForm.value()
 }
+
+const removeItem = (index: number) => {
+    removeItemFromForm.value(index)
+}
+
+const viewProperties = (item: any) => {
+    console.log(item)
+}
+
+const showIcons = ref(false)
 </script>
 
 <template>
@@ -27,12 +41,21 @@ const drop = () => {
             <p class="mb-2">Drag elements here</p>
             <p>Grab an element from the left and drop it here</p>
         </div>
-        <component
-            :is="components[item.name]"
+        <div
             v-for="(item, index) in builderItems"
             :key="index"
-            class="mt-4"
+            class="w-full mt-4 relative cursor-pointer"
             draggable="true"
-        />
+            @mouseleave="showIcons = false"
+            @mouseover="showIcons = true"
+        >
+            <div v-if="showIcons" class=" w-full">
+                <div class="flex justify-end absolute top-0 right-0 w-full">
+                    <DsIcon color="primary" name="cogs" title="Propiedades" @click="viewProperties(item)"/>
+                    <DsIcon color="danger" name="trash" title="Remover" @click="removeItem(index)"/>
+                </div>
+            </div>
+            <component :is="components[item.name]"/>
+        </div>
     </div>
 </template>

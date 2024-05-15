@@ -15,10 +15,24 @@ export const useCounterStore = defineStore('counter', () => {
 
     }
 
+    // Define the removeItemFromForm method in your store
+    function removeItemFromForm(index: number) {
+        builderItems.splice(index, 1)
+    }
+
+
     function addItemToForm() {
         builderItems.push(currentDragItem.value as IItemBuilder)
 
     }
 
-    return {builderItems, sideMenuType, changeSideMenuType, changeCurrentDragItem, currentDragItem, addItemToForm}
+    return {
+        builderItems,
+        sideMenuType,
+        changeSideMenuType,
+        changeCurrentDragItem,
+        currentDragItem,
+        addItemToForm,
+        removeItemFromForm
+    }
 })
