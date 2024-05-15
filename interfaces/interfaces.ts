@@ -1,4 +1,7 @@
 export interface IItemBuilder {
-    name: string,
-    props?: { label?: string }
+    id: number;
+    name?: string;
+    props?: {
+        label?: string;
+    };
 }
