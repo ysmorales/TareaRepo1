@@ -67,7 +67,7 @@ function handlePropertyInput(event: Event) {
                     <DsIcon color="danger" name="trash" title="Remover" @click="removeItem(index)"/>
                 </div>
             </div>
-            <component :is="components[item.name]" v-bind="item.props"/>
+            <component :is="components[item.name]" :label="item.props?.label"/>
         </div>
     </div>
 
