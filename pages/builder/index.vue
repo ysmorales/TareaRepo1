@@ -1,12 +1,13 @@
 <script lang="ts" setup>
 
-import {DsButton, DsInput, DsTypography} from "~/components/DesignSystem";
+import {DsButton, DsTypography} from "~/components/DesignSystem";
 import DraggableArea from "~/components/builder-components/dragable-area/DraggableArea.vue";
 import {ref} from "vue";
 import {useCounterStore} from "~/stores/builderStore";
+import PropertyPanel from "~/components/builder-components/property-panel/PropertyPanel.vue";
 
 const store = useCounterStore()
-const {currentEditItem, updateItemInForm} = toRefs(store)
+const {currentEditItem, updateItemInForm, builderItems} = toRefs(store)
 const showModal = ref(false)
 
 function handlePropertyInput(event: Event) {
@@ -62,7 +63,8 @@ function handleClick() {
                             </svg>
                         </button>
                     </div>
-                    <DsInput label="label" @input="handlePropertyInput"/>
+                    <!--                    <DsInput label="label" @input="handlePropertyInput"/>-->
+                    <PropertyPanel v-model="builderItems" @input="handlePropertyInput"/>
                 </div>
             </div>
         </transition>

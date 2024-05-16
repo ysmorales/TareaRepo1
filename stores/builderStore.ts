@@ -7,6 +7,7 @@ export const useCounterStore = defineStore('counter', () => {
     const sideMenuType = ref<'default' | 'builder'>('default')
     const currentDragItem = ref<null | IItemBuilder>(null)
     const currentEditItem = ref<null | IItemBuilder>(null)
+    const currentComponentProperty = ref(null)
     let idCounter = 0; // Agrega un contador para los IDs
 
     function changeSideMenuType(newName: 'default' | 'builder') {
