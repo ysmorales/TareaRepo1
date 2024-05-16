@@ -33,6 +33,16 @@ const viewProperties = (item: any, index: number) => {
     selectedItem.value = index // Actualiza el ítem seleccionado
     emit("property")
 }
+
+const filterProps = (props: Record<string, any>) => {
+    const newProps: Record<string, any> = {};
+    for (const key in props) {
+        if (props[key] !== '') {
+            newProps[key] = props[key];
+        }
+    }
+    return newProps;
+};
 </script>
 
 <template>
@@ -60,7 +70,7 @@ const viewProperties = (item: any, index: number) => {
             </div>
             <div class="relative border border-transparent hover:border-blue-500 cursor-pointer z-10 mb-3"
                  @click="viewProperties(item, index)">
-                <component :is="components[item.name!]" v-bind="item.props"/>
+                <component :is="components[item.name!]" v-bind="filterProps(item.props || {})"/>
                 <div :class="['absolute inset-0 ',{'bg-blue-500 opacity-20':selectedItem === index}]"></div>
             </div>
         </div>
