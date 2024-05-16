@@ -38,12 +38,6 @@ export const menuItemsVerticalMenu: ISideMenuData[] = [
                 icon: "las la-user",
             }
         ],
-    },
-    {
-        id: "sect8",
-        label: "Builder",
-        icon: "las la-tools",
-        link: "/builder",
-    },
+    }
 
 ];

@@ -23,6 +23,10 @@ function handlePropertyInput(event: Event) {
 function handleProperty() {
     showModal.value = true
 }
+
+function handleClick() {
+    navigateTo('/')
+}
 </script>
 
 <template>
@@ -31,7 +35,7 @@ function handleProperty() {
             <h1>Builder</h1>
             <DraggableArea @property="handleProperty"/>
             <div class="flex justify-end mt-5 space-x-2">
-                <DsButton color="tertiary">Cancelar</DsButton>
+                <DsButton color="tertiary" @click="handleClick">Cancelar</DsButton>
                 <DsButton class="bg-gray-500 border-gray-400">Guardar</DsButton>
             </div>
         </div>

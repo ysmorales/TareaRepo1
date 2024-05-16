@@ -3,6 +3,10 @@ import DsTable from "~/components/DesignSystem/components/basic/table/DsTable.vu
 import {dataTable} from "./data";
 import {prototipeColumns} from "~/pages/index/prototipeColumns";
 
+
+const addRow = () => {
+    navigateTo('/builder')
+}
 </script>
 
 <template>
@@ -17,8 +21,10 @@ import {prototipeColumns} from "~/pages/index/prototipeColumns";
           itemsPerPage: 5,
           itemsPerPageOptions: [5, 10, 50],
           }"
+            add-button-label="Agregar prototipo"
             border
-            checkboxSelection pagination-border sort striped/>
+            checkboxSelection
+            pagination-border sort striped @addRow="addRow"/>
     </div>
 </template>
 
