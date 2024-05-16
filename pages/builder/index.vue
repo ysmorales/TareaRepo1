@@ -13,9 +13,10 @@ import DraggableArea from "~/components/builder-components/dragable-area/Draggab
                 <DsButton>Regresar</DsButton>
             </div>
         </div>
-        <div class="w-[400px] border border-gray-200 p-2 min-h-[80vh]">
+        <div class="w-[400px] border border-gray-200 p-2 min-h-[75vh]">
             <h1>Tools</h1>
         </div>
+
     </div>
 </template>
 

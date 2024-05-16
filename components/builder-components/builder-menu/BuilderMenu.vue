@@ -5,10 +5,19 @@ import {useCounterStore} from "~/stores/builderStore";
 import {components} from "~/components/builder-components/builder-menu/components";
 
 const store = useCounterStore()
-const {changeCurrentDragItem, currentDragItem} = toRefs(store)
+const {changeCurrentDragItem} = toRefs(store)
+
+let idCounter = 0;
+
+function generateId() {
+    return idCounter++;
+}
 
 function dragStart(type: string) {
-    changeCurrentDragItem.value(components.find(component => component.name === type) || {name: 'DsInput'})
+    const component = components.find(component => component.name === type);
+    if (component) {
+        changeCurrentDragItem.value({...component, id: generateId()});
+    }
 }
 </script>
 

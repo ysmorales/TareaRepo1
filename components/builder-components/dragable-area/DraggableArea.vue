@@ -70,6 +70,7 @@ function handlePropertyInput(event: Event) {
             <component :is="components[item.name!]" v-bind="item.props"/>
         </div>
     </div>
+    
 
     <transition name="slide">
         <div v-show="showModal" class="fixed h-full flex items-center justify-end z-50 w-[400px] right-0">

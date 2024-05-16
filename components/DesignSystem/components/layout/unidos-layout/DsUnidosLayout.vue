@@ -44,7 +44,7 @@ async function handleCloseSession() {
 
 <template>
     <div class="flex flex-col justify-center p-2">
-        <div class="top-0 left-0 w-full z-10 bg-white">
+        <div class="top-0 left-0 w-full z-10 bg-white h-[15vh]">
             <div
                 class="flex flex-row items-end mb-2 justify-between lg:justify-normal"
             >
