@@ -2,7 +2,8 @@
 
 import type {IItemBuilder} from "~/interfaces/interfaces";
 import {computed} from "vue";
-import {components} from "~/library/ComponentsLibraryProperty";
+import {DsButton, DsInput, DsSelect, DsTextArea} from "~/components/DesignSystem";
+
 
 const props = defineProps({
     modelValue: {
@@ -14,6 +15,12 @@ const props = defineProps({
         required: true
     },
 })
+const components: { [key: string]: any } = {
+    DsInput,
+    DsTextArea,
+    DsButton,
+    DsSelect
+}
 
 const emit = defineEmits(["input", "update:modelValue"])
 
@@ -25,12 +32,25 @@ const inputComponent = computed(() => {
     return props.modelValue.length > 0 ? props.modelValue[0].props?.label : undefined
 })
 
-
+// const componentType= computed(() => {
+//     switch (props.currentEditItem.name) {
+//         case 'DsInput':
+//             return 'DsInput'
+//         case 'DsSelect':
+//             return 'DsSelect'
+//         case 'DsTextArea':
+//             return 'DsTextArea'
+//         default:
+//             return 'DsInput'
+//
+//     }
+//     return props.currentEditItem.props?.label&&'DsInput'
+// })
 </script>
 
 <template>
     <div>
-        <component :is="components[currentEditItem.name!]"/>
+        <component :is="components['DsInput']" v-for="item in currentEditItem.props"/>
         {{ JSON.stringify(currentEditItem) }}
     </div>
 </template>
