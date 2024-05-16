@@ -64,7 +64,8 @@ function handleClick() {
                         </button>
                     </div>
                     <!--                    <DsInput label="label" @input="handlePropertyInput"/>-->
-                    <PropertyPanel v-model="builderItems" @input="handlePropertyInput"/>
+                    <PropertyPanel v-model="builderItems" :current-edit-item="currentEditItem!"
+                                   @input="handlePropertyInput"/>
                 </div>
             </div>
         </transition>

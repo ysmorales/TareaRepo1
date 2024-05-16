@@ -4,12 +4,17 @@
 import {DsInput} from "~/components/DesignSystem";
 import type {IItemBuilder} from "~/interfaces/interfaces";
 import {computed} from "vue";
+import {InputProperty, SelectProperty, TextAreaProperty} from "~/library/ComponentsLibraryProperty";
 
 const props = defineProps({
     modelValue: {
         type: Object as () => IItemBuilder[],
         default: [],
-    }
+    },
+    currentEditItem: {
+        type: Object as () => IItemBuilder,
+        required: true
+    },
 })
 
 const emit = defineEmits(["input", "update:modelValue"])
@@ -22,18 +27,12 @@ const inputComponent = computed(() => {
     return props.modelValue.length > 0 ? props.modelValue[0].props?.label : undefined
 })
 
-// const model = computed({
-//     get() {
-//         return props.modelValue;
-//     },
-//
-//     // set(value) {
-//     //     emit("update:modelValue", value);
-//     // },
-// });
+
 </script>
 
 <template>
     <DsInput v-model="inputComponent" label="label" @input="handlePropertyInput"/>
+    <!--    {{ JSON.stringify(currentEditItem) }}-->
+    {{ JSON.stringify(currentEditItem) }}
 </template>
 
