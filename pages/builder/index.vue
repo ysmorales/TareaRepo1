@@ -33,7 +33,7 @@ function handleClick() {
 
     <div class="flex w-full">
         <div class="flex flex-col space-y-2 w-full p-2">
-            <h1>Builder</h1>
+            <h1>Nuevo prototipo</h1>
             <DraggableArea @property="handleProperty"/>
             <div class="flex justify-end mt-5 space-x-2">
                 <DsButton color="tertiary" @click="handleClick">Cancelar</DsButton>
