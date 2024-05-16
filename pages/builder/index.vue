@@ -64,8 +64,7 @@ function handleClick() {
                         </button>
                     </div>
                     <!--                    <DsInput label="label" @input="handlePropertyInput"/>-->
-                    <PropertyPanel :current-edit-item="currentEditItem!"
-                                   @input="handlePropertyInput"/>
+                    <PropertyPanel @input="handlePropertyInput"/>
                 </div>
             </div>
         </transition>

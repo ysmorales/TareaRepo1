@@ -1,20 +1,14 @@
 <script lang="ts" setup>
 
-import type {IItemBuilder} from "~/interfaces/interfaces";
-import {computed} from "vue";
+
 import {DsButton, DsInput, DsSelect, DsTextArea} from "~/components/DesignSystem";
+import {useCounterStore} from "~/stores/builderStore";
+import {computed} from "vue";
+
+const store = useCounterStore()
+const {currentEditItem, updateItemInForm, builderItems} = toRefs(store)
 
 
-const props = defineProps({
-    // modelValue: {
-    //     type: Object as () => IItemBuilder[],
-    //     default: [],
-    // },
-    currentEditItem: {
-        type: Object as () => IItemBuilder,
-        required: true
-    },
-})
 const components: { [key: string]: any } = {
     DsInput,
     DsTextArea,
@@ -46,13 +40,14 @@ function handlePropertyInput(event: Event, key: string) {
 //     }
 //     return props.currentEditItem.props?.label&&'DsInput'
 // })
+
 </script>
 
 <template>
     <div>
         <component :is="components['DsInput']" v-for="(value, key) in currentEditItem.props"
-                   :label="key" :value="value"
-                   @input="(event: Event) => handlePropertyInput(event, key)"/>
+                   v-model="currentEditItem.props[key]" :label="key"
+        />
         {{ JSON.stringify(currentEditItem) }}
     </div>
 </template>
