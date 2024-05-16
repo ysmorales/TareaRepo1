@@ -57,10 +57,11 @@ const viewProperties = (item: any, index: number) => {
             <div class="h-[25px]">
                 <IconArea v-show="showIcons[index]||selectedItem===index" :index="index" @removeItem="removeItem"/>
             </div>
-            <div :class="{'border-blue-500': selectedItem === index}"
-                 class="border hover:border-blue-500 cursor-pointer z-10 mb-3"
+            <div :class="{'bg-blue-500 bg-opacity-20': selectedItem === index}"
+                 class="border border-transparent hover:border-blue-500 cursor-pointer z-10 mb-3"
                  @click="viewProperties(item, index)">
-                <component :is="components[item.name!]" class="z-0 pointer-events-none" v-bind="item.props"/>
+                <component :is="components[item.name!]" class="z-0 pointer-events-none"
+                           v-bind="item.props"/>
             </div>
         </div>
         <div v-if="builderItems.length>0" class="flex justify-end space-x-2 m-2 w-full">
