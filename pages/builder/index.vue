@@ -34,14 +34,14 @@ function handleProperty() {
                 <DsButton>Regresar</DsButton>
             </div>
         </div>
-        <div class="w-[450px] border border-gray-200 p-2 min-h-[75vh]">
+        <div class="min-w-[390px] border border-gray-200 p-2 min-h-[75vh]">
             <h1>Tools</h1>
         </div>
         <transition name="slide">
-            <div v-show="showModal" class="fixed h-full flex items-center justify-end z-50 w-[360px] right-0">
+            <div v-show="showModal" class="fixed h-full flex items-center justify-end z-50 min-w-[400px] right-0">
                 <div
                     :class="showModal ? 'translate-x-0' : 'translate-x-full'"
-                    class="bg-white w-[400px] h-full p-4 overflow-auto transform transition-all duration-500 ease-in-out border border-gray-300"
+                    class="bg-white w-[400px] h-full p-4 overflow-auto transform transition-all duration-500 ease-in-out border border-gray-200"
                 >
                     <div class="flex items-center space-x-1">
                         <button class="mb-4" @click="showModal = false">
