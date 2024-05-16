@@ -1,8 +1,6 @@
 <script lang="ts" setup>
-
-
 import {useCounterStore} from "~/stores/builderStore";
-import {ref} from 'vue';
+import {ref, toRefs} from 'vue';
 import {DsButton, DsIcon, DsInput, DsSelect, DsTextArea} from "~/components/DesignSystem";
 import IconArea from "./components/IconArea.vue";
 
@@ -10,7 +8,7 @@ const store = useCounterStore()
 const {builderItems, addItemToForm, addItemToEdit, currentEditItem, updateItemInForm} = toRefs(store)
 
 const {removeItemFromForm} = toRefs(store)
-const showIcons = ref(false)
+const showIcons = ref(builderItems.value.map(() => false))
 
 const emit = defineEmits(["property"])
 
@@ -32,10 +30,7 @@ const removeItem = (index: number) => {
 const viewProperties = (item: any) => {
     addItemToEdit.value(item)
     emit("property")
-    // showModal.value = true
 }
-
-
 </script>
 
 <template>
@@ -54,17 +49,11 @@ const viewProperties = (item: any) => {
             :key="index"
             class="w-full  relative cursor-pointer"
             draggable="true"
-            @mouseleave="showIcons = false"
-            @mouseover="showIcons = true"
+            @mouseleave="showIcons[index] = false"
+            @mouseover="showIcons[index] = true"
         >
             <div class="hover:border hover:border-blue-500 cursor-pointer z-10 " @click="viewProperties(item)">
-                <!--                <div  class=" w-full">-->
-                <!--                    <div class="flex justify-end absolute top-0 right-0 w-full">-->
-                <!--                        <DsIcon color="danger" name="trash" title="Remover" @click="removeItem(index)"/>-->
-                <!--                    </div>-->
-                <!--                </div>-->
-                <IconArea v-if="showIcons" :index="index" @removeItem="removeItem"/>
-
+                <IconArea v-show="showIcons[index]" :index="index" @removeItem="removeItem"/>
                 <component :is="components[item.name!]" class="z-0 pointer-events-none" v-bind="item.props"/>
             </div>
         </div>
@@ -73,6 +62,4 @@ const viewProperties = (item: any) => {
             <DsButton>Aceptar</DsButton>
         </div>
     </div>
-
-
 </template>
