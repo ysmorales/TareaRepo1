@@ -1,9 +1,8 @@
 <script lang="ts" setup>
 
-
-import {DsInput} from "~/components/DesignSystem";
 import type {IItemBuilder} from "~/interfaces/interfaces";
 import {computed} from "vue";
+import {components} from "~/library/ComponentsLibraryProperty";
 
 const props = defineProps({
     modelValue: {
@@ -30,8 +29,9 @@ const inputComponent = computed(() => {
 </script>
 
 <template>
-    <DsInput v-model="inputComponent" label="label" @input="handlePropertyInput"/>
-    <!--    {{ JSON.stringify(currentEditItem) }}-->
-    {{ JSON.stringify(currentEditItem) }}
+    <div>
+        <component :is="components[currentEditItem.name!]"/>
+        {{ JSON.stringify(currentEditItem) }}
+    </div>
 </template>
 

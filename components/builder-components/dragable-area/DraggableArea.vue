@@ -3,6 +3,7 @@ import {useCounterStore} from "~/stores/builderStore";
 import {ref, toRefs} from 'vue';
 import {DsButton, DsIcon, DsInput, DsSelect, DsTextArea} from "~/components/DesignSystem";
 import IconArea from "./components/IconArea.vue";
+import {components} from "~/library/ComponentsLibraryProperty";
 
 const store = useCounterStore()
 const {builderItems, addItemToForm, addItemToEdit} = toRefs(store)
@@ -13,12 +14,6 @@ const selectedItem = ref(-1) // Nuevo estado para el ítem seleccionado
 
 const emit = defineEmits(["property"])
 
-const components: { [key: string]: any } = {
-    DsInput,
-    DsTextArea,
-    DsButton,
-    DsSelect
-}
 
 const drop = () => {
     addItemToForm.value()
