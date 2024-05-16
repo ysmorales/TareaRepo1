@@ -30,6 +30,7 @@ function handleClick() {
 </script>
 
 <template>
+
     <div class="flex w-full">
         <div class="flex flex-col space-y-2 w-full p-2">
             <h1>Builder</h1>
