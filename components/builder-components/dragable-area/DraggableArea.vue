@@ -56,13 +56,14 @@ const viewProperties = (item: any) => {
             @mouseleave="showIcons = false"
             @mouseover="showIcons = true"
         >
-            <div v-if="showIcons" class=" w-full">
-                <div class="flex justify-end absolute top-0 right-0 w-full">
-                    <DsIcon color="primary" name="cogs" title="Propiedades" @click="viewProperties(item)"/>
-                    <DsIcon color="danger" name="trash" title="Remover" @click="removeItem(index)"/>
+            <div class="hover:border hover:border-blue-500 cursor-pointer z-10 " @click="viewProperties(item)">
+                <div v-if="showIcons" class=" w-full">
+                    <div class="flex justify-end absolute top-0 right-0 w-full">
+                        <DsIcon color="danger" name="trash" title="Remover" @click="removeItem(index)"/>
+                    </div>
                 </div>
+                <component :is="components[item.name!]" class="z-0 pointer-events-none" v-bind="item.props"/>
             </div>
-            <component :is="components[item.name!]" v-bind="item.props"/>
         </div>
         <div v-if="builderItems.length>0" class="flex justify-end space-x-2 m-2 w-full">
             <DsButton color="tertiary">Cancelar</DsButton>
