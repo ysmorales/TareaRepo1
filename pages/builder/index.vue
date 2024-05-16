@@ -6,7 +6,7 @@ import {ref} from "vue";
 import {useCounterStore} from "~/stores/builderStore";
 
 const store = useCounterStore()
-const {builderItems, addItemToForm, addItemToEdit, currentEditItem, updateItemInForm} = toRefs(store)
+const {currentEditItem, updateItemInForm} = toRefs(store)
 const showModal = ref(false)
 
 function handlePropertyInput(event: Event) {
