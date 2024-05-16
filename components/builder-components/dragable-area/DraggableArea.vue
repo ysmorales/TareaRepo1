@@ -5,7 +5,7 @@ import {DsButton, DsIcon, DsInput, DsSelect, DsTextArea} from "~/components/Desi
 import IconArea from "./components/IconArea.vue";
 
 const store = useCounterStore()
-const {builderItems, addItemToForm, addItemToEdit, currentEditItem, updateItemInForm} = toRefs(store)
+const {builderItems, addItemToForm, addItemToEdit} = toRefs(store)
 
 const {removeItemFromForm} = toRefs(store)
 const showIcons = ref(builderItems.value.map(() => false))

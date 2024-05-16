@@ -39,7 +39,7 @@ function handleClick() {
                 <DsButton class="bg-gray-500 border-gray-400">Guardar</DsButton>
             </div>
         </div>
-        <div class="min-w-[375px] border border-gray-200 p-2 min-h-[75vh]">
+        <div class="min-w-[365px] border border-gray-200 p-2 min-h-[75vh]">
             <DsTypography variant="h1">Form tree</DsTypography>
         </div>
         <transition name="slide">
