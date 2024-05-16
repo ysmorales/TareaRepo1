@@ -48,7 +48,7 @@ function handleProperty() {
                         <button class="mb-4" @click="showModal = false">
                             x
                         </button>
-                        <DsTypography>{{ currentEditItem?.name }}</DsTypography>
+                        <DsTypography class="font-bold">Property {{ currentEditItem?.name }}</DsTypography>
                     </div>
                     <DsInput label="label" @input="handlePropertyInput"/>
                 </div>
