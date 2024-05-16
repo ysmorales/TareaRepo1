@@ -30,8 +30,9 @@ function handleProperty() {
         <div class="flex flex-col space-y-2 w-full p-2">
             <h1>Builder</h1>
             <DraggableArea @property="handleProperty"/>
-            <div class="flex justify-end">
-                <DsButton>Regresar</DsButton>
+            <div class="flex justify-end mt-5">
+                <DsButton color="tertiary">Cancelar</DsButton>
+                <DsButton>Guardar</DsButton>
             </div>
         </div>
         <div class="min-w-[390px] border border-gray-200 p-2 min-h-[75vh]">

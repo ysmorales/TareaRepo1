@@ -50,7 +50,7 @@ const viewProperties = (item: any) => {
         <div
             v-for="(item, index) in builderItems"
             :key="index"
-            class="w-full mt-4 relative cursor-pointer"
+            class="w-full  relative cursor-pointer"
             draggable="true"
             @mouseleave="showIcons = false"
             @mouseover="showIcons = true"
@@ -62,6 +62,10 @@ const viewProperties = (item: any) => {
                 </div>
             </div>
             <component :is="components[item.name!]" v-bind="item.props"/>
+        </div>
+        <div v-if="builderItems.length>0" class="flex justify-end space-x-2 m-2 w-full">
+            <DsButton color="tertiary">Cancelar</DsButton>
+            <DsButton>Aceptar</DsButton>
         </div>
     </div>
 
