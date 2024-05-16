@@ -6,10 +6,10 @@ import {DsButton, DsInput, DsSelect, DsTextArea} from "~/components/DesignSystem
 
 
 const props = defineProps({
-    modelValue: {
-        type: Object as () => IItemBuilder[],
-        default: [],
-    },
+    // modelValue: {
+    //     type: Object as () => IItemBuilder[],
+    //     default: [],
+    // },
     currentEditItem: {
         type: Object as () => IItemBuilder,
         required: true
@@ -24,13 +24,13 @@ const components: { [key: string]: any } = {
 
 const emit = defineEmits(["input", "update:modelValue"])
 
-function handlePropertyInput(event: Event) {
-    emit("input", event)
+function handlePropertyInput(event: Event, key: string) {
+    emit("input", {event, key})
 }
 
-const inputComponent = computed(() => {
-    return props.modelValue.length > 0 ? props.modelValue[0].props?.label : undefined
-})
+// const inputComponent = computed(() => {
+//     return props.modelValue.length > 0 ? props.modelValue[0].props?.label : undefined
+// })
 
 // const componentType= computed(() => {
 //     switch (props.currentEditItem.name) {
@@ -50,7 +50,9 @@ const inputComponent = computed(() => {
 
 <template>
     <div>
-        <component :is="components['DsInput']" v-for="item in currentEditItem.props"/>
+        <component :is="components['DsInput']" v-for="(value, key) in currentEditItem.props"
+                   :label="key" :value="value"
+                   @input="(event: Event) => handlePropertyInput(event, key)"/>
         {{ JSON.stringify(currentEditItem) }}
     </div>
 </template>
