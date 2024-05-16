@@ -35,20 +35,27 @@ function handleProperty() {
                 <DsButton class="bg-gray-500 border-gray-400">Guardar</DsButton>
             </div>
         </div>
-        <div class="min-w-[390px] border border-gray-200 p-2 min-h-[75vh]">
-            <h1>Tools</h1>
+        <div class="min-w-[375px] border border-gray-200 p-2 min-h-[75vh]">
+            <DsTypography variant="h1">Form tree</DsTypography>
         </div>
         <transition name="slide">
-            <div v-show="showModal" class="fixed h-full flex items-center justify-end z-50 min-w-[400px] right-0">
+            <div v-show="showModal" class="fixed h-full flex items-center justify-end z-50 min-w-[410px] right-0">
                 <div
                     :class="showModal ? 'translate-x-0' : 'translate-x-full'"
-                    class="bg-white w-[400px] h-full p-4 overflow-auto transform transition-all duration-500 ease-in-out border border-gray-200"
+                    class="bg-white w-96 h-full p-6 overflow-auto transform transition-all duration-500 ease-in-out border border-gray-200 shadow-lg"
                 >
-                    <div class="flex items-center space-x-1">
-                        <button class="mb-4" @click="showModal = false">
-                            x
+                    <div class="flex justify-between items-center border-b pb-4 mb-4">
+                        <DsTypography class="text-lg font-semibold">Properties <span class="text-blue-500">{{
+                                currentEditItem?.name
+                            }}</span>
+                        </DsTypography>
+                        <button class="text-gray-400 hover:text-gray-500" @click="showModal = false">
+                            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"
+                                      stroke-width="2"></path>
+                            </svg>
                         </button>
-                        <DsTypography class="font-bold">Property {{ currentEditItem?.name }}</DsTypography>
                     </div>
                     <DsInput label="label" @input="handlePropertyInput"/>
                 </div>
