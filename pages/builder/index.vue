@@ -46,7 +46,7 @@ function handleProperty() {
                 >
                     <div class="flex justify-between items-center border-b pb-4 mb-4">
                         <DsTypography class="text-lg font-semibold">Properties <span class="text-blue-500">{{
-                                currentEditItem?.name
+                                currentEditItem?.name + ' ' + currentEditItem?.id
                             }}</span>
                         </DsTypography>
                         <button class="text-gray-400 hover:text-gray-500" @click="showModal = false">
