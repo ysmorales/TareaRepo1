@@ -4,7 +4,6 @@
 import {DsInput} from "~/components/DesignSystem";
 import type {IItemBuilder} from "~/interfaces/interfaces";
 import {computed} from "vue";
-import {InputProperty, SelectProperty, TextAreaProperty} from "~/library/ComponentsLibraryProperty";
 
 const props = defineProps({
     modelValue: {
