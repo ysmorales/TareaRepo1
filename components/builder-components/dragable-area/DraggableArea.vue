@@ -9,6 +9,7 @@ const {builderItems, addItemToForm, addItemToEdit} = toRefs(store)
 
 const {removeItemFromForm} = toRefs(store)
 const showIcons = ref(builderItems.value.map(() => false))
+const selectedItem = ref(-1) // Nuevo estado para el ítem seleccionado
 
 const emit = defineEmits(["property"])
 
@@ -27,8 +28,9 @@ const removeItem = (index: number) => {
     removeItemFromForm.value(index)
 }
 
-const viewProperties = (item: any) => {
+const viewProperties = (item: any, index: number) => {
     addItemToEdit.value(item)
+    selectedItem.value = index // Actualiza el ítem seleccionado
     emit("property")
 }
 </script>
@@ -52,8 +54,12 @@ const viewProperties = (item: any) => {
             @mouseleave="showIcons[index] = false"
             @mouseover="showIcons[index] = true"
         >
-            <div class="hover:border hover:border-blue-500 cursor-pointer z-10 " @click="viewProperties(item)">
-                <IconArea v-show="showIcons[index]" :index="index" @removeItem="removeItem"/>
+            <div class="h-[25px]">
+                <IconArea v-show="showIcons[index]||selectedItem===index" :index="index" @removeItem="removeItem"/>
+            </div>
+            <div :class="{'border-blue-500': selectedItem === index}"
+                 class="border hover:border-blue-500 cursor-pointer z-10 mb-3"
+                 @click="viewProperties(item, index)">
                 <component :is="components[item.name!]" class="z-0 pointer-events-none" v-bind="item.props"/>
             </div>
         </div>

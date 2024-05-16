@@ -18,12 +18,9 @@ function removeItem(index: number) {
 <template>
 
     <div
-        class="w-full"
+        class="flex justify-end w-full"
     >
-
-        <div class="flex justify-end absolute top-0 right-0 w-full">
-            <DsIcon color="danger" name="trash" title="Remover" @click="removeItem(index!)"/>
-        </div>
+        <DsIcon color="danger" name="trash" title="Remover" @click="removeItem(index!)"/>
     </div>
 </template>
 
