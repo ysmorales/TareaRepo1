@@ -5,6 +5,6 @@ export const components = [{
         name: 'DsTextArea',
     },
     {
-        name: 'DsButton'
+        name: 'DsSelect'
     },
 ]

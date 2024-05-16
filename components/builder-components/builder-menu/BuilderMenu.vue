@@ -54,13 +54,13 @@ function dragStart(type: string) {
             <div
                 class="flex transition duration-500 ease-in-out cursor-pointer transform hover:-translate-y-1 hover:scale-105 shadow-lg rounded-lg bg-white hover:shadow-2xl"
                 draggable="true"
-                role="option" tabindex="-1" @dragstart="dragStart( 'DsButton')">
+                role="option" tabindex="-1" @dragstart="dragStart( 'DsSelect')">
                 <div class=" p-2 ">
-                    <DsIcon name="hand-pointer" size="medium"/>
+                    <DsIcon name="list-alt" size="medium"/>
                 </div>
                 <div class="vfb-element-text-container ml-4">
-                    <div class="font-bold ">DsButton</div>
-                    <div class="text-sm text-gray-500">Button</div>
+                    <div class="font-bold ">DsSelect</div>
+                    <div class="text-sm text-gray-500">Select-option</div>
                 </div>
             </div>
         </div>

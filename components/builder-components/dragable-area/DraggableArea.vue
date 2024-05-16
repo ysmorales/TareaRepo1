@@ -3,7 +3,7 @@
 
 import {useCounterStore} from "~/stores/builderStore";
 import {ref} from 'vue';
-import {DsButton, DsIcon, DsInput, DsTextArea} from "~/components/DesignSystem";
+import {DsButton, DsIcon, DsInput, DsSelect, DsTextArea} from "~/components/DesignSystem";
 
 const store = useCounterStore()
 const {builderItems, addItemToForm, addItemToEdit, currentEditItem, updateItemInForm} = toRefs(store)
@@ -16,7 +16,8 @@ const emit = defineEmits(["property"])
 const components: { [key: string]: any } = {
     DsInput,
     DsTextArea,
-    DsButton
+    DsButton,
+    DsSelect
 }
 
 const drop = () => {
