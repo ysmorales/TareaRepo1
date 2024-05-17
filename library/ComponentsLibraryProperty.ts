@@ -1,6 +1,6 @@
 export const InputProperty = {
     label: "",
-    placeHolder: ""
+    placeholder: ""
 }
 
 export const TextAreaProperty = {
