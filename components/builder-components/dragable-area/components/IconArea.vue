@@ -1,13 +1,12 @@
 <script lang="ts" setup>
 import {DsIcon} from "~/components/DesignSystem";
-import {ref} from 'vue';
 
 defineProps({
     index: Number,
 });
 const emit = defineEmits(["removeItem"])
 
-const showIcon = ref(false);
+// const showIcon = ref(false);
 
 function removeItem(index: number) {
     emit("removeItem", index)

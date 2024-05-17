@@ -4,23 +4,18 @@ import {ref, toRefs} from 'vue';
 import {DsButton, DsIcon, DsInput, DsSelect, DsTextArea} from "~/components/DesignSystem";
 import IconArea from "./components/IconArea.vue";
 
-
 const store = useCounterStore()
 const {builderItems, addItemToForm, addItemToEdit} = toRefs(store)
-
 const {removeItemFromForm} = toRefs(store)
 const showIcons = ref(builderItems.value.map(() => false))
 const selectedItem = ref(-1) // Nuevo estado para el ítem seleccionado
-
 const components: { [key: string]: any } = {
     DsInput,
     DsTextArea,
     DsButton,
     DsSelect
 }
-
 const emit = defineEmits(["property"])
-
 
 const drop = () => {
     addItemToForm.value()
@@ -48,7 +43,6 @@ const filterProps = (props: Record<string, any>) => {
 </script>
 
 <template>
-
     <div
         class="w-full flex  border border-gray-300 shadow-md rounded-md p-5  flex-col  items-center"
         @drop="drop"
