@@ -4,7 +4,7 @@ import {DsInput} from "~/components/DesignSystem";
 import {useCounterStore} from "~/stores/builderStore";
 
 const store = useCounterStore()
-const {currentEditItem, updateItemInForm, builderItems} = toRefs(store)
+const {currentEditItem, updateItemInForm} = toRefs(store)
 const labelValue = ref(currentEditItem.value.props.label)
 const placeHolderValue = ref(currentEditItem.value.props.placeholder)
 
@@ -26,6 +26,5 @@ function handlePlaceHolder(key: string) {
 <template>
     <DsInput v-model="labelValue" label="Label" @input="handleInput('label')"/>
     <DsInput v-model="placeHolderValue" label="Place Holder" @input="handlePlaceHolder('placeholder')"/>
-    <h1>Modificaremos {{ currentEditItem.id }}</h1>
 </template>
 
