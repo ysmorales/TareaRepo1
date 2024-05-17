@@ -17,7 +17,7 @@ const components: { [key: string]: any } = {
 }
 
 const emit = defineEmits(["input", "update:modelValue"])
-
+const componentKey = ref(0);
 //
 // function handlePropertyInput(event: Event, key: number) {
 //     const target = event.target as HTMLInputElement;
@@ -31,6 +31,9 @@ const emit = defineEmits(["input", "update:modelValue"])
 //     }
 //     updateItemInForm.value(currentEditItem.value!)
 // }
+watch(currentEditItem, () => {
+    componentKey.value++;
+}, {deep: true});
 </script>
 
 <template>
@@ -38,9 +41,9 @@ const emit = defineEmits(["input", "update:modelValue"])
     <!--        <component :is="components['DsInput']"-->
     <!--                   :label="key" :value="value" @input="(event:Event) => handlePropertyInput(event, key)"/>-->
     <!--    </div>-->
-    <InputPanel v-if="currentEditItem.name=='DsInput'"/>
-    <SelectPanel v-if="currentEditItem.name=='DsSelect'"/>
-    <TextAreaPanel v-if="currentEditItem.name=='DsTextArea'"/>
+    <InputPanel v-if="currentEditItem.name=='DsInput'" :key="componentKey"/>
+    <SelectPanel v-if="currentEditItem.name=='DsSelect'" :key="componentKey"/>
+    <TextAreaPanel v-if="currentEditItem.name=='DsTextArea'" :key="componentKey"/>
     {{ JSON.stringify(builderItems) }}
     /////////////////////////////////////
     {{ JSON.stringify(currentEditItem) }}

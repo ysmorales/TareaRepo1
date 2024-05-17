@@ -6,7 +6,7 @@ import {computed} from "vue";
 
 const store = useCounterStore()
 const {currentEditItem, updateItemInForm, builderItems} = toRefs(store)
-const labelValue = ref('')
+const labelValue = ref(currentEditItem.value.props.label)
 
 const emit = defineEmits(["input", "update:modelValue"])
 
