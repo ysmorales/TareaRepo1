@@ -21,7 +21,7 @@ watch(currentEditItem, () => {
     <InputPanel v-if="currentEditItem.name=='DsInput'" :key="componentKey"/>
     <SelectPanel v-if="currentEditItem.name=='DsSelect'" :key="componentKey"/>
     <TextAreaPanel v-if="currentEditItem.name=='DsTextArea'" :key="componentKey"/>
-    {{ JSON.stringify(builderItems) }}
-    /////////////////////////////////////
-    {{ JSON.stringify(currentEditItem) }}
+    <!--    {{ JSON.stringify(builderItems) }}-->
+    <!--    /////////////////////////////////////-->
+    <!--    {{ JSON.stringify(currentEditItem) }}-->
 </template>
