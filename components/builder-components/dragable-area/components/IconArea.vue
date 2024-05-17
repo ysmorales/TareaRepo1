@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import {DsIcon} from "~/components/DesignSystem";
-import {defineProps, ref} from 'vue';
+import {ref} from 'vue';
 
 defineProps({
     index: Number,
