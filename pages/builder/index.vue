@@ -5,9 +5,19 @@ import {ref} from "vue";
 import {useCounterStore} from "~/stores/builderStore";
 import PropertyPanel from "~/components/builder-components/property-panel/PropertyPanel.vue";
 import ToolPanel from "~/components/builder-components/tools-panel/ToolPanel.vue";
+import CodeArea from "~/components/builder-components/code-area/CodeArea.vue";
 
 const {currentEditItem} = toRefs(useCounterStore())
+const area = ref<'view' | 'edit' | 'code'>('edit')
 const showModal = ref(false)
+
+function handleCode() {
+    area.value = 'code'
+}
+
+function handleEdit() {
+    area.value = 'edit'
+}
 
 </script>
 
@@ -15,9 +25,10 @@ const showModal = ref(false)
 
     <div class="flex w-full">
         <div class="flex flex-col space-y-2 w-full p-2">
-            <ToolPanel/>
+            <ToolPanel @code="handleCode" @edit="handleEdit"/>
             <DsTypography variant="h1">Nuevo prototipo</DsTypography>
-            <DraggableArea @property="showModal = true"/>
+            <DraggableArea v-if="area=='edit'" @property="showModal = true"/>
+            <CodeArea v-if="area=='code'"/>
             <!--            <div class="flex justify-end mt-5 space-x-2">-->
             <!--                <DsButton color="tertiary" @click="handleClick">Cancelar</DsButton>-->
             <!--                <DsButton class="bg-gray-500 border-gray-400">Guardar</DsButton>-->

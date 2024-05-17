@@ -4,8 +4,13 @@ import {DsIcon} from "~/components/DesignSystem";
 
 const activeButton = ref('edit');
 
-const setActiveButton = (buttonName: string) => {
+const emit = defineEmits([
+    'edit', 'view', 'code', 'save'
+])
+
+const setActiveButton = (buttonName: 'edit' | 'view' | 'code' | 'save') => {
     activeButton.value = buttonName;
+    emit(buttonName);
 };
 </script>
 
