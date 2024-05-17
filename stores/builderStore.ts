@@ -4,7 +4,7 @@ import {reactive, ref} from 'vue';
 import {InputProperty, SelectProperty, TextAreaProperty} from "~/library/ComponentsLibraryProperty";
 
 export const useCounterStore = defineStore('counter', () => {
-    const builderItems = <IItemBuilder[]>([] as IItemBuilder[])
+    const builderItems = ref<IItemBuilder[]>([] as IItemBuilder[])
     const sideMenuType = ref<'default' | 'builder'>('default')
     const currentDragItem = ref<null | IItemBuilder>(null)
     const currentEditItem = ref<any | IItemBuilder>({})
@@ -19,12 +19,12 @@ export const useCounterStore = defineStore('counter', () => {
     }
 
     function removeItemFromForm(index: number) {
-        builderItems.splice(index, 1)
+        builderItems.value.splice(index, 1)
     }
 
     function addItemToForm() {
         const newItem = {...currentDragItem.value, id: idCounter++} as IItemBuilder; // Usa el contador para los IDs
-        builderItems.push(newItem);
+        builderItems.value.push(newItem);
     }
 
     function addItemToEdit(item: IItemBuilder) {
@@ -49,8 +49,9 @@ export const useCounterStore = defineStore('counter', () => {
     }
 
     function updateItemInForm(id: number, key: string, value: any) {
-        const temp = JSON.parse(JSON.stringify(builderItems));
+        const temp = JSON.parse(JSON.stringify(builderItems.value));
         temp[id].props[key] = value.value;
+        builderItems.value = temp;
     }
 
     return {
