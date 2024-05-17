@@ -6,7 +6,7 @@ import SelectPanel from "~/components/builder-components/property-panel/componen
 import TextAreaPanel from "~/components/builder-components/property-panel/components/TextAreaPanel.vue";
 
 const store = useCounterStore()
-const {currentEditItem, builderItems} = toRefs(store)
+const {currentEditItem} = toRefs(store)
 
 
 const emit = defineEmits(["input", "update:modelValue"])
