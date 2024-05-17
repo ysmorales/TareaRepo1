@@ -1,7 +1,7 @@
 import type {IItemBuilder} from "~/interfaces/interfaces";
 import {defineStore} from 'pinia';
-import {reactive, ref} from 'vue';
-import {InputProperty, SelectProperty, TextAreaProperty} from "~/library/ComponentsLibraryProperty";
+import {ref} from 'vue';
+
 
 export const useCounterStore = defineStore('counter', () => {
     const builderItems = ref<IItemBuilder[]>([] as IItemBuilder[])
@@ -28,23 +28,6 @@ export const useCounterStore = defineStore('counter', () => {
     }
 
     function addItemToEdit(item: IItemBuilder) {
-        // const newItem = computed(() => {
-        //         switch (item.name) {
-        //             case 'DsInput':
-        //                 item.props = InputProperty
-        //                 return item
-        //             case 'DsTextArea':
-        //                 item.props = TextAreaProperty
-        //                 return item
-        //             case 'DsSelect':
-        //                 item.props = SelectProperty
-        //                 return item
-        //             default:
-        //                 return {id: -1} // return an object with 'id' property if item.name doesn't match any case
-        //         }
-        //     }
-        // );
-
         currentEditItem.value = item
     }
 

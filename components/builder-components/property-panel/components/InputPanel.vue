@@ -20,7 +20,6 @@ function handlePlaceHolder(key: string) {
 
 }
 
-
 </script>
 
 <template>
