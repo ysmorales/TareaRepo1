@@ -2,7 +2,7 @@
 import {ref} from 'vue';
 import {DsIcon} from "~/components/DesignSystem";
 
-const activeButton = ref('');
+const activeButton = ref('edit');
 
 const setActiveButton = (buttonName: string) => {
     activeButton.value = buttonName;
@@ -10,7 +10,7 @@ const setActiveButton = (buttonName: string) => {
 </script>
 
 <template>
-    <div class="flex w-full items-center justify-between bg-gray-200 p-2 shadow-md">
+    <div class="flex w-full items-center justify-between bg-gray-200 p-2 shadow-md ">
         <button
             class="p-1 rounded-md hover:bg-gray-300 hover:text-black active:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150 ease-in-out"
         >
@@ -37,7 +37,7 @@ const setActiveButton = (buttonName: string) => {
                 <DsIcon name="edit" title="Modo edición"/>
             </button>
             <button
-                :class="['p-1 rounded-md hover:bg-gray-300 hover:text-black  active:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150 ease-in-out',{'bg-blue-500 text-white':activeButton === 'preview'}]"
+                :class="['p-1 rounded-md  hover:bg-gray-300 hover:text-black  active:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150 ease-in-out',{'bg-blue-500 text-white':activeButton === 'preview'}]"
                 @click="setActiveButton('preview')"
             >
                 <DsIcon name="eye" title="Vista previa"/>
