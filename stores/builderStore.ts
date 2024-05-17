@@ -4,7 +4,7 @@ import {reactive, ref} from 'vue';
 import {InputProperty, SelectProperty, TextAreaProperty} from "~/library/ComponentsLibraryProperty";
 
 export const useCounterStore = defineStore('counter', () => {
-    const builderItems = reactive<IItemBuilder[]>([] as IItemBuilder[])
+    const builderItems = <IItemBuilder[]>([] as IItemBuilder[])
     const sideMenuType = ref<'default' | 'builder'>('default')
     const currentDragItem = ref<null | IItemBuilder>(null)
     const currentEditItem = ref<any | IItemBuilder>({})
@@ -48,11 +48,9 @@ export const useCounterStore = defineStore('counter', () => {
         currentEditItem.value = item
     }
 
-    function updateItemInForm(itemToUpdate: IItemBuilder) {
-        const index = builderItems.findIndex(item => item.id === itemToUpdate.id);
-        if (index !== -1) {
-            builderItems[index] = itemToUpdate;
-        }
+    function updateItemInForm(id: number, key: string, value: any) {
+        const temp = JSON.parse(JSON.stringify(builderItems));
+        temp[id].props[key] = value.value;
     }
 
     return {
