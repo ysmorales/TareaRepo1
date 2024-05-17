@@ -48,6 +48,8 @@ function handlePropertyInput(event: Event, key: string) {
         <component :is="components['DsInput']" v-for="(value, key) in currentEditItem.props"
                    v-model="currentEditItem.props[key]" :label="key"
         />
+        {{ JSON.stringify(builderItems) }}
+        /////////////////////////////////////
         {{ JSON.stringify(currentEditItem) }}
     </div>
 </template>
