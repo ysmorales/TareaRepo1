@@ -10,16 +10,6 @@ const store = useCounterStore()
 const {currentEditItem, updateItemInForm, builderItems} = toRefs(store)
 const showModal = ref(false)
 
-function handlePropertyInput({event, key}: { event: Event, key: string }) {
-    const target = event.target as HTMLInputElement;
-    if (currentEditItem.value) {
-        if (!currentEditItem.value.props) {
-            currentEditItem.value.props = {};
-        }
-        currentEditItem.value.props[key] = target.value;
-    }
-    updateItemInForm.value(currentEditItem.value!)
-}
 
 function handleProperty() {
     showModal.value = true
@@ -64,7 +54,7 @@ function handleClick() {
                         </button>
                     </div>
                     <!--                    <DsInput label="label" @input="handlePropertyInput"/>-->
-                    <PropertyPanel @input="handlePropertyInput"/>
+                    <PropertyPanel/>
                 </div>
             </div>
         </transition>
