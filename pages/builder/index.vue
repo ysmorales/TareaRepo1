@@ -51,3 +51,6 @@ const showModal = ref(false)
         </transition>
     </div>
 </template>
+<style scoped>
+@import 'assets/css/transition-drawer.css';
+</style>
