@@ -28,24 +28,24 @@ export const useCounterStore = defineStore('counter', () => {
     }
 
     function addItemToEdit(item: IItemBuilder) {
-        const newItem = computed(() => {
-                switch (item.name) {
-                    case 'DsInput':
-                        item.props = InputProperty
-                        return item
-                    case 'DsTextArea':
-                        item.props = TextAreaProperty
-                        return item
-                    case 'DsSelect':
-                        item.props = SelectProperty
-                        return item
-                    default:
-                        return {id: -1} // return an object with 'id' property if item.name doesn't match any case
-                }
-            }
-        );
+        // const newItem = computed(() => {
+        //         switch (item.name) {
+        //             case 'DsInput':
+        //                 item.props = InputProperty
+        //                 return item
+        //             case 'DsTextArea':
+        //                 item.props = TextAreaProperty
+        //                 return item
+        //             case 'DsSelect':
+        //                 item.props = SelectProperty
+        //                 return item
+        //             default:
+        //                 return {id: -1} // return an object with 'id' property if item.name doesn't match any case
+        //         }
+        //     }
+        // );
 
-        currentEditItem.value = newItem.value
+        currentEditItem.value = item
     }
 
     function updateItemInForm(itemToUpdate: IItemBuilder) {

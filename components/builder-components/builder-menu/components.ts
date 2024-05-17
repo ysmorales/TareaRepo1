@@ -1,10 +1,15 @@
+import {InputProperty, SelectProperty, TextAreaProperty} from "~/library/ComponentsLibraryProperty";
+
 export const components = [{
-    name: 'DsInput'
+    name: 'DsInput',
+    props: InputProperty
 },
     {
         name: 'DsTextArea',
+        props: TextAreaProperty
     },
     {
-        name: 'DsSelect'
+        name: 'DsSelect',
+        props: SelectProperty
     },
 ]
