@@ -38,8 +38,10 @@ export const useCounterStore = defineStore('counter', () => {
     }
 
     function clearStore() {
-        builderItems.value = []
-        currentEditItem.value = {}
+        //bug aquí es cuando nos quedamos sin items en el builderItems
+        // builderItems.value = []
+        // currentEditItem.value = {}
+        // currentDragItem.value = null
     }
 
     return {
