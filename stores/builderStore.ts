@@ -39,6 +39,7 @@ export const useCounterStore = defineStore('counter', () => {
 
     function clearStore() {
         builderItems.value = []
+        currentEditItem.value = {}
     }
 
     return {
