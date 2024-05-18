@@ -10,7 +10,9 @@ export function objectToVueCode(formItems: FormItem[]) {
     formItems.forEach((item: FormItem) => {
         vueCode += `<${item.name}`;
         for (let prop in item.props) {
-            vueCode += ` ${prop}="${item.props[prop]}"`;
+            if (item.props[prop] !== '') {
+                vueCode += ` ${prop}="${item.props[prop]}"`;
+            }
         }
         vueCode += ' />\n';
     });
@@ -18,5 +20,4 @@ export function objectToVueCode(formItems: FormItem[]) {
     vueCode += `</form>\n</template>`;
 
     return vueCode;
-    // return 'hola!!';
 }
