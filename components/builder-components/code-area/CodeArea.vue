@@ -1,18 +1,13 @@
-<template>
-    <div class="flex flex-col justify-between p-4 bg-gray-800 text-white rounded-md shadow h-full">
-        <pre class="text-sm overflow-auto text-white" v-text="code"></pre>
-        <div class="flex justify-end">
-            <DsButton @click="copyCode">Copiar
-            </DsButton>
-        </div>
-    </div>
-</template>
-
 <script lang="ts" setup>
-import {ref} from 'vue';
+import {ref, toRefs} from 'vue';
 import {DsButton} from "~/components/DesignSystem";
+import {type FormItem, objectToVueCode} from "~/components/DesignSystem/utils/ConvertObjectToView";
+import {useCounterStore} from "~/stores/builderStore";
 
-const code = ref('<h1>Holaaaa</h1>');
+const store = useCounterStore()
+const {builderItems} = toRefs(store)
+
+const code = ref(objectToVueCode(builderItems.value as FormItem[]));
 
 const copyCode = () => {
     navigator.clipboard.writeText(code.value)
@@ -23,7 +18,18 @@ const copyCode = () => {
             console.error('Error al copiar el código: ', err);
         });
 };
+
 </script>
+<template>
+
+    <div class="flex flex-col justify-between p-4 bg-gray-800 text-white rounded-md shadow h-full">
+        <pre class="text-sm overflow-auto text-white" v-text="code"></pre>
+        <div class="flex justify-end">
+            <DsButton @click="copyCode">Copiar
+            </DsButton>
+        </div>
+    </div>
+</template>
 
 <style scoped>
 pre {
