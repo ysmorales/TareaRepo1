@@ -5,6 +5,10 @@ export interface FormItem {
 }
 
 export function objectToVueCode(formItems: FormItem[]) {
+    if (formItems.length == 0) {
+        return "No se ha editado el formulario..."
+    }
+
     let vueCode = `<template>\n<form>\n`;
 
     formItems.forEach((item: FormItem) => {
