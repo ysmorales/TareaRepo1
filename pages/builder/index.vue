@@ -1,12 +1,14 @@
 <script lang="ts" setup>
 import {DsTypography} from "~/components/DesignSystem";
 import DraggableArea from "~/components/builder-components/dragable-area/DraggableArea.vue";
-import {ref} from "vue";
+import {ref, toRefs} from "vue";
 import {useCounterStore} from "~/stores/builderStore";
 import PropertyPanel from "~/components/builder-components/property-panel/PropertyPanel.vue";
 import ToolPanel from "~/components/builder-components/tools-panel/ToolPanel.vue";
 import CodeArea from "~/components/builder-components/code-area/CodeArea.vue";
 
+const store = useCounterStore()
+const {clearStore} = toRefs(store)
 const {currentEditItem} = toRefs(useCounterStore())
 const area = ref<'view' | 'edit' | 'code'>('edit')
 const showModal = ref(false)
@@ -19,13 +21,17 @@ function handleEdit() {
     area.value = 'edit'
 }
 
+function handleClear() {
+    clearStore.value()
+}
+
 </script>
 
 <template>
 
     <div class="flex w-full">
         <div class="flex flex-col space-y-2 w-full p-2">
-            <ToolPanel @code="handleCode" @edit="handleEdit"/>
+            <ToolPanel @clear="handleClear" @code="handleCode" @edit="handleEdit"/>
             <DsTypography variant="h1">Nuevo prototipo</DsTypography>
             <DraggableArea v-if="area=='edit'" @property="showModal = true"/>
             <CodeArea v-if="area=='code'"/>

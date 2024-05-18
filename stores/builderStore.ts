@@ -37,6 +37,10 @@ export const useCounterStore = defineStore('counter', () => {
         builderItems.value = temp;
     }
 
+    function clearStore() {
+        builderItems.value = []
+    }
+
     return {
         builderItems,
         sideMenuType,
@@ -47,6 +51,7 @@ export const useCounterStore = defineStore('counter', () => {
         removeItemFromForm,
         currentEditItem,
         addItemToEdit,
-        updateItemInForm
+        updateItemInForm,
+        clearStore
     }
 })
