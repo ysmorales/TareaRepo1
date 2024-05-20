@@ -4,7 +4,6 @@ import {useCounterStore} from "~/stores/builderStore";
 import InputPanel from "~/components/builder-components/property-panel/components/InputPanel.vue";
 import SelectPanel from "~/components/builder-components/property-panel/components/SelectPanel.vue";
 import TextAreaPanel from "~/components/builder-components/property-panel/components/TextAreaPanel.vue";
-import ButtonPanel from "~/components/builder-components/property-panel/components/ConfirmationButtonPanel.vue";
 import ConfirmationButtonPanel
     from "~/components/builder-components/property-panel/components/ConfirmationButtonPanel.vue";
 
