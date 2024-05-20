@@ -46,8 +46,8 @@ const filterProps = (props: Record<string, any>) => {
 };
 
 function addButtonProperties() {
-    dragStart('DsButton')
-    viewProperties({name: 'DsButton', props: {}}, builderItems.value.length)
+    dragStart('DsConfirmationButton')
+    viewProperties({name: 'DsConfirmationButton', props: {}}, builderItems.value.length)
 
 }
 
