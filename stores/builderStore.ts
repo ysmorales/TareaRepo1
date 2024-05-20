@@ -32,16 +32,20 @@ export const useCounterStore = defineStore('counter', () => {
     }
 
     function updateItemInForm(id: number, key: string, value: any) {
-        const temp = JSON.parse(JSON.stringify(builderItems.value));
-        temp[id].props[key] = value.value;
-        builderItems.value = temp;
+        const index = builderItems.value.findIndex(item => item.id === id);
+        if (index !== -1) {
+            const temp = JSON.parse(JSON.stringify(builderItems.value));
+            temp[index].props[key] = value.value;
+            builderItems.value = temp;
+        } else {
+            console.error(`Item with id ${id} not found`);
+        }
     }
 
     function clearStore() {
-        //bug aquí es cuando nos quedamos sin items en el builderItems
-        // builderItems.value = []
-        // currentEditItem.value = {}
-        // currentDragItem.value = null
+        builderItems.value = []
+        currentEditItem.value = {}
+        currentDragItem.value = null
     }
 
     return {
