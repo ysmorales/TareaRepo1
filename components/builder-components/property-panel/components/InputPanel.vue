@@ -1,12 +1,13 @@
 <script lang="ts" setup>
-
-import {DsInput} from "~/components/DesignSystem";
+import {nextTick} from 'vue';
+import {DsInput, DsSelect} from "~/components/DesignSystem";
 import {useCounterStore} from "~/stores/builderStore";
 
 const store = useCounterStore()
 const {currentEditItem, updateItemInForm} = toRefs(store)
 const labelValue = ref(currentEditItem.value.props.label)
 const placeHolderValue = ref(currentEditItem.value.props.placeholder)
+const sizeValue = ref(currentEditItem.value.props.size)
 
 const emit = defineEmits(["input", "update:modelValue"])
 
@@ -20,10 +21,22 @@ function handlePlaceHolder(key: string) {
 
 }
 
+async function handleSize(key: string) {
+    await nextTick();
+    updateItemInForm.value(currentEditItem.value.id, key, sizeValue)
+
+}
+
 </script>
 
 <template>
     <DsInput v-model="labelValue" label="Label" @input="handleInput('label')"/>
     <DsInput v-model="placeHolderValue" label="Place Holder" @input="handlePlaceHolder('placeholder')"/>
+    <!--    <DsInput v-model="sizeValue" label="Size" @input="handleSize('size')"/>-->
+    <DsSelect
+        v-model="sizeValue"
+        :option="[{value:'small',text:'Small'},{value:'normal',text:'Normal'},{value:'medium',text:'Medium'},{value:'large',text:'Large'},{value:'full',text:'Full'}]"
+        label="Size"
+        @select="handleSize('size')"/>
 </template>
 
