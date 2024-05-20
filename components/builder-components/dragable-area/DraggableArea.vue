@@ -91,10 +91,6 @@ function dragStart(type: string) {
                     :class="['absolute inset-0 ',{'bg-blue-500 opacity-20 border border-blue-500 ':selectedItem === index}]"></div>
             </div>
         </div>
-        <!--        <div v-if="builderItems.length>0" class="flex justify-end space-x-2 m-2 w-full">-->
-        <!--            <DsButton @click="addButtonProperties">Cancelar</DsButton>-->
-        <!--            <DsButton>Aceptar</DsButton>-->
-        <!--        </div>-->
         <div
             :class="['flex w-full relative border  hover:border-blue-500 cursor-pointer z-10 mb-3', {'border-blue-500':selectedItem === builderItems.length}, {'border-transparent':selectedItem !== builderItems.length}]"
             @click="addButtonProperties">
