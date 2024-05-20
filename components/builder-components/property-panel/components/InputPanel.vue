@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import {nextTick} from 'vue';
 import {DsInput, DsSelect} from "~/components/DesignSystem";
 import {useCounterStore} from "~/stores/builderStore";
 
@@ -22,7 +21,6 @@ function handlePlaceHolder(key: string) {
 }
 
 async function handleSize(key: string) {
-    await nextTick();
     updateItemInForm.value(currentEditItem.value.id, key, sizeValue)
 
 }
