@@ -35,10 +35,6 @@ function handleClear() {
             <DsTypography variant="h1">Nuevo prototipo</DsTypography>
             <DraggableArea v-if="area=='edit'" @property="showModal = true"/>
             <CodeArea v-if="area=='code'"/>
-            <!--            <div class="flex justify-end mt-5 space-x-2">-->
-            <!--                <DsButton color="tertiary" @click="handleClick">Cancelar</DsButton>-->
-            <!--                <DsButton class="bg-gray-500 border-gray-400">Guardar</DsButton>-->
-            <!--            </div>-->
         </div>
         <div class="min-w-[365px] border border-gray-200 p-2 min-h-[75vh]">
             <DsTypography variant="h1">Form tree</DsTypography>
