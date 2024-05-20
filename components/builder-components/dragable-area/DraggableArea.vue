@@ -16,6 +16,7 @@ const components: { [key: string]: any } = {
     DsTextArea,
     DsButton,
     DsSelect,
+    DsConfirmationButton
 }
 const emit = defineEmits(["property"])
 
@@ -91,12 +92,12 @@ function dragStart(type: string) {
                     :class="['absolute inset-0 ',{'bg-blue-500 opacity-20 border border-blue-500 ':selectedItem === index}]"></div>
             </div>
         </div>
-        <div
-            :class="['flex w-full relative border  hover:border-blue-500 cursor-pointer z-10 mb-3', {'border-blue-500':selectedItem === builderItems.length}, {'border-transparent':selectedItem !== builderItems.length}]"
-            @click="addButtonProperties">
-            <DsConfirmationButton v-if="builderItems.length>0" @cancel="console.log('cancel')" @ok="console.log('ok')"/>
-            <div
-                :class="['absolute inset-0 ',{'bg-blue-500 opacity-20':selectedItem === builderItems.length}]"></div>
-        </div>
+        <!--        <div-->
+        <!--            :class="['flex w-full relative border  hover:border-blue-500 cursor-pointer z-10 mb-3', {'border-blue-500':selectedItem === builderItems.length}, {'border-transparent':selectedItem !== builderItems.length}]"-->
+        <!--            @click="addButtonProperties">-->
+        <!--            <DsConfirmationButton v-if="builderItems.length>0" @cancel="console.log('cancel')" @ok="console.log('ok')"/>-->
+        <!--            <div-->
+        <!--                :class="['absolute inset-0 ',{'bg-blue-500 opacity-20':selectedItem === builderItems.length}]"></div>-->
+        <!--        </div>-->
     </div>
 </template>

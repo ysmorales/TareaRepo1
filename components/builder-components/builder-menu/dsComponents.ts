@@ -17,4 +17,8 @@ export const DsComponents = [
         name: 'DsButton',
         props: SelectProperty
     },
+    {
+        name: 'DsConfirmationButton',
+        props: SelectProperty
+    },
 ]
