@@ -32,7 +32,6 @@ async function handleSize(key: string) {
 <template>
     <DsInput v-model="labelValue" label="Label" @input="handleInput('label')"/>
     <DsInput v-model="placeHolderValue" label="Place Holder" @input="handlePlaceHolder('placeholder')"/>
-    <!--    <DsInput v-model="sizeValue" label="Size" @input="handleSize('size')"/>-->
     <DsSelect
         v-model="sizeValue"
         :option="[{value:'small',text:'Small'},{value:'normal',text:'Normal'},{value:'medium',text:'Medium'},{value:'large',text:'Large'},{value:'full',text:'Full'}]"
