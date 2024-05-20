@@ -45,18 +45,24 @@ function handleClear() {
                     :class="showModal ? 'translate-x-0' : 'translate-x-full'"
                     class="bg-white w-96 h-full p-6 overflow-auto transform transition-all duration-500 ease-in-out border border-gray-200 shadow-lg"
                 >
-                    <div class="flex justify-between items-center border-b pb-4 mb-4">
-                        <DsTypography class="text-lg font-semibold">Properties <span class="text-blue-500">{{
-                                (currentEditItem?.name ?? '') + ' ' + (currentEditItem?.id ?? '')
-                            }}</span>
-                        </DsTypography>
-                        <button class="text-gray-400 hover:text-gray-500" @click="showModal = false">
-                            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                 xmlns="http://www.w3.org/2000/svg">
-                                <path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"
-                                      stroke-width="2"></path>
-                            </svg>
-                        </button>
+                    <div class="flex flex-col border-b pb-4 mb-4">
+                        <div class="flex justify-between items-center">
+                            <DsTypography class="text-lg font-semibold">Panel de propiedades
+                            </DsTypography>
+                            <button class="text-gray-400 hover:text-gray-500" @click="showModal = false">
+                                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"
+                                          stroke-width="2"></path>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="flex justify-between mt-5">
+                            Nombre:
+                            <span class="text-blue-500">{{
+                                    (currentEditItem?.name ?? '') + ' ' + (currentEditItem?.id ?? '')
+                                }}</span>
+                        </div>
                     </div>
                     <PropertyPanel/>
                 </div>
