@@ -37,6 +37,7 @@ async function handleSize(key: string) {
         v-model="sizeValue"
         :option="[{value:'small',text:'Small'},{value:'normal',text:'Normal'},{value:'medium',text:'Medium'},{value:'large',text:'Large'},{value:'full',text:'Full'}]"
         label="Size"
+        placeholder="Select size"
         @select="handleSize('size')"/>
 </template>
 
