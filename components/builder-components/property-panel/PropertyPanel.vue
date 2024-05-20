@@ -4,6 +4,7 @@ import {useCounterStore} from "~/stores/builderStore";
 import InputPanel from "~/components/builder-components/property-panel/components/InputPanel.vue";
 import SelectPanel from "~/components/builder-components/property-panel/components/SelectPanel.vue";
 import TextAreaPanel from "~/components/builder-components/property-panel/components/TextAreaPanel.vue";
+import ButtonPanel from "~/components/builder-components/property-panel/components/ButtonPanel.vue";
 
 const store = useCounterStore()
 const {currentEditItem} = toRefs(store)
@@ -21,6 +22,7 @@ watch(currentEditItem, () => {
     <InputPanel v-if="currentEditItem.name=='DsInput'" :key="componentKey"/>
     <SelectPanel v-if="currentEditItem.name=='DsSelect'" :key="componentKey"/>
     <TextAreaPanel v-if="currentEditItem.name=='DsTextArea'" :key="componentKey"/>
+    <ButtonPanel v-if="currentEditItem.name=='DsButton'" :key="componentKey"/>
     <!--    {{ JSON.stringify(builderItems) }}-->
     <!--    /////////////////////////////////////-->
     <!--    {{ JSON.stringify(currentEditItem) }}-->

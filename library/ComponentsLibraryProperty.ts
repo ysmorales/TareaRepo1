@@ -11,4 +11,8 @@ export const TextAreaProperty = {
 export const SelectProperty = {
     label: "",
 }
+export const ButtonProperty = {
+    text: "",
+    color: ""
+}
 

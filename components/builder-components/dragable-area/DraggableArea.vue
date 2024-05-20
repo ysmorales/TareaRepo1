@@ -5,7 +5,7 @@ import {DsButton, DsIcon, DsInput, DsSelect, DsTextArea} from "~/components/Desi
 import IconArea from "./components/IconArea.vue";
 
 const store = useCounterStore()
-const {builderItems, addItemToForm, addItemToEdit} = toRefs(store)
+const {builderItems, addItemToForm, addItemToEdit, generateId, changeCurrentDragItem} = toRefs(store)
 const {removeItemFromForm} = toRefs(store)
 const showIcons = ref(builderItems.value.map(() => false))
 const selectedItem = ref(-1) // Nuevo estado para el ítem seleccionado
@@ -13,13 +13,14 @@ const components: { [key: string]: any } = {
     DsInput,
     DsTextArea,
     DsButton,
-    DsSelect
+    DsSelect,
 }
 const emit = defineEmits(["property"])
 
 const drop = () => {
     addItemToForm.value()
 }
+
 
 const removeItem = (index: number) => {
     removeItemFromForm.value(index)
@@ -31,6 +32,7 @@ const viewProperties = (item: any, index: number) => {
     emit("property")
 }
 
+
 const filterProps = (props: Record<string, any>) => {
     const newProps: Record<string, any> = {};
     for (const key in props) {
@@ -40,9 +42,24 @@ const filterProps = (props: Record<string, any>) => {
     }
     return newProps;
 };
+
+function addButtonProperties() {
+    dragStart('DsButton')
+    viewProperties({name: 'DsButton', props: {}}, builderItems.value.length)
+
+}
+
+function dragStart(type: string) {
+
+    changeCurrentDragItem.value({name: type, id: generateId.value()});
+
+}
 </script>
 
 <template>
+    {{
+        JSON.stringify(builderItems)
+    }}
     <div
         class="w-full flex  border border-gray-300 shadow-md rounded-md p-5  flex-col  items-center"
         @drop="drop"
@@ -71,7 +88,7 @@ const filterProps = (props: Record<string, any>) => {
             </div>
         </div>
         <div v-if="builderItems.length>0" class="flex justify-end space-x-2 m-2 w-full">
-            <DsButton color="tertiary">Cancelar</DsButton>
+            <DsButton @click="addButtonProperties">Cancelar</DsButton>
             <DsButton>Aceptar</DsButton>
         </div>
     </div>

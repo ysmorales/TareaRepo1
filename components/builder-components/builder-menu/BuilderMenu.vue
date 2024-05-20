@@ -2,21 +2,15 @@
 
 import {DsIcon} from "~/components/DesignSystem";
 import {useCounterStore} from "~/stores/builderStore";
-import {components} from "~/components/builder-components/builder-menu/components";
+import {DsComponents} from "~/components/builder-components/builder-menu/dsComponents";
 
 const store = useCounterStore()
-const {changeCurrentDragItem} = toRefs(store)
-
-let idCounter = 0;
-
-function generateId() {
-    return idCounter++;
-}
+const {changeCurrentDragItem, generateId} = toRefs(store)
 
 function dragStart(type: string) {
-    const component = components.find(component => component.name === type);
+    const component = DsComponents.find(component => component.name === type);
     if (component) {
-        changeCurrentDragItem.value({...component, id: generateId()});
+        changeCurrentDragItem.value({...component, id: generateId.value()});
     }
 }
 </script>

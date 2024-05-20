@@ -10,6 +10,11 @@ export const useCounterStore = defineStore('counter', () => {
     const currentEditItem = ref<any | IItemBuilder>({})
     let idCounter = 0; // Agrega un contador para los IDs
 
+    function generateId() {
+        return idCounter++;
+    }
+
+
     function changeSideMenuType(newName: 'default' | 'builder') {
         sideMenuType.value = newName;
     }
@@ -49,6 +54,7 @@ export const useCounterStore = defineStore('counter', () => {
     }
 
     return {
+        generateId,
         builderItems,
         sideMenuType,
         changeSideMenuType,
