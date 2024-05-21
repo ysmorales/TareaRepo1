@@ -2,12 +2,14 @@ import type {IItemBuilder} from "~/interfaces/interfaces";
 import {defineStore} from 'pinia';
 import {ref} from 'vue';
 
+type ImodalType = 'property' | 'save'
 
 export const useCounterStore = defineStore('counter', () => {
     const builderItems = ref<IItemBuilder[]>([] as IItemBuilder[])
     const sideMenuType = ref<'default' | 'builder'>('default')
     const currentDragItem = ref<null | IItemBuilder>(null)
     const currentEditItem = ref<any | IItemBuilder>({})
+    const modalType = ref<ImodalType>('property')
     // let idCounter = 0; // Agrega un contador para los IDs
 
     // function generateId() {
@@ -83,7 +85,14 @@ export const useCounterStore = defineStore('counter', () => {
         currentDragItem.value = null
     }
 
+    function changeModal(type: ImodalType) {
+        modalType.value = type
+
+    }
+
     return {
+        changeModal,
+        modalType,
         builderItems,
         sideMenuType,
         changeSideMenuType,

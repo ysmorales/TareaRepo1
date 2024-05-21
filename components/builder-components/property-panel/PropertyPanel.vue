@@ -20,6 +20,12 @@ watch(currentEditItem, () => {
 </script>
 
 <template>
+    <div class="flex justify-between mt-5">
+        Nombre:
+        <span class="text-blue-500">{{
+                (currentEditItem?.name ?? '') + ' ' + (currentEditItem?.id ?? '')
+            }}</span>
+    </div>
     <InputPanel v-if="currentEditItem.name=='DsInput'" :key="componentKey"/>
     <SelectPanel v-if="currentEditItem.name=='DsSelect'" :key="componentKey"/>
     <TextAreaPanel v-if="currentEditItem.name=='DsTextArea'" :key="componentKey"/>

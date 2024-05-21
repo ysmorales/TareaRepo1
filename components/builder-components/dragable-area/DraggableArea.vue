@@ -8,7 +8,7 @@ import DsConfirmationButton
 
 
 const store = useCounterStore()
-const {builderItems, addItemToForm, addItemToEdit} = toRefs(store)
+const {builderItems, addItemToForm, addItemToEdit, changeModal} = toRefs(store)
 const {removeItemFromForm} = toRefs(store)
 const showIcons = ref(builderItems.value.map(() => false))
 const selectedItem = ref(-1) // Nuevo estado para el ítem seleccionado
@@ -33,6 +33,7 @@ const removeItem = (index: number) => {
 }
 
 const viewProperties = (item: any, index: number) => {
+    changeModal.value('property')
     addItemToEdit.value(item)
     selectedItem.value = index // Actualiza el ítem seleccionado
     emit("property")
