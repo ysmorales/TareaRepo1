@@ -6,6 +6,8 @@ import {useCounterStore} from "~/stores/builderStore";
 import PropertyPanel from "~/components/builder-components/property-panel/PropertyPanel.vue";
 import ToolPanel from "~/components/builder-components/tools-panel/ToolPanel.vue";
 import CodeArea from "~/components/builder-components/code-area/CodeArea.vue";
+import VersionArea from "~/components/builder-components/version-area/VersionArea.vue";
+import {versions} from "~/components/builder-components/version-area/mockData";
 
 const store = useCounterStore()
 const {clearStore} = toRefs(store)
@@ -29,20 +31,22 @@ function handleRemoveItem() {
     showModal.value = false
 }
 
+function handleSave() {
+    alert("handle save")
+}
+
 </script>
 
 <template>
 
     <div class="flex w-full">
         <div class="flex flex-col space-y-2 w-full p-2">
-            <ToolPanel @clear="handleClear" @code="handleCode" @edit="handleEdit"/>
+            <ToolPanel @clear="handleClear" @code="handleCode" @edit="handleEdit" @save="handleSave"/>
             <DsTypography variant="h1">Nuevo prototipo</DsTypography>
             <DraggableArea v-if="area=='edit'" @property="showModal = true" @remove="handleRemoveItem"/>
             <CodeArea v-if="area=='code'"/>
         </div>
-        <div class="min-w-[365px] border border-gray-200 p-2 min-h-[75vh]">
-            <DsTypography variant="h1">Form tree</DsTypography>
-        </div>
+        <VersionArea :version-data="versions"/>
         <transition name="slide">
             <div v-show="showModal" class="fixed h-full flex items-center justify-end z-50 min-w-[410px] right-0">
                 <div
