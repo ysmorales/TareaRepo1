@@ -6,7 +6,7 @@ import Item from "~/components/builder-components/builder-menu/components/item.v
 import {menuItemsData} from "./components/menuItemsData";
 
 const store = useCounterStore()
-const {changeCurrentDragItem, generateId} = toRefs(store)
+const {changeCurrentDragItem, generateId, builderItems} = toRefs(store)
 
 function dragStart(type: string) {
     const component = DsComponents.find(component => component.name === type);
@@ -14,6 +14,10 @@ function dragStart(type: string) {
         changeCurrentDragItem.value({...component, id: generateId.value()});
     }
 }
+
+const isDsConfirmationButtonPresent = computed(() => {
+    return builderItems.value.some(item => item.name === 'DsConfirmationButton');
+});
 </script>
 
 <template>
@@ -24,6 +28,7 @@ function dragStart(type: string) {
                 v-for="component in menuItemsData"
                 :key="component.name"
                 :description="component.description"
+                :draggable="!(isDsConfirmationButtonPresent && component.name === 'DsConfirmationButton')"
                 :icon="component.icon"
                 :name="component.name"
                 @drag-start="dragStart(component.name)"

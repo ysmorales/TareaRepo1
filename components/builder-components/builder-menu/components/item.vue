@@ -16,6 +16,10 @@ defineProps({
     description: {
         type: String,
         required: true
+    },
+    draggable: {
+        type: Boolean,
+        default: true
     }
 })
 
@@ -26,8 +30,8 @@ function dragStart(type: string) {
 
 <template>
     <div
+        :draggable="draggable"
         class="flex transition duration-500 ease-in-out cursor-pointer transform hover:-translate-y-1 hover:scale-105 shadow-lg rounded-lg bg-white hover:shadow-2xl"
-        draggable="true"
         role="option" tabindex="-1" @dragstart="dragStart( 'DsConfirmationButton')">
         <div class=" p-2 ">
             <DsIcon :name="icon" size="medium"/>
