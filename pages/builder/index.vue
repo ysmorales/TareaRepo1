@@ -25,6 +25,10 @@ function handleClear() {
     clearStore.value()
 }
 
+function handleRemoveItem() {
+    showModal.value = false
+}
+
 </script>
 
 <template>
@@ -33,7 +37,7 @@ function handleClear() {
         <div class="flex flex-col space-y-2 w-full p-2">
             <ToolPanel @clear="handleClear" @code="handleCode" @edit="handleEdit"/>
             <DsTypography variant="h1">Nuevo prototipo</DsTypography>
-            <DraggableArea v-if="area=='edit'" @property="showModal = true"/>
+            <DraggableArea v-if="area=='edit'" @property="showModal = true" @remove="handleRemoveItem"/>
             <CodeArea v-if="area=='code'"/>
         </div>
         <div class="min-w-[365px] border border-gray-200 p-2 min-h-[75vh]">

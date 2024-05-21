@@ -6,8 +6,9 @@ import IconArea from "./components/IconArea.vue";
 import DsConfirmationButton
     from "~/components/DesignSystem/components/form/confirmation-button/DsConfirmationButton.vue";
 
+
 const store = useCounterStore()
-const {builderItems, addItemToForm, addItemToEdit, generateId, changeCurrentDragItem, currentDragItem} = toRefs(store)
+const {builderItems, addItemToForm, addItemToEdit} = toRefs(store)
 const {removeItemFromForm} = toRefs(store)
 const showIcons = ref(builderItems.value.map(() => false))
 const selectedItem = ref(-1) // Nuevo estado para el ítem seleccionado
@@ -18,7 +19,7 @@ const components: { [key: string]: any } = {
     DsSelect,
     DsConfirmationButton
 }
-const emit = defineEmits(["property"])
+const emit = defineEmits(["property", "remove"])
 
 const drop = () => {
     addItemToForm.value()
@@ -26,6 +27,7 @@ const drop = () => {
 
 
 const removeItem = (index: number) => {
+    emit('remove')
     removeItemFromForm.value(index)
 }
 
