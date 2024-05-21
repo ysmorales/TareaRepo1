@@ -27,12 +27,22 @@ export const useCounterStore = defineStore('counter', () => {
         builderItems.value.splice(index, 1)
     }
 
+    function ensureConfirmationButtonAtEnd() {
+        const index = builderItems.value.findIndex(item => item.name === 'DsConfirmationButton');
+
+        if (index !== -1 && index !== builderItems.value.length - 1) {
+            const item = builderItems.value.splice(index, 1)[0];
+            builderItems.value.push(item);
+        }
+    }
+
     function addItemToForm() {
         const newItem = {
             ...currentDragItem.value,
-            id: (currentDragItem.value?.name == 'DsConfirmationButton' ? (idCounter++) + 1000 : idCounter++)
-        } as IItemBuilder; // Usa el contador para los IDs
+            id: idCounter++
+        } as IItemBuilder;
         builderItems.value.push(newItem);
+        ensureConfirmationButtonAtEnd();
     }
 
     function addItemToEdit(item: IItemBuilder) {
