@@ -46,17 +46,17 @@ const filterProps = (props: Record<string, any>) => {
     return newProps;
 };
 
-function addButtonProperties() {
-    dragStart('DsConfirmationButton')
-    viewProperties({name: 'DsConfirmationButton', props: {}}, builderItems.value.length)
+// function addButtonProperties() {
+//     dragStart('DsConfirmationButton')
+//     viewProperties({name: 'DsConfirmationButton', props: {}}, builderItems.value.length)
+//
+// }
 
-}
-
-function dragStart(type: string) {
-
-    changeCurrentDragItem.value({name: type, id: generateId.value()});
-
-}
+// function dragStart(type: string) {
+//
+//     changeCurrentDragItem.value({name: type, id: generateId.value()});
+//
+// }
 </script>
 
 <template>
