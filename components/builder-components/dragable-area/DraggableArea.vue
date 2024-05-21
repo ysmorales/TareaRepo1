@@ -28,6 +28,7 @@ const drop = () => {
 
 const removeItem = (index: number) => {
     emit('remove')
+    selectedItem.value = -1
     removeItemFromForm.value(index)
 }
 
