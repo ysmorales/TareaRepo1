@@ -28,7 +28,10 @@ export const useCounterStore = defineStore('counter', () => {
     }
 
     function addItemToForm() {
-        const newItem = {...currentDragItem.value, id: idCounter++} as IItemBuilder; // Usa el contador para los IDs
+        const newItem = {
+            ...currentDragItem.value,
+            id: (currentDragItem.value?.name == 'DsConfirmationButton' ? (idCounter++) + 1000 : idCounter++)
+        } as IItemBuilder; // Usa el contador para los IDs
         builderItems.value.push(newItem);
     }
 

@@ -7,7 +7,7 @@ import DsConfirmationButton
     from "~/components/DesignSystem/components/form/confirmation-button/DsConfirmationButton.vue";
 
 const store = useCounterStore()
-const {builderItems, addItemToForm, addItemToEdit, generateId, changeCurrentDragItem} = toRefs(store)
+const {builderItems, addItemToForm, addItemToEdit, generateId, changeCurrentDragItem, currentDragItem} = toRefs(store)
 const {removeItemFromForm} = toRefs(store)
 const showIcons = ref(builderItems.value.map(() => false))
 const selectedItem = ref(-1) // Nuevo estado para el ítem seleccionado

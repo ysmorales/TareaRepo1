@@ -11,7 +11,7 @@ const {changeCurrentDragItem, generateId, builderItems} = toRefs(store)
 function dragStart(type: string) {
     const component = DsComponents.find(component => component.name === type);
     if (component) {
-        changeCurrentDragItem.value({...component, id: generateId.value()});
+        changeCurrentDragItem.value(component);
     }
 }
 

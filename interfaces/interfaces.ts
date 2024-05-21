@@ -1,6 +1,6 @@
 export interface IItemBuilder {
     id: number;
-    name?: string;
+    name: string;
     props?: {
         [key: string]: any;
     };
