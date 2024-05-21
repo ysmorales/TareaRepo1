@@ -10,9 +10,9 @@ export const useCounterStore = defineStore('counter', () => {
     const currentEditItem = ref<any | IItemBuilder>({})
     let idCounter = 0; // Agrega un contador para los IDs
 
-    function generateId() {
-        return idCounter++;
-    }
+    // function generateId() {
+    //     return idCounter++;
+    // }
 
 
     function changeSideMenuType(newName: 'default' | 'builder') {
@@ -37,12 +37,17 @@ export const useCounterStore = defineStore('counter', () => {
     }
 
     function addItemToForm() {
-        const newItem = {
-            ...currentDragItem.value,
-            id: idCounter++
-        } as IItemBuilder;
-        builderItems.value.push(newItem);
-        ensureConfirmationButtonAtEnd();
+        if (Array.isArray(currentDragItem.value)) {
+            builderItems.value = currentDragItem.value
+        } else {
+            const newItem = {
+                ...currentDragItem.value,
+                id: idCounter++
+            } as IItemBuilder;
+            builderItems.value.push(newItem);
+            ensureConfirmationButtonAtEnd();
+        }
+
     }
 
     function addItemToEdit(item: IItemBuilder) {
@@ -67,7 +72,6 @@ export const useCounterStore = defineStore('counter', () => {
     }
 
     return {
-        generateId,
         builderItems,
         sideMenuType,
         changeSideMenuType,

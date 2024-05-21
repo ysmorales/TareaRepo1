@@ -6,7 +6,7 @@ import Item from "~/components/builder-components/builder-menu/components/item.v
 import {menuItemsData} from "./components/menuItemsData";
 
 const store = useCounterStore()
-const {changeCurrentDragItem, generateId, builderItems} = toRefs(store)
+const {changeCurrentDragItem, builderItems} = toRefs(store)
 
 function dragStart(type: string) {
     const component = DsComponents.find(component => component.name === type);
