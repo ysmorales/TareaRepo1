@@ -6,14 +6,20 @@ import {useCounterStore} from "~/stores/builderStore";
 const store = useCounterStore()
 const {currentEditItem, updateItemInForm} = toRefs(store)
 
-const textValue = ref(currentEditItem.value.props.size)
+const textValueCancel = ref(currentEditItem.value.props.textCancel)
+const textValueOK = ref(currentEditItem.value.props.textOk)
 
-function handleInputText(key: string) {
-    updateItemInForm.value(currentEditItem.value.id, key, textValue)
+function handleInputTextCancel(key: string) {
+    updateItemInForm.value(currentEditItem.value.id, key, textValueCancel)
+}
+
+function handleInputTextOK(key: string) {
+    updateItemInForm.value(currentEditItem.value.id, key, textValueOK)
 }
 </script>
 
 <template>
-    <DsInput v-model="textValue" label="Text" @input="handleInputText('text')"/>
+    <DsInput v-model="textValueCancel" label="Button cancel text" @input="handleInputTextCancel('textCancel')"/>
+    <DsInput v-model="textValueOK " label="Button ok text" @input="handleInputTextOK('textOk')"/>
 </template>
 

@@ -17,6 +17,7 @@ const componentKey = ref(0);
 watch(currentEditItem, () => {
     componentKey.value++;
 }, {deep: true});
+
 </script>
 
 <template>
@@ -29,7 +30,7 @@ watch(currentEditItem, () => {
     <InputPanel v-if="currentEditItem.name=='DsInput'" :key="componentKey"/>
     <SelectPanel v-if="currentEditItem.name=='DsSelect'" :key="componentKey"/>
     <TextAreaPanel v-if="currentEditItem.name=='DsTextArea'" :key="componentKey"/>
-    <ConfirmationButtonPanel v-if="currentEditItem.name=='DsConfirmationPanel'" :key="componentKey"/>
+    <ConfirmationButtonPanel v-if="currentEditItem.name=='DsConfirmationButton'" :key="componentKey"/>
     <!--    {{ JSON.stringify(builderItems) }}-->
     <!--    /////////////////////////////////////-->
     <!--    {{ JSON.stringify(currentEditItem) }}-->
