@@ -8,11 +8,23 @@ export const useCounterStore = defineStore('counter', () => {
     const sideMenuType = ref<'default' | 'builder'>('default')
     const currentDragItem = ref<null | IItemBuilder>(null)
     const currentEditItem = ref<any | IItemBuilder>({})
-    let idCounter = 0; // Agrega un contador para los IDs
+    // let idCounter = 0; // Agrega un contador para los IDs
 
     // function generateId() {
     //     return idCounter++;
     // }
+    function generateId(items: IItemBuilder[]): number {
+        // Si el array está vacío, comienza desde 1
+        if (items.length === 0) {
+            return 1;
+        }
+
+        // Ordena los elementos en orden descendente por ID
+        const sortedItems = [...items].sort((a, b) => b.id! - a.id!);
+
+        // Toma el ID del primer elemento (el más grande) y añade 1
+        return sortedItems[0].id! + 1;
+    }
 
 
     function changeSideMenuType(newName: 'default' | 'builder') {
@@ -42,7 +54,7 @@ export const useCounterStore = defineStore('counter', () => {
         } else {
             const newItem = {
                 ...currentDragItem.value,
-                id: idCounter++
+                id: generateId(builderItems.value),
             } as IItemBuilder;
             builderItems.value.push(newItem);
             ensureConfirmationButtonAtEnd();
