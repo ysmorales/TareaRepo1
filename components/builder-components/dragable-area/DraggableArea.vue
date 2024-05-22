@@ -50,7 +50,8 @@ const filterProps = (props: Record<string, any>) => {
     return newProps;
 };
 
-function handleValidate() {
+function handleValidate(item: any) {
+    addItemToEdit.value(item)
     selectedItem.value = -1
     emit('validate')
 }
@@ -80,7 +81,7 @@ function handleValidate() {
         >
             <div class="h-[25px]">
                 <IconArea v-show="showIcons[index]||selectedItem===index" :index="index" @removeItem="removeItem"
-                          @validate="handleValidate"/>
+                          @validate="handleValidate(item)"/>
             </div>
             <div
                 :class="['relative border hover:border-blue-500 cursor-pointer z-10 mb-3', {'border-blue-500':selectedItem === index}, {'border-transparent':selectedItem !== index}]"
