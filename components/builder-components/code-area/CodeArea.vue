@@ -5,10 +5,13 @@ import {useCounterStore} from "~/stores/builderStore";
 import Prism from 'prismjs';
 import beautify from 'js-beautify';
 import 'prismjs/themes/prism-tomorrow.css';
+import {DsButton} from "~/components/DesignSystem";
+import DsToast from "~/components/DesignSystem/components/basic/toast/DsToast.vue";
 
 const store = useCounterStore()
 const {builderItems} = toRefs(store)
 const code = ref(objectToVueCode(builderItems.value as FormItem[]));
+const showToast = ref(false);
 
 const options = {
     indent_size: 2,
@@ -38,17 +41,28 @@ const html = ref(
         "javascript",
     ),
 );
-
+const copyToClipboard = async () => {
+    try {
+        await navigator.clipboard.writeText(formattedCode);
+        showToast.value = true;
+    } catch (err) {
+        console.error('Error al copiar el código al portapapeles: ', err);
+    }
+};
 
 </script>
 <template>
-
-
-    <pre class="p-4 bg-gray-800 rounded-md shadow h-full text-sm overflow-auto  language-javascript"
-         v-html="html"></pre>
-
+    <DsToast v-model="showToast" message="El código se ha copiado al portapapeles correctamente."
+             title="Operación Exitosa"/>
+    <div class="relative">
+        <button
+            class="absolute top-2 right-0 m-2 mt-2 rounded-2xl hover:bg-gray-700 text-white border-transparent font-bold py-2 px-4 text-xs"
+            @click="copyToClipboard">Copiar
+        </button>
+        <pre class="p-4 bg-gray-800 rounded-md shadow h-full text-sm overflow-auto  language-javascript"
+             v-html="html"></pre>
+    </div>
 </template>
-
 <style scoped>
 pre {
     white-space: pre-wrap; /* css-3 */
