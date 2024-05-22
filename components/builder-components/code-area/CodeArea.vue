@@ -5,7 +5,6 @@ import {useCounterStore} from "~/stores/builderStore";
 import Prism from 'prismjs';
 import beautify from 'js-beautify';
 import 'prismjs/themes/prism-tomorrow.css';
-import {DsButton} from "~/components/DesignSystem";
 import DsToast from "~/components/DesignSystem/components/basic/toast/DsToast.vue";
 
 const store = useCounterStore()
