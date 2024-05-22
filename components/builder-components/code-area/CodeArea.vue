@@ -4,6 +4,7 @@ import {type FormItem, objectToVueCode} from "~/components/DesignSystem/utils/Co
 import {useCounterStore} from "~/stores/builderStore";
 import Prism from 'prismjs';
 import beautify from 'js-beautify';
+import 'prismjs/themes/prism-dark.min.css';
 
 const store = useCounterStore()
 const {builderItems} = toRefs(store)
@@ -37,6 +38,7 @@ const html = ref(
         "javascript",
     ),
 );
+
 
 </script>
 <template>
