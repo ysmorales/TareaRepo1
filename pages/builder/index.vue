@@ -16,17 +16,11 @@ const {clearStore, changeModal, modalType} = toRefs(store)
 const area = ref<'view' | 'edit' | 'code'>('edit')
 const showModal = ref(false)
 
-function getTitleModal() {
-    switch (modalType.value) {
-        case 'property':
-            return 'Panel de propiedades'
-        case 'save':
-            return 'Guardar prototipo'
-        case 'validate':
-            return 'Validar input'
-
-    }
-}
+const titles = {
+    'property': 'Panel de propiedades',
+    'save': 'Guardar prototipo',
+    'validate': 'Validar input'
+};
 
 const handle = {
     code: () => area.value = 'code',
@@ -64,7 +58,7 @@ const handle = {
                     <div class="flex flex-col border-b pb-4 mb-4">
                         <div class="flex justify-between items-center">
                             <DsTypography class="text-lg font-semibold">
-                                {{ getTitleModal() }}
+                                {{ titles[modalType] }}
                             </DsTypography>
                             <button class="text-gray-400 hover:text-gray-500" @click="showModal = false">
                                 <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
