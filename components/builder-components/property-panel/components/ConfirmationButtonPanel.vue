@@ -20,6 +20,7 @@ function handleInputTextOK(key: string) {
     updateItemInForm.value(currentEditItem.value.id, key, textValueOK)
 }
 
+
 function handleChangeColorCancel(key: string) {
     updateItemInForm.value(currentEditItem.value.id, key, colorValueCancel)
 }
@@ -33,7 +34,7 @@ function handleChangeColorOk(key: string) {
 
 <template>
     <DsInput v-model="textValueCancel" label="Texto del botón cancel" @input="handleInputTextCancel('textCancel')"/>
-    <DsInput v-model="textValueOK " label="Texto del botón ok" @input="handleInputTextOK('textOk')"/>
+    <DsInput v-model="textValueOK" label="Texto del botón ok" @input="handleInputTextOK('textOk')"/>
     <DsSelect
         v-model="colorValueCancel"
         :option="colorData"
