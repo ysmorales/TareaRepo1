@@ -32,14 +32,15 @@ function handleChangeColorOk(key: string) {
 </script>
 
 <template>
-    <DsInput v-model="textValueCancel" label="Button cancel text" @input="handleInputTextCancel('textCancel')"/>
-    <DsInput v-model="textValueOK " label="Button ok text" @input="handleInputTextOK('textOk')"/>
+    <DsInput v-model="textValueCancel" label="Texto del botón cancel" @input="handleInputTextCancel('textCancel')"/>
+    <DsInput v-model="textValueOK " label="Texto del botón ok" @input="handleInputTextOK('textOk')"/>
     <DsSelect
         v-model="colorValueCancel"
         :option="colorData"
-        label="Color button cancel"
+        label="Color del botón cancel"
+        placeholder="Seleccione color"
         @select="handleChangeColorCancel('colorCancel')"/>
-    <DsSelect v-model="colorValueOk" :option="colorData" label="Color button ok"
+    <DsSelect v-model="colorValueOk" :option="colorData" label="Color del botón ok" placeholder="Seleccione color"
               @select="handleChangeColorOk('colorOk')"/>
 </template>
 
