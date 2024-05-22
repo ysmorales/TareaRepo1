@@ -16,7 +16,6 @@ const {clearStore, changeModal, modalType} = toRefs(store)
 const area = ref<'view' | 'edit' | 'code'>('edit')
 const showModal = ref(false)
 
-
 function getTitleModal() {
     switch (modalType.value) {
         case 'property':
@@ -24,7 +23,7 @@ function getTitleModal() {
         case 'save':
             return 'Guardar prototipo'
         case 'validate':
-            return 'Validar prototipo'
+            return 'Validar input'
 
     }
 }
@@ -47,7 +46,6 @@ const handle = {
 </script>
 
 <template>
-
     <div class="flex w-full">
         <div class="flex flex-col space-y-2 w-full p-2">
             <ToolPanel @clear="handle.clear" @code="handle.code" @edit="handle.edit" @save="handle.save"/>
