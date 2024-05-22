@@ -59,7 +59,7 @@ const copyToClipboard = async () => {
             class="absolute top-2 right-0 m-2 mt-2 rounded-2xl hover:bg-gray-700 text-white border-transparent font-bold py-2 px-4 text-xs"
             @click="copyToClipboard">Copiar
         </button>
-        <pre class="p-4 bg-gray-800 rounded-md shadow h-full text-sm overflow-auto  language-javascript"
+        <pre class="p-4 pt-12 bg-gray-800 rounded-md shadow text-sm overflow-auto  language-javascript h-full"
              v-html="html"></pre>
     </div>
 </template>
@@ -70,6 +70,5 @@ pre {
     white-space: pre-wrap; /* Opera 4-6 */
     white-space: -o-pre-wrap; /* Opera 7 */
     word-wrap: break-word; /* Internet Explorer 5.5+ */
-    max-height: 200px;
 }
 </style>
