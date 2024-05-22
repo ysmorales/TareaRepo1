@@ -3,6 +3,7 @@ import {ref, toRefs} from 'vue';
 import {DsButton} from "~/components/DesignSystem";
 import {type FormItem, objectToVueCode} from "~/components/DesignSystem/utils/ConvertObjectToView";
 import {useCounterStore} from "~/stores/builderStore";
+import Prism from 'prismjs';
 
 const store = useCounterStore()
 const {builderItems} = toRefs(store)
@@ -18,12 +19,14 @@ const copyCode = () => {
             console.error('Error al copiar el código: ', err);
         });
 };
+const html = computed(() => Prism.highlight(code.value, Prism.languages.javascript, 'javascript'));
 
 </script>
 <template>
 
     <div class="flex flex-col justify-between p-4 bg-gray-800 text-white rounded-md shadow h-full">
-        <pre class="text-sm overflow-auto text-white" v-text="code"></pre>
+        <pre class="text-sm overflow-auto text-white language-javascript" v-html="html"></pre>
+
         <div class="flex justify-end">
             <DsButton @click="copyCode">Copiar
             </DsButton>
