@@ -48,7 +48,7 @@ const handle = {
 <template>
     <div class="flex w-full">
         <div class="flex flex-col space-y-2 w-full p-2">
-            <ToolPanel @clear="handle.clear" @code="handle.code" @edit="handle.edit" @save="handle.save"/>
+            <ToolPanel v-on="handle"/>
             <DsTypography variant="h1">Nuevo prototipo</DsTypography>
             <DraggableArea v-if="area=='edit'" @property="showModal = true" @remove="handle.removeItem"
                            @validate="handle.validate"/>
