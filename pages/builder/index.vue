@@ -13,35 +13,9 @@ import ValidatePanel from "~/components/builder-components/validate-panel/Valida
 
 const store = useCounterStore()
 const {clearStore, changeModal, modalType} = toRefs(store)
-
 const area = ref<'view' | 'edit' | 'code'>('edit')
 const showModal = ref(false)
 
-function handleCode() {
-    area.value = 'code'
-}
-
-function handleEdit() {
-    area.value = 'edit'
-}
-
-function handleClear() {
-    clearStore.value()
-}
-
-function handleRemoveItem() {
-    showModal.value = false
-}
-
-function handleSave() {
-    changeModal.value('save')
-    showModal.value = true
-}
-
-function handleValidate() {
-    changeModal.value('validate')
-    showModal.value = true
-}
 
 function getTitleModal() {
     switch (modalType.value) {
@@ -55,16 +29,31 @@ function getTitleModal() {
     }
 }
 
+const handle = {
+    code: () => area.value = 'code',
+    edit: () => area.value = 'edit',
+    clear: () => clearStore.value(),
+    removeItem: () => showModal.value = false,
+    save: () => {
+        changeModal.value('save')
+        showModal.value = true
+    },
+    validate: () => {
+        changeModal.value('validate')
+        showModal.value = true
+    },
+}
+
 </script>
 
 <template>
 
     <div class="flex w-full">
         <div class="flex flex-col space-y-2 w-full p-2">
-            <ToolPanel @clear="handleClear" @code="handleCode" @edit="handleEdit" @save="handleSave"/>
+            <ToolPanel @clear="handle.clear" @code="handle.code" @edit="handle.edit" @save="handle.save"/>
             <DsTypography variant="h1">Nuevo prototipo</DsTypography>
-            <DraggableArea v-if="area=='edit'" @property="showModal = true" @remove="handleRemoveItem"
-                           @validate="handleValidate"/>
+            <DraggableArea v-if="area=='edit'" @property="showModal = true" @remove="handle.removeItem"
+                           @validate="handle.validate"/>
             <CodeArea v-if="area=='code'"/>
         </div>
         <VersionArea :version-data="versions"/>
