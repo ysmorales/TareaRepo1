@@ -9,6 +9,7 @@ import CodeArea from "~/components/builder-components/code-area/CodeArea.vue";
 import VersionArea from "~/components/builder-components/version-area/VersionArea.vue";
 import {versions} from "~/components/builder-components/version-area/mockData";
 import SavePanel from "~/components/builder-components/save-panel/SavePanel.vue";
+import ValidatePanel from "~/components/builder-components/validate-panel/ValidatePanel.vue";
 
 const store = useCounterStore()
 const {clearStore, changeModal, modalType} = toRefs(store)
@@ -37,6 +38,23 @@ function handleSave() {
     showModal.value = true
 }
 
+function handleValidate() {
+    changeModal.value('validate')
+    showModal.value = true
+}
+
+function getTitleModal() {
+    switch (modalType.value) {
+        case 'property':
+            return 'Panel de propiedades'
+        case 'save':
+            return 'Guardar prototipo'
+        case 'validate':
+            return 'Validar prototipo'
+
+    }
+}
+
 </script>
 
 <template>
@@ -45,7 +63,8 @@ function handleSave() {
         <div class="flex flex-col space-y-2 w-full p-2">
             <ToolPanel @clear="handleClear" @code="handleCode" @edit="handleEdit" @save="handleSave"/>
             <DsTypography variant="h1">Nuevo prototipo</DsTypography>
-            <DraggableArea v-if="area=='edit'" @property="showModal = true" @remove="handleRemoveItem"/>
+            <DraggableArea v-if="area=='edit'" @property="showModal = true" @remove="handleRemoveItem"
+                           @validate="handleValidate"/>
             <CodeArea v-if="area=='code'"/>
         </div>
         <VersionArea :version-data="versions"/>
@@ -58,7 +77,7 @@ function handleSave() {
                     <div class="flex flex-col border-b pb-4 mb-4">
                         <div class="flex justify-between items-center">
                             <DsTypography class="text-lg font-semibold">
-                                {{ modalType == 'property' ? 'Panel de propiedades' : 'Guardar prototipo' }}
+                                {{ getTitleModal() }}
                             </DsTypography>
                             <button class="text-gray-400 hover:text-gray-500" @click="showModal = false">
                                 <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
@@ -72,6 +91,7 @@ function handleSave() {
                     </div>
                     <PropertyPanel v-if="modalType=='property'"/>
                     <SavePanel v-if="modalType=='save'"/>
+                    <ValidatePanel v-if="modalType=='validate'"/>
                 </div>
             </div>
         </transition>

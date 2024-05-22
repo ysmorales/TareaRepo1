@@ -19,7 +19,7 @@ const components: { [key: string]: any } = {
     DsSelect,
     DsConfirmationButton
 }
-const emit = defineEmits(["property", "remove"])
+const emit = defineEmits(["property", "remove", "validate"])
 
 const drop = () => {
     addItemToForm.value()
@@ -51,7 +51,8 @@ const filterProps = (props: Record<string, any>) => {
 };
 
 function handleValidate() {
-    alert('Validando')
+    selectedItem.value = -1
+    emit('validate')
 }
 </script>
 
