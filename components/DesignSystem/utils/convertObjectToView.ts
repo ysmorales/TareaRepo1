@@ -9,7 +9,9 @@ export function objectToVueCode(formItems: FormItem[]) {
         return "No se ha editado el formulario..."
     }
 
-    let vueCode = `<template>\n<form>\n`;
+    let vueCode = `<script setup lang="ts">\n\n</script>\n`;
+
+    vueCode += `<template>\n<form>\n`;
 
     formItems.forEach((item: FormItem) => {
         vueCode += `<${item.name}`;
