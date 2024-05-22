@@ -4,7 +4,7 @@ import {type FormItem, objectToVueCode} from "~/components/DesignSystem/utils/Co
 import {useCounterStore} from "~/stores/builderStore";
 import Prism from 'prismjs';
 import beautify from 'js-beautify';
-import 'prismjs/themes/prism-dark.min.css';
+import 'prismjs/themes/prism-tomorrow.css';
 
 const store = useCounterStore()
 const {builderItems} = toRefs(store)
