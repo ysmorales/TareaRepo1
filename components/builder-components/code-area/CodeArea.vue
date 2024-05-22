@@ -1,37 +1,50 @@
 <script lang="ts" setup>
 import {ref, toRefs} from 'vue';
-import {DsButton} from "~/components/DesignSystem";
 import {type FormItem, objectToVueCode} from "~/components/DesignSystem/utils/ConvertObjectToView";
 import {useCounterStore} from "~/stores/builderStore";
 import Prism from 'prismjs';
+import beautify from 'js-beautify';
 
 const store = useCounterStore()
 const {builderItems} = toRefs(store)
-
 const code = ref(objectToVueCode(builderItems.value as FormItem[]));
 
-const copyCode = () => {
-    navigator.clipboard.writeText(code.value)
-        .then(() => {
-            alert('Código copiado al portapapeles');
-        })
-        .catch(err => {
-            console.error('Error al copiar el código: ', err);
-        });
+const options = {
+    indent_size: 2,
+    indent_char: " ",
+    max_preserve_newlines: 5,
+    preserve_newlines: true,
+    keep_array_indentation: false,
+    break_chained_methods: false,
+    brace_style: "collapse",
+    space_before_conditional: true,
+    unescape_strings: false,
+    jslint_happy: false,
+    end_with_newline: false,
+    wrap_line_length: 0,
+    indent_inner_html: true,
+    comma_first: false,
+    e4x: false,
+    indent_empty_lines: true
 };
-const html = computed(() => Prism.highlight(code.value, Prism.languages.javascript, 'javascript'));
+
+const formattedCode = beautify.html(code.value, options);
+
+const html = ref(
+    Prism.highlight(
+        formattedCode,
+        Prism.languages.javascript,
+        "javascript",
+    ),
+);
 
 </script>
 <template>
 
-    <div class="flex flex-col justify-between p-4 bg-gray-800 text-white rounded-md shadow h-full">
-        <pre class="text-sm overflow-auto text-white language-javascript" v-html="html"></pre>
 
-        <div class="flex justify-end">
-            <DsButton @click="copyCode">Copiar
-            </DsButton>
-        </div>
-    </div>
+    <pre class="p-4 bg-gray-800 rounded-md shadow h-full text-sm overflow-auto  language-javascript"
+         v-html="html"></pre>
+
 </template>
 
 <style scoped>
