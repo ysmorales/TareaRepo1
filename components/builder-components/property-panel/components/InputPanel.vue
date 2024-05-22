@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import {DsInput, DsSelect} from "~/components/DesignSystem";
+import {DsAccordion, DsInput, DsSelect} from "~/components/DesignSystem";
 import {useCounterStore} from "~/stores/builderStore";
 
 const store = useCounterStore()

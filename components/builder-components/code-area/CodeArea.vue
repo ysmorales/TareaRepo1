@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import {ref, toRefs} from 'vue';
-import {type FormItem, objectToVueCode} from "~/components/DesignSystem/utils/ConvertObjectToView";
+import {type FormItem, objectToVueCode} from "~/components/DesignSystem/utils/convertObjectToView";
 import {useCounterStore} from "~/stores/builderStore";
 import Prism from 'prismjs';
 import beautify from 'js-beautify';

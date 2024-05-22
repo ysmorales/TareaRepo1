@@ -50,17 +50,9 @@ const filterProps = (props: Record<string, any>) => {
     return newProps;
 };
 
-// function addButtonProperties() {
-//     dragStart('DsConfirmationButton')
-//     viewProperties({name: 'DsConfirmationButton', props: {}}, builderItems.value.length)
-//
-// }
-
-// function dragStart(type: string) {
-//
-//     changeCurrentDragItem.value({name: type, id: generateId.value()});
-//
-// }
+function handleValidate() {
+    alert('Validando')
+}
 </script>
 
 <template>
@@ -86,7 +78,8 @@ const filterProps = (props: Record<string, any>) => {
             @mouseover="showIcons[index] = true"
         >
             <div class="h-[25px]">
-                <IconArea v-show="showIcons[index]||selectedItem===index" :index="index" @removeItem="removeItem"/>
+                <IconArea v-show="showIcons[index]||selectedItem===index" :index="index" @removeItem="removeItem"
+                          @validate="handleValidate"/>
             </div>
             <div
                 :class="['relative border hover:border-blue-500 cursor-pointer z-10 mb-3', {'border-blue-500':selectedItem === index}, {'border-transparent':selectedItem !== index}]"
