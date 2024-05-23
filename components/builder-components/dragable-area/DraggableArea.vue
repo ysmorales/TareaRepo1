@@ -50,9 +50,9 @@ const filterProps = (props: Record<string, any>) => {
     return newProps;
 };
 
-function handleValidate(item: any) {
+function handleValidate(item: any, index: number) {
     addItemToEdit.value(item)
-    selectedItem.value = -1
+    selectedItem.value = index
     emit('validate')
 }
 </script>
@@ -81,7 +81,7 @@ function handleValidate(item: any) {
         >
             <div class="h-[25px]">
                 <IconArea v-show="showIcons[index]||selectedItem===index" :index="index" @removeItem="removeItem"
-                          @validate="handleValidate(item)"/>
+                          @validate="handleValidate(item,index)"/>
             </div>
             <div
                 :class="['relative border hover:border-blue-500 cursor-pointer z-10 mb-3', {'border-blue-500':selectedItem === index}, {'border-transparent':selectedItem !== index}]"
@@ -91,12 +91,5 @@ function handleValidate(item: any) {
                     :class="['absolute inset-0 ',{'bg-blue-500 opacity-20 border border-blue-500 ':selectedItem === index}]"></div>
             </div>
         </div>
-        <!--        <div-->
-        <!--            :class="['flex w-full relative border  hover:border-blue-500 cursor-pointer z-10 mb-3', {'border-blue-500':selectedItem === builderItems.length}, {'border-transparent':selectedItem !== builderItems.length}]"-->
-        <!--            @click="addButtonProperties">-->
-        <!--            <DsConfirmationButton v-if="builderItems.length>0" @cancel="console.log('cancel')" @ok="console.log('ok')"/>-->
-        <!--            <div-->
-        <!--                :class="['absolute inset-0 ',{'bg-blue-500 opacity-20':selectedItem === builderItems.length}]"></div>-->
-        <!--        </div>-->
     </div>
 </template>
