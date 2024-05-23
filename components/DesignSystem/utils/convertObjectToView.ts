@@ -20,30 +20,52 @@ export function objectToVueCode(formItems: FormItem[]) {
 
     let reactiveObject = 'const formValues = reactive({\n';
     formItems.forEach((item: FormItem, index: number) => {
-        reactiveObject += `${item.name}${index}: '',\n`;
+        if (!item.name.startsWith('DsConfirmationButton')) {
+            reactiveObject += `${item.name}${index}: '',\n`;
+        }
     });
     reactiveObject += '});\n';
     vueCode += reactiveObject;
 
-    vueCode += `\nconst v$ = useVuelidate();\n\n`;
-
+    let formRules = 'const formRules = reactive({\n';
     formItems.forEach((item: FormItem, index: number) => {
-        vueCode += `$: v$.value.formValues.${item.name}${index} = { required, minLength: minLength(3) };\n`;
+        if (!item.name.startsWith('DsConfirmationButton')) {
+            formRules += `${item.name}${index}: { required},\n`;
+        }
     });
+    formRules += '});\n';
+    vueCode += formRules;
+
+    vueCode += `\nconst v$ = useVuelidate(formRules, formValues);\n\n`;
 
     vueCode += `</script>\n`;
 
     vueCode += `<template>\n<form>\n`;
 
     formItems.forEach((item: FormItem, index: number) => {
-        vueCode += `<${item.name} v-model="formValues.${item.name}${index}"`;
-        for (let prop in item.props) {
-            if (item.props[prop] !== '') {
-                vueCode += ` ${prop}="${item.props[prop]}"`;
+        if (!item.name.startsWith('DsConfirmationButton')) {
+            vueCode += `<${item.name} v-model="formValues.${item.name}${index}"`;
+            for (let prop in item.props) {
+                if (item.props[prop] !== '') {
+                    vueCode += ` ${prop}="${item.props[prop]}"`;
+                }
             }
+            vueCode += ' />\n';
+            vueCode += `<div v-if="v$.value.${item.name}${index}.$error" class="text-red-500">Please enter a valid value</div>\n`;
         }
-        vueCode += ' />\n';
-        vueCode += `<div v-if="v$.value.formValues.${item.name}${index}.$error" class="text-red-500">Please enter a valid value</div>\n`;
+    });
+
+    // Agregar DsConfirmationButton al final del formulario
+    formItems.forEach((item: FormItem, index: number) => {
+        if (item.name.startsWith('DsConfirmationButton')) {
+            vueCode += `<${item.name}`;
+            for (let prop in item.props) {
+                if (item.props[prop] !== '') {
+                    vueCode += ` ${prop}="${item.props[prop]}"`;
+                }
+            }
+            vueCode += ' />\n';
+        }
     });
 
     vueCode += `</form>\n</template>`;
