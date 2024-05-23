@@ -58,9 +58,9 @@ function handleValidate(item: any) {
 </script>
 
 <template>
-    <!--    {{-->
-    <!--        JSON.stringify(builderItems)-->
-    <!--    }}-->
+    {{
+        JSON.stringify(builderItems)
+    }}
     <div
         class="w-full flex  border border-gray-300 shadow-md rounded-md p-5  flex-col  items-center"
         @drop="drop"
