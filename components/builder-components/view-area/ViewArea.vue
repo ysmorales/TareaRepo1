@@ -2,7 +2,6 @@
 import {useCounterStore} from "~/stores/builderStore";
 import {toRefs, reactive} from "vue";
 import {filterProps} from "~/utils/filterProps";
-import {required} from '@vuelidate/validators';
 import {
     DsButton,
     DsConfirmationButton,
