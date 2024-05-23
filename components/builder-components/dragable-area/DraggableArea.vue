@@ -47,11 +47,11 @@ function handleValidate(item: any, index: number) {
 
 <template>
     <div
-        class="w-full flex  border border-gray-300 shadow-md rounded-md p-5  flex-col  items-center"
+        class="w-full flex  border border-gray-300 shadow-md rounded-md p-5  flex-col  items-center min-h-[400px]"
         @drop="drop"
         @dragover.prevent
     >
-        <div v-if="builderItems.length==0" class="flex flex-col justify-center items-center">
+        <div v-if="builderItems.length==0" class="flex flex-col justify-center h-full items-center">
             <DsIcon class="mb-4" name="hand-pointer" size="medium"/>
             <p class="mb-2">Drag elements here</p>
             <p>Grab an element from the left and drop it here</p>

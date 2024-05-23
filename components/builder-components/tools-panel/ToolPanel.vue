@@ -9,7 +9,10 @@ const emit = defineEmits([
 ])
 
 const setActiveButton = (buttonName: 'edit' | 'view' | 'code' | 'save' | 'clear') => {
-    activeButton.value = buttonName;
+    if (buttonName !== 'clear' && buttonName !== 'save') {
+        activeButton.value = buttonName;
+    }
+
     emit(buttonName);
 };
 </script>
@@ -22,14 +25,7 @@ const setActiveButton = (buttonName: 'edit' | 'view' | 'code' | 'save' | 'clear'
         >
             <DsIcon name="arrow-left" title="Regresar"/>
         </button>
-
-        <div class="flex space-x-1">
-            <button
-                :class="['p-1 rounded-md hover:bg-gray-300 hover:text-black active:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150 ease-in-out', {'bg-blue-500 text-white':activeButton === 'save'}]"
-                @click="setActiveButton('save')"
-            >
-                <DsIcon name="save" title="Guardar"/>
-            </button>
+        <div>
             <button
                 :class="['p-1 rounded-md hover:bg-gray-300 hover:text-black active:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150 ease-in-out', {'bg-blue-500 text-white':activeButton === 'code'}]"
                 @click="setActiveButton('code')"
@@ -48,11 +44,21 @@ const setActiveButton = (buttonName: 'edit' | 'view' | 'code' | 'save' | 'clear'
             >
                 <DsIcon name="eye" title="Vista previa"/>
             </button>
+        </div>
+
+        <div class="flex space-x-1">
             <button
-                :class="['p-1 rounded-md  hover:bg-gray-300 hover:text-black  active:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150 ease-in-out',{'bg-blue-500 text-white':activeButton === 'clear'}]"
+                :class="['p-1 rounded-md hover:bg-gray-300 hover:text-black active:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150 ease-in-out']"
+                @click="setActiveButton('save')"
+            >
+                <DsIcon name="save" title="Guardar"/>
+            </button>
+
+            <button
+                :class="['p-1 rounded-md  hover:bg-gray-300 hover:text-black  active:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150 ease-in-out']"
                 @click="setActiveButton('clear')"
             >
-                <DsIcon name="trash" title="Limpiar todo el formulario"/>
+                <DsIcon color="danger" name="trash" title="Limpiar todo el formulario"/>
             </button>
         </div>
     </div>
