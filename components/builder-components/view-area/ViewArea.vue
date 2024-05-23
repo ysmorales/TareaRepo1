@@ -24,25 +24,9 @@ const components: { [key: string]: any } = {
     DsConfirmationButton
 }
 
-// const obtainFormValues = computed(() => {
-//     return builderItems.value.reduce((acc, item) => {
-//         if (item && typeof item.name === 'string' && typeof item.id === 'number') {
-//             acc[item.name + item.id] = '';
-//         }
-//         return acc;
-//     }, {} as Record<string, string>);
-// });
-
-const obtainFormRules = computed(() => {
-    return builderItems.value.reduce((acc, item) => {
-        if (item && typeof item.name === 'string' && typeof item.id === 'number') {
-            acc[item.name + item.id] = {required};
-        }
-        return acc;
-    }, {} as Record<string, any>);
-});
 
 const formValues: { [key: string]: any } = reactive({});
+const formRules: { [key: string]: any } = reactive({});
 
 onMounted(() => {
     builderItems.value.forEach((item) => {
@@ -62,7 +46,26 @@ watch(builderItems, (newVal) => {
         }
     });
 }, {deep: true});
-const formRules: { [key: string]: any } = reactive(obtainFormRules);
+
+
+onMounted(() => {
+    builderItems.value.forEach((item) => {
+        if (item && typeof item.name === 'string' && typeof item.id === 'number') {
+            formRules[item.name + item.id] = {required};
+        }
+    });
+});
+
+watch(builderItems, (newVal) => {
+    newVal.forEach((item) => {
+        if (item && typeof item.name === 'string' && typeof item.id === 'number') {
+            const key = item.name + item.id;
+            if (!(key in formRules)) {
+                formRules[key] = {required};
+            }
+        }
+    });
+}, {deep: true});
 const $V = useVuelidate(formRules, formValues);
 
 function submitForm() {
