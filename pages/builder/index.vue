@@ -10,6 +10,7 @@ import VersionArea from "~/components/builder-components/version-area/VersionAre
 import {versions} from "~/components/builder-components/version-area/mockData";
 import SavePanel from "~/components/builder-components/save-panel/SavePanel.vue";
 import ValidatePanel from "~/components/builder-components/validate-panel/ValidatePanel.vue";
+import ViewArea from "~/components/builder-components/view-area/ViewArea.vue";
 
 const store = useCounterStore()
 const {clearStore, changeModal, modalType} = toRefs(store)
@@ -35,6 +36,7 @@ const handle = {
         changeModal.value('validate')
         showModal.value = true
     },
+    view: () => area.value = 'view'
 }
 
 </script>
@@ -47,6 +49,7 @@ const handle = {
             <DraggableArea v-if="area=='edit'" @property="showModal = true" @remove="handle.removeItem"
                            @validate="handle.validate"/>
             <CodeArea v-if="area=='code'"/>
+            <ViewArea v-if="area=='view'"/>
         </div>
         <VersionArea :version-data="versions"/>
         <transition name="slide">
