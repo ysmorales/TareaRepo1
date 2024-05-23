@@ -1,10 +1,9 @@
 <script lang="ts" setup>
 import {useCounterStore} from "~/stores/builderStore";
 import {ref, toRefs} from 'vue';
-import {DsButton, DsIcon, DsInput, DsSelect, DsTextArea} from "~/components/DesignSystem";
+import {DsButton, DsConfirmationButton, DsIcon, DsInput, DsSelect, DsTextArea} from "~/components/DesignSystem";
 import IconArea from "./components/IconArea.vue";
-import DsConfirmationButton
-    from "~/components/DesignSystem/components/form/confirmation-button/DsConfirmationButton.vue";
+import {filterProps} from "~/utils/filterProps";
 
 
 const store = useCounterStore()
@@ -38,17 +37,6 @@ const viewProperties = (item: any, index: number) => {
     selectedItem.value = index // Actualiza el ítem seleccionado
     emit("property")
 }
-
-
-const filterProps = (props: Record<string, any>) => {
-    const newProps: Record<string, any> = {};
-    for (const key in props) {
-        if (props[key] !== '') {
-            newProps[key] = props[key];
-        }
-    }
-    return newProps;
-};
 
 function handleValidate(item: any, index: number) {
     addItemToEdit.value(item)
