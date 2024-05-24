@@ -59,6 +59,8 @@ export const useCounterStore = defineStore('counter', () => {
                 id: generateId(builderItems.value),
             } as IItemBuilder;
             builderItems.value.push(newItem);
+            //para que se actualice el estado
+            builderItems.value = [...builderItems.value];
             ensureConfirmationButtonAtEnd();
         }
 

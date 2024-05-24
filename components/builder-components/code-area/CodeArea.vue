@@ -11,6 +11,7 @@ const store = useCounterStore()
 const {builderItems, addItemToForm} = toRefs(store)
 const code = ref('');
 const showToast = ref(false);
+const componentKey = ref(0);
 
 const options = {
     indent_size: 2,
@@ -54,6 +55,7 @@ const copyToClipboard = async () => {
 };
 const drop = () => {
     addItemToForm.value()
+    componentKey.value++;
 }
 
 </script>
@@ -64,12 +66,13 @@ const drop = () => {
         @dragover.prevent>
         <DsToast v-model="showToast" message="El código se ha copiado al portapapeles correctamente."
                  title="Operación Exitosa"/>
-        <div class="relative">
+        <div class="relative ">
             <button
                 class="absolute top-2 right-0 m-2 mt-2 rounded-2xl hover:bg-gray-700 text-white border-transparent font-bold py-2 px-4 text-xs"
                 @click="copyToClipboard">Copiar
             </button>
-            <pre class=" bg-gray-800 rounded-md shadow text-sm overflow-auto  language-javascript h-full"
+            <pre :key="componentKey"
+                 class=" bg-gray-800 rounded-md shadow text-sm overflow-auto  language-javascript h-full"
                  v-html="html"></pre>
         </div>
     </div>
