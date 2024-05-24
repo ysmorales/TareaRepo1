@@ -47,6 +47,10 @@ export function objectToVueCode(formItems: FormItem[]) {
     }
 }\n`;
 
+    vueCode += `function handleCancelForm() {
+        emit('cancel')
+}\n`;
+
     vueCode += `</script>\n`;
 
     vueCode += `<template>\n<form @submit.prevent="submitForm">\n`;
@@ -66,7 +70,7 @@ export function objectToVueCode(formItems: FormItem[]) {
     // Agregar DsConfirmationButton al final del formulario
     formItems.forEach((item: FormItem, index: number) => {
         if (item.name.startsWith('DsConfirmationButton')) {
-            vueCode += `<${item.name}`;
+            vueCode += `<${item.name} @cancel="handleCancelForm"`;
             for (let prop in item.props) {
                 if (item.props[prop] !== '') {
                     vueCode += ` ${prop}="${item.props[prop]}"`;
