@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import {ref, toRefs} from 'vue';
+import {ref, toRefs, watch} from 'vue';
 import {type FormItem, objectToVueCode} from "~/components/DesignSystem/utils/convertObjectToView";
 import {useCounterStore} from "~/stores/builderStore";
 import Prism from 'prismjs';
@@ -9,7 +9,7 @@ import DsToast from "~/components/DesignSystem/components/basic/toast/DsToast.vu
 
 const store = useCounterStore()
 const {builderItems} = toRefs(store)
-const code = ref(objectToVueCode(builderItems.value as FormItem[]));
+const code = ref('');
 const showToast = ref(false);
 
 const options = {
@@ -31,15 +31,19 @@ const options = {
     indent_empty_lines: true
 };
 
-const formattedCode = beautify.html(code.value, options);
+let formattedCode = '';
+const html = ref('');
 
-const html = ref(
-    Prism.highlight(
+watch(builderItems, (newVal) => {
+    code.value = objectToVueCode(newVal as FormItem[]);
+    formattedCode = beautify.html(code.value, options);
+    html.value = Prism.highlight(
         formattedCode,
         Prism.languages.javascript,
         "javascript",
-    ),
-);
+    );
+}, {immediate: true});
+
 const copyToClipboard = async () => {
     try {
         await navigator.clipboard.writeText(formattedCode);
@@ -51,15 +55,18 @@ const copyToClipboard = async () => {
 
 </script>
 <template>
-    <DsToast v-model="showToast" message="El código se ha copiado al portapapeles correctamente."
-             title="Operación Exitosa"/>
-    <div class="relative">
-        <button
-            class="absolute top-2 right-0 m-2 mt-2 rounded-2xl hover:bg-gray-700 text-white border-transparent font-bold py-2 px-4 text-xs"
-            @click="copyToClipboard">Copiar
-        </button>
-        <pre class="p-4 pt-12 bg-gray-800 rounded-md shadow text-sm overflow-auto  language-javascript h-full"
-             v-html="html"></pre>
+    <div
+        class="md:min-w-[723px]  border border-gray-300 shadow-md rounded-md p-5  flex-col  items-center min-h-[400px]">
+        <DsToast v-model="showToast" message="El código se ha copiado al portapapeles correctamente."
+                 title="Operación Exitosa"/>
+        <div class="relative">
+            <button
+                class="absolute top-2 right-0 m-2 mt-2 rounded-2xl hover:bg-gray-700 text-white border-transparent font-bold py-2 px-4 text-xs"
+                @click="copyToClipboard">Copiar
+            </button>
+            <pre class=" bg-gray-800 rounded-md shadow text-sm overflow-auto  language-javascript h-full"
+                 v-html="html"></pre>
+        </div>
     </div>
 </template>
 <style scoped>

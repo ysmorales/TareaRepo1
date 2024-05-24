@@ -88,7 +88,7 @@ function submitForm() {
     <!--    <h1>valores de validación</h1>-->
     <!--    {{ JSON.stringify(formRules) }}-->
     <div
-        class="w-full flexp-5 flex-col  items-center justify-center border border-gray-300 shadow-md rounded-md p-5 min-h-[400px]"
+        class="w-full flexp-5 flex-col md:min-w-[723px]  items-center justify-center border border-gray-300 shadow-md rounded-md p-5 min-h-[400px]"
     >
         <div v-if="builderItems.length==0" class="flex flex-col h-full justify-center items-center">
             <DsTypography>Area de previsualización, no se ha adicionado componentes aún.</DsTypography>

@@ -50,7 +50,7 @@ function handleValidate(item: any, index: number) {
 <template>
     <!--    {{ JSON.stringify(builderItems) }}-->
     <div
-        class="w-full flex  border border-gray-300 shadow-md rounded-md p-5  flex-col  items-center min-h-[400px]"
+        class="w-full flex md:min-w-[723px]  border border-gray-300 shadow-md rounded-md p-5  flex-col  items-center min-h-[400px]"
         @drop="drop"
         @dragover.prevent
     >
