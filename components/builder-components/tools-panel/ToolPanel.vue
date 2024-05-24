@@ -27,12 +27,6 @@ const setActiveButton = (buttonName: 'edit' | 'view' | 'code' | 'save' | 'clear'
         </button>
         <div>
             <button
-                :class="['p-1 rounded-md hover:bg-gray-300 hover:text-black active:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150 ease-in-out', {'bg-blue-500 text-white':activeButton === 'code'}]"
-                @click="setActiveButton('code')"
-            >
-                <DsIcon name="code" title="Ver código"/>
-            </button>
-            <button
                 :class="['p-1 rounded-md hover:bg-gray-300 hover:text-black active:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150 ease-in-out',{'bg-blue-500 text-white':activeButton === 'edit'}]"
                 @click="setActiveButton('edit')"
             >
@@ -43,6 +37,12 @@ const setActiveButton = (buttonName: 'edit' | 'view' | 'code' | 'save' | 'clear'
                 @click="setActiveButton('view')"
             >
                 <DsIcon name="eye" title="Vista previa"/>
+            </button>
+            <button
+                :class="['p-1 rounded-md hover:bg-gray-300 hover:text-black active:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150 ease-in-out', {'bg-blue-500 text-white':activeButton === 'code'}]"
+                @click="setActiveButton('code')"
+            >
+                <DsIcon name="code" title="Ver código"/>
             </button>
         </div>
 

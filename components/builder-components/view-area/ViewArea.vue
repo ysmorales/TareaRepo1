@@ -83,10 +83,10 @@ function submitForm() {
 </script>
 
 <template>
-    <h1>valores del form</h1>
-    {{ JSON.stringify(formValues) }}
-    <h1>valores de validación</h1>
-    {{ JSON.stringify(formRules) }}
+    <!--    <h1>valores del form</h1>-->
+    <!--    {{ JSON.stringify(formValues) }}-->
+    <!--    <h1>valores de validación</h1>-->
+    <!--    {{ JSON.stringify(formRules) }}-->
     <div
         class="w-full flexp-5 flex-col  items-center justify-center border border-gray-300 shadow-md rounded-md p-5 min-h-[400px]"
     >
