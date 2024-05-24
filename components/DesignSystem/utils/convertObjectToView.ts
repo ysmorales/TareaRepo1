@@ -12,8 +12,15 @@ export function objectToVueCode(formItems: FormItem[]) {
     let imports = [
         `import { reactive } from 'vue';`,
         `import { useVuelidate } from '@vuelidate/core';`,
-        `import { required, minLength } from '@vuelidate/validators';`
+        `import { required, minLength } from '@vuelidate/validators';`,
     ];
+    
+    // Crear un conjunto para almacenar los nombres de los componentes únicos
+    const componentNames = new Set(formItems.map(item => item.name));
+
+    // Agregar una importación para cada componente único
+    let componentImports = Array.from(componentNames).join(', ');
+    imports.push(`import { ${componentImports} } from "~/components/DesignSystem";`);
 
     let vueCode = `<script setup lang="ts">\n`;
     vueCode += imports.join(' ') + '\n\n';
