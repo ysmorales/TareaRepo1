@@ -8,7 +8,7 @@ import 'prismjs/themes/prism-tomorrow.css';
 import DsToast from "~/components/DesignSystem/components/basic/toast/DsToast.vue";
 
 const store = useCounterStore()
-const {builderItems} = toRefs(store)
+const {builderItems, addItemToForm} = toRefs(store)
 const code = ref('');
 const showToast = ref(false);
 
@@ -52,11 +52,16 @@ const copyToClipboard = async () => {
         console.error('Error al copiar el código al portapapeles: ', err);
     }
 };
+const drop = () => {
+    addItemToForm.value()
+}
 
 </script>
 <template>
     <div
-        class="md:min-w-[723px]  border border-gray-300 shadow-md rounded-md p-5  flex-col  items-center min-h-[400px]">
+        class="md:min-w-[723px]  border border-gray-300 shadow-md rounded-md p-5  flex-col  items-center min-h-[400px]"
+        @drop="drop"
+        @dragover.prevent>
         <DsToast v-model="showToast" message="El código se ha copiado al portapapeles correctamente."
                  title="Operación Exitosa"/>
         <div class="relative">

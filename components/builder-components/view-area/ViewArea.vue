@@ -14,7 +14,7 @@ import {useVuelidate} from "@vuelidate/core";
 import {required} from "@vuelidate/validators";
 
 const store = useCounterStore()
-const {builderItems} = toRefs(store)
+const {builderItems, addItemToForm} = toRefs(store)
 
 const components: { [key: string]: any } = {
     DsInput,
@@ -79,6 +79,9 @@ function submitForm() {
     }
 }
 
+const drop = () => {
+    addItemToForm.value()
+}
 
 </script>
 
@@ -89,7 +92,8 @@ function submitForm() {
     <!--    {{ JSON.stringify(formRules) }}-->
     <div
         class="w-full flexp-5 flex-col md:min-w-[723px]  items-center justify-center border border-gray-300 shadow-md rounded-md p-5 min-h-[400px]"
-    >
+        @drop="drop"
+        @dragover.prevent>
         <div v-if="builderItems.length==0" class="flex flex-col h-full justify-center items-center">
             <DsTypography>Area de previsualización, no se ha adicionado componentes aún.</DsTypography>
         </div>
