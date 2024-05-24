@@ -28,6 +28,8 @@ const components: { [key: string]: any } = {
 const formValues: { [key: string]: any } = reactive({});
 const formRules: { [key: string]: any } = reactive({});
 
+const emit = defineEmits(["submit", "cancel"])
+
 onMounted(() => {
     builderItems.value.forEach((item) => {
         if (item && typeof item.name === 'string' && typeof item.id === 'number' && !item.name.includes('DsConfirmationButton')) {
@@ -69,11 +71,8 @@ const $V = useVuelidate(formRules, formValues);
 
 function submitForm() {
     $V.value.$touch();
-    console.log(formValues)
-    console.log(formRules)
     if (!$V.value.$error) {
-        console.log(formValues)
-        console.log(formRules)
+        emit('submit', formValues)
     } else {
         console.log('error')
     }
