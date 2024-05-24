@@ -38,9 +38,18 @@ export function objectToVueCode(formItems: FormItem[]) {
 
     vueCode += `\nconst v$ = useVuelidate(formRules, formValues);\n\n`;
 
+    vueCode += `function submitForm() {
+    v$.value.$touch();
+    if (!v$.value.$error) {
+        emit('submit', formValues)
+    } else {
+        console.log('error')
+    }
+}\n`;
+
     vueCode += `</script>\n`;
 
-    vueCode += `<template>\n<form>\n`;
+    vueCode += `<template>\n<form @submit.prevent="submitForm">\n`;
 
     formItems.forEach((item: FormItem, index: number) => {
         if (!item.name.startsWith('DsConfirmationButton')) {
