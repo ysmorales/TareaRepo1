@@ -94,12 +94,13 @@ function submitForm() {
         <div v-if="builderItems.length==0" class="flex flex-col h-full justify-center items-center">
             <DsTypography>Area de previsualización, no se ha adicionado componentes aún.</DsTypography>
         </div>
-        <component :is="item && item.name && components[item.name]"
-                   v-for="(item, index) in builderItems"
-                   v-if="builderItems.length>0"
-                   :key="index" v-model="formValues[item.name! + item.id]"
-                   :error="$V[item.name! + item.id]?.$error ? $V[item.name! + item.id].required.$message : ''"
-                   v-bind="filterProps(item.props || {})"/>
-        <DsButton @click="submitForm">Submit</DsButton>
+        <form @submit.prevent="submitForm">
+            <component :is="components[item.name!]"
+                       v-for="(item, index) in builderItems"
+                       v-if="builderItems.length>0"
+                       :key="index" v-model="formValues[item.name! + item.id]"
+                       :error="$V[item.name! + item.id]?.$error ? $V[item.name! + item.id].required.$message : ''"
+                       v-bind="filterProps(item.props || {})"/>
+        </form>
     </div>
 </template>

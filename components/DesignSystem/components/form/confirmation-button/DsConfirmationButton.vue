@@ -30,8 +30,8 @@ const emit = defineEmits(["cancel", "ok"])
 
 <template>
     <div class="flex justify-end space-x-2 w-full">
-        <DsButton :color="colorCancel" @click="emit('cancel')">{{ textCancel }}</DsButton>
-        <DsButton :color="colorOk" :text="textOk" @click="emit('ok')">{{ textOk }}</DsButton>
+        <DsButton :color="colorCancel" type="button" @click="emit('cancel')">{{ textCancel }}</DsButton>
+        <DsButton :color="colorOk" :text="textOk" type="submit" @click="emit('ok')">{{ textOk }}</DsButton>
     </div>
 </template>
 
