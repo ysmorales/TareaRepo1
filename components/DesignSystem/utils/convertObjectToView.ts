@@ -18,6 +18,8 @@ export function objectToVueCode(formItems: FormItem[]) {
     let vueCode = `<script setup lang="ts">\n`;
     vueCode += imports.join(' ') + '\n\n';
 
+    vueCode += `const emit = defineEmits(['submit', 'cancel']);\n\n`;
+
     let reactiveObject = 'const formValues = reactive({\n';
     formItems.forEach((item: FormItem, index: number) => {
         if (!item.name.startsWith('DsConfirmationButton')) {
