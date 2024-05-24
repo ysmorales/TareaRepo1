@@ -30,7 +30,7 @@ const formRules: { [key: string]: any } = reactive({});
 
 onMounted(() => {
     builderItems.value.forEach((item) => {
-        if (item && typeof item.name === 'string' && typeof item.id === 'number') {
+        if (item && typeof item.name === 'string' && typeof item.id === 'number' && !item.name.includes('DsConfirmationButton')) {
             formValues[item.name + item.id] = '';
         }
     });
@@ -38,7 +38,7 @@ onMounted(() => {
 
 watch(builderItems, (newVal) => {
     newVal.forEach((item) => {
-        if (item && typeof item.name === 'string' && typeof item.id === 'number') {
+        if (item && typeof item.name === 'string' && typeof item.id === 'number' && !item.name.includes('DsConfirmationButton')) {
             const key = item.name + item.id;
             if (!(key in formValues)) {
                 formValues[key] = '';
@@ -47,10 +47,9 @@ watch(builderItems, (newVal) => {
     });
 }, {deep: true});
 
-
 onMounted(() => {
     builderItems.value.forEach((item) => {
-        if (item && typeof item.name === 'string' && typeof item.id === 'number') {
+        if (item && typeof item.name === 'string' && typeof item.id === 'number' && !item.name.includes('DsConfirmationButton')) {
             formRules[item.name + item.id] = {required};
         }
     });
@@ -58,7 +57,7 @@ onMounted(() => {
 
 watch(builderItems, (newVal) => {
     newVal.forEach((item) => {
-        if (item && typeof item.name === 'string' && typeof item.id === 'number') {
+        if (item && typeof item.name === 'string' && typeof item.id === 'number' && !item.name.includes('DsConfirmationButton')) {
             const key = item.name + item.id;
             if (!(key in formRules)) {
                 formRules[key] = {required};
