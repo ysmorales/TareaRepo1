@@ -44,14 +44,13 @@ export function objectToVueCode(formItems: FormItem[]) {
 
     formItems.forEach((item: FormItem, index: number) => {
         if (!item.name.startsWith('DsConfirmationButton')) {
-            vueCode += `<${item.name} v-model="formValues.${item.name}${index}"`;
+            vueCode += `<${item.name} :error="v$.${item.name}${index}.$error" v-model="formValues.${item.name}${index}"`;
             for (let prop in item.props) {
                 if (item.props[prop] !== '') {
                     vueCode += ` ${prop}="${item.props[prop]}"`;
                 }
             }
             vueCode += ' />\n';
-            vueCode += `<div v-if="v$.value.${item.name}${index}.$error" class="text-red-500">Please enter a valid value</div>\n`;
         }
     });
 
