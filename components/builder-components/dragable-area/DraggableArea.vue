@@ -50,6 +50,7 @@ function handleValidate(item: any, index: number) {
 <template>
     <!--    {{ JSON.stringify(builderItems) }}-->
     <div
+        :draggable="false"
         class="w-full flex md:min-w-[723px]  border border-gray-300 shadow-md rounded-md p-5  flex-col  items-center min-h-[400px]"
         @drop="drop"
         @dragover.prevent
@@ -63,9 +64,9 @@ function handleValidate(item: any, index: number) {
             v-for="(item, index) in builderItems"
             :key="index"
             class="w-full  relative cursor-pointer"
-            draggable="true"
             @mouseleave="showIcons[index] = false"
             @mouseover="showIcons[index] = true"
+            @dragstart.prevent
         >
             <div class="h-[25px]">
                 <IconArea v-show="showIcons[index]||selectedItem===index" :index="index" @removeItem="removeItem"
