@@ -5,7 +5,6 @@ import {DsButton, DsConfirmationButton, DsIcon, DsInput, DsSelect, DsTextArea} f
 import IconArea from "./components/IconArea.vue";
 import {filterProps} from "~/utils/filterProps";
 
-
 const store = useCounterStore()
 const {builderItems, addItemToForm, addItemToEdit, changeModal} = toRefs(store)
 const {removeItemFromForm} = toRefs(store)
