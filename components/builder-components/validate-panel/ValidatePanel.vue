@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import {useBuilderStore} from "~/stores/builderStore";
 import {toRefs} from "vue";
+import BuilderGroupRadio from "~/components/builder-components/validate-panel/components/BuilderGroupRadio.vue";
 
 const store = useBuilderStore()
 const {currentEditItem} = toRefs(store)
@@ -23,33 +24,10 @@ const radioGroupValue = ref('')
                 <input class="form-radio h-5 w-5 text-blue-500" type="checkbox">
             </div>
         </div>
-        <div class="mt-2">
-            <div class="flex items-center justify-between">
-                <label class="text-gray-700 font-medium" for="run">RUN</label>
-                <input id="run" v-model="radioGroupValue" class="form-radio h-5 w-5 text-blue-500" type="radio"
-                       value="run">
-            </div>
-        </div>
-        <div class="mt-2">
-            <div class="flex items-center justify-between">
-                <label class="text-gray-700 font-medium" for="email">Email</label>
-                <input id="email" v-model="radioGroupValue" class="form-radio h-5 w-5 text-blue-500" type="radio"
-                       value="email">
-            </div>
-        </div>
-        <div class="mt-2">
-            <div class="flex items-center justify-between">
-                <label class="text-gray-700 font-medium" for="text">Solo texto</label>
-                <input id="text" v-model="radioGroupValue" class="form-radio h-5 w-5 text-blue-500" type="radio"
-                       value="text">
-            </div>
-        </div>
-        <div class="mt-2">
-            <div class="flex items-center justify-between">
-                <label class="text-gray-700 font-medium" for="numbers">Solo números</label>
-                <input id="numbers" v-model="radioGroupValue" class="form-radio h-5 w-5 text-blue-500" type="radio"
-                       value="numbers">
-            </div>
-        </div>
+        {{ radioGroupValue }}
+        <BuilderGroupRadio id="run" v-model="radioGroupValue" label="RUN" value="run"/>
+        <BuilderGroupRadio id="email" v-model="radioGroupValue" label="Email" value="email"/>
+        <BuilderGroupRadio id="text" v-model="radioGroupValue" label="Solo texto" value="text"/>
+        <BuilderGroupRadio id="numbers" v-model="radioGroupValue" label="Solo números" value="numbers"/>
     </div>
 </template>
