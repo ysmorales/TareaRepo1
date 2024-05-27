@@ -68,7 +68,8 @@ function handleValidate(item: any, index: number) {
             @dragstart.prevent
         >
             <div class="h-[25px]">
-                <IconArea v-show="showIcons[index]||selectedItem===index" :index="index" @removeItem="removeItem"
+                <IconArea v-show="showIcons[index]||selectedItem===index" :index="index" :item="item"
+                          @removeItem="removeItem"
                           @validate="handleValidate(item,index)"/>
             </div>
             <div

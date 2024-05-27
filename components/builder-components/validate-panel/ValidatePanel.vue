@@ -10,6 +10,7 @@ const radioGroupValue = ref('')
 </script>
 
 <template>
+    {{ currentEditItem }}
     <div class="p-4 bg-white shadow rounded-md">
         <div class="flex justify-between">
             Nombre:
@@ -24,7 +25,6 @@ const radioGroupValue = ref('')
                 <input class="form-radio h-5 w-5 text-blue-500" type="checkbox">
             </div>
         </div>
-        {{ radioGroupValue }}
         <BuilderGroupRadio id="run" v-model="radioGroupValue" label="RUN" value="run"/>
         <BuilderGroupRadio id="email" v-model="radioGroupValue" label="Email" value="email"/>
         <BuilderGroupRadio id="text" v-model="radioGroupValue" label="Solo texto" value="text"/>
