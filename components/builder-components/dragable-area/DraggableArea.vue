@@ -1,11 +1,11 @@
 <script lang="ts" setup>
-import {useCounterStore} from "~/stores/builderStore";
+import {useBuilderStore} from "~/stores/builderStore";
 import {ref, toRefs} from 'vue';
 import {DsButton, DsConfirmationButton, DsIcon, DsInput, DsSelect, DsTextArea} from "~/components/DesignSystem";
 import IconArea from "./components/IconArea.vue";
 import {filterProps} from "~/utils/filterProps";
 
-const store = useCounterStore()
+const store = useBuilderStore()
 const {builderItems, addItemToForm, addItemToEdit, changeModal} = toRefs(store)
 const {removeItemFromForm} = toRefs(store)
 const showIcons = ref(builderItems.value.map(() => false))

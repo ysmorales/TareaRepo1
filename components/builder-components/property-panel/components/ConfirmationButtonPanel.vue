@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 
 import {DsInput, DsSelect} from "~/components/DesignSystem";
-import {useCounterStore} from "~/stores/builderStore";
+import {useBuilderStore} from "~/stores/builderStore";
 import {colorData} from "~/components/builder-components/property-panel/components/data/data";
 
-const store = useCounterStore()
+const store = useBuilderStore()
 const {currentEditItem, updateItemInForm} = toRefs(store)
 
 const textValueCancel = ref(currentEditItem.value.props.textCancel)

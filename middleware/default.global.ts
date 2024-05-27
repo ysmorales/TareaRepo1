@@ -1,7 +1,7 @@
-import {useCounterStore} from "~/stores/builderStore";
+import {useBuilderStore} from "~/stores/builderStore";
 
 export default defineNuxtRouteMiddleware((to, from) => {
-    const store = useCounterStore()
+    const store = useBuilderStore()
     const {changeSideMenuType} = toRefs(store)
     // In a real app you would probably not redirect every route to `/`
     // however it is important to check `to.path` before redirecting or you

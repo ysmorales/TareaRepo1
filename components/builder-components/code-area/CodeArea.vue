@@ -1,13 +1,13 @@
 <script lang="ts" setup>
 import {ref, toRefs, watch} from 'vue';
 import {type FormItem, objectToVueCode} from "~/components/DesignSystem/utils/convertObjectToView";
-import {useCounterStore} from "~/stores/builderStore";
+import {useBuilderStore} from "~/stores/builderStore";
 import Prism from 'prismjs';
 import beautify from 'js-beautify';
 import 'prismjs/themes/prism-tomorrow.css';
 import DsToast from "~/components/DesignSystem/components/basic/toast/DsToast.vue";
 
-const store = useCounterStore()
+const store = useBuilderStore()
 const {builderItems, addItemToForm} = toRefs(store)
 const code = ref('');
 const showToast = ref(false);

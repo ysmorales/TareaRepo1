@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 
 import {DsTypography} from "~/components/DesignSystem";
-import {useCounterStore} from "~/stores/builderStore";
+import {useBuilderStore} from "~/stores/builderStore";
 
 defineProps({
     versionData: {
@@ -9,7 +9,7 @@ defineProps({
         required: true
     }
 })
-const store = useCounterStore()
+const store = useBuilderStore()
 const {changeCurrentDragItem} = toRefs(store)
 
 function dragStart(data: any) {

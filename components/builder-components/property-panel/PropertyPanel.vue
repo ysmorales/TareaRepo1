@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import {useCounterStore} from "~/stores/builderStore";
+import {useBuilderStore} from "~/stores/builderStore";
 
 import InputPanel from "~/components/builder-components/property-panel/components/InputPanel.vue";
 import SelectPanel from "~/components/builder-components/property-panel/components/SelectPanel.vue";
@@ -7,7 +7,7 @@ import TextAreaPanel from "~/components/builder-components/property-panel/compon
 import ConfirmationButtonPanel
     from "~/components/builder-components/property-panel/components/ConfirmationButtonPanel.vue";
 
-const store = useCounterStore()
+const store = useBuilderStore()
 const {currentEditItem} = toRefs(store)
 
 

@@ -3,11 +3,11 @@ import DsUnidosLayout from "~/components/DesignSystem/components/layout/unidos-l
 import {DsSelect} from "~/components/DesignSystem";
 
 import DsSideMenu from "~/components/DesignSystem/components/navigation/sideMenu/DsSideMenu.vue";
-import {useCounterStore} from "~/stores/builderStore";
+import {useBuilderStore} from "~/stores/builderStore";
 import BuilderMenu from "~/components/builder-components/builder-menu/BuilderMenu.vue";
 import {menuItemsVerticalMenu} from "./data";
 
-const store = useCounterStore()
+const store = useBuilderStore()
 const {sideMenuType} = toRefs(store)
 </script>
 <template>

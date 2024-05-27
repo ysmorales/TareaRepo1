@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 
 import {DsInput, DsSelect} from "~/components/DesignSystem";
-import {useCounterStore} from "~/stores/builderStore";
+import {useBuilderStore} from "~/stores/builderStore";
 
 
-const store = useCounterStore()
+const store = useBuilderStore()
 const {currentEditItem, updateItemInForm} = toRefs(store)
 const labelValue = ref(currentEditItem.value.props.label)
 const sizeValue = ref(currentEditItem.value.props.size)

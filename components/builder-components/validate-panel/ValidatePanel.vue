@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import {useCounterStore} from "~/stores/builderStore";
+import {useBuilderStore} from "~/stores/builderStore";
 import {toRefs} from "vue";
 
-const store = useCounterStore()
+const store = useBuilderStore()
 const {currentEditItem} = toRefs(store)
 const radioGroupValue = ref('')
 

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import {useCounterStore} from "~/stores/builderStore";
+import {useBuilderStore} from "~/stores/builderStore";
 import {toRefs, reactive} from "vue";
 import {filterProps} from "~/utils/filterProps";
 import {
@@ -13,7 +13,7 @@ import {
 import {useVuelidate} from "@vuelidate/core";
 import {required} from "@vuelidate/validators";
 
-const store = useCounterStore()
+const store = useBuilderStore()
 const {builderItems, addItemToForm} = toRefs(store)
 
 const components: { [key: string]: any } = {

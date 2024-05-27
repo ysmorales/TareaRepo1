@@ -2,7 +2,7 @@
 import {DsTypography} from "~/components/DesignSystem";
 import DraggableArea from "~/components/builder-components/dragable-area/DraggableArea.vue";
 import {ref, toRefs} from "vue";
-import {useCounterStore} from "~/stores/builderStore";
+import {useBuilderStore} from "~/stores/builderStore";
 import PropertyPanel from "~/components/builder-components/property-panel/PropertyPanel.vue";
 import ToolPanel from "~/components/builder-components/tools-panel/ToolPanel.vue";
 import CodeArea from "~/components/builder-components/code-area/CodeArea.vue";
@@ -12,7 +12,7 @@ import SavePanel from "~/components/builder-components/save-panel/SavePanel.vue"
 import ValidatePanel from "~/components/builder-components/validate-panel/ValidatePanel.vue";
 import ViewArea from "~/components/builder-components/view-area/ViewArea.vue";
 
-const store = useCounterStore()
+const store = useBuilderStore()
 const {clearStore, changeModal, modalType} = toRefs(store)
 const area = ref<'view' | 'edit' | 'code'>('edit')
 const showModal = ref(false)

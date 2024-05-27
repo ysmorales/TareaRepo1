@@ -1,11 +1,11 @@
 <script lang="ts" setup>
 
-import {useCounterStore} from "~/stores/builderStore";
+import {useBuilderStore} from "~/stores/builderStore";
 import {DsComponents} from "~/components/builder-components/builder-menu/dsComponents";
 import Item from "~/components/builder-components/builder-menu/components/item.vue";
 import {menuItemsData} from "./components/menuItemsData";
 
-const store = useCounterStore()
+const store = useBuilderStore()
 const {changeCurrentDragItem, builderItems} = toRefs(store)
 
 function dragStart(type: string) {

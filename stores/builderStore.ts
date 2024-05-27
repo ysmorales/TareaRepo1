@@ -4,7 +4,7 @@ import {ref} from 'vue';
 
 type ImodalType = 'property' | 'save' | 'validate'
 
-export const useCounterStore = defineStore('counter', () => {
+export const useBuilderStore = defineStore('counter', () => {
     const builderItems = ref<IItemBuilder[]>([] as IItemBuilder[])
     const sideMenuType = ref<'default' | 'builder'>('default')
     const currentDragItem = ref<null | IItemBuilder>(null)
