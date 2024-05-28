@@ -16,7 +16,7 @@ function dragStart(type: string) {
 }
 
 const isDsConfirmationButtonPresent = computed(() => {
-    return builderItems.value.some(item => item.name === 'DsConfirmationButton');
+    return builderItems.value.some(item => item.type === 'DsConfirmationButton');
 });
 </script>
 

@@ -72,7 +72,6 @@ export const useBuilderStore = defineStore('counter', () => {
             builderItems.value = [...builderItems.value];
             ensureConfirmationButtonAtEnd();
         }
-
     }
 
     function addItemToEdit(item: IItemBuilder) {
