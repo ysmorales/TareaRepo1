@@ -24,13 +24,13 @@ watch(currentEditItem, () => {
     <div class="flex justify-between mt-5">
         Nombre:
         <span class="text-blue-500">{{
-                (currentEditItem?.name ?? '') + ' ' + (currentEditItem?.id ?? '')
+                currentEditItem?.name ?? ''
             }}</span>
     </div>
-    <InputPanel v-if="currentEditItem.name=='DsInput'" :key="componentKey"/>
-    <SelectPanel v-if="currentEditItem.name=='DsSelect'" :key="componentKey"/>
-    <TextAreaPanel v-if="currentEditItem.name=='DsTextArea'" :key="componentKey"/>
-    <ConfirmationButtonPanel v-if="currentEditItem.name=='DsConfirmationButton'" :key="componentKey"/>
+    <InputPanel v-if="currentEditItem.type=='DsInput'" :key="componentKey"/>
+    <SelectPanel v-if="currentEditItem.type=='DsSelect'" :key="componentKey"/>
+    <TextAreaPanel v-if="currentEditItem.type=='DsTextArea'" :key="componentKey"/>
+    <ConfirmationButtonPanel v-if="currentEditItem.type=='DsConfirmationButton'" :key="componentKey"/>
     <!--    {{ JSON.stringify(builderItems) }}-->
     <!--    /////////////////////////////////////-->
     <!--    {{ JSON.stringify(currentEditItem) }}-->

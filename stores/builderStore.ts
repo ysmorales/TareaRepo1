@@ -45,7 +45,7 @@ export const useBuilderStore = defineStore('counter', () => {
     }
 
     function ensureConfirmationButtonAtEnd() {
-        const index = builderItems.value.findIndex(item => item.name === 'DsConfirmationButton');
+        const index = builderItems.value.findIndex(item => item.type === 'DsConfirmationButton');
 
         if (index !== -1 && index !== builderItems.value.length - 1) {
             const item = builderItems.value.splice(index, 1)[0];
