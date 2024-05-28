@@ -32,7 +32,7 @@ const isDsInput = computed(() => currentEditItem?.value?.name?.includes('DsInput
             <BuilderGroupRadio id="run" v-model="radioGroupValue" label="RUN" value="run"/>
             <BuilderGroupRadio id="email" v-model="radioGroupValue" label="Email" value="email"/>
             <BuilderGroupRadio id="text" v-model="radioGroupValue" label="Solo texto" value="text"/>
-            <BuilderGroupRadio id="numbers" v-model="radioGroupValue" label="Solo números" value="numbers"/>
+            <BuilderGroupRadio id="number" v-model="radioGroupValue" label="Solo números" value="number"/>
         </div>
     </div>
 </template>
