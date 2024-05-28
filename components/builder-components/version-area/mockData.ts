@@ -1,45 +1,71 @@
 export const version1 = [{
-    "name": "DsInput",
-    "props": {"label": "Name:", "placeholder": ""},
-    "id": 1
-}, {"name": "DsTextArea", "props": {"label": "Last Name", "placeHolder": ""}, "id": 2}, {
-    "name": "DsSelect",
-    "props": {"label": "Ciudad"},
-    "id": 3
-}, {"name": "DsInput", "props": {"label": "Estado", "placeholder": ""}, "id": 4}, {
-    "name": "DsConfirmationButton",
+    name: "DsInput-17",
+    type: "DsInput",
+    props: {"label": "", "placeholder": ""},
+    id: 1,
+    validation: {"required": true, "custom": null}
+}, {
+    name: "DsTextArea-18",
+    type: "DsTextArea",
+    props: {"label": "", "placeHolder": ""},
+    id: 2,
+    validation: {"required": true, "custom": null}
+}, {
+    "name": "DsSelect-19",
+    "type": "DsSelect",
     "props": {"label": ""},
-    "id": 5
+    "id": 3,
+    "validation": {"required": true, "custom": null}
+}, {
+    "name": "DsConfirmationButton-20",
+    "type": "DsConfirmationButton",
+    "props": {"label": ""},
+    "id": 4,
+    "validation": {"required": true, "custom": null}
 }]
 export const version2 = [{
-    "name": "DsInput",
-    "props": {"label": "Name:", "placeholder": ""},
-    "id": 1
-}, {"name": "DsInput", "props": {"label": "Estado", "placeholder": ""}, "id": 4}, {
-    "name": "DsConfirmationButton",
+    "name": "DsInput-21",
+    "type": "DsInput",
+    "props": {"label": "", "placeholder": ""},
+    "id": 1,
+    "validation": {"required": true, "custom": null}
+}, {
+    "name": "DsInput-22",
+    "type": "DsInput",
+    "props": {"label": "", "placeholder": ""},
+    "id": 2,
+    "validation": {"required": true, "custom": null}
+}, {
+    "name": "DsTextArea-23",
+    "type": "DsTextArea",
+    "props": {"label": "", "placeHolder": ""},
+    "id": 3,
+    "validation": {"required": true, "custom": null}
+}, {
+    "name": "DsSelect-24",
+    "type": "DsSelect",
     "props": {"label": ""},
-    "id": 5
+    "id": 4,
+    "validation": {"required": true, "custom": null}
+}, {
+    "name": "DsConfirmationButton-25",
+    "type": "DsConfirmationButton",
+    "props": {"label": ""},
+    "id": 5,
+    "validation": {"required": true, "custom": null}
 }]
 export const version3 = [{
-    "name": "DsInput",
-    "props": {"label": "Name:", "placeholder": ""},
-    "id": 1
-}, {"name": "DsTextArea", "props": {"label": "Last Name", "placeHolder": ""}, "id": 2}, {
-    "name": "DsSelect",
-    "props": {"label": "Ciudad"},
-    "id": 3
-}, {"name": "DsTextArea", "props": {"label": "Last Name", "placeHolder": ""}, "id": 2}, {
-    "name": "DsSelect",
-    "props": {"label": "Ciudad"},
-    "id": 4
-}, {"name": "DsTextArea", "props": {"label": "Last Name", "placeHolder": ""}, "id": 2}, {
-    "name": "DsSelect",
-    "props": {"label": "Ciudad"},
-    "id": 5
-}, {"name": "DsInput", "props": {"label": "Estado", "placeholder": ""}, "id": 4}, {
-    "name": "DsConfirmationButton",
+    "name": "DsInput-26",
+    "type": "DsInput",
+    "props": {"label": "", "placeholder": ""},
+    "id": 1,
+    "validation": {"required": true, "custom": null}
+}, {
+    "name": "DsConfirmationButton-27",
+    "type": "DsConfirmationButton",
     "props": {"label": ""},
-    "id": 7
+    "id": 2,
+    "validation": {"required": true, "custom": null}
 }]
 
 export const versions = [
