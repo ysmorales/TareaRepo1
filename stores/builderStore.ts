@@ -10,11 +10,12 @@ export const useBuilderStore = defineStore('counter', () => {
     const currentDragItem = ref<null | IItemBuilder>(null)
     const currentEditItem = ref<any | IItemBuilder>({})
     const modalType = ref<ImodalType>('property')
-    // let idCounter = 0; // Agrega un contador para los IDs
+    let idCounter = 0; // Agrega un contador para los IDs
 
-    // function generateId() {
-    //     return idCounter++;
-    // }
+    function generateNumberId() {
+        return idCounter++;
+    }
+
     function generateId(items: IItemBuilder[]): number {
         // Si el array está vacío, comienza desde 1
         if (items.length === 0) {
@@ -34,7 +35,9 @@ export const useBuilderStore = defineStore('counter', () => {
     }
 
     function changeCurrentDragItem(item: IItemBuilder) {
-        currentDragItem.value = item;
+        const temp = {...item}; // Hacer una copia del objeto
+        temp.name = item.name + '-' + generateNumberId();
+        currentDragItem.value = temp;
     }
 
     function removeItemFromForm(index: number) {
