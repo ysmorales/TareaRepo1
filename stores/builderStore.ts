@@ -57,6 +57,7 @@ export const useBuilderStore = defineStore('counter', () => {
             const newItem = {
                 ...currentDragItem.value,
                 id: generateId(builderItems.value),
+                validation: {required: true}
             } as IItemBuilder;
             builderItems.value.push(newItem);
             //para que se actualice el estado

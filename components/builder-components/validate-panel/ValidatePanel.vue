@@ -24,7 +24,8 @@ const isDsInput = computed(() => currentEditItem?.value?.name?.includes('DsInput
         <div class="mt-5">
             <div class="flex items-center justify-between">
                 <label class="text-gray-700 font-medium" for="required">Requerido</label>
-                <input class="form-radio h-5 w-5 text-blue-500" type="checkbox">
+                <input v-model="currentEditItem.validation.required" class="form-radio h-5 w-5 text-blue-500"
+                       type="checkbox"/>
             </div>
         </div>
         <div v-if="isDsInput">
