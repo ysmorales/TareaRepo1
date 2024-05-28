@@ -29,10 +29,11 @@ const isDsInput = computed(() => currentEditItem?.value?.name?.includes('DsInput
             </div>
         </div>
         <div v-if="isDsInput">
-            <BuilderGroupRadio id="run" v-model="radioGroupValue" label="RUN" value="run"/>
-            <BuilderGroupRadio id="email" v-model="radioGroupValue" label="Email" value="email"/>
-            <BuilderGroupRadio id="text" v-model="radioGroupValue" label="Solo texto" value="text"/>
-            <BuilderGroupRadio id="number" v-model="radioGroupValue" label="Solo números" value="number"/>
+            <BuilderGroupRadio id="run" v-model="currentEditItem.validation.custom" label="RUN" value="run"/>
+            <BuilderGroupRadio id="email" v-model="currentEditItem.validation.custom" label="Email" value="email"/>
+            <BuilderGroupRadio id="text" v-model="currentEditItem.validation.custom" label="Solo texto" value="text"/>
+            <BuilderGroupRadio id="number" v-model="currentEditItem.validation.custom" label="Solo números"
+                               value="number"/>
         </div>
     </div>
 </template>
