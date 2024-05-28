@@ -2,14 +2,14 @@ import type {IItemBuilder} from "~/interfaces/interfaces";
 import {defineStore} from 'pinia';
 import {ref} from 'vue';
 
-type ImodalType = 'property' | 'save' | 'validate'
+type IModalType = 'property' | 'save' | 'validate'
 
 export const useBuilderStore = defineStore('counter', () => {
     const builderItems = ref<IItemBuilder[]>([] as IItemBuilder[])
     const sideMenuType = ref<'default' | 'builder'>('default')
     const currentDragItem = ref<null | IItemBuilder>(null)
     const currentEditItem = ref<any | IItemBuilder>({})
-    const modalType = ref<ImodalType>('property')
+    const modalType = ref<IModalType>('property')
     let idCounter = 0; // Agrega un contador para los IDs
 
     function generateNumberId() {
@@ -35,9 +35,14 @@ export const useBuilderStore = defineStore('counter', () => {
     }
 
     function changeCurrentDragItem(item: IItemBuilder) {
-        const temp = {...item}; // Hacer una copia del objeto
-        temp.name = item.name + '-' + generateNumberId();
-        currentDragItem.value = temp;
+        if (Array.isArray(item)) {
+            currentDragItem.value = item;
+        } else {
+            const temp = {...item}; // Hacer una copia del objeto
+            temp.name = item.name + '-' + generateNumberId();
+            currentDragItem.value = temp;
+        }
+
     }
 
     function removeItemFromForm(index: number) {
@@ -91,7 +96,7 @@ export const useBuilderStore = defineStore('counter', () => {
         currentDragItem.value = null
     }
 
-    function changeModal(type: ImodalType) {
+    function changeModal(type: IModalType) {
         modalType.value = type
 
     }
