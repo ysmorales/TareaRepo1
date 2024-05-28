@@ -75,7 +75,7 @@ function handleValidate(item: any, index: number) {
             <div
                 :class="['relative border hover:border-blue-500 cursor-pointer z-10 mb-3', {'border-blue-500':selectedItem === index}, {'border-transparent':selectedItem !== index}]"
                 @click="viewProperties(item, index)">
-                <component :is="components[item.name!]" v-bind="filterProps(item.props || {})"/>
+                <component :is="components[item.type]" v-bind="filterProps(item.props || {})"/>
                 <div
                     :class="['absolute inset-0 ',{'bg-blue-500 opacity-20 border border-blue-500 ':selectedItem === index}]"></div>
             </div>
