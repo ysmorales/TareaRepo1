@@ -97,7 +97,7 @@ const drop = () => {
             <DsTypography>Area de previsualización, no se ha adicionado componentes aún.</DsTypography>
         </div>
         <form @submit.prevent="submitForm">
-            <component :is="components[item.name!]"
+            <component :is="components[item.type!]"
                        v-for="(item, index) in builderItems"
                        v-if="builderItems.length>0"
                        :key="index" v-model="formValues[item.name! + item.id]"
