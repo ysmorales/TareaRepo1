@@ -11,10 +11,10 @@ const isDsInput = computed(() => currentEditItem?.value?.type === 'DsInput')
 </script>
 
 <template>
-    {{ currentEditItem }}
+    <!--    {{ currentEditItem }}-->
     <div class="p-4 bg-white shadow rounded-md">
         <div class="flex justify-between items-center">
-            Nombre:<input v-model="currentEditItem.name" class="w-[120px] h-[30px]" type="text"/>
+            Nombre:<input v-model="currentEditItem.name" class="w-[150px] h-[30px]" type="text"/>
 
         </div>
         <div class="mt-5">
