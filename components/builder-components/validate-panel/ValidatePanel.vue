@@ -5,7 +5,6 @@ import BuilderGroupRadio from "~/components/builder-components/validate-panel/co
 
 const store = useBuilderStore()
 const {currentEditItem} = toRefs(store)
-const radioGroupValue = ref('')
 
 const isDsInput = computed(() => currentEditItem?.value?.name?.includes('DsInput'))
 
