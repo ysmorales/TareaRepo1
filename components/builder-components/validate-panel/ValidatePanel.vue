@@ -7,6 +7,8 @@ const store = useBuilderStore()
 const {currentEditItem} = toRefs(store)
 const radioGroupValue = ref('')
 
+const isDsInput = computed(() => currentEditItem?.value?.name?.includes('DsInput'))
+
 </script>
 
 <template>
@@ -25,9 +27,11 @@ const radioGroupValue = ref('')
                 <input class="form-radio h-5 w-5 text-blue-500" type="checkbox">
             </div>
         </div>
-        <BuilderGroupRadio id="run" v-model="radioGroupValue" label="RUN" value="run"/>
-        <BuilderGroupRadio id="email" v-model="radioGroupValue" label="Email" value="email"/>
-        <BuilderGroupRadio id="text" v-model="radioGroupValue" label="Solo texto" value="text"/>
-        <BuilderGroupRadio id="numbers" v-model="radioGroupValue" label="Solo números" value="numbers"/>
+        <div v-if="isDsInput">
+            <BuilderGroupRadio id="run" v-model="radioGroupValue" label="RUN" value="run"/>
+            <BuilderGroupRadio id="email" v-model="radioGroupValue" label="Email" value="email"/>
+            <BuilderGroupRadio id="text" v-model="radioGroupValue" label="Solo texto" value="text"/>
+            <BuilderGroupRadio id="numbers" v-model="radioGroupValue" label="Solo números" value="numbers"/>
+        </div>
     </div>
 </template>
