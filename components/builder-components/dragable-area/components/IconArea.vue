@@ -18,7 +18,7 @@ function validate(index: number) {
     emit("validate", index)
 }
 
-let isDsConfirmationButton = computed(() => props.item?.name?.includes("DsConfirmationButton"));
+let isDsConfirmationButton = computed(() => props.item?.type === "DsConfirmationButton");
 </script>
 
 <template>
