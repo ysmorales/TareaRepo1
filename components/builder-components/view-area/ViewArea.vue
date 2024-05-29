@@ -11,7 +11,7 @@ import {
     DsTypography
 } from "~/components/DesignSystem";
 import {useVuelidate} from "@vuelidate/core";
-import {required} from "@vuelidate/validators";
+import {email, helpers, numeric, required} from "@vuelidate/validators";
 
 const store = useBuilderStore()
 const {builderItems, addItemToForm} = toRefs(store)
@@ -52,7 +52,9 @@ watch(builderItems, (newVal) => {
 onMounted(() => {
     builderItems.value.forEach((item) => {
         if (item && typeof item.name === 'string' && typeof item.id === 'number' && !item.name.includes('DsConfirmationButton')) {
-            formRules[item.name + item.id] = {required};
+            const key = item.name + item.id;
+            formValues[key] = '';
+            formRules[key] = createValidationRules(item.validation!);
         }
     });
 });
@@ -61,12 +63,17 @@ watch(builderItems, (newVal) => {
     newVal.forEach((item) => {
         if (item && typeof item.name === 'string' && typeof item.id === 'number' && !item.name.includes('DsConfirmationButton')) {
             const key = item.name + item.id;
+            if (!(key in formValues)) {
+                formValues[key] = '';
+            }
             if (!(key in formRules)) {
-                formRules[key] = {required};
+                formRules[key] = createValidationRules(item.validation!);
             }
         }
     });
 }, {deep: true});
+
+
 const $V = useVuelidate(formRules, formValues);
 
 function submitForm() {
@@ -82,11 +89,37 @@ const drop = () => {
     addItemToForm.value()
 }
 
+function createValidationRules(validation: {
+    required: boolean,
+    custom?: null | 'email' | 'number' | 'text' | 'run' | 'defecto'
+}) {
+
+    const rules: { [key: string]: any } = {};
+    if (validation.required) {
+        rules.required = required;
+    }
+    if (validation.custom) {
+        switch (validation.custom) {
+            case 'email':
+                rules.email = email;
+                break;
+            case 'number':
+                rules.numeric = numeric;
+                break;
+            case 'text':
+                rules.text = helpers.regex('text', /^[a-zA-Z\s]*$/);
+                break;
+            // Aquí puedes agregar más casos si necesitas más tipos de validación
+        }
+    }
+    return rules;
+}
+
 </script>
 
 <template>
     <!--    <h1>valores del form</h1>-->
-    <!--    {{ JSON.stringify(formValues) }}-->
+    {{ JSON.stringify(builderItems) }}
     <!--    <h1>valores de validación</h1>-->
     <!--    {{ JSON.stringify(formRules) }}-->
     <div
@@ -100,7 +133,7 @@ const drop = () => {
             <component :is="components[item.type!]"
                        v-for="(item, index) in builderItems"
                        v-if="builderItems.length>0"
-                       :key="index" v-model="formValues[item.name! + item.id]"
+                       :key="item.id" v-model="formValues[item.name! + item.id]"
                        :error="$V[item.name! + item.id]?.$error ? $V[item.name! + item.id].required.$message : ''"
                        v-bind="filterProps(item.props || {})"/>
         </form>

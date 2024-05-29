@@ -38,6 +38,11 @@ const handle = {
     },
     view: () => area.value = 'view'
 }
+watch(area, () => {
+    if (area.value !== 'edit') {
+        showModal.value = false
+    }
+})
 
 </script>
 
