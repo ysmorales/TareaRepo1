@@ -23,20 +23,19 @@ watch(currentEditItem, () => {
 </script>
 
 <template>
-    {{ propertyCollapse }}
     <div class="flex justify-between mt-5">
         Nombre:
         <span class="text-blue-500">{{
                 currentEditItem?.name ?? ''
             }}</span>
     </div>
-    <DsAccordion :collapsed="!propertyCollapse" title="Propiedades" @toggleCollapse="changePropertyCollapse">
+    <DsAccordion :collapsed="propertyCollapse" title="Propiedades" @toggleCollapse="changePropertyCollapse">
         <InputPanel v-if="currentEditItem.type=='DsInput'" :key="componentKey"/>
         <SelectPanel v-if="currentEditItem.type=='DsSelect'" :key="componentKey"/>
         <TextAreaPanel v-if="currentEditItem.type=='DsTextArea'" :key="componentKey"/>
         <ConfirmationButtonPanel v-if="currentEditItem.type=='DsConfirmationButton'" :key="componentKey"/>
     </DsAccordion>
-    <DsAccordion :collapsed="propertyCollapse" title="Validaciones" @toggleCollapse="changePropertyCollapse">
+    <DsAccordion :collapsed="!propertyCollapse" title="Validaciones" @toggleCollapse="changePropertyCollapse">
         <ValidatePanel/>
     </DsAccordion>
 </template>
