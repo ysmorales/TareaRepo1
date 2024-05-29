@@ -6,6 +6,8 @@ import SelectPanel from "~/components/builder-components/property-panel/componen
 import TextAreaPanel from "~/components/builder-components/property-panel/components/TextAreaPanel.vue";
 import ConfirmationButtonPanel
     from "~/components/builder-components/property-panel/components/ConfirmationButtonPanel.vue";
+import {DsAccordion} from "~/components/DesignSystem";
+import ValidatePanel from "~/components/builder-components/validate-panel/ValidatePanel.vue";
 
 const store = useBuilderStore()
 const {currentEditItem} = toRefs(store)
@@ -27,11 +29,13 @@ watch(currentEditItem, () => {
                 currentEditItem?.name ?? ''
             }}</span>
     </div>
-    <InputPanel v-if="currentEditItem.type=='DsInput'" :key="componentKey"/>
-    <SelectPanel v-if="currentEditItem.type=='DsSelect'" :key="componentKey"/>
-    <TextAreaPanel v-if="currentEditItem.type=='DsTextArea'" :key="componentKey"/>
-    <ConfirmationButtonPanel v-if="currentEditItem.type=='DsConfirmationButton'" :key="componentKey"/>
-    <!--    {{ JSON.stringify(builderItems) }}-->
-    <!--    /////////////////////////////////////-->
-    <!--    {{ JSON.stringify(currentEditItem) }}-->
+    <DsAccordion title="Propiedades">
+        <InputPanel v-if="currentEditItem.type=='DsInput'" :key="componentKey"/>
+        <SelectPanel v-if="currentEditItem.type=='DsSelect'" :key="componentKey"/>
+        <TextAreaPanel v-if="currentEditItem.type=='DsTextArea'" :key="componentKey"/>
+        <ConfirmationButtonPanel v-if="currentEditItem.type=='DsConfirmationButton'" :key="componentKey"/>
+    </DsAccordion>
+    <DsAccordion title="Validaciones">
+        <ValidatePanel/>
+    </DsAccordion>
 </template>

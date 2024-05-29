@@ -8,7 +8,14 @@ export const useBuilderStore = defineStore('counter', () => {
     const builderItems = ref<IItemBuilder[]>([] as IItemBuilder[])
     const sideMenuType = ref<'default' | 'builder'>('default')
     const currentDragItem = ref<null | IItemBuilder>(null)
-    const currentEditItem = ref<any | IItemBuilder>({})
+    const currentEditItem = ref<any | IItemBuilder>({
+        name: '',
+        type: '',
+        validation: {
+            required: false,
+            custom: ''
+        }
+    })
     const modalType = ref<IModalType>('property')
     const formValues = ref({} as any)
 

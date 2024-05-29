@@ -19,7 +19,7 @@ const area = ref<'view' | 'edit' | 'code'>('edit')
 const showModal = ref(false)
 
 const titles = {
-    'property': 'Panel de propiedades',
+    'property': 'Panel de configuración',
     'save': 'Guardar prototipo',
     'validate': 'Validar input',
     'formData': 'Form data'
