@@ -123,7 +123,7 @@ watch(formValues, (newVal) => {
 
 <template>
     <!--    <h1>valores del form</h1>-->
-    <!--    {{ JSON.stringify(builderItems) }}-->
+    {{ JSON.stringify(builderItems) }}
     <!--    &lt;!&ndash;    <h1>valores de validación</h1>&ndash;&gt;-->
     <!--    &lt;!&ndash;    {{ JSON.stringify(formRules) }}&ndash;&gt;-->
     <div
@@ -137,7 +137,7 @@ watch(formValues, (newVal) => {
             <component :is="components[item.type!]"
                        v-for="(item, index) in builderItems"
                        v-if="builderItems.length>0"
-                       :key="item.id" v-model="formValues[item.name! + item.id]"
+                       :key="item.id" v-model="formValues[item.name!]"
                        :error="$V[item.name! + item.id]?.$error ? $V[item.name! + item.id].required.$message : ''"
                        v-bind="filterProps(item.props || {})"/>
         </form>
