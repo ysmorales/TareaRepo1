@@ -23,11 +23,12 @@ watch(currentEditItem, () => {
 </script>
 
 <template>
-    <div class="flex justify-between mt-5">
-        Nombre:
-        <span class="text-blue-500">{{
-                currentEditItem?.name ?? ''
-            }}</span>
+    <div
+        class="flex items-center justify-between mt-5 mb-5 p-4 bg-white shadow-lg rounded-lg transition-colors duration-200 hover:bg-gray-100">
+        <span class="font-semibold text-gray-700 mr-2">Nombre:</span>
+        <input v-model="currentEditItem.name"
+               class="text-end w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-200 transition-colors duration-200"
+               type="text"/>
     </div>
     <DsAccordion :collapsed="propertyCollapse" title="Propiedades" @toggleCollapse="changePropertyCollapse">
         <InputPanel v-if="currentEditItem.type=='DsInput'" :key="componentKey"/>
