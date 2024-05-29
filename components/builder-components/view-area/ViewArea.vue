@@ -14,7 +14,7 @@ import {useVuelidate} from "@vuelidate/core";
 import {email, helpers, numeric, required} from "@vuelidate/validators";
 
 const store = useBuilderStore()
-const {builderItems, addItemToForm} = toRefs(store)
+const {builderItems, addItemToForm, updateFormValues} = toRefs(store)
 
 const components: { [key: string]: any } = {
     DsInput,
@@ -114,6 +114,10 @@ function createValidationRules(validation: {
     }
     return rules;
 }
+
+watch(formValues, (newVal) => {
+    updateFormValues.value(newVal)
+}, {deep: true});
 
 </script>
 

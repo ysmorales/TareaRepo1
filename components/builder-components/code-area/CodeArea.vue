@@ -6,30 +6,13 @@ import Prism from 'prismjs';
 import beautify from 'js-beautify';
 import 'prismjs/themes/prism-tomorrow.css';
 import DsToast from "~/components/DesignSystem/components/basic/toast/DsToast.vue";
+import {options} from "~/components/builder-components/utils/data";
 
 const store = useBuilderStore()
 const {builderItems, addItemToForm} = toRefs(store)
 const code = ref('');
 const showToast = ref(false);
 
-const options = {
-    indent_size: 2,
-    indent_char: " ",
-    max_preserve_newlines: 5,
-    preserve_newlines: true,
-    keep_array_indentation: false,
-    break_chained_methods: false,
-    brace_style: "collapse",
-    space_before_conditional: true,
-    unescape_strings: false,
-    jslint_happy: false,
-    end_with_newline: false,
-    wrap_line_length: 0,
-    indent_inner_html: true,
-    comma_first: false,
-    e4x: false,
-    indent_empty_lines: true
-};
 
 let formattedCode = '';
 const html = ref('');

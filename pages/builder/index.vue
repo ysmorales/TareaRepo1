@@ -41,8 +41,12 @@ const handle = {
     view: () => area.value = 'view'
 }
 watch(area, () => {
-    if (area.value !== 'edit') {
+    if (area.value == 'view') {
         changeModal.value('formData')
+        showModal.value = true
+    }
+    if (area.value == 'edit') {
+        changeModal.value('property')
         showModal.value = true
     }
 })

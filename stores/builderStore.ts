@@ -10,6 +10,8 @@ export const useBuilderStore = defineStore('counter', () => {
     const currentDragItem = ref<null | IItemBuilder>(null)
     const currentEditItem = ref<any | IItemBuilder>({})
     const modalType = ref<IModalType>('property')
+    const formValues = ref({} as any)
+
     let idCounter = 0; // Agrega un contador para los IDs
 
     function generateNumberId() {
@@ -100,7 +102,13 @@ export const useBuilderStore = defineStore('counter', () => {
 
     }
 
+    function updateFormValues(newValues: { [key: string]: any }) {
+        formValues.value = newValues;
+    }
+
     return {
+        formValues,
+        updateFormValues,
         changeModal,
         modalType,
         builderItems,
