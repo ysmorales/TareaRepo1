@@ -20,7 +20,8 @@ const showModal = ref(false)
 const titles = {
     'property': 'Panel de propiedades',
     'save': 'Guardar prototipo',
-    'validate': 'Validar input'
+    'validate': 'Validar input',
+    'formData': 'Form data'
 };
 
 const handle = {
@@ -40,7 +41,8 @@ const handle = {
 }
 watch(area, () => {
     if (area.value !== 'edit') {
-        showModal.value = false
+        changeModal.value('formData')
+        showModal.value = true
     }
 })
 
@@ -81,6 +83,7 @@ watch(area, () => {
                     <PropertyPanel v-if="modalType=='property'"/>
                     <SavePanel v-if="modalType=='save'"/>
                     <ValidatePanel v-if="modalType=='validate'"/>
+                    <h1 v-if="modalType=='formData'">Form data</h1>
                 </div>
             </div>
         </transition>

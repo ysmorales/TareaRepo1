@@ -2,7 +2,7 @@ import type {IItemBuilder} from "~/interfaces/interfaces";
 import {defineStore} from 'pinia';
 import {ref} from 'vue';
 
-type IModalType = 'property' | 'save' | 'validate'
+type IModalType = 'property' | 'save' | 'validate' | 'formData'
 
 export const useBuilderStore = defineStore('counter', () => {
     const builderItems = ref<IItemBuilder[]>([] as IItemBuilder[])
