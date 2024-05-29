@@ -123,9 +123,9 @@ watch(formValues, (newVal) => {
 
 <template>
     <!--    <h1>valores del form</h1>-->
-    {{ JSON.stringify(builderItems) }}
-    <!--    <h1>valores de validación</h1>-->
-    <!--    {{ JSON.stringify(formRules) }}-->
+    <!--    {{ JSON.stringify(builderItems) }}-->
+    <!--    &lt;!&ndash;    <h1>valores de validación</h1>&ndash;&gt;-->
+    <!--    &lt;!&ndash;    {{ JSON.stringify(formRules) }}&ndash;&gt;-->
     <div
         class="w-full flexp-5 flex-col md:min-w-[723px]  items-center justify-center border border-gray-300 shadow-md rounded-md p-5 min-h-[400px]"
         @drop="drop"
