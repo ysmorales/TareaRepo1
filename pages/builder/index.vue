@@ -11,6 +11,7 @@ import {versions} from "~/components/builder-components/version-area/mockData";
 import SavePanel from "~/components/builder-components/save-panel/SavePanel.vue";
 import ValidatePanel from "~/components/builder-components/validate-panel/ValidatePanel.vue";
 import ViewArea from "~/components/builder-components/view-area/ViewArea.vue";
+import FormDataPanel from "~/components/builder-components/form-data-panel/FormDataPanel.vue";
 
 const store = useBuilderStore()
 const {clearStore, changeModal, modalType} = toRefs(store)
@@ -83,7 +84,7 @@ watch(area, () => {
                     <PropertyPanel v-if="modalType=='property'"/>
                     <SavePanel v-if="modalType=='save'"/>
                     <ValidatePanel v-if="modalType=='validate'"/>
-                    <h1 v-if="modalType=='formData'">Form data</h1>
+                    <FormDataPanel v-if="modalType=='formData'"/>
                 </div>
             </div>
         </transition>
