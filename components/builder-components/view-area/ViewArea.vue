@@ -123,7 +123,7 @@ watch(formValues, (newVal) => {
 
 <template>
     <!--    <h1>valores del form</h1>-->
-    {{ JSON.stringify(builderItems) }}
+    <!--    {{ JSON.stringify(builderItems) }}-->
     <!--    &lt;!&ndash;    <h1>valores de validación</h1>&ndash;&gt;-->
     <!--    &lt;!&ndash;    {{ JSON.stringify(formRules) }}&ndash;&gt;-->
     <div

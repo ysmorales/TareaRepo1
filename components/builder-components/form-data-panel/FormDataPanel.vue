@@ -20,7 +20,7 @@ const highlightedCode = computed(() => {
 </script>
 
 <template>
-    {{ formValues }}
+    <!--    {{ formValues }}-->
 
     <pre
         class=" bg-gray-800 rounded-md shadow text-sm overflow-auto  language-javascript h-fit "
