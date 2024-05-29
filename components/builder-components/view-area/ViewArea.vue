@@ -33,7 +33,7 @@ const emit = defineEmits(["submit", "cancel"])
 onMounted(() => {
     builderItems.value.forEach((item) => {
         if (item && typeof item.name === 'string' && typeof item.id === 'number' && !item.name.includes('DsConfirmationButton')) {
-            formValues[item.name + item.id] = '';
+            formValues[item.name] = '';
         }
     });
 });
@@ -41,7 +41,7 @@ onMounted(() => {
 watch(builderItems, (newVal) => {
     newVal.forEach((item) => {
         if (item && typeof item.name === 'string' && typeof item.id === 'number' && !item.name.includes('DsConfirmationButton')) {
-            const key = item.name + item.id;
+            const key = item.name;
             if (!(key in formValues)) {
                 formValues[key] = '';
             }
@@ -52,7 +52,7 @@ watch(builderItems, (newVal) => {
 onMounted(() => {
     builderItems.value.forEach((item) => {
         if (item && typeof item.name === 'string' && typeof item.id === 'number' && !item.name.includes('DsConfirmationButton')) {
-            const key = item.name + item.id;
+            const key = item.name;
             formValues[key] = '';
             formRules[key] = createValidationRules(item.validation!);
         }
@@ -62,7 +62,7 @@ onMounted(() => {
 watch(builderItems, (newVal) => {
     newVal.forEach((item) => {
         if (item && typeof item.name === 'string' && typeof item.id === 'number' && !item.name.includes('DsConfirmationButton')) {
-            const key = item.name + item.id;
+            const key = item.name;
             if (!(key in formValues)) {
                 formValues[key] = '';
             }
@@ -123,7 +123,7 @@ watch(formValues, (newVal) => {
 
 <template>
     <!--    <h1>valores del form</h1>-->
-    <!--    {{ JSON.stringify(builderItems) }}-->
+    {{ JSON.stringify(builderItems) }}
     <!--    &lt;!&ndash;    <h1>valores de validación</h1>&ndash;&gt;-->
     <!--    &lt;!&ndash;    {{ JSON.stringify(formRules) }}&ndash;&gt;-->
     <div

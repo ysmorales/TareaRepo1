@@ -47,7 +47,6 @@ function handleValidate(item: any, index: number) {
 </script>
 
 <template>
-    <!--    {{ JSON.stringify(builderItems) }}-->
     <div
         :draggable="false"
         class="w-full flex md:min-w-[723px]  border border-gray-300 shadow-md rounded-md p-5  flex-col  items-center min-h-[400px]"
