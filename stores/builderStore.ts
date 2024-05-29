@@ -18,6 +18,9 @@ export const useBuilderStore = defineStore('counter', () => {
     })
     const modalType = ref<IModalType>('property')
     const formValues = ref({} as any)
+    const propertyCollapse = ref(
+        true
+    )
 
     let idCounter = 0; // Agrega un contador para los IDs
 
@@ -113,7 +116,13 @@ export const useBuilderStore = defineStore('counter', () => {
         formValues.value = newValues;
     }
 
+    function changePropertyCollapse() {
+        propertyCollapse.value = !propertyCollapse.value
+    }
+
     return {
+        propertyCollapse,
+        changePropertyCollapse,
         formValues,
         updateFormValues,
         changeModal,

@@ -26,8 +26,8 @@ const props = defineProps({
     },
 
     collapsed: {
-        type: Boolean,
-        default: false,
+        type: Boolean as () => boolean | string,
+        default: 'disability',
     },
 
     children: {
@@ -35,12 +35,16 @@ const props = defineProps({
         default: loremItsum,
     },
 });
+const emit = defineEmits(['toggleCollapse'])
 
 const uniqueId = computed(() => generateUniqueId("accordion"));
 
-const isCollapsed = ref(props.collapsed);
+const isCollapsed = ref(false);
 
-const toggleCollapse = () => (isCollapsed.value = !isCollapsed.value);
+const toggleCollapse = () => {
+    isCollapsed.value = !isCollapsed.value;
+    emit('toggleCollapse');
+};
 
 const defaultClasses = computed(() => {
     let result = "collapsed border";
@@ -129,8 +133,8 @@ onMounted(() => {
             <button
                 :id="uniqueID"
                 :aria-controls="uniqueId"
-                :aria-expanded="!isCollapsed"
-                :class="[triggerClass, { 'rounded-b-none': !isCollapsed }]"
+                :aria-expanded="collapsed=='disability'?!isCollapsed:collapsed as boolean"
+                :class="[triggerClass, { 'rounded-b-none':(collapsed=='disability'?!isCollapsed:collapsed) }]"
                 type="button"
                 @click="toggleCollapse"
             >
@@ -140,7 +144,7 @@ onMounted(() => {
 
                 <DsIcon
                     v-if="isStandard"
-                    :rotate="isCollapsed ? 0 : 180"
+                    :rotate="(collapsed=='disability'?!isCollapsed:collapsed) ? 0 : 180"
                     name="angle-down"
                     size="small"
                 />
@@ -150,7 +154,7 @@ onMounted(() => {
             </button>
         </div>
 
-        <div v-if="!isCollapsed" :id="uniqueId" :class="contentCssClass">
+        <div v-if="collapsed=='disability'?!isCollapsed:collapsed" :id="uniqueId" :class="contentCssClass">
             <div :aria-labelledby="uniqueID" class="colap-cont">
                 <slot>
                     <DsTypography>
