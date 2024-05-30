@@ -150,8 +150,7 @@ const collapsedMode = computed(() => {
 
                 <DsIcon
                     v-if="isStandard"
-                    :rotate="collapsedMode ? 0 : 180"
-                    name="angle-down"
+                    :name="'angle-'+(collapsedMode ? 'up' : 'down')"
                     size="small"
                 />
                 <span v-if="isCard" class="text-primary-500">
