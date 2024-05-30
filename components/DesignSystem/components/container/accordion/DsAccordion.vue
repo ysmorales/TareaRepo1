@@ -138,9 +138,9 @@ onMounted(() => {
                 type="button"
                 @click="toggleCollapse"
             >
-                <p :class="[collapseTitleCssClass, 'text-xl']">
+                <span :class="[collapseTitleCssClass, 'text-xl']">
                     {{ title }}
-                </p>
+                </span>
 
                 <DsIcon
                     v-if="isStandard"
