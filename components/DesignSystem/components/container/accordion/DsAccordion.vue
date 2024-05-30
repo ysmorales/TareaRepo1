@@ -125,6 +125,12 @@ const uniqueID = ref("");
 onMounted(() => {
     uniqueID.value = generateUniqueId("accordion");
 });
+const collapsedMode = computed(() => {
+    if (props.collapsed == 'disability') {
+        return isCollapsed.value
+    }
+    return props.collapsed
+})
 </script>
 
 <template>
@@ -144,7 +150,7 @@ onMounted(() => {
 
                 <DsIcon
                     v-if="isStandard"
-                    :rotate="(collapsed=='disability'?!isCollapsed:collapsed) ? 0 : 180"
+                    :rotate="collapsedMode ? 0 : 180"
                     name="angle-down"
                     size="small"
                 />

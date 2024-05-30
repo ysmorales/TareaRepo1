@@ -84,7 +84,6 @@ const iconClasses = computed(() => `${props.prefix} la-${props.name}`);
       iconClasses,
       textColorClasses[props.color],
       iconSizeClass[size],
-      'la-rotate-180'
     ]"
         @click="handleClick"
     />
