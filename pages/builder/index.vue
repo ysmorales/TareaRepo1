@@ -15,7 +15,7 @@ import FormDataPanel from "~/components/builder-components/form-data-panel/FormD
 import InfoPanel from "~/components/builder-components/info-panel/InfoPanel.vue";
 
 const store = useBuilderStore()
-const {clearStore, changeModal, modalType, builderItems} = toRefs(store)
+const {clearStore, changeModal, modalType, builderItems, currentEditItem} = toRefs(store)
 const area = ref<'view' | 'edit' | 'code'>('edit')
 const showModal = ref(false)
 
@@ -51,6 +51,8 @@ watch(area, () => {
         if (area.value == 'edit') {
             changeModal.value('property')
             showModal.value = true
+
+
         }
         if (area.value == 'code') {
             changeModal.value('infoPanel')

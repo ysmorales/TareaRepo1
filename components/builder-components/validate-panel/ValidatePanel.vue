@@ -11,8 +11,11 @@ const isDsInput = computed(() => currentEditItem?.value?.type === 'DsInput')
 </script>
 
 <template>
+    <div v-if="currentEditItem.name==''">
+        <p>Seleccione un componente para ver o modificar sus propiedades...</p>
+    </div>
     <!--    {{ currentEditItem }}-->
-    <div class="p-4 bg-white shadow rounded-md">
+    <div v-if="currentEditItem.name!=''" class="p-4 bg-white shadow rounded-md">
         <!--        <div class="flex justify-between items-center">-->
         <!--            Nombre:<input v-model="currentEditItem.name" class="w-[150px] h-[30px]" type="text"/>-->
 
