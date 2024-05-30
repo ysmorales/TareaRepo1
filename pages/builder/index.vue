@@ -12,9 +12,10 @@ import SavePanel from "~/components/builder-components/save-panel/SavePanel.vue"
 import ValidatePanel from "~/components/builder-components/validate-panel/ValidatePanel.vue";
 import ViewArea from "~/components/builder-components/view-area/ViewArea.vue";
 import FormDataPanel from "~/components/builder-components/form-data-panel/FormDataPanel.vue";
+import InfoPanel from "~/components/builder-components/info-panel/InfoPanel.vue";
 
 const store = useBuilderStore()
-const {clearStore, changeModal, modalType} = toRefs(store)
+const {clearStore, changeModal, modalType, builderItems} = toRefs(store)
 const area = ref<'view' | 'edit' | 'code'>('edit')
 const showModal = ref(false)
 
@@ -22,7 +23,8 @@ const titles = {
     'property': 'Panel de configuración',
     'save': 'Guardar prototipo',
     'validate': 'Validar input',
-    'formData': 'Form data'
+    'formData': 'Form data',
+    'infoPanel': 'Ejemplos de uso',
 };
 
 const handle = {
@@ -41,14 +43,24 @@ const handle = {
     view: () => area.value = 'view'
 }
 watch(area, () => {
-    if (area.value == 'view') {
-        changeModal.value('formData')
-        showModal.value = true
+    if (builderItems.value.length != 0) {
+        if (area.value == 'view') {
+            changeModal.value('formData')
+            showModal.value = true
+        }
+        if (area.value == 'edit') {
+            changeModal.value('property')
+            showModal.value = true
+        }
+        if (area.value == 'code') {
+            changeModal.value('infoPanel')
+            showModal.value = true
+        }
+    } else {
+        showModal.value = false
     }
-    if (area.value == 'edit') {
-        changeModal.value('property')
-        showModal.value = true
-    }
+
+
 })
 
 </script>
@@ -89,6 +101,7 @@ watch(area, () => {
                     <SavePanel v-if="modalType=='save'"/>
                     <ValidatePanel v-if="modalType=='validate'"/>
                     <FormDataPanel v-if="modalType=='formData'"/>
+                    <InfoPanel v-if="modalType=='infoPanel'"/>
                 </div>
             </div>
         </transition>
