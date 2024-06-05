@@ -24,7 +24,7 @@ const props = defineProps({
     },
 
     class: {
-        type: Array as () => string[] | string,
+        type: String,
         default: "",
     },
 });

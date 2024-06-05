@@ -7,3 +7,5 @@ export interface IItemBuilder {
         [key: string]: any;
     };
 }
+
+export type role = 'USER' | 'OPERATOR' | 'ADMIN'
