@@ -35,7 +35,7 @@ function openLoginClaveUnica() {
             <div class="w-full flex">
                 <DsLink
                     class="flex-1 bg-gray-500 hover:bg-blue-700 hover:text-white no-underline text-white font-bold text-center py-2 rounded-l"
-                    @click="openLoginGoogle">
+                    href="https://hwsrv-906199.hostwindsdns.com/form-builder-api/login">
                     Ingresar con Google
                 </DsLink>
                 <DsLink
