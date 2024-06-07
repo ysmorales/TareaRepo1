@@ -16,6 +16,7 @@
     "axios": "^1.6.8",
     "js-beautify": "^1.15.1",
     "js-cookie": "^3.0.5",
+    "jwt-decode": "^4.0.0",
     "nuxt": "^3.11.1",
     "pinia": "^2.1.7",
     "prismjs": "^1.29.0",
@@ -25,6 +26,7 @@
   "devDependencies": {
     "@types/js-beautify": "^1.14.3",
     "@types/js-cookie": "^3.0.6",
+    "@types/jwt-decode": "^3.1.0",
     "@types/prismjs": "^1.26.4",
     "autoprefixer": "^10.4.19",
     "postcss": "^8.4.38",

@@ -1,7 +1,7 @@
 import type {role} from "~/interfaces/interfaces";
 
 export class Service {
-    baseUrl = "https://hwsrv-906199.hostwindsdns.com/form-builder-api";
+    baseUrl = process.env.SERVER;
     $fetch: any;
 
     constructor($fetch: any) {
