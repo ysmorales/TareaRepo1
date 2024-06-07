@@ -7,14 +7,6 @@ definePageMeta({
     layout: false
 })
 
-function openLoginGoogle() {
-    alert("google")
-}
-
-function openLoginClaveUnica() {
-    alert("openLoginClaveUnica")
-
-}
 </script>
 
 <template>
@@ -35,12 +27,11 @@ function openLoginClaveUnica() {
             <div class="w-full flex">
                 <DsLink
                     class="flex-1 bg-gray-500 hover:bg-blue-700 hover:text-white no-underline text-white font-bold text-center py-2 rounded-l"
-                    href="https://hwsrv-906199.hostwindsdns.com/form-builder-api/auth/login">
+                    href="http://127.0.0.1:8000/auth/login">
                     Ingresar con Google
                 </DsLink>
                 <DsLink
-                    class="flex-1 bg-gray-400 hover:bg-blue-700 hover:text-white no-underline text-white font-bold text-center py-2 rounded-r"
-                    @click="openLoginClaveUnica">
+                    class="flex-1 bg-gray-400 hover:bg-blue-700 hover:text-white no-underline text-white font-bold text-center py-2 rounded-r">
                     Ingresar con Clave Única
                 </DsLink>
             </div>
