@@ -6,7 +6,6 @@ type IModalType = 'property' | 'save' | 'validate' | 'formData' | 'infoPanel'
 
 export const useBuilderStore = defineStore('counter', () => {
     const builderItems = ref<IItemBuilder[]>([] as IItemBuilder[])
-    const sideMenuType = ref<'default' | 'builder'>('default')
     const currentDragItem = ref<null | IItemBuilder>(null)
     const currentEditItem = ref<any | IItemBuilder>({
         name: '',
@@ -39,11 +38,6 @@ export const useBuilderStore = defineStore('counter', () => {
 
         // Toma el ID del primer elemento (el más grande) y añade 1
         return sortedItems[0].id! + 1;
-    }
-
-
-    function changeSideMenuType(newName: 'default' | 'builder') {
-        sideMenuType.value = newName;
     }
 
     function changeCurrentDragItem(item: IItemBuilder) {
@@ -128,8 +122,6 @@ export const useBuilderStore = defineStore('counter', () => {
         changeModal,
         modalType,
         builderItems,
-        sideMenuType,
-        changeSideMenuType,
         changeCurrentDragItem,
         currentDragItem,
         addItemToForm,

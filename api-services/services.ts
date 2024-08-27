@@ -1,7 +1,7 @@
 import type {role} from "~/interfaces/interfaces";
 
 export class Service {
-    baseUrl = process.env.SERVER;
+    baseUrl = 'http://127.0.0.1:8000';
     $fetch: any;
 
     constructor($fetch: any) {
