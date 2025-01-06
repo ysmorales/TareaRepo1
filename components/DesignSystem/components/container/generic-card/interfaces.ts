@@ -1,1 +1,1 @@
-type IContentTopColor = "primary" | "dark";
+type IContentTopColor = 'primary' | 'dark';

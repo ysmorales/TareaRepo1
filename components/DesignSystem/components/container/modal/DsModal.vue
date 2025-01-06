@@ -1,6 +1,16 @@
 <script lang="ts" setup>
+import {
+  ref,
+  nextTick,
+  onMounted,
+  onUnmounted,
+  type Ref,
+  watch,
+  computed,
+} from "vue";
 import DsIcon from "../../basic/icon/DsIcon.vue";
-import { computed, ref, nextTick, onMounted, onUnmounted, type Ref ,watch } from "vue";
+import DsButton from "../../../../DesignSystem/components/basic/button/DsButton.vue";
+import type { IButtonColor } from "../../basic/button/interfaces";
 
 const props = defineProps({
   modelValue: {
@@ -32,6 +42,36 @@ const props = defineProps({
     type: Boolean,
     default: true,
   },
+
+  okOnly: {
+    type: Boolean,
+    default: false,
+  },
+  cancelOnly: {
+    type: Boolean,
+    default: false,
+  },
+  buttonModalLoading: {
+    type: Boolean,
+    default: false,
+  },
+  colorButtonOk: {
+    type: String as () => IButtonColor,
+    default: "primary",
+  },
+  class: {
+    type: String,
+    default: "",
+  },
+  size: {
+    type: String,
+    default: "md",
+  },
+});
+
+const filterClassComp = computed(() => {
+  // return filterClass(predefinedClasses, props.class, otherStyle);
+  return props.class;
 });
 const closeButton = ref<Ref | null>(null);
 onMounted(() => {
@@ -44,7 +84,7 @@ onUnmounted(() => {
 
 function handleKeydown(event: KeyboardEvent) {
   if (event.key === "Escape" && props.modelValue === true) {
-    closeModal.value();
+    closeModal();
   }
 }
 
@@ -60,10 +100,10 @@ watch(
 
 const emit = defineEmits(["update:modelValue", "accept", "close"]);
 
-const closeModal: any = computed(() => {
+function closeModal() {
   emit("update:modelValue", !props.modelValue);
   emit("close");
-});
+}
 
 const onAccept = () => emit("accept");
 
@@ -90,12 +130,13 @@ function loopFocus() {
           >
             <div
               class="modal-background bg-black/80 absolute bottom-0 left-0 right-0 top-0"
-            ></div>
+            />
 
             <div
               ref="closeButton"
+              :class="filterClassComp"
               aria-labelledby="modal-title"
-              class="max-h-fit relative flex flex-col w-full md:my-0 md:mx-auto max-w-screen-md overflow-visible"
+              class="max-h-fit relative flex flex-col w-full md:my-0 md:mx-auto max-w-screen-md overflow-hidden rounded"
               tabindex="0"
             >
               <section
@@ -106,10 +147,7 @@ function loopFocus() {
                   <header
                     class="p-2 text-left border-b border-b-primary-500 flex items-center justify-between"
                   >
-                    <h3
-                      id="modal-title"
-                      class="font-bold text-primary-500 text-xl"
-                    >
+                    <h3 id="modal-title" class="font-bold">
                       {{ title }}
                     </h3>
 
@@ -143,32 +181,32 @@ function loopFocus() {
 
               <footer
                 v-if="showFooter"
-                class="bg-neutral-100 border border-t-neutral-300 text-center md:text-right p-5"
+                class="bg-white text-center md:text-right p-5"
               >
-                <div v-if="!$slots.footer">
-                  <button
-                    aria-labelledby="form_modal_example1"
-                    class="modal-close font-roboto border border-primary-500 text-primary-500 bg-white px-3 py-2 hover:bg-primary-900 hover:text-white m-2"
+                <div v-if="!$slots.footer" class="flex justify-end space-x-2">
+                  <DsButton
+                    v-show="!okOnly"
+                    class="btn-large"
+                    color="secondary"
+                    text="Cancelar"
                     title="Cancelar los cambios realizados y cerrar modal"
-                    type="reset"
                     @click="closeModal"
-                  >
-                    Cancelar
-                  </button>
-
-                  <button
+                  />
+                  <DsButton
+                    v-if="!cancelOnly"
+                    :color="colorButtonOk"
+                    :disabled="buttonModalLoading"
+                    :loading="buttonModalLoading"
+                    :text="acceptText"
                     :title="acceptTooltip"
-                    aria-labelledby="form_modal_example1"
-                    class="font-roboto border border-primary-500 bg-primary-500 text-white px-3 py-2 hover:bg-primary-900"
+                    class="btn-large"
                     type="submit"
                     @click="onAccept"
                     @keydown.tab="loopFocus"
-                  >
-                    {{ acceptText }}
-                  </button>
+                  />
                 </div>
 
-                <slot name="footer"></slot>
+                <slot name="footer" />
               </footer>
             </div>
           </div>

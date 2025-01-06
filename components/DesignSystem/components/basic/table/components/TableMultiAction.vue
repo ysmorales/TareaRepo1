@@ -1,17 +1,21 @@
 <script lang="ts" setup>
-import DsIcon from "../../icon/DsIcon.vue";
-import type{ Ref } from "vue";
+import type { Ref } from "vue";
 import DsButton from "../../button/DsButton.vue";
+import DsIcon from "../../../../../DesignSystem/components/basic/icon/DsIcon.vue";
 
 const props = defineProps({
   rowsSelected: {
-    type: Array<Ref<any[]>>,
+    type: Array<Ref<unknown[]>>,
     default: () => [],
     required: true,
   },
   addButtonLabel: {
     type: String,
     default: "Nueva Fila",
+  },
+  addButtonIconHide: {
+    type: Boolean,
+    default: true,
   },
   addButtonHide: {
     type: Boolean,
@@ -21,13 +25,25 @@ const props = defineProps({
     type: Object,
     default: () => ({ one: "Eliminar", many: "Eliminar todas" }),
   },
+  deleteAllButtonHide: {
+    type: Boolean,
+    default: false,
+  },
+  hideCheckBox: {
+    type: Boolean,
+    default: false,
+  },
+  customRender: {
+    type: Object,
+    default: () => ({}),
+  },
+  showIconDeleteAllMultiAction: {
+    type: Boolean,
+    default: false,
+  },
 });
-console.log(
-  "viendo filas seleccionadas",
-  hasMoreThanOneTrue(props.rowsSelected),
-);
 
-function hasMoreThanOneTrue(array: Array<Ref<any[]>>) {
+function hasMoreThanOneTrue(array: Array<Ref<unknown[]>>) {
   const trueValues = array.filter((value) => value);
   return trueValues.length > 1;
 }
@@ -44,29 +60,53 @@ function emitAddButton() {
 </script>
 
 <template>
-  <div
-    id="multiAcciones"
-    class="flex justify-between p-2 border border-gray-300"
-  >
-    <div class="flex items-center px-4 py-2 text-[#000000de]">
-      {{ rowsSelected.filter((row) => row).length }} fila(s) seleccionada(s)
-    </div>
-    <div class="flex">
-      <DsButton v-if="!addButtonHide" class="mr-1" @click="emitAddButton">
-        <DsIcon name="plus" />
-        {{ addButtonLabel }}
-      </DsButton>
+  <div id="multiAcciones" class="flex justify-end align-center md:mt-[-36px]">
+    <div class="flex space-x-2">
       <DsButton
+        v-if="!deleteAllButtonHide"
         :disabled="!(rowsSelected.filter((row) => row).length > 0)"
         color="danger"
+        size="medium"
         @click="multiDelete"
-        >{{
+      >
+        <DsIcon
+          v-if="showIconDeleteAllMultiAction"
+          class="mr-1"
+          name="trash"
+          size="medium"
+        />
+        {{
           hasMoreThanOneTrue(props.rowsSelected)
             ? deleteAllButtonLabel.many
             : deleteAllButtonLabel.one
         }}
       </DsButton>
+      <DsButton
+        v-if="!addButtonHide"
+        color="success"
+        size="medium"
+        @click="emitAddButton"
+      >
+        <DsIcon
+          v-if="!addButtonIconHide"
+          class="mr-1"
+          name="plus"
+          size="medium"
+        />
+        {{ addButtonLabel }}
+      </DsButton>
+
+      <component
+        :is="customRender?.component"
+        v-if="customRender?.component"
+        v-bind="customRender?.getProps()"
+      />
     </div>
+  </div>
+  <div class="flex items-center py-3 text-[#000000de]">
+    <template v-if="!hideCheckBox">
+      {{ rowsSelected.filter((row) => row).length }} fila(s) seleccionada(s)
+    </template>
   </div>
 </template>
 

@@ -1,8 +1,8 @@
 <script lang="ts" setup>
+import { computed } from "vue";
 import DsTypography from "../../basic/typography/DsTypography.vue";
 import { filterClass } from "../../../utils/filterClass";
 import { predefinedClasses } from "../../../common/propsStyle";
-import {computed} from "vue"
 
 const topColorCssMap = {
   dark: "text-dark-500",
@@ -41,38 +41,35 @@ const props = defineProps({
   },
 });
 
-const defaultClasses = 'p-4 border border-primary mb-3';
+const defaultClasses = "p-4 border border-primary mb-3";
 
 const filterClassComp = computed(() => {
   return filterClass(predefinedClasses, props.class);
 });
 
 const cssClasses = computed(() => [
-  filterClassComp,
+  `${defaultClasses} ${filterClassComp.value}`,
   {
-    'rounded-lg': props.rounded,
+    "rounded-lg": props.rounded,
   },
-  defaultClasses,
 ]);
 
 const topTextCssClass = computed(() => [
   topColorCssMap[props.topColor],
-  'font-roboto mb-2',
+  "font-roboto mb-2",
 ]);
-
-
 </script>
 
 <template>
   <div :class="cssClasses">
     <header>
-      <div class="flex flex-col">
-        <span :class="topTextCssClass">
-          <slot name="header">
-            {{ headerText || 'Default header' }}
-          </slot>
-        </span>
-      </div>
+      <slot name="header">
+        <div class="flex flex-col">
+          <span :class="topTextCssClass">
+            {{ headerText || "Default header" }}
+          </span>
+        </div>
+      </slot>
     </header>
 
     <section>
@@ -81,7 +78,7 @@ const topTextCssClass = computed(() => [
       </slot>
     </section>
 
-    <footer>
+    <footer v-if="$slots.footer">
       <DsTypography class="mb-2" variant="p">
         <slot name="footer">
           {{ footerText }}

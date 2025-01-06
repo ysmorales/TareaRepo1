@@ -1,5 +1,5 @@
 export const loadingTextAlignmentClasses = {
-  left: 'items-start',
-  center: 'items-center',
-  right: 'items-end',
+	left: 'items-start',
+	center: 'items-center',
+	right: 'items-end',
 };

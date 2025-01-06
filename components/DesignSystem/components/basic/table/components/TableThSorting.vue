@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import {ref,computed} from "vue";
+import { ref, computed } from "vue";
 import DsIcon from "../../icon/DsIcon.vue";
 
 defineProps({
@@ -8,7 +8,7 @@ defineProps({
   },
   columnWith: {
     type: String,
-    default: 'w-[10%]'
+    default: "",
   },
   index: {
     type: Number,
@@ -43,34 +43,36 @@ function handleClick() {
 }
 
 const computedClass = computed(() => {
-  return stateSort.value === 'default'
-      ? 'opacity-0 group-hover:opacity-50'
-      : (stateSort.value === 'up' || stateSort.value === 'down')
-          ? 'opacity-100'
-          : '';
+  return stateSort.value === "default"
+    ? "opacity-0 group-hover:opacity-50"
+    : stateSort.value === "up" || stateSort.value === "down"
+    ? "opacity-100"
+    : "";
 });
 </script>
 
 <template>
   <th
-      :key="'col' + index"
-      :class="[columnWith,
-      'px-2 py-2   group cursor-pointer',{'text-end':(title==='Acciones')},
-      { 'text-white': striped },
+    :key="'col' + index"
+    :class="[
+      columnWith,
+      'px-2 py-2 group cursor-pointer',
+      { 'text-end': title === 'Acciones' },
+      { 'text-dark-500': striped },
       { 'text-gray-500': !striped },
     ]"
-      @click="handleClick"
+    @click="handleClick"
   >
     {{ title }}
     <DsIcon
-        v-if="sort"
-        :class="computedClass"
-        :name="
+      v-if="sort"
+      :class="computedClass"
+      :name="
         {
           default: 'arrow-up',
           up: 'arrow-up',
           down: 'arrow-down',
-        }[stateSort]|| 'default'
+        }[stateSort] || 'default'
       "
     />
   </th>

@@ -1,37 +1,37 @@
 <script lang="ts" setup>
-import { sizeAvatarClasses } from "../../../common/propsStyle";
-import { computed } from "vue";
+import { computed } from 'vue';
+import { sizeAvatarClasses } from '../../../common/propsStyle';
 
-type ISize = "xSmall" | "small" | "medium" | "large";
+type ISize = 'xSmall' | 'small' | 'normal' | 'medium' | 'large';
 
 const props = defineProps({
-  size: {
-    type: String as () => ISize,
-    default: "large",
-  },
-  alt: {
-    type: String,
-    default: "alt-default",
-  },
-  src: {
-    type: String,
-    default: "/images/avatar.jpg",
-  },
-  class: {
-    type: String,
-    default: "",
-  },
+	size: {
+		type: String as () => ISize,
+		default: 'large',
+	},
+	alt: {
+		type: String,
+		default: 'alt-default',
+	},
+	src: {
+		type: String,
+		default: '/images/avatar.jpeg',
+	},
+	class: {
+		type: String,
+		default: '',
+	},
 });
 const filterClassComp = computed(() => {
-  // return filterClass(predefinedClasses, props.class);
-  return props.class;
+	// return filterClass(predefinedClasses, props.class);
+	return props.class;
 });
 </script>
 
 <template>
-  <img
-    :alt="alt"
-    :class="['rounded-full', filterClassComp, sizeAvatarClasses[size]]"
-    :src="src"
-  />
+	<img
+		:alt="alt"
+		:class="['rounded-full', filterClassComp, sizeAvatarClasses[size]]"
+		:src="src || '/images/icono-user.jpg'"
+	>
 </template>
