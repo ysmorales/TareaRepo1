@@ -106,14 +106,37 @@ export default function (configApi?: IConfig | undefined) {
                 useCache: boolean,
                 query?: any,
                 useWatchQuery?: boolean
-            ): Promise<AsyncData<Partial<IListRequest>, IError>> =>
-                requestResponse({
+            ): Promise<AsyncData<Partial<IListRequest>, IError>> => {
+
+                const simulateData: any = {
+                    codigoRetorno: 200,
+                    respuesta: {
+                        data: Array.from({ length: 100 }, (_, i) => i).map(d => ({
+                            id: d,
+                            name: 'test 1',
+                            lastChange: 'test 1',
+                            username: 'test 1',
+                            email: 'test 1',
+                            permissions: 'test 1'
+                        })),
+                        meta: {
+                            current_page: query.page ?? 1,
+                            total: 100,
+                            per_page: query.paginate ?? 20
+                        }
+                    }
+                }
+
+                return requestResponse({
                     path: `/request`,
                     baseURL,
                     query,
                     withAsyncData: { keyName, useCache, watch, useWatchQuery },
-                    manifest: config
+                    manifest: config,
+                    simulateData
                 })
+            }
+
         }
     }
 }

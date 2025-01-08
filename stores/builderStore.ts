@@ -1,6 +1,6 @@
-import type {IItemBuilder} from "~/interfaces/interfaces";
-import {defineStore} from 'pinia';
-import {ref} from 'vue';
+import type { IItemBuilder } from "~/interfaces/interfaces";
+import { defineStore } from 'pinia';
+import { ref } from 'vue';
 
 type IModalType = 'property' | 'save' | 'validate' | 'formData' | 'infoPanel'
 
@@ -44,7 +44,8 @@ export const useBuilderStore = defineStore('counter', () => {
         if (Array.isArray(item)) {
             currentDragItem.value = item;
         } else {
-            const temp = {...item}; // Hacer una copia del objeto
+            const temp = getStories()[item]; // Hacer una copia del objeto
+            temp.keyName = item;
             temp.name = item.name + '-' + generateNumberId();
             currentDragItem.value = temp;
         }
@@ -71,7 +72,7 @@ export const useBuilderStore = defineStore('counter', () => {
             const newItem = {
                 ...currentDragItem.value,
                 id: generateId(builderItems.value),
-                validation: {required: true, custom: 'defecto'}
+                validation: { required: true, custom: 'defecto' }
             } as IItemBuilder;
             builderItems.value.push(newItem);
             //para que se actualice el estado
@@ -103,7 +104,6 @@ export const useBuilderStore = defineStore('counter', () => {
 
     function changeModal(type: IModalType) {
         modalType.value = type
-
     }
 
     function updateFormValues(newValues: { [key: string]: any }) {

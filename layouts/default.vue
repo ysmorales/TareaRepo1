@@ -10,7 +10,7 @@ useHead({
 <template>
   <div class="h-full">
     <NavTop />
-    <div class="p-8">
+    <div>
       <slot />
     </div>
   </div>

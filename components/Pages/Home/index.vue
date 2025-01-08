@@ -75,52 +75,55 @@ const tableColumn: ITableColumnData[] = [
 </script>
 
 <template>
-  <article>
-    <TitleBlock />
-    <div class="grid md:grid-cols-4 gap-2">
-      <DsGenericCard class="bg-slate-50 border-slate-300" v-for="ii in 4">
-        <template #header>
-          <div class="flex">
-            <div class="flex-none">
-              <DsTypography variant="h4">Landing</DsTypography>
+  <div class="p-8">
+    <article>
+      <TitleBlock />
+      <div class="grid md:grid-cols-4 gap-2">
+        <DsGenericCard class="bg-slate-50 border-slate-300" v-for="ii in 4">
+          <template #header>
+            <div class="flex">
+              <div class="flex-none">
+                <DsTypography variant="h4">Landing</DsTypography>
+              </div>
+              <div class="ml-auto">
+                <DsButton
+                  color="tertiary"
+                  size="large"
+                  @click="() => handlerSelect()"
+                  >></DsButton
+                >
+              </div>
             </div>
-            <div class="ml-auto">
-              <DsButton
-                color="tertiary"
-                size="large"
-                @click="() => handlerSelect()"
-                >></DsButton
-              >
+          </template>
+
+          <template #body> Plantilla varias columnas </template>
+
+          <template #footer>
+            <div class="flex flex-wrap gap-2">
+              <DsTag text="Templates" class="text-primary-500" />
+              <DsTag text="Garelly" class="text-primary-500" />
+              <DsTag text="Templates" class="text-primary-500" />
             </div>
-          </div>
-        </template>
-
-        <template #body> Plantilla varias columnas </template>
-
-        <template #footer>
-          <div class="flex flex-wrap gap-2">
-            <DsTag text="Templates" class="text-primary-500" />
-            <DsTag text="Garelly" class="text-primary-500" />
-            <DsTag text="Templates" class="text-primary-500" />
-          </div>
-        </template>
-      </DsGenericCard>
-    </div>
-  </article>
-  <article class="mt-2">
-    <TitleBlock
-      title="Últimos prototipos"
-      sub-title="Revisa y gestiona tus prototipos más recientes."
-    />
-    <TableWrapper
-      :columns="tableColumn"
-      :data="detail as any"
-      :loading="status === 'pending'"
-      :others-props="othersProps"
-      :events-props="eventsProps"
-      :error="error"
-      :getData="getList"
-      :getPaginator="getPaginator"
-    />
-  </article>
+          </template>
+        </DsGenericCard>
+      </div>
+    </article>
+    <article class="mt-2">
+      <TitleBlock
+        title="Últimos prototipos"
+        sub-title="Revisa y gestiona tus prototipos más recientes."
+      />
+      <TableWrapper
+        :columns="tableColumn"
+        :data="detail as any"
+        :loading="status === 'pending'"
+        :others-props="othersProps"
+        :events-props="eventsProps"
+        :error="error"
+        no-update-data-on-pagination="yes"
+        :getData="getList"
+        :getPaginator="getPaginator"
+      />
+    </article>
+  </div>
 </template>

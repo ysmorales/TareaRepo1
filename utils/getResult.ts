@@ -1,5 +1,6 @@
 
 import type { ICertificateRequest, IListRequest } from "~/api-services/creator";
+import type { IMeta } from "~/api-services/global-interface/interfaces";
 import { isValidResponse } from "~/api-services/utils";
 
 export interface Item {
