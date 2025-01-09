@@ -13,6 +13,14 @@ function dragStart(currentKeyName: string) {
     changeCurrentDragItem.value(currentKeyName);
   }
 }
+
+const listItems = computed(() =>
+  getAllComponents().filter((d) =>
+    getNameComponentKey(d)
+      .toLowerCase()
+      .includes(searchText.value.toLowerCase())
+  )
+);
 </script>
 
 <template>
@@ -29,7 +37,7 @@ function dragStart(currentKeyName: string) {
         tabindex="0"
       >
         <Item
-          v-for="keyName in getAllComponents()"
+          v-for="keyName in listItems"
           :key="keyName"
           :icon="getStories()[keyName].icon ?? ''"
           :name="getNameComponentKey(keyName)"

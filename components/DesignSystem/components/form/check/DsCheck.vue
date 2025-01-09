@@ -1,134 +1,150 @@
 <script lang="ts" setup>
-import { elementSizes, predefinedClasses } from "../../../common/propsStyle";
-import type { ISize } from "../../../interfaces/elements";
-import { filterClass } from "../../../utils/filterClass";
-import generateUniqueId from "../../../utils/generateUniqueId";
-import { translateError } from "../../../utils/translateErrorMessage";
-import buildAriaLabels from "../../../utils/buildAriaLabels";
-import { computed} from "vue";
-import type{ PropType } from "vue";
+import {computed} from 'vue';
+import type {PropType} from 'vue';
+import {elementSizes} from '../../../common/propsStyle';
+import type {ISize} from '../../../interfaces/elements';
+import generateUniqueId from '../../../utils/generateUniqueId';
+import {translateError} from '../../../utils/translateErrorMessage';
+import buildAriaLabels from '../../../utils/buildAriaLabels';
 
 const props = defineProps({
-  modelValue: {
-    type: Boolean,
-    default: false,
-  },
-  id: {
-    type: String,
-  },
+    modelValue: {
+        type: Boolean,
+        default: false,
+    },
+    id: {
+        type: String,
+    },
 
-  class: {
-    type: String,
-    default: "",
-  },
+    class: {
+        type: String,
+        default: '',
+    },
 
-  size: {
-    type: String as () => ISize,
-    default: "normal",
-  },
+    size: {
+        type: String as () => ISize,
+        default: 'normal',
+    },
 
-  rounded: {
-    type: Boolean,
-    default: true,
-  },
+    rounded: {
+        type: Boolean,
+        default: true,
+    },
 
-  disabled: {
-    type: Boolean,
-    default: false,
-  },
+    disabled: {
+        type: Boolean,
+        default: false,
+    },
 
-  required: {
-    type: Boolean,
-    default: false,
-  },
+    required: {
+        type: Boolean,
+        default: false,
+    },
 
-  label: {
-    type: String,
-    default: "Default label",
-  },
+    label: {
+        type: String,
+        default: 'Default label',
+    },
 
-  helpMessage: {
-    type: String as PropType<string | null>,
-    default: null,
-  },
+    helpMessage: {
+        type: String as PropType<string | null>,
+        default: null,
+    },
 
-  error: {
-    type: String,
-    default: null,
-  },
+    error: {
+        type: String,
+        default: null,
+    },
+
 });
 
-const inputId = computed(() => generateUniqueId("checkbox"));
+const inputId = computed(() => generateUniqueId('checkbox'));
 const labelId = computed(() => `${inputId.value}-label`);
 const errorMessageId = computed(() => `${inputId.value}-error-message`);
 const helpMessageId = computed(() => `${inputId.value}-help-message`);
 
-const defaultClasses = "hover:border-dark-500 border p-2 mb-2";
+const defaultClasses = 'hover:border-dark-500 border p-2 mb-2';
 
 const filterClassComp = computed(() => {
-  return filterClass(predefinedClasses, props.class);
+    return props.class
 });
 
 const cssClasses = computed(() => [
-  filterClassComp,
-  elementSizes[props.size],
-  {
-    rounded: props.rounded,
-    error: hasError.value,
-  },
-  defaultClasses,
+    elementSizes[props.size],
+    {
+        rounded: props.rounded,
+        error: hasError.value,
+    },
+    defaultClasses,
 ]);
 
-const emit = defineEmits(["update:modelValue"]);
+const emit = defineEmits(['update:modelValue']);
 
 const model = computed({
-  get() {
-    return props.modelValue;
-  },
+    get() {
+        return props.modelValue;
+    },
 
-  set(value) {
-    emit("update:modelValue", value);
-  },
+    set(value) {
+        emit('update:modelValue', value);
+    },
 });
 
 const hasError = computed(() => !!props.error);
 const errorMessage = computed(() => translateError(props.error));
 
 const ariaLabels = computed(() =>
-  buildAriaLabels(props, {
-    label: labelId.value,
-    error: errorMessageId.value,
-    helpMessage: helpMessageId.value,
-  }),
+    buildAriaLabels(props, {
+        label: labelId.value,
+        error: errorMessageId.value,
+        helpMessage: helpMessageId.value,
+    }),
 );
 </script>
 
 <template>
-  <div class="flex items-center">
-    <input
-      :id="id ?? inputId"
-      v-model="model"
-      :aria-invalid="hasError"
-      :aria-labelledby="ariaLabels"
-      :aria-required="required"
-      :checked="modelValue"
-      :class="cssClasses"
-      :disabled="disabled"
-      class="w-auto mr-1"
-      type="checkbox"
-    />
+    <div :class="filterClassComp" class="flex items-center">
+        <input
+            :id="id ?? inputId"
+            v-model="model"
+            :aria-invalid="hasError"
+            :aria-labelledby="ariaLabels"
+            :aria-required="required"
+            :checked="modelValue"
+            :class="cssClasses"
+            :disabled="disabled"
+            class="w-auto mr-1"
+            type="checkbox"
+        >
 
-    <label v-if="label" :id="labelId" :for="inputId" class="mb-2">
-      {{ label }}
-      <span v-if="required" aria-hidden="true" class="required-marker">*</span>
+        <label
+            v-if="label"
+            :id="labelId"
+            :for="inputId"
+            class="mb-2"
+        >
+            {{ label }}
+            <span
+                v-if="required"
+                aria-hidden="true"
+                class="required-marker"
+            >*</span>
+        </label>
+    </div>
+
+    <label
+        v-if="hasError"
+        :id="errorMessageId"
+        class="error-message block mb-0"
+    >
+        {{ errorMessage }}
     </label>
-  </div>
 
-  <label v-if="hasError" :id="errorMessageId" class="error-message block mb-0">
-    {{ errorMessage }}
-  </label>
-
-  <label v-if="helpMessage" :id="helpMessageId" class="help-message block">
-    {{ helpMessage }}
-  </label>
+    <label
+        v-if="helpMessage"
+        :id="helpMessageId"
+        class="help-message block"
+    >
+        {{ helpMessage }}
+    </label>
 </template>
