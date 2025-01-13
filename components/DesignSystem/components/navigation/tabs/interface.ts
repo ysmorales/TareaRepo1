@@ -1,6 +1,6 @@
 export interface ITabItem {
-  id: number,
-  index: number,
-  title: string;
-  icon?: string;
+	id: number;
+	index: number;
+	title: string;
+	icon?: string;
 }

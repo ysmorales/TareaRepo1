@@ -3,7 +3,7 @@ import LayoutThreeColumns from "../LayoutThreeColumns.vue";
 import DraggableArea from "~/components/builder-components/dragable-area/DraggableArea.vue";
 
 import ListComponents from "./ListComponents.vue";
-import FieldOptions from "./FieldOptions.vue";
+import FieldTabsOptions from "./FieldTabsOptions.vue";
 
 const showModal = ref(false);
 
@@ -35,7 +35,7 @@ const handle = {
       <ListComponents />
     </template>
     <template v-slot:sideRight>
-      <FieldOptions />
+      <FieldTabsOptions />
     </template>
     <template v-slot:container>
       <DraggableArea
@@ -47,3 +47,27 @@ const handle = {
     </template>
   </LayoutThreeColumns>
 </template>
+
+<style>
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(11, 20, 26, 0.2) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 6px !important;
+  height: 6px !important;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: rgba(11, 20, 26, 0.2);
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(10, 11, 11, 0.2);
+}
+
+*::-webkit-scrollbar-track {
+  background: rgba(141, 147, 147, 0.1);
+}
+</style>

@@ -5,7 +5,7 @@ import Item from "./CardItemComponent.vue";
 
 const searchText = ref("");
 const store = useBuilderStore();
-const { changeCurrentDragItem, builderItems } = toRefs(store);
+const { changeCurrentDragItem, addItemToForm } = toRefs(store);
 
 function dragStart(currentKeyName: string) {
   if (currentKeyName) {
@@ -21,6 +21,11 @@ const listItems = computed(() =>
       .includes(searchText.value.toLowerCase())
   )
 );
+
+const addComponent = (keyName) => {
+  dragStart(keyName);
+  addItemToForm.value();
+};
 </script>
 
 <template>
@@ -29,7 +34,7 @@ const listItems = computed(() =>
   </div>
   <div>
     <DsTypography> Componentes </DsTypography>
-    <div class="flex flex-col overflow-auto max-h-[calc(100vh-200px)]">
+    <div class="flex flex-col overflow-auto max-h-[calc(100vh-210px)]">
       <div
         aria-describedby="vfb-elements-description"
         aria-label="Elements"
@@ -43,6 +48,7 @@ const listItems = computed(() =>
           :name="getNameComponentKey(keyName)"
           :keyName="keyName"
           @drag-start="dragStart(keyName)"
+          @dbl-click="addComponent(keyName)"
         />
       </div>
     </div>

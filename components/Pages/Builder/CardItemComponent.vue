@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { DsIcon } from "~/components/DesignSystem";
 
-const emit = defineEmits(["dragStart"]);
+const emit = defineEmits(["dragStart", "dblClick"]);
 
 interface IProp {
   name?: string;
@@ -19,6 +19,10 @@ const props = withDefaults(defineProps<IProp>(), {
 function dragStart(nameKey: string) {
   emit("dragStart", nameKey);
 }
+
+function dblclick(nameKey: string) {
+  emit("dblClick", nameKey);
+}
 </script>
 
 <template>
@@ -32,6 +36,7 @@ function dragStart(nameKey: string) {
     role="option"
     tabindex="-1"
     @dragstart="dragStart(keyName)"
+    @dblclick="dblclick(keyName)"
   >
     <div class="">
       <DsIcon name="bars" size="medium" />

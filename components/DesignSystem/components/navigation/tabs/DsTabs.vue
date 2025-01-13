@@ -1,14 +1,34 @@
 <script lang="ts" setup>
+import { ref, provide, computed } from "vue";
 import DsIcon from "../../basic/icon/DsIcon.vue";
-import type { ITabItem } from "./interface";
 import { filterClass } from "../../../utils/filterClass";
 import { predefinedClasses } from "../../../common/propsStyle";
-import { ref, provide,computed } from "vue";
+import type { ITabItem } from "./interface";
 
 const props = defineProps({
   rounded: {
     type: Boolean,
     default: true,
+  },
+  titleClass: {
+    type: String,
+    default: "",
+  },
+  titleClassActive: {
+    type: String,
+    default: "",
+  },
+  adjust: {
+    type: Boolean,
+    default: false,
+  },
+  showIconOnActive: {
+    type: Boolean,
+    default: false,
+  },
+  transparent: {
+    type: Boolean,
+    default: false,
   },
   class: {
     type: String,
@@ -29,6 +49,10 @@ const tabContainerClass = (tab: ITabItem) => {
     result += " -mb-px";
   }
 
+  if (props.adjust) {
+    return "";
+  }
+
   return result;
 };
 
@@ -44,6 +68,17 @@ const tabLinkClass = (tab: ITabItem) => {
   } else {
     result +=
       "flex justify-center px-4 py-2 bg-white hover:bg-neutral-100 hover:text-primary-500";
+  }
+
+  if (props.transparent) {
+    result = "flex justify-center border-transparent font-inriaSansBold";
+    if (isActiveTab(tab)) {
+      result += " bg-blue-100 rounded-b-none text-blue-500";
+    }
+  }
+
+  if (props.adjust) {
+    result += " w-full";
   }
 
   return result;
@@ -83,13 +118,20 @@ provide("tabChange", (tab: ITabItem) => {
 <template>
   <span v-if="!hasTabs">No tabs defined</span>
 
-  <section v-if="tabs" :class="['my-4', filterClassComp]">
+  <section v-if="tabs" :class="['my-4', 'w-full', filterClassComp]">
     <div class="tabs-container">
       <nav
-        class="items-stretch flex justify-between overflow-hidden overflow-x-auto whitespace-nowrap mb-6"
+        class="w-full items-stretch flex justify-between overflow-hidden overflow-x-auto whitespace-nowrap mb-[-1px]"
       >
         <ul
-          class="items-center border-b border-b-neutral-300 flex grow shrink-0 justify-start"
+          :class="[
+            {
+              'items-center border-b border-b-neutral-300 flex grow shrink-0 justify-start':
+                !adjust,
+              'w-full grid content-center': adjust,
+            },
+            adjust ? `grid-cols-${tabs.length}` : '',
+          ]"
           role="tablist"
         >
           <li
@@ -100,11 +142,14 @@ provide("tabChange", (tab: ITabItem) => {
             @click="activeTab = tab"
           >
             <button :class="tabLinkClass(tab)" role="button">
-              <span class="flex items-center justify-center">
+              <span :class="`flex items-center justify-center ${titleClass} `">
                 <DsIcon
                   v-if="tab.icon"
                   :name="tab.icon"
-                  class="mr-2"
+                  class="mr-2 block"
+                  :class="{
+                    hidden: showIconOnActive && !isActiveTab(tab),
+                  }"
                   size="default"
                 />
                 {{ tab.title }}
