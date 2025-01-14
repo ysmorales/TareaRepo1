@@ -11,3 +11,5 @@ export const getStories = (): any => {
 export const getAllComponents = () => Object.keys(getStories()).filter(d => isNotEmpty(getNameComponentKey(d)))
 
 export const getNameComponentKey = (keyName: string) => getStories()[keyName]?.component?.__name ?? ''
+
+export const getComponentByName = (nameFind: string) => getStories()[getAllComponents().find(keyName => getNameComponentKey(keyName) === nameFind)]

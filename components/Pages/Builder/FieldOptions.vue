@@ -1,8 +1,6 @@
 <script lang="ts" setup>
-import { DsAccordion, DsIcon, DsTypography } from "~/components/DesignSystem";
 import { useBuilderStore } from "~/stores/builderStore";
-const store = useBuilderStore();
-const { changeModal, builderItems, currentEditItem } = toRefs(store);
+import Fields from "./FormBuilder/Fields.vue";
 
 interface IProp {
   item: any;
@@ -11,10 +9,23 @@ interface IProp {
 const props = withDefaults(defineProps<IProp>(), {
   item: {},
 });
+
+const infoComponent = getComponentByName(props.item?.component?.__name);
+
+const getAllInfoComponent = (keyNameProp) => ({
+  ...props.item?.component?.props[keyNameProp],
+  ...infoComponent?.argTypes[keyNameProp],
+});
 </script>
 
 <template>
-  <div class="m-2">
-    <div>{{ item }}</div>
+  <div class="m-2 mt-0">
+    <div v-for="ii in Object.keys(item?.component?.props)">
+      <Fields
+        :fieldKey="ii"
+        :fieldInfo="getAllInfoComponent(ii)"
+        :name="item?.component?.__name"
+      />
+    </div>
   </div>
 </template>

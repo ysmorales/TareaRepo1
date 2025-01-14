@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import LayoutThreeColumns from "../LayoutThreeColumns.vue";
-import DraggableArea from "~/components/builder-components/dragable-area/DraggableArea.vue";
+import DraggableArea from "./DraggableArea.vue";
 
 import ListComponents from "./ListComponents.vue";
 import FieldTabsOptions from "./FieldTabsOptions.vue";

@@ -34,14 +34,14 @@ export default defineNuxtConfig({
         },
     },
 
-    devServer: {
-        host: "aplicaciones-unidoos.loc",
-        port: 31010,
-        https: {
-            key: "./builder.loc-key.pem",
-            cert: "./builder.loc.pem",
-        },
-    },
+    // devServer: {
+    //     host: "aplicaciones-unidoos.loc",
+    //     port: 31010,
+    //     https: {
+    //         key: "./builder.loc-key.pem",
+    //         cert: "./builder.loc.pem",
+    //     },
+    // },
 
     css: ['~/assets/css/main.css'],
     compatibilityDate: '2025-01-06',
