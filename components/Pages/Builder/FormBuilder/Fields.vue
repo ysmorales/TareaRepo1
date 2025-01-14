@@ -42,10 +42,11 @@ function handleChange() {
 
       <DsSelect
         v-if="fieldInfo?.control === 'select'"
-        v-model="sizeValue"
+        v-model="valueField"
         :option="fieldInfo?.options.map((d) => ({ value: d, text: d }))"
         :label="fieldKey"
         :placeholder="`Select ${fieldKey}`"
+        @select="handleChange()"
       />
 
       <DsCheck

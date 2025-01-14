@@ -94,7 +94,6 @@ export const useBuilderStore = defineStore('counter', () => {
             }
 
             builderItems.value[index].props[key] = value.value;
-            builderItems.value = builderItems.value;
         } else {
             console.error(`Item with id ${id} not found`);
         }
