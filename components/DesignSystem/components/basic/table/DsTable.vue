@@ -127,7 +127,7 @@ const props = defineProps({
   scrollx: {
     type: Boolean,
     default: true,
-  }
+  },
 });
 
 const totalItems = ref(0);
@@ -167,7 +167,7 @@ const parseRun = computed(() => {
   }
 
   const columnWithRunFilter = props.columns.find(
-    (column) => column.filter?.filterType === "run",
+    (column) => column.filter?.filterType === "run"
   );
   const key = columnWithRunFilter ? columnWithRunFilter.key : null;
 
@@ -225,7 +225,7 @@ watch(
     allRowsSelected.value = someSelected ? (allSelected ? true : null) : false;
     indeterminate.value = someSelected && !allSelected;
   },
-  { deep: true },
+  { deep: true }
 );
 
 watch(
@@ -234,7 +234,7 @@ watch(
     totalItems.value = newVal?.totalItems;
     currentPage.value = newVal?.currentPage;
     itemsPerPage.value = newVal?.itemsPerPage;
-  },
+  }
 );
 
 watch(
@@ -243,7 +243,7 @@ watch(
     totalItems.value = calculateTotalItems.value;
     currentPage.value = calculateCurrentPage.value;
     itemsPerPage.value = calculateItemsPerPage.value;
-  },
+  }
 );
 
 function handleClickCheckbox() {
@@ -300,7 +300,7 @@ function handleMultiDelete() {
   if (!props.modalDelete) {
     emit(
       "multiDelete",
-      props.data.filter((_: any, index: number) => rowsSelected.value[index]),
+      props.data.filter((_: any, index: number) => rowsSelected.value[index])
     );
   } else {
     showModalDelete.value = true;
@@ -310,7 +310,7 @@ function handleMultiDelete() {
 function handleMultiDeleteFromModal() {
   emit(
     "multiDelete",
-    props.data.filter((_: any, index: number) => rowsSelected.value[index]),
+    props.data.filter((_: any, index: number) => rowsSelected.value[index])
   );
   showModalDelete.value = false;
 }
@@ -326,14 +326,14 @@ function handleAddRow() {
 function handleCheckChange() {
   emit(
     "checkboxChange",
-    props.data.filter((_: any, index: number) => rowsSelected.value[index]),
+    props.data.filter((_: any, index: number) => rowsSelected.value[index])
   );
 }
 
 function handleHeadCheckChange() {
   emit(
     "parentAllCheckBoxChange",
-    props.data.filter((_: any, index: number) => rowsSelected.value[index]),
+    props.data.filter((_: any, index: number) => rowsSelected.value[index])
   );
 }
 
@@ -423,9 +423,12 @@ function handleClean() {
       <DsEmptyComponent class="mt-5 mb-5" />
     </div>
 
-    <div v-if="!cardMode" :class="{
-      'overflow-x-scroll': scrollx
-    }">
+    <div
+      v-if="!cardMode"
+      :class="{
+        'overflow-x-scroll': scrollx,
+      }"
+    >
       <table
         :class="[
           'w-full divide-y divide-gray-100 outline-0 shadow-[0_0px_0px_1px_rgba(0,0,0,0.1)]',

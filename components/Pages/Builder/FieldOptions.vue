@@ -20,11 +20,12 @@ const getAllInfoComponent = (keyNameProp) => ({
 
 <template>
   <div class="m-2 mt-0">
-    <div v-for="ii in Object.keys(item?.component?.props)">
+    <div v-for="ii in Object.keys(item?.component?.props ?? {})">
       <Fields
         :fieldKey="ii"
         :fieldInfo="getAllInfoComponent(ii)"
         :name="item?.component?.__name"
+        :id="item.id"
       />
     </div>
   </div>

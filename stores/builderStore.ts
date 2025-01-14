@@ -88,9 +88,13 @@ export const useBuilderStore = defineStore('counter', () => {
     function updateItemInForm(id: number, key: string, value: any) {
         const index = builderItems.value.findIndex(item => item.id === id);
         if (index !== -1) {
-            const temp = JSON.parse(JSON.stringify(builderItems.value));
-            temp[index].props[key] = value.value;
-            builderItems.value = temp;
+
+            if (!builderItems.value[index].props) {
+                builderItems.value[index].props = {}
+            }
+
+            builderItems.value[index].props[key] = value.value;
+            builderItems.value = builderItems.value;
         } else {
             console.error(`Item with id ${id} not found`);
         }

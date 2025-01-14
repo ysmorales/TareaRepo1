@@ -76,6 +76,7 @@ function handleValidate(item: any, index: number) {
         ]"
         @click="viewProperties(item, index)"
       >
+        {{ filterProps(item.component.props || {}) }}
         <component
           :is="item.component"
           v-bind="filterProps(item.props || {})"
