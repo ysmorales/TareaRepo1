@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { useBuilderStore } from "~/stores/builderStore";
 import Fields from "./FormBuilder/Fields.vue";
 
 interface IProp {

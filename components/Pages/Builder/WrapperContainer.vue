@@ -23,7 +23,7 @@ const handlerAction = (mode) => {
   <div class="group">
     <div
       :class="[
-        'relative border hover:border-blue-500 cursor-pointer z-10 mb-3',
+        'relative border hover:border-blue-500 cursor-pointer z-10 mb-3 hover:shadow-lg',
         'border-transparent group-hover:border-blue-500',
       ]"
     >

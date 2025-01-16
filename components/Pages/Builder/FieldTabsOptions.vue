@@ -2,19 +2,11 @@
 import { useBuilderStore } from "~/stores/builderStore";
 import { DsTabs, DsTabItem } from "~/components/DesignSystem";
 import ListFieldOptions from "./ListFieldOptions.vue";
-
-const store = useBuilderStore();
-const { modalType, currentEditItem } = toRefs(store);
-
-const showTabs = computed(
-  () =>
-    currentEditItem?.value?.component?.__name && modalType.value === "property"
-);
 </script>
 
 <template>
   <div class="">
-    <div v-show="showTabs" class="h-full flex m-2">
+    <div class="h-full flex m-2">
       <DsTabs
         adjust
         :rounded="false"

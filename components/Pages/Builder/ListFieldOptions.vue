@@ -3,7 +3,34 @@ import { DsAccordion, DsIcon, DsTypography } from "~/components/DesignSystem";
 import { useBuilderStore } from "~/stores/builderStore";
 import FieldOptions from "./FieldOptions.vue";
 const store = useBuilderStore();
-const { changeModal, builderItems, currentEditItem } = toRefs(store);
+const { itemsPage } = toRefs(store);
+
+const allModules = computed(() => {
+  const dd: any[] = [];
+  Object.keys(itemsPage.value?.sections ?? {}).forEach((idS) =>
+    Object.keys(itemsPage.value?.sections[idS].rows).forEach((idR) =>
+      Object.keys(itemsPage.value?.sections[idS].rows[idR].columns).forEach(
+        (idC) =>
+          Object.keys(
+            itemsPage.value?.sections[idS].rows[idR].columns[idC].modules
+          ).forEach((idM) => {
+            dd.push({
+              idS,
+              idR,
+              idC,
+              idM,
+              component: getComponentKey(
+                itemsPage.value?.sections[idS].rows[idR].columns[idC].modules[
+                  idM
+                ].module
+              ),
+            });
+          })
+      )
+    )
+  );
+  return dd;
+});
 </script>
 
 <template>
@@ -11,8 +38,8 @@ const { changeModal, builderItems, currentEditItem } = toRefs(store);
     <DsAccordion
       class="mt-2"
       :title="item.title ?? 'some'"
-      v-for="(item, index) in builderItems"
-      :key="`itm${index}-${item.id}`"
+      v-for="(item, index) in allModules"
+      :key="`itm${index}-${item.idM}`"
     >
       <template v-slot:header>
         <div class="flex w-full items-center">
