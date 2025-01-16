@@ -1,34 +1,53 @@
 <script lang="ts" setup>
-import {DsIcon} from "~/components/DesignSystem";
-import type {IItemBuilder} from "~/interfaces/interfaces";
+import { DsIcon } from "~/components/DesignSystem";
+import type { IItemBuilder } from "~/interfaces/interfaces";
 
 const props = defineProps({
-    index: Number,
-    item: Object as () => IItemBuilder
+  index: Number,
 });
-const emit = defineEmits(["removeItem", "validate"])
+const emit = defineEmits(["handlerAction"]);
 
-// const showIcon = ref(false);
-
-function removeItem(index: number) {
-    emit("removeItem", index)
+function handlerAction(mode: string) {
+  emit("handlerAction", mode);
 }
-
-function validate(index: number) {
-    emit("validate", index)
-}
-
-let isDsConfirmationButton = computed(() => props.item?.type === "DsConfirmationButton");
 </script>
 
 <template>
-
+  <div>
     <div
-        class="flex justify-end w-full"
+      class="relative bg-white z-20 float-right mt-[-10px] mr-1 hover:bg-blue-100 hidden group-hover:inline"
     >
-        <DsIcon v-if="!isDsConfirmationButton" color="primary" name="code" title="Validación"
-                @click="validate(index!)"/>
-        <DsIcon color="danger" name="trash" title="Remover" @click="removeItem(index!)"/>
-    </div>
-</template>
+      <div class="flex justify-end w-full">
+        <DsIcon
+          color="primary"
+          class="cursor-pointer"
+          name="copy"
+          title="Copiar"
+          @click="handlerAction('copy')"
+        />
+        <DsIcon
+          color="primary"
+          class="cursor-pointer"
+          name="clone"
+          title="Clonar"
+          @click="handlerAction('clone')"
+        />
 
+        <DsIcon
+          color="primary"
+          class="cursor-pointer"
+          name="paste"
+          title="Pegar"
+          @click="handlerAction('paste')"
+        />
+        <DsIcon
+          color="danger"
+          class="cursor-pointer"
+          name="trash"
+          title="Remover"
+          @click="handlerAction('trash')"
+        />
+      </div>
+    </div>
+  </div>
+</template>

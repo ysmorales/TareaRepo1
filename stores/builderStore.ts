@@ -1,10 +1,14 @@
 import type { IItemBuilder } from "~/interfaces/interfaces";
 import { defineStore } from 'pinia';
+import uniqid from "uniqid";
 import { ref } from 'vue';
 
 type IModalType = 'property' | 'save' | 'validate' | 'formData' | 'infoPanel'
 
 export const useBuilderStore = defineStore('counter', () => {
+    const itemsPage = ref({})
+    const itemOnHover = ref('')
+    const itemOnSelect = ref('')
     const builderItems = ref<IItemBuilder[]>([] as IItemBuilder[])
     const currentDragItem = ref<null | IItemBuilder>(null)
     const currentEditItem = ref<any | IItemBuilder>({
@@ -79,6 +83,50 @@ export const useBuilderStore = defineStore('counter', () => {
             builderItems.value = [...builderItems.value];
             ensureConfirmationButtonAtEnd();
         }
+        let idS, idR, idC, idM;
+        ({ idS =  uniqid('s'), idR= uniqid('r'), idC = uniqid('c'), idM = uniqid('m') } = currentDragItem.value)
+
+        const dicC = itemsPage.value
+        if (!dicC.sections) {
+            dicC.sections = {}
+        }
+
+        const baseSettings = {
+            settings: {},
+            sort: 1,
+        }
+
+        if (!dicC.sections[idC]) {
+            dicC.sections[idC] = {
+                ...baseSettings,
+                rows: {}
+            }
+        }
+
+        if (!dicC.sections[idC].rows[idR]) {
+            dicC.sections[idC].rows[idR] = {
+                ...baseSettings,
+                columns: {}
+            }
+        }
+
+
+        if (!dicC.sections[idC].rows[idR].columns[idC]) {
+            dicC.sections[idC].rows[idR].columns[idC] = {
+                ...baseSettings,
+                modules: {}
+            }
+        }
+
+        if (!dicC.sections[idC].rows[idR].columns[idC].modules[idM]) {
+            dicC.sections[idC].rows[idR].columns[idC].modules[idM] = {
+                ...baseSettings,
+                module: currentDragItem.value.keyName
+            }
+        }
+
+        itemsPage.value = dicC
+
     }
 
     function addItemToEdit(item: IItemBuilder) {
@@ -117,6 +165,15 @@ export const useBuilderStore = defineStore('counter', () => {
         propertyCollapse.value = !propertyCollapse.value
     }
 
+
+    function handlerItemHover(id: string) {
+        itemOnHover.value = id
+    }
+
+    function handlerItemOnSelect(id: string) {
+        itemOnSelect.value = id
+    }
+
     return {
         propertyCollapse,
         changePropertyCollapse,
@@ -131,7 +188,12 @@ export const useBuilderStore = defineStore('counter', () => {
         removeItemFromForm,
         currentEditItem,
         addItemToEdit,
+        itemsPage,
         updateItemInForm,
-        clearStore
+        clearStore,
+        itemOnHover,
+        handlerItemHover,
+        itemOnSelect,
+        handlerItemOnSelect
     }
 })

@@ -1,49 +1,26 @@
 <script lang="ts" setup>
 import { useBuilderStore } from "~/stores/builderStore";
-import { ref, toRefs } from "vue";
-import IconArea from "./IconArea.vue";
-import { filterProps } from "~/utils/filterProps";
+import { toRefs } from "vue";
+import Sections from "./Section";
 
 const store = useBuilderStore();
-const { builderItems, addItemToForm, addItemToEdit, changeModal } =
-  toRefs(store);
-const { removeItemFromForm } = toRefs(store);
-const showIcons = ref(builderItems.value.map(() => false));
-const selectedItem = ref(-1); // Nuevo estado para el ítem seleccionado
+const { addItemToForm } = toRefs(store);
 const emit = defineEmits(["property", "remove", "validate"]);
 
 const drop = () => {
   addItemToForm.value();
 };
-
-const removeItem = (index: number) => {
-  emit("remove");
-  selectedItem.value = -1;
-  removeItemFromForm.value(index);
-};
-
-const viewProperties = (item: any, index: number) => {
-  changeModal.value("property");
-  addItemToEdit.value(item);
-  selectedItem.value = index; // Actualiza el ítem seleccionado
-  emit("property");
-};
-
-function handleValidate(item: any, index: number) {
-  addItemToEdit.value(item);
-  selectedItem.value = index;
-  emit("validate");
-}
 </script>
 
 <template>
   <div
     :draggable="false"
-    class="w-full pb-20 flex md:min-w-[723px] border border-gray-300 shadow-md rounded-md p-5 flex-col items-center overflow-auto min-h-[calc(100vh-80px)] max-h-[calc(100vh-80px)]"
+    class="w-full pb-20 md:min-w-[723px] border border-gray-300 shadow-md rounded-md p-5 items-center overflow-auto min-h-[calc(100vh-80px)] max-h-[calc(100vh-80px)]"
     @drop="drop"
     @dragover.prevent
   >
-    <div
+    <Sections />
+    <!-- <div
       v-if="builderItems.length == 0"
       class="flex flex-col justify-center h-full items-center"
     >
@@ -89,7 +66,7 @@ function handleValidate(item: any, index: number) {
             },
           ]"
         ></div>
-      </div>
-    </div>
+      </div> 
+    </div>-->
   </div>
 </template>
