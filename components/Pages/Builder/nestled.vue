@@ -1,16 +1,26 @@
 <template>
   <draggable
     class="dragArea"
-    tag="ul"
+    tag="div"
     :list="tasks"
     :group="{ name: 'g1' }"
     item-key="id"
   >
     <template #item="{ element }">
-      <li>
-        <p>{{ element.id }}</p>
-        <div>{{ element.type }}</div>
-        <div>{{ element.item }}</div>
+      <div>
+        <WrapperContainer
+          :idm="element.id"
+          :ids="element.ids"
+          :idr="element.idr"
+          :idc="element.idc"
+        >
+          <div v-if="element.type !== 'module'">
+            {{ element.type }} {{ element.id }}
+          </div>
+
+          <modulec v-if="element.type === 'module'" :element="element" />
+        </WrapperContainer>
+
         <NesteDraggable
           :ids="element.idS"
           :idr="element.idR"
@@ -18,12 +28,14 @@
           v-if="element.items"
           :tasks="element.items"
         />
-      </li>
+      </div>
     </template>
   </draggable>
 </template>
 <script>
 import draggable from "vuedraggable";
+import modulec from "./moduleComponent.vue";
+import WrapperContainer from "./WrapperContainer.vue";
 
 export default {
   props: {
@@ -46,6 +58,8 @@ export default {
   },
   components: {
     draggable,
+    modulec,
+    WrapperContainer,
   },
   name: "NesteDraggable",
 };
@@ -54,6 +68,6 @@ export default {
 .dragArea {
   min-height: 50px;
   outline: 1px dashed;
-  padding-left: 10px;
+  padding-left: 0.5rem;
 }
 </style>
