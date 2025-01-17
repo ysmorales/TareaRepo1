@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import draggable from "vuedraggable";
 import { useBuilderStore } from "~/stores/builderStore";
 import IconArea from "./IconArea.vue";
 
@@ -36,6 +37,13 @@ const getId = () => props.idm ?? props.idc ?? props.idr ?? props.ids;
 </script>
 
 <template>
+  <!-- <draggable
+    class="list-group"
+    :list="[{ id: idm }]"
+    group="people"
+    itemKey="id"
+  >
+    <template #item="{ element, index }"> -->
   <div class="group">
     <div
       :class="[
@@ -61,4 +69,6 @@ const getId = () => props.idm ?? props.idc ?? props.idr ?? props.ids;
       ></div>
     </div>
   </div>
+  <!-- </template>
+  </draggable> -->
 </template>

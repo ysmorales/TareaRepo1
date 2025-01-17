@@ -7,6 +7,7 @@ type IModalType = 'property' | 'save' | 'validate' | 'formData' | 'infoPanel'
 
 export const useBuilderStore = defineStore('counter', () => {
     const itemsPage = ref({})
+    const itemsPageList = ref([])
     const newProps = ref({})
     const itemOnHover = ref('')
     const itemOnSelect = ref('')
@@ -52,6 +53,7 @@ export const useBuilderStore = defineStore('counter', () => {
         let idS, idR, idC, idM;
         ({ idS =  uniqid('s'), idR= uniqid('r'), idC = uniqid('c'), idM = uniqid('m') } = currentDragItem.value)
 
+        const list: any[] = itemsPageList.value
         const dicC = itemsPage.value
         if (!dicC.sections) {
             dicC.sections = {}
@@ -68,6 +70,11 @@ export const useBuilderStore = defineStore('counter', () => {
                 ...baseSettings,
                 rows: {}
             }
+            list.push({
+                ...baseSettings,
+                id: idS,
+                items: []
+            })
         }
 
         if (!dicC.sections[idS].rows[idR]) {
@@ -75,6 +82,13 @@ export const useBuilderStore = defineStore('counter', () => {
                 ...baseSettings,
                 columns: {}
             }
+
+            const idxS = list.findIndex(d => d.id === idS)
+            list[idxS].items.push({
+                ...baseSettings,
+                id: idR,
+                items: []
+            })
         }
 
 
@@ -83,6 +97,13 @@ export const useBuilderStore = defineStore('counter', () => {
                 ...baseSettings,
                 modules: {}
             }
+            const idxS = list.findIndex(d => d.id === idS)
+            const idxR = list[idxS].items.findIndex(d => d.id === idR)
+            list[idxS].items[idxR].items.push({
+                ...baseSettings,
+                id: idC,
+                items: []
+            })
         }
 
         if (!dicC.sections[idS].rows[idR].columns[idC].modules[idM]) {
@@ -90,9 +111,19 @@ export const useBuilderStore = defineStore('counter', () => {
                 ...baseSettings,
                 module: currentDragItem.value.keyName
             }
+
+            const idxS = list.findIndex(d => d.id === idS)
+            const idxR = list[idxS].items.findIndex(d => d.id === idR)
+            const idxC = list[idxS].items[idxR].items.findIndex(d => d.id === idC)
+            list[idxS].items[idxR].items[idxC].push({
+                ...baseSettings,
+                id: idS,
+                items: []
+            })
         }
 
         itemsPage.value = dicC
+        itemsPageList.value = list
 
     }
 
@@ -178,6 +209,7 @@ export const useBuilderStore = defineStore('counter', () => {
         itemOnSelect,
         handlerItemOnSelect,
         handlerRemoveItem,
-        handlerCloneItem
+        handlerCloneItem,
+        itemsPageList
     }
 })

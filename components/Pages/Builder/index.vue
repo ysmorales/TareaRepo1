@@ -4,29 +4,9 @@ import DraggableArea from "./DraggableArea.vue";
 
 import ListComponents from "./ListComponents.vue";
 import FieldTabsOptions from "./FieldTabsOptions.vue";
-
-const showModal = ref(false);
-
-const store = useBuilderStore();
-const { clearStore, changeModal, modalType, builderItems, currentEditItem } =
-  toRefs(store);
+import NestledExample from "./nestled-example.vue";
 
 const area = ref<"view" | "edit" | "code">("edit");
-const handle = {
-  code: () => (area.value = "code"),
-  edit: () => (area.value = "edit"),
-  clear: () => clearStore.value(),
-  removeItem: () => (showModal.value = false),
-  save: () => {
-    changeModal.value("save");
-    showModal.value = true;
-  },
-  validate: () => {
-    changeModal.value("validate");
-    showModal.value = true;
-  },
-  view: () => (area.value = "view"),
-};
 </script>
 
 <template>
@@ -38,12 +18,8 @@ const handle = {
       <FieldTabsOptions />
     </template>
     <template v-slot:container>
-      <DraggableArea
-        v-if="area == 'edit'"
-        @property="showModal = true"
-        @remove="handle.removeItem"
-        @validate="handle.validate"
-      />
+      <NestledExample />
+      <DraggableArea v-if="area == 'edit'" />
     </template>
   </LayoutThreeColumns>
 </template>

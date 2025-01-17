@@ -13,11 +13,11 @@ const drop = () => {
 </script>
 
 <template>
+  <!-- @drop="drop"
+  @dragover.prevent -->
   <div
     :draggable="false"
     class="w-full pb-20 md:min-w-[723px] border border-gray-300 shadow-md rounded-md p-5 items-center overflow-auto min-h-[calc(100vh-80px)] max-h-[calc(100vh-80px)]"
-    @drop="drop"
-    @dragover.prevent
   >
     <Sections />
     <!-- <div
