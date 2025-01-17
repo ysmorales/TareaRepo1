@@ -26,11 +26,17 @@ const { itemsPage } = toRefs(store);
       itemsPage.sections[ids].rows[idr].columns[idc].modules
     )"
   >
-    <WrapperContainer :id="mm">
+    <WrapperContainer :idm="mm" :ids="ids" :idr="idr" :idc="idc">
       <component
         :is="
           getComponentKey(
             itemsPage.sections[ids].rows[idr].columns[idc].modules[mm].module
+          )
+        "
+        v-bind="
+          filterProps(
+            itemsPage.sections[ids].rows[idr].columns[idc].modules[mm].props ??
+              {}
           )
         "
       />

@@ -7,6 +7,7 @@ type IModalType = 'property' | 'save' | 'validate' | 'formData' | 'infoPanel'
 
 export const useBuilderStore = defineStore('counter', () => {
     const itemsPage = ref({})
+    const newProps = ref({})
     const itemOnHover = ref('')
     const itemOnSelect = ref('')
     const builderItems = ref<IItemBuilder[]>([] as IItemBuilder[])
@@ -31,19 +32,6 @@ export const useBuilderStore = defineStore('counter', () => {
         return idCounter++;
     }
 
-    function generateId(items: IItemBuilder[]): number {
-        // Si el array está vacío, comienza desde 1
-        if (items.length === 0) {
-            return 1;
-        }
-
-        // Ordena los elementos en orden descendente por ID
-        const sortedItems = [...items].sort((a, b) => b.id! - a.id!);
-
-        // Toma el ID del primer elemento (el más grande) y añade 1
-        return sortedItems[0].id! + 1;
-    }
-
     function changeCurrentDragItem(item: IItemBuilder) {
         if (Array.isArray(item)) {
             currentDragItem.value = item;
@@ -60,29 +48,7 @@ export const useBuilderStore = defineStore('counter', () => {
         builderItems.value.splice(index, 1)
     }
 
-    function ensureConfirmationButtonAtEnd() {
-        const index = builderItems.value.findIndex(item => item.type === 'DsConfirmationButton');
-
-        if (index !== -1 && index !== builderItems.value.length - 1) {
-            const item = builderItems.value.splice(index, 1)[0];
-            builderItems.value.push(item);
-        }
-    }
-
     function addItemToForm() {
-        if (Array.isArray(currentDragItem.value)) {
-            builderItems.value = currentDragItem.value
-        } else {
-            const newItem = {
-                ...currentDragItem.value,
-                id: generateId(builderItems.value),
-                validation: { required: true, custom: 'defecto' }
-            } as IItemBuilder;
-            builderItems.value.push(newItem);
-            //para que se actualice el estado
-            builderItems.value = [...builderItems.value];
-            ensureConfirmationButtonAtEnd();
-        }
         let idS, idR, idC, idM;
         ({ idS =  uniqid('s'), idR= uniqid('r'), idC = uniqid('c'), idM = uniqid('m') } = currentDragItem.value)
 
@@ -94,32 +60,33 @@ export const useBuilderStore = defineStore('counter', () => {
         const baseSettings = {
             settings: {},
             sort: 1,
+            props: {}
         }
 
-        if (!dicC.sections[idC]) {
-            dicC.sections[idC] = {
+        if (!dicC.sections[idS]) {
+            dicC.sections[idS] = {
                 ...baseSettings,
                 rows: {}
             }
         }
 
-        if (!dicC.sections[idC].rows[idR]) {
-            dicC.sections[idC].rows[idR] = {
+        if (!dicC.sections[idS].rows[idR]) {
+            dicC.sections[idS].rows[idR] = {
                 ...baseSettings,
                 columns: {}
             }
         }
 
 
-        if (!dicC.sections[idC].rows[idR].columns[idC]) {
-            dicC.sections[idC].rows[idR].columns[idC] = {
+        if (!dicC.sections[idS].rows[idR].columns[idC]) {
+            dicC.sections[idS].rows[idR].columns[idC] = {
                 ...baseSettings,
                 modules: {}
             }
         }
 
-        if (!dicC.sections[idC].rows[idR].columns[idC].modules[idM]) {
-            dicC.sections[idC].rows[idR].columns[idC].modules[idM] = {
+        if (!dicC.sections[idS].rows[idR].columns[idC].modules[idM]) {
+            dicC.sections[idS].rows[idR].columns[idC].modules[idM] = {
                 ...baseSettings,
                 module: currentDragItem.value.keyName
             }
@@ -133,18 +100,8 @@ export const useBuilderStore = defineStore('counter', () => {
         currentEditItem.value = item
     }
 
-    function updateItemInForm(id: number, key: string, value: any) {
-        const index = builderItems.value.findIndex(item => item.id === id);
-        if (index !== -1) {
-
-            if (!builderItems.value[index].props) {
-                builderItems.value[index].props = {}
-            }
-
-            builderItems.value[index].props[key] = value.value;
-        } else {
-            console.error(`Item with id ${id} not found`);
-        }
+    function updateItemInForm({ idS, idR, idC, idM }: any, key: string, value: any) {
+        itemsPage.value.sections[idS].rows[idR].columns[idC].modules[idM].props[key] = value.value;
     }
 
     function clearStore() {
@@ -174,6 +131,31 @@ export const useBuilderStore = defineStore('counter', () => {
         itemOnSelect.value = id
     }
 
+    function handlerRemoveItem({ ids, idr, idc, idm }) {
+        if (idm) {
+            delete itemsPage.value.sections[ids].rows[idr].columns[idc].modules[idm]
+        }
+        if (!idm && idc) {
+            delete itemsPage.value.sections[ids].rows[idr].columns[idc]
+        }
+        if (!idm && !idc && idr) {
+            delete itemsPage.value.sections[ids].rows[idr]
+        }
+        if (!idm && !idc && !idr && ids) {
+            delete itemsPage.value.sections[ids]
+        }
+    }
+
+    function handlerCloneItem({ ids, idr, idc, idm }) {
+        if (idm) {
+            const idM = uniqid('m')
+            const item = JSON.parse(JSON.stringify(itemsPage.value.sections[ids].rows[idr].columns[idc].modules[idm]))
+            const sort = item?.sort + 1
+            itemsPage.value.sections[ids].rows[idr].columns[idc].modules[idM] = { ...item, sort }
+        }
+    }
+
+
     return {
         propertyCollapse,
         changePropertyCollapse,
@@ -194,6 +176,8 @@ export const useBuilderStore = defineStore('counter', () => {
         itemOnHover,
         handlerItemHover,
         itemOnSelect,
-        handlerItemOnSelect
+        handlerItemOnSelect,
+        handlerRemoveItem,
+        handlerCloneItem
     }
 })

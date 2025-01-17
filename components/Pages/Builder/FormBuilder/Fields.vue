@@ -6,7 +6,7 @@ interface IProp {
   fieldKey: string;
   fieldInfo: any;
   name: string;
-  id: number;
+  item: any;
 }
 
 const props = withDefaults(defineProps<IProp>(), {
@@ -15,15 +15,15 @@ const props = withDefaults(defineProps<IProp>(), {
 });
 
 const store = useBuilderStore();
-const { currentEditItem, updateItemInForm } = toRefs(store);
+const { updateItemInForm } = toRefs(store);
 
 const emit = defineEmits(["input", "update:modelValue"]);
 
 const valueField = ref("");
 
 function handleChange() {
-  console.log(props.id, props.fieldKey, valueField);
-  updateItemInForm.value(props?.id, props.fieldKey, valueField);
+  console.log(props.item, props.fieldKey, valueField);
+  updateItemInForm.value(props?.item, props.fieldKey, valueField);
 }
 </script>
 
@@ -51,7 +51,7 @@ function handleChange() {
 
       <DsCheck
         v-if="fieldInfo?.control === 'boolean'"
-        v-model="labelValue"
+        v-model="valueField"
         :label="fieldKey"
       />
     </div>

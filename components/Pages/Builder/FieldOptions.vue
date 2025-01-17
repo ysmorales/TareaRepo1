@@ -24,7 +24,7 @@ const getAllInfoComponent = (keyNameProp) => ({
         :fieldKey="ii"
         :fieldInfo="getAllInfoComponent(ii)"
         :name="item?.component?.__name"
-        :id="item.id"
+        :item="item"
       />
     </div>
   </div>

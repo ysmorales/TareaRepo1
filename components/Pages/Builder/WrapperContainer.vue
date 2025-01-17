@@ -3,11 +3,19 @@ import { useBuilderStore } from "~/stores/builderStore";
 import IconArea from "./IconArea.vue";
 
 const store = useBuilderStore();
-const { itemOnSelect, handlerItemOnSelect } = toRefs(store);
+const {
+  itemOnSelect,
+  handlerItemOnSelect,
+  handlerRemoveItem,
+  handlerCloneItem,
+} = toRefs(store);
 
 interface IProp {
   type?: string;
-  id: string;
+  idm: string;
+  ids: string;
+  idr: string;
+  idc: string;
 }
 
 const props = withDefaults(defineProps<IProp>(), {
@@ -16,7 +24,15 @@ const props = withDefaults(defineProps<IProp>(), {
 
 const handlerAction = (mode) => {
   console.log({ mode });
+  if (mode === "trash") {
+    handlerRemoveItem.value(props);
+  }
+  if (mode === "clone") {
+    handlerCloneItem.value(props);
+  }
 };
+
+const getId = () => props.idm ?? props.idc ?? props.idr ?? props.ids;
 </script>
 
 <template>
@@ -30,16 +46,16 @@ const handlerAction = (mode) => {
       <slot>some</slot>
 
       <div class="absolute inset-0">
-        <IconArea :index="`idf${id}`" @handlerAction="handlerAction" />
+        <IconArea :index="`idf${getId()}`" @handlerAction="handlerAction" />
       </div>
 
       <div
-        @click="() => handlerItemOnSelect(id)"
+        @click="() => handlerItemOnSelect(getId())"
         :class="[
           'absolute inset-0 ',
           {
             'bg-blue-500 opacity-20 border border-blue-500 ':
-              itemOnSelect === id,
+              itemOnSelect === getId(),
           },
         ]"
       ></div>
