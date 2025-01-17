@@ -7,8 +7,8 @@
     item-key="id"
   >
     <template #item="{ element }">
-      <div>
-        <WrapperContainer
+      <WrapperContainer>
+        <OptionsContainer
           :idm="element.id"
           :ids="element.ids"
           :idr="element.idr"
@@ -19,7 +19,7 @@
           </div>
 
           <modulec v-if="element.type === 'module'" :element="element" />
-        </WrapperContainer>
+        </OptionsContainer>
 
         <NesteDraggable
           :ids="element.idS"
@@ -28,7 +28,7 @@
           v-if="element.items"
           :tasks="element.items"
         />
-      </div>
+      </WrapperContainer>
     </template>
   </draggable>
 </template>
@@ -36,6 +36,7 @@
 import draggable from "vuedraggable";
 import modulec from "./moduleComponent.vue";
 import WrapperContainer from "./WrapperContainer.vue";
+import OptionsContainer from "./OptionsContainer.vue";
 
 export default {
   props: {
@@ -60,6 +61,7 @@ export default {
     draggable,
     modulec,
     WrapperContainer,
+    OptionsContainer,
   },
   name: "NesteDraggable",
 };
