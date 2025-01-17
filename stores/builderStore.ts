@@ -72,6 +72,7 @@ export const useBuilderStore = defineStore('counter', () => {
             }
             list.push({
                 ...baseSettings,
+                type: 'section',
                 id: idS,
                 items: []
             })
@@ -86,7 +87,9 @@ export const useBuilderStore = defineStore('counter', () => {
             const idxS = list.findIndex(d => d.id === idS)
             list[idxS].items.push({
                 ...baseSettings,
+                type: 'row',
                 id: idR,
+                idS: idS,
                 items: []
             })
         }
@@ -101,6 +104,9 @@ export const useBuilderStore = defineStore('counter', () => {
             const idxR = list[idxS].items.findIndex(d => d.id === idR)
             list[idxS].items[idxR].items.push({
                 ...baseSettings,
+                type: 'column',
+                idR: idR,
+                idS: idS,
                 id: idC,
                 items: []
             })
@@ -115,10 +121,14 @@ export const useBuilderStore = defineStore('counter', () => {
             const idxS = list.findIndex(d => d.id === idS)
             const idxR = list[idxS].items.findIndex(d => d.id === idR)
             const idxC = list[idxS].items[idxR].items.findIndex(d => d.id === idC)
-            list[idxS].items[idxR].items[idxC].push({
+            list[idxS].items[idxR].items[idxC].items.push({
                 ...baseSettings,
-                id: idS,
-                items: []
+                type: 'module',
+                idR: idR,
+                idS: idS,
+                idC: idC,
+                id: idM,
+                item: currentDragItem.value.keyName
             })
         }
 

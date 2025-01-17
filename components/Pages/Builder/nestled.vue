@@ -9,7 +9,15 @@
     <template #item="{ element }">
       <li>
         <p>{{ element.id }}</p>
-        <NesteDraggable :tasks="element.items" />
+        <div>{{ element.type }}</div>
+        <div>{{ element.item }}</div>
+        <NesteDraggable
+          :ids="element.idS"
+          :idr="element.idR"
+          :idc="element.idC"
+          v-if="element.items"
+          :tasks="element.items"
+        />
       </li>
     </template>
   </draggable>
@@ -22,6 +30,18 @@ export default {
     tasks: {
       required: true,
       type: Array,
+    },
+    idS: {
+      required: false,
+      type: String,
+    },
+    idR: {
+      required: false,
+      type: String,
+    },
+    idC: {
+      required: false,
+      type: String,
     },
   },
   components: {
