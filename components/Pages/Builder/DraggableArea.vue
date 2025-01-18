@@ -1,10 +1,12 @@
 <script lang="ts" setup>
 import { useBuilderStore } from "~/stores/builderStore";
 import { toRefs } from "vue";
-import Sections from "./Section";
+
+import NesteDraggable from "./nestled.vue";
+import GlobalActions from "./GlobalActions.vue";
 
 const store = useBuilderStore();
-const { addItemToForm } = toRefs(store);
+const { addItemToForm, itemsPageList } = toRefs(store);
 const emit = defineEmits(["property", "remove", "validate"]);
 
 const drop = () => {
@@ -13,13 +15,11 @@ const drop = () => {
 </script>
 
 <template>
-  <!-- @drop="drop"
-  @dragover.prevent -->
+  <!-- @drop="drop" @dragover.prevent -->
   <div
-    :draggable="false"
     class="w-full pb-20 md:min-w-[723px] border border-gray-300 shadow-md rounded-md p-5 items-center overflow-auto min-h-[calc(100vh-80px)] max-h-[calc(100vh-80px)]"
   >
-    <Sections />
+    <NesteDraggable :items="itemsPageList" />
     <!-- <div
       v-if="builderItems.length == 0"
       class="flex flex-col justify-center h-full items-center"
@@ -69,4 +69,6 @@ const drop = () => {
       </div> 
     </div>-->
   </div>
+
+  <GlobalActions />
 </template>

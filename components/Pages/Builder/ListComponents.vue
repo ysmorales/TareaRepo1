@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import draggable from "vuedraggable";
+import uniqid from "uniqid";
 import { useBuilderStore } from "~/stores/builderStore";
 import { DsTypography, DsInput } from "~/components/DesignSystem";
 import Item from "./CardItemComponent.vue";
@@ -15,17 +17,20 @@ function dragStart(currentKeyName: string) {
 }
 
 const listItems = computed(() =>
-  getAllComponents().filter((d) =>
-    getNameComponentKey(d)
-      .toLowerCase()
-      .includes(searchText.value.toLowerCase())
-  )
+  getAllComponents()
+    .filter((d) =>
+      getNameComponentKey(d)
+        .toLowerCase()
+        .includes(searchText.value.toLowerCase())
+    )
+    .map((id) => ({ id }))
 );
 
 const addComponent = (keyName) => {
   dragStart(keyName);
   addItemToForm.value();
 };
+const cloneDog = ({ id }) => ({ type: "module", id: uniqid("m"), item: id });
 </script>
 
 <template>
@@ -41,15 +46,23 @@ const addComponent = (keyName) => {
         class="flex flex-col space-y-1 p-2"
         tabindex="0"
       >
-        <Item
-          v-for="keyName in listItems"
-          :key="keyName"
-          :icon="getStories()[keyName].icon ?? ''"
-          :name="getNameComponentKey(keyName)"
-          :keyName="keyName"
-          @drag-start="dragStart(keyName)"
-          @dbl-click="addComponent(keyName)"
-        />
+        <draggable
+          class="dragArea list-group"
+          :list="listItems"
+          :group="{ name: 'g1', pull: 'clone', put: false }"
+          :clone="cloneDog"
+          item-key="id"
+        >
+          <template #item="{ element }">
+            <Item
+              :key="element.id"
+              :icon="getStories()[element.id].icon ?? ''"
+              :name="getNameComponentKey(element.id)"
+              :keyName="element.id"
+              @dbl-click="addComponent(element.id)"
+            />
+          </template>
+        </draggable>
       </div>
     </div>
   </div>

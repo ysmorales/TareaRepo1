@@ -4,7 +4,6 @@ import DraggableArea from "./DraggableArea.vue";
 
 import ListComponents from "./ListComponents.vue";
 import FieldTabsOptions from "./FieldTabsOptions.vue";
-import NestledExample from "./nestled-example.vue";
 
 const area = ref<"view" | "edit" | "code">("edit");
 </script>
@@ -18,7 +17,6 @@ const area = ref<"view" | "edit" | "code">("edit");
       <FieldTabsOptions />
     </template>
     <template v-slot:container>
-      <NestledExample />
       <DraggableArea v-if="area == 'edit'" />
     </template>
   </LayoutThreeColumns>

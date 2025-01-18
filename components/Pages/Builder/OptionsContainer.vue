@@ -13,10 +13,7 @@ const {
 
 interface IProp {
   type?: string;
-  idm: string;
-  ids: string;
-  idr: string;
-  idc: string;
+  id: string;
 }
 
 const props = withDefaults(defineProps<IProp>(), {
@@ -32,18 +29,9 @@ const handlerAction = (mode) => {
     handlerCloneItem.value(props);
   }
 };
-
-const getId = () => props.idm ?? props.idc ?? props.idr ?? props.ids;
 </script>
 
 <template>
-  <!-- <draggable
-    class="list-group"
-    :list="[{ id: idm }]"
-    group="people"
-    itemKey="id"
-  >
-    <template #item="{ element, index }"> -->
   <div class="group">
     <div
       :class="[
@@ -54,16 +42,16 @@ const getId = () => props.idm ?? props.idc ?? props.idr ?? props.ids;
       <slot>some</slot>
 
       <div class="absolute inset-0">
-        <IconArea :index="`idf${getId()}`" @handlerAction="handlerAction" />
+        <IconArea :index="`idf${id}`" @handlerAction="handlerAction" />
       </div>
 
       <div
-        @click="() => handlerItemOnSelect(getId())"
+        @click="() => handlerItemOnSelect(id)"
         :class="[
           'absolute inset-0 ',
           {
             'bg-blue-500 opacity-20 border border-blue-500 ':
-              itemOnSelect === getId(),
+              itemOnSelect === id,
           },
         ]"
       ></div>
