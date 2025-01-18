@@ -3,32 +3,26 @@ import { DsAccordion, DsIcon, DsTypography } from "~/components/DesignSystem";
 import { useBuilderStore } from "~/stores/builderStore";
 import FieldOptions from "./FieldOptions.vue";
 const store = useBuilderStore();
-const { itemsPage } = toRefs(store);
+const { itemsPageList } = toRefs(store);
 
 const allModules = computed(() => {
   const dd: any[] = [];
-  Object.keys(itemsPage.value?.sections ?? {}).forEach((idS) =>
-    Object.keys(itemsPage.value?.sections[idS].rows).forEach((idR) =>
-      Object.keys(itemsPage.value?.sections[idS].rows[idR].columns).forEach(
-        (idC) =>
-          Object.keys(
-            itemsPage.value?.sections[idS].rows[idR].columns[idC].modules
-          ).forEach((idM) => {
-            dd.push({
-              idS,
-              idR,
-              idC,
-              idM,
-              component: getComponentKey(
-                itemsPage.value?.sections[idS].rows[idR].columns[idC].modules[
-                  idM
-                ].module
-              ),
-            });
-          })
-      )
-    )
-  );
+
+  itemsPageList.value.forEach((section) => {
+    section.items?.forEach((row) => {
+      row.items?.forEach((column) => {
+        column.items?.forEach((module) => {
+          dd.push({
+            idS: section.id,
+            idR: row.id,
+            idC: column.id,
+            idM: module.id,
+            component: getComponentKey(module.item),
+          });
+        });
+      });
+    });
+  });
   return dd;
 });
 </script>

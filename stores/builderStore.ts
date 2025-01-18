@@ -93,7 +93,6 @@ export const useBuilderStore = defineStore('counter', () => {
             })
         }
 
-
         if (!dicC.sections[idS].rows[idR].columns[idC]) {
             dicC.sections[idS].rows[idR].columns[idC] = {
                 ...baseSettings,
@@ -136,7 +135,13 @@ export const useBuilderStore = defineStore('counter', () => {
     }
 
     function updateItemInForm({ idS, idR, idC, idM }: any, key: string, value: any) {
-        itemsPage.value.sections[idS].rows[idR].columns[idC].modules[idM].props[key] = value.value;
+
+        const idxS = itemsPageList.value.findIndex(d => d.id === idS)
+        const idxR = itemsPageList.value[idxS].items.findIndex(d => d.id === idR)
+        const idxC = itemsPageList.value[idxS].items[idxR].items.findIndex(d => d.id === idC)
+        const idxM = itemsPageList.value[idxS].items[idxR].items[idxC].items.findIndex(d => d.id === idM)
+
+        itemsPageList.value[idxS].items[idxR].items[idxC].items[idxM].props[key] = value.value;
     }
 
     function clearStore() {
@@ -166,18 +171,46 @@ export const useBuilderStore = defineStore('counter', () => {
         itemOnSelect.value = id
     }
 
-    function handlerRemoveItem({ ids, idr, idc, idm }) {
-        if (idm) {
-            delete itemsPage.value.sections[ids].rows[idr].columns[idc].modules[idm]
+    function handlerRemoveItem({ type, id }) {
+
+        if (type === 'section') {
+            const indexSection = itemsPageList.value.findIndex(d => d.id === id)
+            if (indexSection !== -1) {
+                itemsPageList.value.splice(indexSection, 1)
+                return;
+            }
         }
-        if (!idm && idc) {
-            delete itemsPage.value.sections[ids].rows[idr].columns[idc]
-        }
-        if (!idm && !idc && idr) {
-            delete itemsPage.value.sections[ids].rows[idr]
-        }
-        if (!idm && !idc && !idr && ids) {
-            delete itemsPage.value.sections[ids]
+
+        for (let indexSections = 0; indexSections < itemsPageList.value.length; indexSections++) {
+
+            if (type === 'row') {
+                const indexRow = itemsPageList.value[indexSections].items.findIndex(d => d.id === id)
+                if (indexRow !== -1) {
+                    itemsPageList.value[indexSections].items.splice(indexRow, 1)
+                    return;
+                }
+            }
+
+            for (let indexRows = 0; indexRows < itemsPageList.value[indexSections].items.length; indexRows++) {
+
+                if (type === 'column') {
+                    const indexColumn = itemsPageList.value[indexSections].items[indexRows].items.findIndex(d => d.id === id)
+                    if (indexColumn !== -1) {
+                        itemsPageList.value[indexSections].items[indexRows].items.splice(indexColumn, 1)
+                        return;
+                    }
+                }
+
+                if (type === 'module') {
+                    for (let indexColumns = 0; indexColumns < itemsPageList.value[indexSections].items[indexRows].items.length; indexColumns++) {
+                        const indexModule = itemsPageList.value[indexSections].items[indexRows].items[indexColumns].items.findIndex(d => d.id === id)
+                        if (indexModule !== -1) {
+                            itemsPageList.value[indexSections].items[indexRows].items[indexColumns].items.splice(indexModule, 1)
+                            return;
+                        }
+                    }
+                }
+            }
         }
     }
 
