@@ -49,7 +49,7 @@ const cloneDog = ({ id }) => ({ type: "module", id: uniqid("m"), item: id });
         <draggable
           class="dragArea list-group"
           :list="listItems"
-          :group="{ name: 'g1', pull: 'clone', put: false }"
+          :group="{ name: 'rowcol', pull: 'clone', put: false }"
           :clone="cloneDog"
           item-key="id"
         >

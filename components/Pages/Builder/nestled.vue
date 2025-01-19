@@ -3,7 +3,14 @@
     class="dragArea"
     tag="div"
     :list="items"
-    :group="{ name: 'g1' }"
+    :group="{
+      name:
+        type === 'module' || type === 'column'
+          ? 'rowcol'
+          : type === 'row'
+          ? 'row'
+          : 'section',
+    }"
     item-key="id"
   >
     <template #item="{ element }">
@@ -16,7 +23,11 @@
           <modulec v-if="element.type === 'module'" :element="element" />
         </OptionsContainer>
 
-        <NesteDraggable v-if="element.items" :items="element.items" />
+        <NesteDraggable
+          v-if="element.items"
+          :items="element.items"
+          :type="element.type"
+        />
       </WrapperContainer>
     </template>
   </draggable>
@@ -32,6 +43,10 @@ export default {
     items: {
       required: true,
       type: Array,
+    },
+    type: {
+      required: false,
+      type: String,
     },
   },
   components: {
