@@ -32,14 +32,22 @@ const handlerAction = (mode) => {
 </script>
 
 <template>
-  <div class="group">
+  <div
+    :class="[
+      'group',
+      {
+        'col-span-12': type === 'row',
+      },
+    ]"
+  >
     <div
       :class="[
         'relative border hover:border-blue-500 cursor-pointer z-10 mb-3 hover:shadow-lg',
         'border-transparent group-hover:border-blue-500',
       ]"
     >
-      <slot>some</slot>
+      <div v-if="type !== 'module'">{{ type }} {{ id }}</div>
+      <slot></slot>
 
       <div class="absolute inset-0">
         <IconArea :index="`idf${id}`" @handlerAction="handlerAction" />

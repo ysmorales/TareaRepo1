@@ -1,7 +1,13 @@
 <template>
   <draggable
-    class="dragArea"
-    tag="div"
+    :class="[
+      'dragArea',
+      `is-${type ?? 'section'}`,
+      {
+        'grid grid-cols-12': type === 'row',
+      },
+    ]"
+    :tag="type !== 'section' ? 'div' : type"
     :list="items"
     :group="{
       name:
@@ -14,12 +20,8 @@
     item-key="id"
   >
     <template #item="{ element }">
-      <WrapperContainer>
+      <WrapperContainer :type="element.type">
         <OptionsContainer :type="element.type" :id="element.id">
-          <div v-if="element.type !== 'module'">
-            {{ element.type }} {{ element.id }}
-          </div>
-
           <modulec v-if="element.type === 'module'" :element="element" />
         </OptionsContainer>
 
