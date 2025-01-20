@@ -25,6 +25,12 @@
           <modulec v-if="element.type === 'module'" :element="element" />
         </OptionsContainer>
 
+        <div class="hidden">{{ element?.items?.length }} {{ element.id }}</div>
+
+        <AddBlock
+          v-if="!isNotEmpty(element.items ?? []) && element.type !== 'module'"
+        />
+
         <NesteDraggable
           v-if="element.items"
           :items="element.items"
@@ -39,6 +45,7 @@ import draggable from "vuedraggable";
 import modulec from "./moduleComponent.vue";
 import WrapperContainer from "./WrapperContainer.vue";
 import OptionsContainer from "./OptionsContainer.vue";
+import AddBlock from "./AddBlock.vue";
 
 export default {
   props: {
@@ -56,6 +63,7 @@ export default {
     modulec,
     WrapperContainer,
     OptionsContainer,
+    AddBlock,
   },
   name: "NesteDraggable",
 };
