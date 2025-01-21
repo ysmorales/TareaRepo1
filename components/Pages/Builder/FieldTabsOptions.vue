@@ -2,6 +2,10 @@
 import { useBuilderStore } from "~/stores/builderStore";
 import { DsTabs, DsTabItem } from "~/components/DesignSystem";
 import ListFieldOptions from "./ListFieldOptions.vue";
+import ListContainerOptions from "./ListContainerOptions.vue";
+
+const store = useBuilderStore();
+const { itemOnSelect } = toRefs(store);
 </script>
 
 <template>
@@ -18,7 +22,8 @@ import ListFieldOptions from "./ListFieldOptions.vue";
           <div
             class="overflow-auto min-h-[calc(100vh-145px)] max-h-[calc(100vh-145px)]"
           >
-            <ListFieldOptions />
+            <ListFieldOptions v-if="itemOnSelect?.type === 'module'" />
+            <ListContainerOptions v-if="itemOnSelect?.type !== 'module'" />
           </div>
         </DsTabItem>
         <DsTabItem title="Desarrollo">

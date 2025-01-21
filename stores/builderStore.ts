@@ -10,7 +10,7 @@ export const useBuilderStore = defineStore('counter', () => {
     const itemsPageList = ref([])
     const newProps = ref({})
     const itemOnHover = ref('')
-    const itemOnSelect = ref('')
+    const itemOnSelect = ref({})
     const builderItems = ref<IItemBuilder[]>([] as IItemBuilder[])
     const currentDragItem = ref<null | IItemBuilder>(null)
     const currentEditItem = ref<any | IItemBuilder>({
@@ -167,8 +167,8 @@ export const useBuilderStore = defineStore('counter', () => {
         itemOnHover.value = id
     }
 
-    function handlerItemOnSelect(id: string) {
-        itemOnSelect.value = id
+    function handlerItemOnSelect(id: string, type: string) {
+        itemOnSelect.value = { id, type }
     }
 
     function findIndexs({ type, id }) {
@@ -216,7 +216,7 @@ export const useBuilderStore = defineStore('counter', () => {
 
         const { indexSection, indexRow, indexColumn, indexModule } = findIndexs({ type, id })
 
-        if (type === 'section' && indexSection) {
+        if (type === 'section') {
             itemsPageList.value.splice(indexSection, 1)
             return;
         }

@@ -10,12 +10,7 @@
     :tag="type !== 'section' ? 'div' : type"
     :list="items"
     :group="{
-      name:
-        type === 'module' || type === 'column'
-          ? 'rowcol'
-          : type === 'row'
-          ? 'row'
-          : 'section',
+      name: type ?? 'section',
     }"
     item-key="id"
   >

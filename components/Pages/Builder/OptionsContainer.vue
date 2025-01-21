@@ -53,12 +53,12 @@ const handlerAction = (mode) => {
       </div>
 
       <div
-        @click="() => handlerItemOnSelect(id)"
+        @click="() => handlerItemOnSelect(id, type)"
         :class="[
           'absolute inset-0 ',
           {
             'bg-blue-500 opacity-20 border border-blue-500 ':
-              itemOnSelect === id,
+              itemOnSelect?.id === id,
           },
         ]"
       ></div>
