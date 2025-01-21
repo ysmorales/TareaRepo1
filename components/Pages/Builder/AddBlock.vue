@@ -1,15 +1,18 @@
 <script lang="ts" setup>
-import { DsIcon } from "~/components/DesignSystem";
+import { DsIcon, DsButton } from "~/components/DesignSystem";
 
 const props = defineProps({
   type: String,
 });
+const handleAdd = () => {};
 </script>
 
 <template>
   <div class="relative flex justify-center w-full">
     <div class="absolute mt-4">
-      <div class="">add block empty</div>
+      <DsButton color="tertiary" @click="handleAdd">
+        <DsIcon name="plus" />
+      </DsButton>
     </div>
   </div>
 </template>

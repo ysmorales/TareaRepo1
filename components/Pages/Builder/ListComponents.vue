@@ -2,7 +2,7 @@
 import draggable from "vuedraggable";
 import uniqid from "uniqid";
 import { useBuilderStore } from "~/stores/builderStore";
-import { DsTypography, DsInput } from "~/components/DesignSystem";
+import { DsTypography, DsInput, DsIcon } from "~/components/DesignSystem";
 import Item from "./CardItemComponent.vue";
 
 const searchText = ref("");
@@ -11,7 +11,6 @@ const { changeCurrentDragItem, addItemToForm } = toRefs(store);
 
 function dragStart(currentKeyName: string) {
   if (currentKeyName) {
-    console.log(currentKeyName, "tttt");
     changeCurrentDragItem.value(currentKeyName);
   }
 }
@@ -35,9 +34,25 @@ const cloneDog = ({ id }) => ({ type: "module", id: uniqid("m"), item: id });
 
 <template>
   <div class="p-2">
-    <DsInput v-model="searchText" placeholder="Buscador" type="text" />
+    <DsInput
+      v-model="searchText"
+      placeholder="Buscador"
+      type="text"
+      :label="''"
+    />
   </div>
   <div>
+    <div class="ml-2 flex">
+      <DsIcon
+        name="info-circle"
+        size="default"
+        color="primary"
+        class="mt-[-5px]"
+      />
+      <DsTypography class="text-primary-500 ml-2 text-sm"
+        >Arrastra uno o mas componentes.</DsTypography
+      >
+    </div>
     <DsTypography> Componentes </DsTypography>
     <div class="flex flex-col overflow-auto max-h-[calc(100vh-210px)]">
       <div

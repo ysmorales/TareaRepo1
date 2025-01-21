@@ -13,6 +13,7 @@ const {
 interface IProp {
   type?: string;
   id: string;
+  areaMode: string;
 }
 
 const props = withDefaults(defineProps<IProp>(), {
@@ -45,10 +46,15 @@ const handlerAction = (mode) => {
         'border-transparent group-hover:border-blue-500',
       ]"
     >
-      <div v-if="type !== 'module'">{{ type }} {{ id }}</div>
+      <div v-if="type !== 'module' && areaMode === 'dragable'">
+        {{ type }} {{ id }}
+      </div>
       <slot></slot>
 
-      <div class="absolute inset-0">
+      <div
+        class="absolute inset-0"
+        v-if="areaMode === 'dragable' || type === 'module'"
+      >
         <IconArea :index="`idf${id}`" @handlerAction="handlerAction" />
       </div>
 

@@ -9,6 +9,7 @@ export const useBuilderStore = defineStore('counter', () => {
     const itemsPage = ref({})
     const itemsPageList = ref([])
     const newProps = ref({})
+    const areaMode = ref('dragable')
     const itemOnHover = ref('')
     const itemOnSelect = ref({})
     const builderItems = ref<IItemBuilder[]>([] as IItemBuilder[])
@@ -171,6 +172,10 @@ export const useBuilderStore = defineStore('counter', () => {
         itemOnSelect.value = { id, type }
     }
 
+    function updateAreaMode(newMode: string) {
+        areaMode.value = newMode;
+    }
+
     function findIndexs({ type, id }) {
 
         if (type === 'section') {
@@ -319,6 +324,8 @@ export const useBuilderStore = defineStore('counter', () => {
         handlerItemOnSelect,
         handlerRemoveItem,
         handlerCloneItem,
-        itemsPageList
+        itemsPageList,
+        areaMode,
+        updateAreaMode
     }
 })

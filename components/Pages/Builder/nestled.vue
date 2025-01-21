@@ -1,7 +1,7 @@
 <template>
   <draggable
     :class="[
-      'dragArea',
+      areaMode === 'dragable' ? 'dragArea' : '',
       `is-${type ?? 'section'}`,
       {
         'grid grid-cols-12': type === 'row',
@@ -16,7 +16,11 @@
   >
     <template #item="{ element }">
       <WrapperContainer :type="element.type">
-        <OptionsContainer :type="element.type" :id="element.id">
+        <OptionsContainer
+          :type="element.type"
+          :id="element.id"
+          :area-mode="areaMode"
+        >
           <modulec v-if="element.type === 'module'" :element="element" />
         </OptionsContainer>
 
@@ -24,12 +28,14 @@
 
         <AddBlock
           v-if="!isNotEmpty(element.items ?? []) && element.type !== 'module'"
+          :type="element.type"
         />
 
         <NesteDraggable
           v-if="element.items"
           :items="element.items"
           :type="element.type"
+          :area-mode="areaMode"
         />
       </WrapperContainer>
     </template>
@@ -52,6 +58,10 @@ export default {
       required: false,
       type: String,
     },
+    areaMode: {
+      required: false,
+      type: String,
+    },
   },
   components: {
     draggable,
@@ -65,7 +75,7 @@ export default {
 </script>
 <style scoped>
 .dragArea {
-  min-height: 50px;
+  min-height: 80px;
   outline: 1px dashed;
   padding-left: 0.5rem;
   padding-bottom: 0.5rem;

@@ -3,27 +3,50 @@ import {
   DsImages,
   DsTypography,
   DsButtonAvatar,
+  DsButton,
+  DsIcon,
 } from "~/components/DesignSystem";
 import { useAuthStore } from "~/stores/auth";
 
 const authStore = useAuthStore();
 
 const handleCloseSession = () => {};
+
+const handleSave = () => {
+  console.log("handleSave");
+};
 </script>
 
 <template>
   <nav
-    class="bg-white border-gray-200 dark:bg-gray-900 dark:border-gray-700 h-[64px] border-b border-stale-600 bg-[#ffff]"
+    class="bg-white border-gray-200 dark:bg-gray-900 dark:border-gray-700 h-[70px] border-b border-stale-600 bg-[#ffff]"
   >
-    <div class="grid grid-cols-2 gap-3 items-center">
+    <div class="grid grid-cols-8 gap-3 items-center">
       <div class="ml-2 place-content-start">
         <DsImages
-          class="h-[53px] w-auto"
+          class="w-auto h-auto max-w-[110%]"
           src="/images/builder/creador-logotipo.jpg"
         />
       </div>
 
-      <div class="justify-self-end flex items-center">
+      <div class="ml-2 place-content-center flex gap-3 items-center col-span-5">
+        <div class="border-gray-300 p-1 float-left border">
+          <DsIcon name="home" size="medium" />
+        </div>
+        <div><DsIcon name="file" size="small" /></div>
+        <div>
+          <DsTypography variant="span" class="text-md mb-0">
+            Nuevo prototipo ...
+          </DsTypography>
+        </div>
+        <div>
+          <DsButton color="primary" @click="handleSave"
+            >Guardar prototipo
+          </DsButton>
+        </div>
+      </div>
+
+      <div class="justify-self-end flex items-center col-span-2">
         <div>
           <DsTypography variant="h4" class="text-sm mb-0"
             >{{ sanatizeText(authStore.getFullNameUser) }}

@@ -1,14 +1,13 @@
 <script lang="ts" setup>
 import { DsIcon } from "~/components/DesignSystem";
+import { useBuilderStore } from "~/stores/builderStore";
 
-const props = defineProps({
-  index: Number,
-});
-const emit = defineEmits(["handlerAction"]);
+const store = useBuilderStore();
+const { updateAreaMode, areaMode } = toRefs(store);
 
-function handlerAction(mode: string) {
-  emit("handlerAction", mode);
-}
+const toogleMode = () => {
+  updateAreaMode.value(areaMode.value === "dragable" ? "normal" : "dragable");
+};
 </script>
 
 <template>
@@ -18,31 +17,15 @@ function handlerAction(mode: string) {
         <DsIcon
           color="primary"
           class="cursor-pointer"
-          name="copy"
+          :name="areaMode === 'dragable' ? 'toggle-on' : 'toggle-off'"
           title="Copiar"
-          @click="handlerAction('copy')"
+          @click="toogleMode()"
         />
         <DsIcon
           color="primary"
           class="cursor-pointer"
-          name="clone"
-          title="Clonar"
-          @click="handlerAction('clone')"
-        />
-
-        <DsIcon
-          color="primary"
-          class="cursor-pointer"
-          name="paste"
-          title="Pegar"
-          @click="handlerAction('paste')"
-        />
-        <DsIcon
-          color="danger"
-          class="cursor-pointer"
-          name="trash"
-          title="Remover"
-          @click="handlerAction('trash')"
+          name="window-maximize"
+          title="Expandir area de trabajo"
         />
       </div>
     </div>

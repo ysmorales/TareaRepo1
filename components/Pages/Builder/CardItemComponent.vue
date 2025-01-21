@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { DsIcon } from "~/components/DesignSystem";
 
-const emit = defineEmits(["dragStart", "dblClick"]);
+const emit = defineEmits(["dblClick"]);
 
 interface IProp {
   name?: string;
@@ -16,10 +16,6 @@ const props = withDefaults(defineProps<IProp>(), {
   draggable: true,
 });
 
-function dragStart(nameKey: string) {
-  emit("dragStart", nameKey);
-}
-
 function dblclick(nameKey: string) {
   emit("dblClick", nameKey);
 }
@@ -32,16 +28,15 @@ function dblclick(nameKey: string) {
       { 'cursor-pointer': draggable },
     ]"
     :draggable="draggable"
-    class="grid grid-cols-8 items-center p-2 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-105 bg-white hover:shadow-2xl border border-slate-300"
+    class="flex overflow-hidden items-center p-2 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-105 bg-white hover:shadow-2xl border border-slate-300"
     role="option"
     tabindex="-1"
-    @dragstart="dragStart(keyName)"
     @dblclick="dblclick(keyName)"
   >
     <div class="">
-      <DsIcon name="bars" size="medium" />
+      <DsIcon name="bars" size="smoll" />
     </div>
-    <div class="vml-4 col-span-7 ml-2">
+    <div class="vml-4 col-span-7 ml-1">
       <div class="font-bold">{{ name }}</div>
     </div>
   </div>
