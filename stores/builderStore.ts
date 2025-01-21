@@ -171,58 +171,130 @@ export const useBuilderStore = defineStore('counter', () => {
         itemOnSelect.value = id
     }
 
-    function handlerRemoveItem({ type, id }) {
+    function findIndexs({ type, id }) {
 
         if (type === 'section') {
             const indexSection = itemsPageList.value.findIndex(d => d.id === id)
             if (indexSection !== -1) {
-                itemsPageList.value.splice(indexSection, 1)
-                return;
+                return { indexSection };
             }
         }
 
-        for (let indexSections = 0; indexSections < itemsPageList.value.length; indexSections++) {
+        for (let indexSection = 0; indexSection < itemsPageList.value.length; indexSection++) {
 
             if (type === 'row') {
-                const indexRow = itemsPageList.value[indexSections].items.findIndex(d => d.id === id)
+                const indexRow = itemsPageList.value[indexSection].items.findIndex(d => d.id === id)
                 if (indexRow !== -1) {
-                    itemsPageList.value[indexSections].items.splice(indexRow, 1)
-                    return;
+                    return { indexSection, indexRow }
                 }
             }
 
-            for (let indexRows = 0; indexRows < itemsPageList.value[indexSections].items.length; indexRows++) {
+            for (let indexRow = 0; indexRow < itemsPageList.value[indexSection].items.length; indexRow++) {
 
                 if (type === 'column') {
-                    const indexColumn = itemsPageList.value[indexSections].items[indexRows].items.findIndex(d => d.id === id)
+                    const indexColumn = itemsPageList.value[indexSection].items[indexRow].items.findIndex(d => d.id === id)
                     if (indexColumn !== -1) {
-                        itemsPageList.value[indexSections].items[indexRows].items.splice(indexColumn, 1)
-                        return;
+                        return { indexSection, indexRow, indexColumn }
                     }
                 }
 
                 if (type === 'module') {
-                    for (let indexColumns = 0; indexColumns < itemsPageList.value[indexSections].items[indexRows].items.length; indexColumns++) {
-                        const indexModule = itemsPageList.value[indexSections].items[indexRows].items[indexColumns].items.findIndex(d => d.id === id)
+                    for (let indexColumn = 0; indexColumn < itemsPageList.value[indexSection].items[indexRow].items.length; indexColumn++) {
+                        const indexModule = itemsPageList.value[indexSection].items[indexRow].items[indexColumn].items.findIndex(d => d.id === id)
                         if (indexModule !== -1) {
-                            itemsPageList.value[indexSections].items[indexRows].items[indexColumns].items.splice(indexModule, 1)
-                            return;
+                            return { indexSection, indexRow, indexColumn, indexModule }
                         }
                     }
                 }
             }
         }
+
+        return {}
     }
 
-    function handlerCloneItem({ ids, idr, idc, idm }) {
-        if (idm) {
-            const idM = uniqid('m')
-            const item = JSON.parse(JSON.stringify(itemsPage.value.sections[ids].rows[idr].columns[idc].modules[idm]))
-            const sort = item?.sort + 1
-            itemsPage.value.sections[ids].rows[idr].columns[idc].modules[idM] = { ...item, sort }
+    function handlerRemoveItem({ type, id }) {
+
+        const { indexSection, indexRow, indexColumn, indexModule } = findIndexs({ type, id })
+
+        if (type === 'section' && indexSection) {
+            itemsPageList.value.splice(indexSection, 1)
+            return;
+        }
+
+        if (type === 'row') {
+            itemsPageList.value[indexSection].items.splice(indexRow, 1)
+            return;
+        }
+
+        if (type === 'column') {
+            itemsPageList.value[indexSection].items[indexRow].items.splice(indexColumn, 1)
+            return;
+        }
+
+        if (type === 'module') {
+            itemsPageList.value[indexSection].items[indexRow].items[indexColumn].items.splice(indexModule, 1)
+            return;
+
         }
     }
 
+
+    function duplicateItem(originalItem) {
+        const item = JSON.parse(JSON.stringify(originalItem))
+        const id = uniqid('duplicate')
+        if (item.items) {
+            for (let index = 0; index < item.items.length; index++) {
+                item.items[index] = duplicateItem(item.items[index])
+            }
+        }
+        const sort = item?.sort! + 1
+        return { ...item, sort, id }
+    }
+
+    function handlerCloneItem({ id, type }) {
+        const { indexSection, indexRow, indexColumn, indexModule } = findIndexs({ type, id })
+
+        if (type === 'section') {
+            itemsPageList.value.push(
+                duplicateItem(itemsPageList.value[indexSection]
+                )
+            )
+        }
+
+        if (type === 'row') {
+            itemsPageList.value[indexSection]
+                .items.push(
+                    duplicateItem(itemsPageList.value[indexSection].items[indexRow]
+
+                    )
+                )
+        }
+        if (type === 'column') {
+            itemsPageList.value[indexSection]
+                .items[indexRow]
+                .items.push(
+                    duplicateItem(
+                        itemsPageList.value[indexSection]
+                            .items[indexRow]
+                            .items[indexColumn]
+                    )
+                )
+
+        }
+        if (type === 'module') {
+            itemsPageList.value[indexSection]
+                .items[indexRow]
+                .items[indexColumn]
+                .items.push(
+                    duplicateItem(
+                        itemsPageList.value[indexSection]
+                            .items[indexRow]
+                            .items[indexColumn]
+                            .items[indexModule]
+                    )
+                )
+        }
+    }
 
     return {
         propertyCollapse,

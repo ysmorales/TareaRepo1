@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import draggable from "vuedraggable";
 import { useBuilderStore } from "~/stores/builderStore";
 import IconArea from "./IconArea.vue";
 

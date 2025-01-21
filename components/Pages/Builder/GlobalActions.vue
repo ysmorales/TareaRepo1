@@ -12,7 +12,7 @@ function handlerAction(mode: string) {
 </script>
 
 <template>
-  <div class="relative float-right mt-[-200px] mr-2 z-30">
+  <div class="relative float-right mt-[-200px] mr-1 z-30">
     <div class="bg-gray-200 float-right mt-[-10px] p-2 hover:bg-blue-100">
       <div class="flex justify-end w-full flex-col">
         <DsIcon
