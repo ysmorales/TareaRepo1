@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 interface IProp {
   type?: string;
+  settings?: any;
 }
 
 const props = withDefaults(defineProps<IProp>(), {});
@@ -11,9 +12,7 @@ const props = withDefaults(defineProps<IProp>(), {});
     :class="[
       'containerd',
       type,
-      {
-        'col-span-6': type === 'column',
-      },
+      type === 'column' ? settings.columnSpan ?? 'col-span-12' : '',
     ]"
   >
     <slot>some </slot>

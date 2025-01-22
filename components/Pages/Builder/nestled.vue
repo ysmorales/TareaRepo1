@@ -4,8 +4,11 @@
       areaMode === 'dragable' ? 'dragArea' : '',
       `is-${type ?? 'section'}`,
       {
-        'grid grid-cols-12': type === 'row',
+        grid: type === 'row',
       },
+      type === 'row' && settings
+        ? `grid-cols-${settings.rowNumCols ?? '12'}`
+        : '',
     ]"
     :tag="type !== 'section' ? 'div' : type"
     :list="items"
@@ -15,7 +18,7 @@
     item-key="id"
   >
     <template #item="{ element }">
-      <WrapperContainer :type="element.type">
+      <WrapperContainer :type="element.type" :settings="element.settings">
         <OptionsContainer
           :type="element.type"
           :id="element.id"
@@ -40,6 +43,7 @@
           :items="element.items"
           :type="element.type"
           :area-mode="areaMode"
+          :settings="element.settings"
         />
       </WrapperContainer>
     </template>
@@ -65,6 +69,10 @@ export default {
     areaMode: {
       required: false,
       type: String,
+    },
+    settings: {
+      required: false,
+      type: Object,
     },
   },
   components: {

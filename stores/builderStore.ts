@@ -256,6 +256,10 @@ export const useBuilderStore = defineStore('counter', () => {
         return { ...item, sort, id }
     }
 
+    function clone(item) {
+        return JSON.parse(JSON.stringify(item))
+    }
+
 
     function handlerChangeLayout({ id, type }, newLayoutCols) {
         const { indexSection, indexRow, indexColumn, indexModule } = findIndexs({ type, id })
@@ -263,8 +267,23 @@ export const useBuilderStore = defineStore('counter', () => {
         if (type === 'row') {
             const colsConfig = Array.isArray(newLayoutCols.mode) ? newLayoutCols.mode : newLayoutCols.mode.split(',').map(d => `col-span-${d}`)
             for (let index = 0; index < colsConfig.length; index++) {
-                console.log(colsConfig[index], 'aquii')
-
+                if (itemsPageList.value[indexSection].items[indexRow].items[index]?.settings) {
+                    const itemd = clone(itemsPageList.value[indexSection].items[indexRow].items[index])
+                    itemsPageList.value[indexSection].items[indexRow].items[index] = { ...itemd, settings: { ...itemd.settings, columnSpan: colsConfig[index] } }
+                } else {
+                    itemsPageList.value[indexSection].items[indexRow].items.push({
+                        id: uniqid('c'),
+                        settings: {
+                            columnSpan: colsConfig[index]
+                        },
+                        type: 'column',
+                        items: []
+                    })
+                }
+            }
+            if (newLayoutCols?.row) {
+                const rowd = clone(itemsPageList.value[indexSection].items[indexRow])
+                itemsPageList.value[indexSection].items[indexRow] = { ...rowd, settings: { ...rowd.settings, rowNumCols: newLayoutCols?.row } }
             }
         }
     }
@@ -282,9 +301,7 @@ export const useBuilderStore = defineStore('counter', () => {
         if (type === 'row') {
             itemsPageList.value[indexSection]
                 .items.push(
-                    duplicateItem(itemsPageList.value[indexSection].items[indexRow]
-
-                    )
+                    duplicateItem(itemsPageList.value[indexSection].items[indexRow])
                 )
         }
         if (type === 'column') {
