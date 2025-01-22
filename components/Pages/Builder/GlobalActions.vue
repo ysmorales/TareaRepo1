@@ -18,7 +18,11 @@ const toogleMode = () => {
           color="primary"
           class="cursor-pointer"
           :name="areaMode === 'dragable' ? 'toggle-on' : 'toggle-off'"
-          title="Copiar"
+          :title="
+            areaMode === 'dragable'
+              ? 'No mostrar contenedores'
+              : 'Mostrar contenedores'
+          "
           @click="toogleMode()"
         />
         <DsIcon
@@ -26,6 +30,18 @@ const toogleMode = () => {
           class="cursor-pointer"
           name="window-maximize"
           title="Expandir area de trabajo"
+        />
+        <DsIcon
+          color="primary"
+          class="cursor-pointer"
+          name="long-arrow-alt-left"
+          title="Ir atrás"
+        />
+        <DsIcon
+          color="primary"
+          class="cursor-pointer"
+          name="long-arrow-alt-right"
+          title="Ir hacia adelante"
         />
       </div>
     </div>

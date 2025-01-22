@@ -1,7 +1,12 @@
 <script lang="ts" setup>
-import { DsAccordion, DsIcon, DsTypography } from "~/components/DesignSystem";
+import {
+  DsAccordion,
+  DsIcon,
+  DsTypography,
+  DsDropdown,
+} from "~/components/DesignSystem";
 import { useBuilderStore } from "~/stores/builderStore";
-import FieldOptions from "./FieldOptions.vue";
+import FieldContainerLayout from "./FormBuilder/FieldContainerLayout.vue";
 const store = useBuilderStore();
 const { itemOnSelect } = toRefs(store);
 </script>
@@ -27,7 +32,11 @@ const { itemOnSelect } = toRefs(store);
           </div>
         </div>
       </template>
-      <div>all config about {{ itemOnSelect.type }} container</div>
+      <div>
+        <div v-if="itemOnSelect.type === 'row'">
+          <FieldContainerLayout />
+        </div>
+      </div>
     </DsAccordion>
   </div>
 </template>

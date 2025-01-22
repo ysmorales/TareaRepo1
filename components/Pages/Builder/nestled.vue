@@ -27,7 +27,11 @@
         <div class="hidden">{{ element?.items?.length }} {{ element.id }}</div>
 
         <AddBlock
-          v-if="!isNotEmpty(element.items ?? []) && element.type !== 'module'"
+          v-if="
+            !isNotEmpty(element.items ?? []) &&
+            element.type !== 'module' &&
+            areaMode === 'dragable'
+          "
           :type="element.type"
         />
 
