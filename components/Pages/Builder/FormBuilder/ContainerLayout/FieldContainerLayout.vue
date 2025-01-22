@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { DsDropdown } from "~/components/DesignSystem";
+import Item from "./ItemTypeLayout.vue";
 const typesRowsLayouts = [
   {
     mode: "12",
@@ -71,33 +72,33 @@ const typesRowsLayouts = [
     extraClass: "grid-flow-col",
   },
 ];
+const selected = ref({});
+
+const emit = defineEmits(["handlerChange"]);
+const handlerSelect = (select) => {
+  selected.value = select;
+  emit("handlerChange", { layout: select });
+};
 </script>
 
 <template>
   <DsDropdown label="somee">
+    <template v-slot:button>
+      <div class="min-w-[200px] hover:cursor-pointer">
+        <Item
+          v-if="selected?.mode"
+          :data="selected"
+          @onSelect="handlerSelect"
+        />
+        <label v-if="!selected?.mode">Selecciona</label>
+      </div>
+    </template>
     <div class="p-2">
       <div
         v-for="rowOption in typesRowsLayouts"
         class="p-1 hover:bg-blue-200 hover:cursor-pointer min-w-[300px]"
       >
-        <div
-          :class="[
-            `grid grid-cols-${
-              rowOption?.row ?? '12'
-            } gap-2 place-content-center`,
-          ]"
-        >
-          <div
-            v-if="!Array.isArray(rowOption.mode)"
-            v-for="columnOption in rowOption.mode.split(',')"
-            :class="['p-2 bg-slate-200 ', `col-span-${columnOption}`]"
-          ></div>
-          <div
-            v-if="Array.isArray(rowOption.mode)"
-            v-for="columnOption in rowOption.mode"
-            :class="[columnOption, 'p-1 bg-slate-200']"
-          ></div>
-        </div>
+        <Item :data="rowOption" @onSelect="handlerSelect" />
       </div>
     </div>
   </DsDropdown>

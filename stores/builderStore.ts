@@ -256,6 +256,19 @@ export const useBuilderStore = defineStore('counter', () => {
         return { ...item, sort, id }
     }
 
+
+    function handlerChangeLayout({ id, type }, newLayoutCols) {
+        const { indexSection, indexRow, indexColumn, indexModule } = findIndexs({ type, id })
+
+        if (type === 'row') {
+            const colsConfig = Array.isArray(newLayoutCols.mode) ? newLayoutCols.mode : newLayoutCols.mode.split(',').map(d => `col-span-${d}`)
+            for (let index = 0; index < colsConfig.length; index++) {
+                console.log(colsConfig[index], 'aquii')
+
+            }
+        }
+    }
+
     function handlerCloneItem({ id, type }) {
         const { indexSection, indexRow, indexColumn, indexModule } = findIndexs({ type, id })
 
@@ -326,6 +339,7 @@ export const useBuilderStore = defineStore('counter', () => {
         handlerCloneItem,
         itemsPageList,
         areaMode,
-        updateAreaMode
+        updateAreaMode,
+        handlerChangeLayout
     }
 })

@@ -1,14 +1,16 @@
 <script lang="ts" setup>
-import {
-  DsAccordion,
-  DsIcon,
-  DsTypography,
-  DsDropdown,
-} from "~/components/DesignSystem";
+import { DsAccordion, DsIcon, DsTypography } from "~/components/DesignSystem";
 import { useBuilderStore } from "~/stores/builderStore";
-import FieldContainerLayout from "./FormBuilder/FieldContainerLayout.vue";
+import FieldContainerLayout from "./FormBuilder/ContainerLayout/FieldContainerLayout.vue";
 const store = useBuilderStore();
-const { itemOnSelect } = toRefs(store);
+const { itemOnSelect, handlerChangeLayout } = toRefs(store);
+
+const handlerChange = (change) => {
+  console.log({ change });
+  if (change.layout) {
+    handlerChangeLayout.value(itemOnSelect.value, change.layout);
+  }
+};
 </script>
 
 <template>
@@ -34,7 +36,7 @@ const { itemOnSelect } = toRefs(store);
       </template>
       <div>
         <div v-if="itemOnSelect.type === 'row'">
-          <FieldContainerLayout />
+          <FieldContainerLayout @handlerChange="handlerChange" />
         </div>
       </div>
     </DsAccordion>
