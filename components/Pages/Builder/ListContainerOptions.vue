@@ -1,7 +1,13 @@
 <script lang="ts" setup>
-import { DsAccordion, DsIcon, DsTypography } from "~/components/DesignSystem";
+import {
+  DsAccordion,
+  DsIcon,
+  DsTypography,
+  DsInput,
+} from "~/components/DesignSystem";
 import { useBuilderStore } from "~/stores/builderStore";
 import FieldContainerLayout from "./FormBuilder/ContainerLayout/FieldContainerLayout.vue";
+import SidesNums from "./FormBuilder/SidesNums/index.vue";
 const store = useBuilderStore();
 const { itemOnSelect, handlerChangeLayout } = toRefs(store);
 
@@ -10,6 +16,11 @@ const handlerChange = (change) => {
   if (change.layout) {
     handlerChangeLayout.value(itemOnSelect.value, change.layout);
   }
+};
+
+const padding = ref("");
+const handleChangePadding = (val) => {
+  console.log("val aquiii");
 };
 </script>
 
@@ -34,10 +45,23 @@ const handlerChange = (change) => {
           </div>
         </div>
       </template>
-      <div>
+      <div class="flex flex-col gap-1">
         <div v-if="itemOnSelect.type === 'row'">
-          <FieldContainerLayout @handlerChange="handlerChange" />
+          <div>
+            <DsTypography class="text-ms mb-0" variant="span"
+              >Diseño de contenedores tipo:</DsTypography
+            >
+            <div>
+              <FieldContainerLayout @handlerChange="handlerChange" />
+            </div>
+          </div>
         </div>
+        <SidesNums @handlerChange="handlerChange" />
+        <SidesNums
+          @handlerChange="handlerChange"
+          label="Marging"
+          key-name="margin"
+        />
       </div>
     </DsAccordion>
   </div>

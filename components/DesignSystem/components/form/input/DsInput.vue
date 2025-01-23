@@ -113,7 +113,7 @@ const cssClasses = computed(() => [
 
 const { elementRef: inputRef } = useFocus(
   () => props.focus,
-  () => props.error,
+  () => props.error
 );
 
 const emit = defineEmits(["update:modelValue", "blur", "input"]);
@@ -136,7 +136,7 @@ const ariaLabels = computed(() =>
     label: labelId.value,
     error: errorMessageId.value,
     helpMessage: helpMessageId.value,
-  }),
+  })
 );
 
 function handleBlur() {
@@ -153,7 +153,7 @@ function handleInput(e: any) {
 </script>
 
 <template>
-  <div :class="['mb-4', containerSize, filterClassComp]">
+  <div :class="[containerSize, filterClassComp, 'mb-4']">
     <label v-if="label" :id="labelId" :for="uniqueID" class="mb-2">
       {{ label
       }}<span v-if="required" aria-hidden="true" class="required-marker"

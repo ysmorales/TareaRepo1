@@ -17,7 +17,9 @@ const handlerSelect = (select) => {
       <div class="min-w-[200px] hover:cursor-pointer">
         <Item v-if="selected?.mode" :data="selected" />
         <slot name="action">
-          <label v-if="!selected?.mode">Estructura</label>
+          <div v-if="!selected?.mode" class="min-h-[20px] bg-blue-300">
+            <label>Selecciona tipo</label>
+          </div>
         </slot>
       </div>
     </template>
