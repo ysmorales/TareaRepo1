@@ -281,10 +281,8 @@ export const useBuilderStore = defineStore('counter', () => {
                     })
                 }
             }
-            if (newLayoutCols?.row) {
-                const rowd = clone(itemsPageList.value[indexSection].items[indexRow])
-                itemsPageList.value[indexSection].items[indexRow] = { ...rowd, settings: { ...rowd.settings, rowNumCols: newLayoutCols?.row } }
-            }
+            const rowd = clone(itemsPageList.value[indexSection].items[indexRow])
+            itemsPageList.value[indexSection].items[indexRow] = { ...rowd, settings: { ...rowd.settings, rowNumCols: newLayoutCols?.row ?? 12 } }
         }
     }
 

@@ -15,7 +15,7 @@ const handlerClick = () => {
 <template>
   <div
     :class="[
-      `grid grid-cols-${data?.row ?? '12'} gap-2 place-content-center`,
+      `grid grid-cols-${data?.row ?? '12'} gap-1 w-full`,
       data.extraClass,
     ]"
     @click="handlerClick"
