@@ -34,9 +34,9 @@ function dblclick(nameKey: string) {
     @dblclick="dblclick(keyName)"
   >
     <div class="">
-      <DsIcon name="bars" size="smoll" />
+      <DsIcon name="bars" size="small" />
     </div>
-    <div class="vml-4 col-span-7 ml-1">
+    <div class="vml-4 col-span-7 ml-2">
       <div class="font-bold">{{ name }}</div>
     </div>
   </div>
