@@ -260,6 +260,59 @@ export const useBuilderStore = defineStore('counter', () => {
         return JSON.parse(JSON.stringify(item))
     }
 
+    function handlerChangeContainerPaddingMargin({ id, type }, paddingMargin) {
+        const { indexSection, indexRow, indexColumn, indexModule } = findIndexs({ type, id })
+
+        if (type === 'row') {
+            const currentSettings = clone(itemsPageList.value[indexSection].items[indexRow].settings)
+            itemsPageList.value[indexSection].items[indexRow].settings = {
+                ...currentSettings,
+                margin: paddingMargin?.margin ?? currentSettings.margin ?? {},
+                padding: paddingMargin?.padding ?? currentSettings.padding ?? {},
+            }
+        }
+        if (type === 'column') {
+            const currentSettings = clone(itemsPageList.value[indexSection].items[indexRow].items[indexColumn].settings)
+            itemsPageList.value[indexSection].items[indexRow].items[indexColumn].settings = {
+                ...currentSettings,
+                margin: paddingMargin?.margin ?? currentSettings.margin ?? {},
+                padding: paddingMargin?.padding ?? currentSettings.padding ?? {},
+            }
+        }
+    }
+
+    function handlerChangeContainerSettings({ id, type }, newSettingsToAdd) {
+        const { indexSection, indexRow, indexColumn, indexModule } = findIndexs({ type, id })
+        if (type === 'row') {
+            const currentSettings = clone(itemsPageList.value[indexSection].items[indexRow].settings)
+            itemsPageList.value[indexSection].items[indexRow].settings = {
+                ...currentSettings,
+                ...newSettingsToAdd
+            }
+        }
+        if (type === 'column') {
+            const currentSettings = clone(itemsPageList.value[indexSection].items[indexRow].items[indexColumn].settings)
+            itemsPageList.value[indexSection].items[indexRow].items[indexColumn].settings = {
+                ...currentSettings,
+                ...newSettingsToAdd
+            }
+        }
+    }
+
+
+    function handlerAddEmptyContainerRow({ id, type }) {
+        const { indexSection } = findIndexs({ type, id })
+        if (type === 'section') {
+            itemsPageList.value[indexSection].items.push({
+                id: uniqid('r'),
+                settings: {},
+                type: 'row',
+                items: []
+            })
+        }
+    }
+
+
 
     function handlerChangeLayout({ id, type }, newLayoutCols) {
         const { indexSection, indexRow, indexColumn, indexModule } = findIndexs({ type, id })
@@ -355,6 +408,9 @@ export const useBuilderStore = defineStore('counter', () => {
         itemsPageList,
         areaMode,
         updateAreaMode,
-        handlerChangeLayout
+        handlerChangeLayout,
+        handlerChangeContainerPaddingMargin,
+        handlerChangeContainerSettings,
+        handlerAddEmptyContainerRow
     }
 })

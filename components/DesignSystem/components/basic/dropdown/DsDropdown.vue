@@ -114,7 +114,7 @@ function handleClick(id: string) {
     <div
       v-show="open"
       :class="[
-        'absolute left-0 mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5',
+        'absolute left-0 mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-20',
         dropDirection === 'dropup' ? 'bottom-full mb-2' : 'top-full',
       ]"
     >

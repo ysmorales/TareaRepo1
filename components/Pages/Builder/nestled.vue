@@ -6,15 +6,14 @@
       {
         grid: type === 'row',
       },
-      type === 'row' && settings
-        ? `grid-cols-${settings.rowNumCols ?? '12'}`
-        : '',
+      getClassRow(),
     ]"
     :tag="type !== 'section' ? 'div' : type"
     :list="items"
     :group="{
       name: type ?? 'section',
     }"
+    :style="[getCustomStyleRow()]"
     item-key="id"
   >
     <template #item="{ element }">
@@ -36,6 +35,7 @@
             areaMode === 'dragable'
           "
           :type="element.type"
+          :id="element.id"
         />
 
         <NesteDraggable
@@ -81,6 +81,32 @@ export default {
     WrapperContainer,
     OptionsContainer,
     AddBlock,
+  },
+  methods: {
+    getCustomStyleRow: function () {
+      const calcRem = (value) => `${value / 4}rem`;
+      return {
+        marginLeft: calcRem(this.settings?.margin?.left),
+        marginRight: calcRem(this.settings?.margin?.right),
+        marginTop: calcRem(this.settings?.margin?.top),
+        marginBottom: calcRem(this.settings?.margin?.bottom),
+
+        paddingLeft: calcRem(this.settings?.padding?.left),
+        paddingRight: calcRem(this.settings?.padding?.right),
+        paddingTop: calcRem(this.settings?.padding?.top),
+        paddingBottom: calcRem(this.settings?.padding?.bottom),
+
+        backgroundColor: this.settings?.backgroundColor,
+      };
+    },
+    getClassRow: function () {
+      const colsNum =
+        this.type === "row" && this.settings
+          ? `grid-cols-${this.settings?.rowNumCols ?? "12"}`
+          : "";
+
+      return [colsNum];
+    },
   },
   name: "NesteDraggable",
 };
