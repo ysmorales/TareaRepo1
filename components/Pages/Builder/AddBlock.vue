@@ -13,7 +13,6 @@ const store = useBuilderStore();
 const { handlerChangeLayout, handlerAddEmptyContainerRow } = toRefs(store);
 
 const handleAdd = (toAdd) => {
-  console.log("aquiiiii", { id: props.id, type: props.type }, toAdd);
   if (toAdd.layout) {
     handlerChangeLayout.value({ id: props.id, type: props.type }, toAdd.layout);
   }

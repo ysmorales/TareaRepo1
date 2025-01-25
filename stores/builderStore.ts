@@ -176,6 +176,124 @@ export const useBuilderStore = defineStore('counter', () => {
         areaMode.value = newMode;
     }
 
+
+    function deleteElementByPath(trees, path) {
+        if (!Array.isArray(path) || path.length === 0) {
+            throw new Error('La ruta debe ser un array de índices no vacío.');
+        }
+
+        let current = trees[path[0]];
+        for (let i = 1; i < path.length - 1; i++) {
+            if (!Array.isArray(current.items) || current.items[path[i]] === undefined) {
+                throw new Error('Ruta inválida en el árbol.');
+            }
+            current = current.items[path[i]];
+        }
+
+        const lastIndex = path[path.length - 1];
+        if (!Array.isArray(current.items) || current.items[lastIndex] === undefined) {
+            throw new Error('Índice final inválido.');
+        }
+
+        current.items.splice(lastIndex, 1);
+    }
+
+    function encontrarRutaPorIndice(arbol, idBuscado, ruta = []) {
+        for (let i = 0; i < arbol.length; i++) {
+            const nodo = arbol[i];
+
+            // Añadir el índice actual a la ruta
+            ruta.push(i);
+
+            // Si encontramos el nodo con el id buscado, retornamos la ruta
+            if (nodo.id === idBuscado) {
+                return ruta;
+            }
+
+            // Si el nodo tiene hijos, buscamos recursivamente en ellos
+            if (nodo.items && nodo.items.length > 0) {
+                const rutaEncontrada = encontrarRutaPorIndice(nodo.items, idBuscado, ruta);
+                if (rutaEncontrada) {
+                    return rutaEncontrada;
+                }
+            }
+
+            // Si no se encontró el nodo, quitamos el índice de la ruta (retrocedemos)
+            ruta.pop();
+        }
+        return null; // Si no se encuentra el nodo
+    }
+
+    function assignNewIds(node) {
+        node.id = uniqid();
+        if (Array.isArray(node.items)) {
+            node.items.forEach(assignNewIds);
+        }
+    }
+
+
+    function duplicateNodesByPath(trees, path) {
+        if (!Array.isArray(path) || path.length === 0) {
+            throw new Error('La ruta debe ser un array de índices no vacío.');
+        }
+
+        let current = trees[path[0]];
+        for (let i = 1; i < path.length - 1; i++) {
+            if (!Array.isArray(current.items) || current.items[path[i]] === undefined) {
+                throw new Error('Ruta inválida en el árbol.');
+            }
+            current = current.items[path[i]];
+        }
+
+        const lastIndex = path[path.length - 1];
+        if (!Array.isArray(current.items) || current.items[lastIndex] === undefined) {
+            throw new Error('Índice final inválido.');
+        }
+
+        const nodeToDuplicate = JSON.parse(JSON.stringify(current.items[lastIndex]));
+        assignNewIds(nodeToDuplicate);
+        current.items.splice(lastIndex + 1, 0, nodeToDuplicate);
+    }
+
+    function getNodeByPath(trees, path) {
+        if (!Array.isArray(path) || path.length === 0) {
+            throw new Error('La ruta debe ser un array de índices no vacío.');
+        }
+
+        let current = trees[path[0]];
+        for (let i = 1; i < path.length; i++) {
+            if (!Array.isArray(current.items) || current.items[path[i]] === undefined) {
+                throw new Error('Ruta inválida en el árbol.');
+            }
+            current = current.items[path[i]];
+        }
+
+        return current;
+    }
+
+
+    function updateNodeByPath(trees, path, key, value, allReplace = false) {
+        if (!Array.isArray(path) || path.length === 0) {
+            throw new Error('La ruta debe ser un array de índices no vacío.');
+        }
+
+        let current = trees[path[0]];
+        for (let i = 1; i < path.length; i++) {
+            if (!Array.isArray(current.items) || current.items[path[i]] === undefined) {
+                throw new Error('Ruta inválida en el árbol.');
+            }
+            current = current.items[path[i]];
+        }
+
+        if (key) {
+            if (allReplace) {
+                current[key] = value;
+            } else {
+                current[key] = { ...current[key], ...value };
+            }
+        }
+    }
+
     function findIndexs({ type, id }) {
 
         if (type === 'section') {
@@ -217,43 +335,38 @@ export const useBuilderStore = defineStore('counter', () => {
         return {}
     }
 
-    function handlerRemoveItem({ type, id }) {
-
-        const { indexSection, indexRow, indexColumn, indexModule } = findIndexs({ type, id })
-
+    function handlerRemoveItem({ id, type }) {
+        let foundSectionInRoot = false;
         if (type === 'section') {
-            itemsPageList.value.splice(indexSection, 1)
-            return;
+            const indexSection = itemsPageList.value.findIndex(d => d.id === id)
+            if (indexSection !== -1) {
+                foundSectionInRoot = true
+                itemsPageList.value.splice(indexSection, 1)
+            }
         }
-
-        if (type === 'row') {
-            itemsPageList.value[indexSection].items.splice(indexRow, 1)
-            return;
-        }
-
-        if (type === 'column') {
-            itemsPageList.value[indexSection].items[indexRow].items.splice(indexColumn, 1)
-            return;
-        }
-
-        if (type === 'module') {
-            itemsPageList.value[indexSection].items[indexRow].items[indexColumn].items.splice(indexModule, 1)
-            return;
-
+        if (!foundSectionInRoot) {
+            const ruta = encontrarRutaPorIndice(itemsPageList.value, id);
+            deleteElementByPath(itemsPageList.value, ruta);
         }
     }
 
+    function handlerCloneItem({ id, type }) {
+        let foundSectionInRoot = false;
+        if (type === 'section') {
+            const indexSection = itemsPageList.value.findIndex(d => d.id === id)
+            if (indexSection !== -1) {
+                foundSectionInRoot = true
 
-    function duplicateItem(originalItem) {
-        const item = JSON.parse(JSON.stringify(originalItem))
-        const id = uniqid('duplicate')
-        if (item.items) {
-            for (let index = 0; index < item.items.length; index++) {
-                item.items[index] = duplicateItem(item.items[index])
+                const nodeToDuplicate = JSON.parse(JSON.stringify(itemsPageList.value[indexSection]));
+                assignNewIds(nodeToDuplicate);
+                itemsPageList.value.splice(indexSection + 1, 0, nodeToDuplicate);
+
             }
         }
-        const sort = item?.sort! + 1
-        return { ...item, sort, id }
+        if (!foundSectionInRoot) {
+            const ruta = encontrarRutaPorIndice(itemsPageList.value, id);
+            duplicateNodesByPath(itemsPageList.value, ruta);
+        }
     }
 
     function clone(item) {
@@ -282,49 +395,44 @@ export const useBuilderStore = defineStore('counter', () => {
     }
 
     function handlerChangeContainerSettings({ id, type }, newSettingsToAdd) {
-        const { indexSection, indexRow, indexColumn, indexModule } = findIndexs({ type, id })
-        if (type === 'row') {
-            const currentSettings = clone(itemsPageList.value[indexSection].items[indexRow].settings)
-            itemsPageList.value[indexSection].items[indexRow].settings = {
-                ...currentSettings,
-                ...newSettingsToAdd
-            }
-        }
-        if (type === 'column') {
-            const currentSettings = clone(itemsPageList.value[indexSection].items[indexRow].items[indexColumn].settings)
-            itemsPageList.value[indexSection].items[indexRow].items[indexColumn].settings = {
-                ...currentSettings,
-                ...newSettingsToAdd
-            }
-        }
+        const ruta = encontrarRutaPorIndice(itemsPageList.value, id);
+        updateNodeByPath(itemsPageList.value, ruta, 'settings', newSettingsToAdd);
     }
-
 
     function handlerAddEmptyContainerRow({ id, type }) {
-        const { indexSection } = findIndexs({ type, id })
+        let foundSectionInRoot = false;
+        const emptyRow = {
+            id: uniqid('r'),
+            settings: {},
+            type: 'row',
+            items: []
+        }
         if (type === 'section') {
-            itemsPageList.value[indexSection].items.push({
-                id: uniqid('r'),
-                settings: {},
-                type: 'row',
-                items: []
-            })
+            const indexSection = itemsPageList.value.findIndex(d => d.id === id)
+            if (indexSection !== -1) {
+                foundSectionInRoot = true
+                itemsPageList.value[indexSection].items.push(emptyRow)
+            }
+        }
+        if (!foundSectionInRoot) {
+            const ruta = encontrarRutaPorIndice(itemsPageList.value, id);
+            updateNodeByPath(itemsPageList.value, ruta, 'items', emptyRow, true);
         }
     }
 
-
-
     function handlerChangeLayout({ id, type }, newLayoutCols) {
-        const { indexSection, indexRow, indexColumn, indexModule } = findIndexs({ type, id })
+
+        const ruta = encontrarRutaPorIndice(itemsPageList.value, id);
+        const nodo = getNodeByPath(itemsPageList.value, ruta);
 
         if (type === 'row') {
             const colsConfig = Array.isArray(newLayoutCols.mode) ? newLayoutCols.mode : newLayoutCols.mode.split(',').map(d => `col-span-${d}`)
             for (let index = 0; index < colsConfig.length; index++) {
-                if (itemsPageList.value[indexSection].items[indexRow].items[index]?.settings) {
-                    const itemd = clone(itemsPageList.value[indexSection].items[indexRow].items[index])
-                    itemsPageList.value[indexSection].items[indexRow].items[index] = { ...itemd, settings: { ...itemd.settings, columnSpan: colsConfig[index] } }
+                if (nodo.items[index]?.settings) {
+                    const itemd = clone(nodo.items[index])
+                    nodo.items[index] = { ...itemd, settings: { ...itemd.settings, columnSpan: colsConfig[index] } }
                 } else {
-                    itemsPageList.value[indexSection].items[indexRow].items.push({
+                    nodo.items.push({
                         id: uniqid('c'),
                         settings: {
                             columnSpan: colsConfig[index]
@@ -334,51 +442,9 @@ export const useBuilderStore = defineStore('counter', () => {
                     })
                 }
             }
-            const rowd = clone(itemsPageList.value[indexSection].items[indexRow])
-            itemsPageList.value[indexSection].items[indexRow] = { ...rowd, settings: { ...rowd.settings, rowNumCols: newLayoutCols?.row ?? 12 } }
-        }
-    }
-
-    function handlerCloneItem({ id, type }) {
-        const { indexSection, indexRow, indexColumn, indexModule } = findIndexs({ type, id })
-
-        if (type === 'section') {
-            itemsPageList.value.push(
-                duplicateItem(itemsPageList.value[indexSection]
-                )
-            )
-        }
-
-        if (type === 'row') {
-            itemsPageList.value[indexSection]
-                .items.push(
-                    duplicateItem(itemsPageList.value[indexSection].items[indexRow])
-                )
-        }
-        if (type === 'column') {
-            itemsPageList.value[indexSection]
-                .items[indexRow]
-                .items.push(
-                    duplicateItem(
-                        itemsPageList.value[indexSection]
-                            .items[indexRow]
-                            .items[indexColumn]
-                    )
-                )
-
-        }
-        if (type === 'module') {
-            itemsPageList.value[indexSection]
-                .items[indexRow]
-                .items[indexColumn]
-                .items.push(
-                    duplicateItem(
-                        itemsPageList.value[indexSection]
-                            .items[indexRow]
-                            .items[indexColumn]
-                            .items[indexModule]
-                    )
-                )
+            const newRow = { ...nodo, settings: { ...nodo.settings, rowNumCols: newLayoutCols?.row ?? 12 } }
+            updateNodeByPath(itemsPageList.value, ruta, 'items', newRow.items, true);
+            updateNodeByPath(itemsPageList.value, ruta, 'settings', newRow.settings);
         }
     }
 

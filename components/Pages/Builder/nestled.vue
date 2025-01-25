@@ -11,7 +11,7 @@
     :tag="type !== 'section' ? 'div' : type"
     :list="items"
     :group="{
-      name: type ?? 'section',
+      name: type ?? 'column',
     }"
     :style="[getCustomStyleRow()]"
     item-key="id"
@@ -22,6 +22,7 @@
           :type="element.type"
           :id="element.id"
           :area-mode="areaMode"
+          :settings="element.settings"
         >
           <modulec v-if="element.type === 'module'" :element="element" />
         </OptionsContainer>

@@ -14,6 +14,7 @@ interface IProp {
   type?: string;
   id: string;
   areaMode: string;
+  settings: any;
 }
 
 const props = withDefaults(defineProps<IProp>(), {
