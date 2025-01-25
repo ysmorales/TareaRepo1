@@ -13,10 +13,11 @@ const store = useBuilderStore();
 const { handlerChangeLayout, handlerAddEmptyContainerRow } = toRefs(store);
 
 const handleAdd = (toAdd) => {
+  console.log({ toAdd });
   if (toAdd.layout) {
     handlerChangeLayout.value({ id: props.id, type: props.type }, toAdd.layout);
   }
-  if (toAdd.row) {
+  if (toAdd.type === "section") {
     handlerAddEmptyContainerRow.value(props);
   }
 };
@@ -38,7 +39,7 @@ const dicTypesSectionInnerToAddLabeL = {
       <AddFieldOptions
         v-if="type !== 'row'"
         :label="dicTypesSectionInnerToAddLabeL[type]"
-        @add="() => handleAdd({ row: true })"
+        @add="() => handleAdd({ type })"
       />
     </div>
   </div>
