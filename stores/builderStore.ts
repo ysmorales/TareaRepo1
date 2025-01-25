@@ -55,10 +55,6 @@ export const useBuilderStore = defineStore('counter', () => {
         ({ idS =  uniqid('s'), idR= uniqid('r'), idC = uniqid('c'), idM = uniqid('m') } = currentDragItem.value)
 
         const list: any[] = itemsPageList.value
-        const dicC = itemsPage.value
-        if (!dicC.sections) {
-            dicC.sections = {}
-        }
 
         const baseSettings = {
             settings: {},
@@ -66,67 +62,28 @@ export const useBuilderStore = defineStore('counter', () => {
             props: {}
         }
 
-        if (!dicC.sections[idS]) {
-            dicC.sections[idS] = {
-                ...baseSettings,
-                rows: {}
-            }
-            list.push({
-                ...baseSettings,
-                type: 'section',
-                id: idS,
-                items: []
-            })
-        }
-
-        if (!dicC.sections[idS].rows[idR]) {
-            dicC.sections[idS].rows[idR] = {
-                ...baseSettings,
-                columns: {}
-            }
-
-            const idxS = list.findIndex(d => d.id === idS)
-            list[idxS].items.push({
+        list.push({
+            ...baseSettings,
+            type: 'section',
+            id: idS,
+            items: [{
                 ...baseSettings,
                 type: 'row',
                 id: idR,
-                items: []
-            })
-        }
+                items: [{
+                    ...baseSettings,
+                    type: 'column',
+                    id: idC,
+                    items: [{
+                        ...baseSettings,
+                        type: 'module',
+                        id: idM,
+                        item: currentDragItem.value.keyName
+                    }]
+                }]
+            }]
+        })
 
-        if (!dicC.sections[idS].rows[idR].columns[idC]) {
-            dicC.sections[idS].rows[idR].columns[idC] = {
-                ...baseSettings,
-                modules: {}
-            }
-            const idxS = list.findIndex(d => d.id === idS)
-            const idxR = list[idxS].items.findIndex(d => d.id === idR)
-            list[idxS].items[idxR].items.push({
-                ...baseSettings,
-                type: 'column',
-                id: idC,
-                items: []
-            })
-        }
-
-        if (!dicC.sections[idS].rows[idR].columns[idC].modules[idM]) {
-            dicC.sections[idS].rows[idR].columns[idC].modules[idM] = {
-                ...baseSettings,
-                module: currentDragItem.value.keyName
-            }
-
-            const idxS = list.findIndex(d => d.id === idS)
-            const idxR = list[idxS].items.findIndex(d => d.id === idR)
-            const idxC = list[idxS].items[idxR].items.findIndex(d => d.id === idC)
-            list[idxS].items[idxR].items[idxC].items.push({
-                ...baseSettings,
-                type: 'module',
-                id: idM,
-                item: currentDragItem.value.keyName
-            })
-        }
-
-        itemsPage.value = dicC
         itemsPageList.value = list
 
     }
@@ -135,15 +92,6 @@ export const useBuilderStore = defineStore('counter', () => {
         currentEditItem.value = item
     }
 
-    function updateItemInForm({ idS, idR, idC, idM }: any, key: string, value: any) {
-
-        const idxS = itemsPageList.value.findIndex(d => d.id === idS)
-        const idxR = itemsPageList.value[idxS].items.findIndex(d => d.id === idR)
-        const idxC = itemsPageList.value[idxS].items[idxR].items.findIndex(d => d.id === idC)
-        const idxM = itemsPageList.value[idxS].items[idxR].items[idxC].items.findIndex(d => d.id === idM)
-
-        itemsPageList.value[idxS].items[idxR].items[idxC].items[idxM].props[key] = value.value;
-    }
 
     function clearStore() {
         builderItems.value = []
@@ -163,7 +111,6 @@ export const useBuilderStore = defineStore('counter', () => {
         propertyCollapse.value = !propertyCollapse.value
     }
 
-
     function handlerItemHover(id: string) {
         itemOnHover.value = id
     }
@@ -175,7 +122,6 @@ export const useBuilderStore = defineStore('counter', () => {
     function updateAreaMode(newMode: string) {
         areaMode.value = newMode;
     }
-
 
     function deleteElementByPath(trees, path) {
         if (!Array.isArray(path) || path.length === 0) {
@@ -231,7 +177,6 @@ export const useBuilderStore = defineStore('counter', () => {
         }
     }
 
-
     function duplicateNodesByPath(trees, path) {
         if (!Array.isArray(path) || path.length === 0) {
             throw new Error('La ruta debe ser un array de índices no vacío.');
@@ -271,7 +216,6 @@ export const useBuilderStore = defineStore('counter', () => {
         return current;
     }
 
-
     function updateNodeByPath(trees, path, key, value, allReplace = false) {
         if (!Array.isArray(path) || path.length === 0) {
             throw new Error('La ruta debe ser un array de índices no vacío.');
@@ -294,47 +238,6 @@ export const useBuilderStore = defineStore('counter', () => {
         }
     }
 
-    function findIndexs({ type, id }) {
-
-        if (type === 'section') {
-            const indexSection = itemsPageList.value.findIndex(d => d.id === id)
-            if (indexSection !== -1) {
-                return { indexSection };
-            }
-        }
-
-        for (let indexSection = 0; indexSection < itemsPageList.value.length; indexSection++) {
-
-            if (type === 'row') {
-                const indexRow = itemsPageList.value[indexSection].items.findIndex(d => d.id === id)
-                if (indexRow !== -1) {
-                    return { indexSection, indexRow }
-                }
-            }
-
-            for (let indexRow = 0; indexRow < itemsPageList.value[indexSection].items.length; indexRow++) {
-
-                if (type === 'column') {
-                    const indexColumn = itemsPageList.value[indexSection].items[indexRow].items.findIndex(d => d.id === id)
-                    if (indexColumn !== -1) {
-                        return { indexSection, indexRow, indexColumn }
-                    }
-                }
-
-                if (type === 'module') {
-                    for (let indexColumn = 0; indexColumn < itemsPageList.value[indexSection].items[indexRow].items.length; indexColumn++) {
-                        const indexModule = itemsPageList.value[indexSection].items[indexRow].items[indexColumn].items.findIndex(d => d.id === id)
-                        if (indexModule !== -1) {
-                            return { indexSection, indexRow, indexColumn, indexModule }
-                        }
-                    }
-                }
-            }
-        }
-
-        return {}
-    }
-
     function handlerRemoveItem({ id, type }) {
         let foundSectionInRoot = false;
         if (type === 'section') {
@@ -348,6 +251,13 @@ export const useBuilderStore = defineStore('counter', () => {
             const ruta = encontrarRutaPorIndice(itemsPageList.value, id);
             deleteElementByPath(itemsPageList.value, ruta);
         }
+    }
+
+    function updateItemInForm({ id }: any, key: string, value: any) {
+        const ruta = encontrarRutaPorIndice(itemsPageList.value, id);
+
+        updateNodeByPath(itemsPageList.value, ruta, 'props', { [key]: value.value });
+        // itemsPageList.value = itemsPageList.value
     }
 
     function handlerCloneItem({ id, type }) {
@@ -373,28 +283,16 @@ export const useBuilderStore = defineStore('counter', () => {
         return JSON.parse(JSON.stringify(item))
     }
 
-    function handlerChangeContainerPaddingMargin({ id, type }, paddingMargin) {
-        const { indexSection, indexRow, indexColumn, indexModule } = findIndexs({ type, id })
-
-        if (type === 'row') {
-            const currentSettings = clone(itemsPageList.value[indexSection].items[indexRow].settings)
-            itemsPageList.value[indexSection].items[indexRow].settings = {
-                ...currentSettings,
-                margin: paddingMargin?.margin ?? currentSettings.margin ?? {},
-                padding: paddingMargin?.padding ?? currentSettings.padding ?? {},
-            }
-        }
-        if (type === 'column') {
-            const currentSettings = clone(itemsPageList.value[indexSection].items[indexRow].items[indexColumn].settings)
-            itemsPageList.value[indexSection].items[indexRow].items[indexColumn].settings = {
-                ...currentSettings,
-                margin: paddingMargin?.margin ?? currentSettings.margin ?? {},
-                padding: paddingMargin?.padding ?? currentSettings.padding ?? {},
-            }
-        }
+    function handlerChangeContainerPaddingMargin({ id }, paddingMargin) {
+        const ruta = encontrarRutaPorIndice(itemsPageList.value, id);
+        const nodo = getNodeByPath(itemsPageList.value, ruta);
+        updateNodeByPath(itemsPageList.value, ruta, 'settings', {
+            margin: paddingMargin?.margin ?? nodo.settings.margin ?? {},
+            padding: paddingMargin?.padding ?? nodo.settings.padding ?? {},
+        });
     }
 
-    function handlerChangeContainerSettings({ id, type }, newSettingsToAdd) {
+    function handlerChangeContainerSettings({ id }, newSettingsToAdd) {
         const ruta = encontrarRutaPorIndice(itemsPageList.value, id);
         updateNodeByPath(itemsPageList.value, ruta, 'settings', newSettingsToAdd);
     }

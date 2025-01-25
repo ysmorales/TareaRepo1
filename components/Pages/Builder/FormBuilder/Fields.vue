@@ -30,6 +30,7 @@ function handleChange() {
 <template>
   {{ fieldKey }}
   {{ fieldInfo }}
+  {{ item.id }}
 
   <div class="flex items-end w-full">
     <div class="flex-1">

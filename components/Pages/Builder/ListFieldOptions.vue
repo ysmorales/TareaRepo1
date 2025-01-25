@@ -5,22 +5,26 @@ import FieldOptions from "./FieldOptions.vue";
 const store = useBuilderStore();
 const { itemsPageList } = toRefs(store);
 
+const getAllLeafNodes = (trees) => {
+  let leaves = [];
+  function traverse(node) {
+    if (!node.items || node.items.length === 0) {
+      leaves.push(node);
+    } else {
+      node.items.forEach(traverse);
+    }
+  }
+  trees.forEach(traverse);
+  return leaves;
+};
+
 const allModules = computed(() => {
   const dd: any[] = [];
-
-  itemsPageList.value.forEach((section) => {
-    section.items?.forEach((row) => {
-      row.items?.forEach((column) => {
-        column.items?.forEach((module) => {
-          dd.push({
-            idS: section.id,
-            idR: row.id,
-            idC: column.id,
-            idM: module.id,
-            component: getComponentKey(module.item),
-          });
-        });
-      });
+  const listModules = getAllLeafNodes(itemsPageList.value);
+  listModules?.forEach((module) => {
+    dd.push({
+      id: module.id,
+      component: getComponentKey(module.item),
     });
   });
   return dd;
@@ -33,7 +37,7 @@ const allModules = computed(() => {
       class="mt-2"
       :title="item.title ?? 'some'"
       v-for="(item, index) in allModules"
-      :key="`itm${index}-${item.idM}`"
+      :key="`itm${index}-${item.id}`"
     >
       <template v-slot:header>
         <div class="flex w-full items-center">
@@ -43,9 +47,7 @@ const allModules = computed(() => {
 
           <div class="flex-1">
             <DsTypography class="text-lg ml-4 mb-0" variant="h4">{{
-              item?.component?.__name ??
-              item.title.split("/")[item.title.split("/").length - 1] ??
-              item.title
+              item?.component?.__name ?? "name"
             }}</DsTypography>
           </div>
 
