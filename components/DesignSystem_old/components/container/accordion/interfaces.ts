@@ -1,1 +1,0 @@
-type IAccordionType = 'standard' | 'card';

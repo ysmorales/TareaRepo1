@@ -1,9 +1,0 @@
-.toast-fade-enter-active,
-.toast-fade-leave-active {
-    transition: opacity 0.5s;
-}
-
-.toast-fade-enter,
-.toast-fade-leave-to {
-    opacity: 0;
-}
