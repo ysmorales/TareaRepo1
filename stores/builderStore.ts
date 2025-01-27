@@ -8,7 +8,6 @@ type IModalType = 'property' | 'save' | 'validate' | 'formData' | 'infoPanel'
 export const useBuilderStore = defineStore('counter', () => {
     const itemsPage = ref({})
     const itemsPageList = ref([])
-    const newProps = ref({})
     const areaMode = ref('dragable')
     const itemOnHover = ref('')
     const itemOnSelect = ref({})
@@ -298,23 +297,35 @@ export const useBuilderStore = defineStore('counter', () => {
     }
 
     function handlerAddEmptyContainerRow({ id, type }) {
-        let foundSectionInRoot = false;
         const emptyRow = {
             id: uniqid('r'),
             settings: {},
             type: 'row',
             items: []
         }
-        if (type === 'section') {
-            const indexSection = itemsPageList.value.findIndex(d => d.id === id)
-            if (indexSection !== -1) {
-                foundSectionInRoot = true
-                itemsPageList.value[indexSection].items.push(emptyRow)
+        if (!id) {
+            const emptySection = {
+                id: uniqid('s'),
+                settings: {},
+                type: 'section',
+                items: [emptyRow]
             }
-        }
-        if (!foundSectionInRoot) {
-            const ruta = encontrarRutaPorIndice(itemsPageList.value, id);
-            updateNodeByPath(itemsPageList.value, ruta, 'items', emptyRow, true);
+            itemsPageList.value.push(emptySection)
+        } else {
+
+            let foundSectionInRoot = false;
+
+            if (type === 'section') {
+                const indexSection = itemsPageList.value.findIndex(d => d.id === id)
+                if (indexSection !== -1) {
+                    foundSectionInRoot = true
+                    itemsPageList.value[indexSection].items.push(emptyRow)
+                }
+            }
+            if (!foundSectionInRoot) {
+                const ruta = encontrarRutaPorIndice(itemsPageList.value, id);
+                updateNodeByPath(itemsPageList.value, ruta, 'items', emptyRow, true);
+            }
         }
     }
 

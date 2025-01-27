@@ -1,0 +1,330 @@
+import {Meta} from "@storybook/blocks";
+
+import "../assets/css/landing.css"
+
+<Meta title="Welcome"/>
+<div className="landing-page">
+    <section className="p-4 py-10 relative landing">
+        <div className="bg-section-1"></div>
+        <div className="container-section">
+            <div className="logo">
+                <img alt="Cordillera, design system" src="images/landing/logo-dark.svg"/>
+            </div>
+            <h1>Descubre el nuevo sistema de diseño <strong>Coordillera</strong></h1>
+            <img alt="Joven buscando información" className="img-banner-1" src="images/landing/man-table.png"/>
+        </div>
+    </section>
+    <section className="section overflow-hidden landing">
+        <div className="container-section grid grid-cols-1 md-grid-cols-2  gap-2">
+            <div className="my-0 md-my-4">
+                <div className="text-center">
+                    <img src="images/landing/note-tools.png" alt="" className="w-full max-width-600 inline-block"/>
+                </div>
+
+            </div>
+            <div className="mb-10 md-my-4">
+                <div className="p-4 text-left">
+                    <h2 className="mb-0">
+                        <p style={{fontSize: '24px'}}>Sistema de diseño: Storybook Coordillera</p>
+                    </h2>
+                    <p>
+                        Esta metodología y herramienta surge como una respuesta vanguardista a una institución con
+                        desafíos de
+                        desarrollo descentralizado.
+                    </p>
+                    <p> Con foco en la velocidad de entregas, diseño estandarizado, ofrece componentes reutilizables y
+                        documentación viva, simplificando la labor del desarrollador y unificando la experiencia del
+                        usuario
+                        final.</p>
+                </div>
+            </div>
+        </div>
+
+    </section>
+    <section className="py-10 relative mb-12 landing">
+        <div className="bg-section-2"></div>
+        <div className="container-section">
+            <img className="w-2/3 inline-block  -mb-48"
+                 src="images/landing/edit-widget.png"
+                 alt="Joven buscando información"/>
+        </div>
+    </section>
+    <section className="mt-36 md-mt-24 overflow-hidden landing ">
+        <div className="container-section">
+            <div className="text-left grid sm-grid-cols-1 md-grid-cols-2  gap-8  py-8">
+                <div>
+                    <h2 className="font-roboto text-4xl">
+                        Beneficios de utilizar <strong>Coordillera</strong>
+                    </h2>
+                    <ul className="ul">
+                        <li className="py-2 px-3 border rounded border-neutral-300 mb-4 flex items-center ">
+                            <i className="las la-check-circle text-xl text-green-500 mr-2"></i> Permite crecimiento del
+                            sistema
+                            descentralizado.
+                        </li>
+                        <li className="py-2 px-3 border rounded border-neutral-300 mb-4 flex items-center ">
+                            <i className="las la-check-circle text-xl text-green-500 mr-2"></i> Detección rápida y
+                            aislada de
+                            problemas.
+                        </li>
+                        <li className="py-2 px-3 border rounded border-neutral-300 mb-4 flex items-center ">
+                            <i className="las la-check-circle text-xl text-green-500 mr-2"></i> Componentes
+                            reutilizables.
+                        </li>
+                        <li className="py-2 px-3 border rounded border-neutral-300 mb-4 flex items-center ">
+                            <i className="las la-check-circle text-xl text-green-500 mr-2"></i> Acelera el desarrollo de
+                            la
+                            aplicación.
+                        </li>
+                        <li className="py-2 px-3 border rounded border-neutral-300 mb-4 flex items-center ">
+                            <i className="las la-check-circle text-xl text-green-500 mr-2"></i> Simplifica la labor del
+                            equipo
+                            técnico.
+                        </li>
+                        <li className="py-2 px-3 border rounded border-neutral-300 mb-4 flex items-center ">
+                            <i className="las la-check-circle text-xl text-green-500 mr-2"></i> Entrega directrices a
+                            todos los
+                            equipos
+                            involucrados.
+                        </li>
+                    </ul>
+                </div>
+                <img src="images/landing/screen-tools.png" alt="" className=" max-w-[800px] w-full mt-12"/>
+            </div>
+        </div>
+
+        <div className="container-section text-left">
+            <h2 className="font-roboto text-4xl text-center mb-10">
+                Características de <strong>Coordillera</strong>
+            </h2>
+            <div className="block md:grid sm:grid-cols-1 md:grid-cols-3  gap-0 border rounded w-full mb-4">
+                <div className="rounded-t md:rounded-none md:rounded-s flex overflow-hidden w-full   ">
+                    <img src="images/landing/feat-dev-purple.png" alt="" className="w-full h-full"/>
+                </div>
+                <div className="p-4 rounded-b md:rounded-none md:rounded-e col-span-2">
+                    <h3 className="font-bold font-roboto text-xl mb-2">Herramienta de desarrollo</h3>
+                    <p className="text-neutral-500">Una herramienta de desarrollo que se utiliza para definir los
+                        componentes de
+                        interfaz de manera aislada.</p>
+                </div>
+            </div>
+            <div className="block md:grid sm:grid-cols-1 md:grid-cols-3  gap-0 border rounded w-full mb-4">
+                <div className="rounded-t md:rounded-none md:rounded-s flex overflow-hidden w-full   ">
+                    <img src="images/landing/feat-folder-pink.png" alt="" className="w-full h-full"/>
+                </div>
+                <div className="p-4 rounded-b md:rounded-none md:rounded-e col-span-2">
+                    <h3 className="font-bold font-roboto text-xl mb-2">Documentación siempre actualizada</h3>
+                    <p className="text-neutral-500">Mantiene una documentación actualizada y en tiempo real la cual
+                        puede ser
+                        consultada por todo el equipo técnico, de diseño y de negocio para su utilización.</p>
+                </div>
+            </div>
+            <div className="block md:grid sm:grid-cols-1 md:grid-cols-3  gap-0 border rounded w-full mb-4">
+                <div className="rounded-t md:rounded-none md:rounded-s flex overflow-hidden w-full   ">
+                    <img src="images/landing/feat-laptop-cyan.png" alt="" className="w-full h-full"/>
+                </div>
+                <div className="p-4 rounded-b md:rounded-none md:rounded-e col-span-2">
+                    <h3 className="font-bold font-roboto text-xl mb-2">Componentes flexibles</h3>
+                    <p className="text-neutral-500">La actualización de cada componente se repercute de forma recursiva
+                        para todo
+                        el portal de forma automática.</p>
+                </div>
+            </div>
+            <div className="block md:grid sm:grid-cols-1 md:grid-cols-3  gap-0 border rounded w-full mb-4">
+                <div className="rounded-t md:rounded-none md:rounded-s flex overflow-hidden w-full   ">
+                    <img src="images/landing/feat-notifications-violet.png" alt="" className="w-full h-full"/>
+                </div>
+                <div className="p-4 rounded-b md:rounded-none md:rounded-e col-span-2">
+                    <h3 className="font-bold font-roboto text-xl mb-2">Una fuente maestra</h3>
+                    <p className="text-neutral-500">Genera una fuente de componentes centralizadas.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section className="relative pb-0 pt-12 mt-10 md-py-10 ">
+        <div className="bg-section-3"></div>
+        <div className="container-section">
+            <div className="logo">
+                <img alt="Cordillera, design system" src="images/landing/logo-dark.svg"/>
+            </div>
+            <h2 className="font-roboto text-4xl mt-10"> Tecnologías aplicadas
+                en <strong className="font-roboto">Coordillera</strong></h2>
+            <p className="text-lg text-dark-500">La solución aplicada involucra diferentes lenguajes y frameworks. Los
+                cuales
+                se han
+                orquestados para simplificar el desarrollo de un sistema.</p>
+            <img className="w-full md:w-2/3 inline-block" src="images/landing/cup-tools.png" alt=""/>
+        </div>
+    </section>
+    <section className="my-0 md:my-8 mb-24">
+        <div className="max-w-800 mx-auto text-left px-4">
+            <div className="block md:grid sm:grid-cols-1 md:grid-cols-4  gap-2 py-8">
+                <div className="w-full relative flex items-top justify-center md:justify-end">
+                    <img src="images/landing/nuxt.png" alt="" className="w-24 h-24 mr-8 mb-4"/>
+                </div>
+                <div className="col-span-3">
+                    <h3 className="text-dark-500 font-roboto text-xl mb-4">
+                        Nuxt
+                    </h3>
+                    <p>
+                        Nuxt 3 es un marco de trabajo de código abierto basado en Vue.js que facilita la creación de
+                        aplicaciones
+                        web modernas. Ofrece características como la generación estática y el servidor de aplicaciones
+                        para una
+                        experiencia de desarrollo robusta.
+                    </p>
+                </div>
+            </div>
+            <div className=" grid sm-grid-cols-1 md-grid-cols-1 gap-2 py-8">
+                <div className="w-full relative flex items-top justify-center md-justify-end">
+                    <img src="images/landing/vue.png" alt="" className="left-0 w-24 h-24 mr-8 mb-4"/>
+                </div>
+                <div className="col-span-3">
+                    <h3 className="text-dark-500 font-roboto text-xl mb-4">
+                        Vue
+                    </h3>
+                    <p>
+                        Vue 3 es una biblioteca JavaScript progresiva para construir interfaces de usuario. Con un
+                        núcleo más rápido
+                        y características avanzadas, Vue 3 facilita la creación de aplicaciones web interactivas y
+                        eficientes.
+                    </p>
+                </div>
+            </div>
+            <div className="block md:grid sm:grid-cols-1 md:grid-cols-4  gap-2 py-8">
+                <div className="w-full relative flex items-top justify-center md:justify-end">
+                    <img src="images/landing/tipescript.png" alt="" className="left-0 max-w-24 w-24 h-24 mr-8 mb-4"/>
+                </div>
+                <div className="col-span-3">
+                    <h3 className="text-dark-500 font-roboto text-xl mb-4">
+                        Typescript
+                    </h3>
+                    <p>
+                        TypeScript es un superconjunto tipado de JavaScript que agrega tipado estático opcional. Esto
+                        mejora la
+                        seguridad y la eficiencia del código, especialmente en proyectos grandes, al tiempo que sigue
+                        siendo
+                        compatible con JavaScript.
+                    </p>
+                </div>
+            </div>
+            <div className="block md:grid sm:grid-cols-1 md:grid-cols-4  gap-2 py-8">
+                <div className="w-full relative flex items-top justify-center md:justify-end">
+                    <img src="images/landing/tailwind.png" alt="" className="left-0 max-w-24 w-24 h-20 mr-8 mb-4"/>
+                </div>
+                <div className="col-span-3">
+                    <h3 className="text-dark-500 font-roboto text-xl mb-4">
+                        Tailwind
+                    </h3>
+                    <p>
+                        Tailwind CSS es un marco de diseño de utilidad que simplifica el desarrollo de interfaces
+                        mediante la
+                        aplicación de clases predefinidas. Permite un diseño rápido y consistente sin necesidad de
+                        escribir CSS
+                        personalizado extenso.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div className="w-full mx-auto text-center px-4 h-200 py-8">
+            <div className="text-left bg-cyan-500 p-4 mb-3 rounded" role="alert"
+                 aria-label="Cuadro de información importante">
+                <h3 className="text-primary-500 text-xl font-roboto font-bold mb-3 "><i
+                    className="las la-check-circle mr-2 text-xl"></i>Sobre
+                    TypeScript</h3>
+                <p className="text-primary-500 ">Cada componente está desarrollado en TypeScript para garantizar una
+                    base
+                    sólida. Es importante destacar que esta elección <strong> no impone restricciones al
+                        desarrollo</strong>, ya
+                    que se puede integrar fácilmente con Vanilla JS sin inconvenientes.</p>
+            </div>
+        </div>
+        <div className="max-w-800 mx-auto">
+            <div className="block md:grid sm:grid-cols-1 md:grid-cols-3  gap-2 w-full mb-4">
+                <div className="flex overflow-hidden w-full justify-center  ">
+                    <img src="images/landing/pink-doc.jfif" alt=""
+                         className="max-w-500px w-full h-[250px] md:h-full rounded-lg "/>
+                </div>
+                <div className="p-4 rounded-b md:rounded-none md:rounded-e col-span-2">
+                    <h3 className="font-roboto text-xl mb-2">De User Interface a Storybook</h3>
+                    <p className="mb-6 p-nomargin">
+                        Se apoya en el sólido fundamento de diseño de Interfaz llamado UI Kit. Este se rige por
+                        los principios del diseño atómico y el minimalismo adoptado en la institución. Si desea explorar
+                        más sobre
+                        estas
+                        definiciones y normativas gráficas, diríjase a:
+                        <a className="inline ml-1" target="_blank" href="https://uikit.chileatiende.gob.cl/uikit"
+                           title="Ir al sitio externo">
+                            uikit.chileatiende.gob.cl/uikit
+                        </a>
+                    </p>
+                    <a href="https://uikit.chileatiende.gob.cl/uikit" target="_blank" className="btn btn-pink">
+                        Ver UiKit Coordillera
+                        <i className="las la-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </section>
+    <section className="p-4 py-10 relative landing">
+        <div className="bg-section-4"></div>
+        <div className="container-section text-dark-500">
+            <div className="logo">
+                <img alt="Cordillera, design system" src="images/landing/logo-dark.svg"/>
+            </div>
+            <h2 className="font-roboto font-normal text-4xl mb-6 mt-10">El Equipo detrás de <strong
+                className="font-roboto">Coordillera</strong></h2>
+            <p className="text-lg mb-4">Nuestro equipo interno está conformado por diseñadores de interfaz,
+                maquetadores,
+                desarrolladores y especialistas en accesibilidad web, los cuales se centran en la creación meticulosa de
+                cada
+                componente esencial para la aplicación.</p>
+            <p className="text-lg mb-0">
+                Estamos comprometidos a escuchar atentamente los comentarios y necesidades de nuestros compañeros y
+                colegas,
+                quienes participan desde la maquetación hasta el despliegue en producción.
+            </p>
+            <div>
+                <img className="mt-0 md:-mt-10 w-full md:max-w-[600px] inline-block"
+                     src="images/landing/notepad-tools.png" alt=""/>
+            </div>
+        </div>
+    </section>
+    <section className=" p-4 md:p-0 ">
+        <div className="max-w-600 mx-auto text-center">
+            <div className="p-8 border border-primary-500 rounded-lg mb-3 text-left">
+                <h3 className="text-primary-500 font-bold text-xl text-left mb-2 flex">
+                    <i className="las la-envelope text-2xl mr-2"></i>
+                    <span>
+      Contáctanos para más información
+      </span>
+                </h3>
+                <p className="mb-2 p-nomargin">
+                    Si tienes alguna pregunta o inquietud sobre el proyecto, no dudes en escribirnos a:
+                    <a className="text-primary-500 ml-1" href="mailto:designsystem@chileatiende.gob.cl"
+                       title="Enviar correo">
+                        designsystem@chileatiende.gob.cl.
+                    </a>
+                </p>
+                <p>
+                    Estamos aquí para ayudarte en cada paso del camino.
+                </p>
+            </div>
+        </div>
+    </section>
+    <section className="my-12">
+        <div className="text-center">
+
+            <div className="logo alpha-50">
+                <img alt="Cordillera, design system" src="images/landing/logo-dark.svg"/>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+
+
+
+

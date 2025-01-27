@@ -7,6 +7,7 @@ import AddFieldOptions from "./FormBuilder/addFieldOptions.vue";
 const props = defineProps({
   type: String,
   id: String,
+  emptyList: Boolean,
 });
 
 const store = useBuilderStore();
@@ -38,7 +39,9 @@ const dicTypesSectionInnerToAddLabeL = {
       </FieldContainerLayout>
       <AddFieldOptions
         v-if="type !== 'row'"
-        :label="dicTypesSectionInnerToAddLabeL[type]"
+        :label="
+          emptyList ? 'Add section' : dicTypesSectionInnerToAddLabeL[type]
+        "
         @add="() => handleAdd({ type })"
       />
     </div>

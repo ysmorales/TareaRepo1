@@ -7,6 +7,7 @@
         grid: type === 'row',
       },
       getClassRow(),
+      'outline-blue-200 outline-dashed outline-[0.50px] pl-2 pb-2',
     ]"
     :tag="type !== 'section' ? 'div' : type"
     :list="items"
@@ -115,8 +116,5 @@ export default {
 <style scoped>
 .dragArea {
   min-height: 80px;
-  outline: 1px dashed;
-  padding-left: 0.5rem;
-  padding-bottom: 0.5rem;
 }
 </style>
