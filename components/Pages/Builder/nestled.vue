@@ -1,13 +1,14 @@
 <template>
   <draggable
     :class="[
-      areaMode === 'dragable' ? 'dragArea' : '',
+      areaMode === 'dragable'
+        ? 'dragArea outline-blue-200 outline-dashed outline-[0.50px] pl-2 pb-2'
+        : '',
       `is-${type ?? 'section'}`,
       {
         grid: type === 'row',
       },
       getClassRow(),
-      'outline-blue-200 outline-dashed outline-[0.50px] pl-2 pb-2',
     ]"
     :tag="type !== 'section' ? 'div' : type"
     :list="items"
