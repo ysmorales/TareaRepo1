@@ -1,5 +1,7 @@
 <script lang="ts" setup>
 import { DsInput, DsSelect, DsIcon, DsCheck } from "~/components/DesignSystem";
+
+import DsTooltip from "~/components/DesignSystem/components/basic/tooltip/DsTooltip.vue";
 import { useBuilderStore } from "~/stores/builderStore";
 
 interface IProp {
@@ -28,11 +30,7 @@ function handleChange() {
 </script>
 
 <template>
-  {{ fieldKey }}
-  {{ fieldInfo }}
-  {{ item.id }}
-
-  <div class="flex items-end w-full">
+  <div class="flex items-end w-full" v-if="fieldInfo?.control">
     <div class="flex-1">
       <DsInput
         v-if="fieldInfo?.control === 'text'"
@@ -58,7 +56,12 @@ function handleChange() {
     </div>
 
     <div class="mb-4 ml-2">
-      <DsIcon name="info-circle" size="default" />
+      <DsTooltip
+        :text="fieldInfo.description ?? 'no found description'"
+        position="right"
+      >
+        <DsIcon name="info-circle" size="default" />
+      </DsTooltip>
     </div>
   </div>
 </template>
