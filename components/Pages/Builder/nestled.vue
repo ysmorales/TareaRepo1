@@ -58,6 +58,7 @@ import modulec from "./moduleComponent.vue";
 import WrapperContainer from "./WrapperContainer.vue";
 import OptionsContainer from "./OptionsContainer.vue";
 import AddBlock from "./AddBlock.vue";
+import { getCustomStyleRow, getClassRow } from "./helpers";
 
 export default {
   props: {
@@ -87,28 +88,10 @@ export default {
   },
   methods: {
     getCustomStyleRow: function () {
-      const calcRem = (value) => `${value / 4}rem`;
-      return {
-        marginLeft: calcRem(this.settings?.margin?.left),
-        marginRight: calcRem(this.settings?.margin?.right),
-        marginTop: calcRem(this.settings?.margin?.top),
-        marginBottom: calcRem(this.settings?.margin?.bottom),
-
-        paddingLeft: calcRem(this.settings?.padding?.left),
-        paddingRight: calcRem(this.settings?.padding?.right),
-        paddingTop: calcRem(this.settings?.padding?.top),
-        paddingBottom: calcRem(this.settings?.padding?.bottom),
-
-        backgroundColor: this.settings?.backgroundColor,
-      };
+      return getCustomStyleRow(this);
     },
     getClassRow: function () {
-      const colsNum =
-        this.type === "row" && this.settings
-          ? `grid-cols-${this.settings?.rowNumCols ?? "12"}`
-          : "";
-
-      return [colsNum];
+      return getClassRow(this);
     },
   },
   name: "NesteDraggable",

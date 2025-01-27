@@ -3,10 +3,13 @@ import { DsIcon } from "~/components/DesignSystem";
 import { useBuilderStore } from "~/stores/builderStore";
 
 const store = useBuilderStore();
-const { updateAreaMode, areaMode } = toRefs(store);
+const { updateAreaMode, areaMode, updateViewMode, viewMode } = toRefs(store);
 
 const toogleMode = () => {
   updateAreaMode.value(areaMode.value === "dragable" ? "normal" : "dragable");
+};
+const toogleView = () => {
+  updateViewMode.value(viewMode.value === "edition" ? "default" : "edition");
 };
 </script>
 
@@ -16,6 +19,14 @@ const toogleMode = () => {
       <div class="flex justify-end w-full flex-col">
         <DsIcon
           color="primary"
+          class="cursor-pointer"
+          :name="viewMode === 'default' ? 'eye-slash' : 'eye'"
+          title="Mostrar resultado final"
+          @click="toogleView()"
+        />
+        <DsIcon
+          color="primary"
+          v-if="viewMode === 'edition'"
           class="cursor-pointer"
           :name="areaMode === 'dragable' ? 'toggle-on' : 'toggle-off'"
           :title="

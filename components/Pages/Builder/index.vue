@@ -1,15 +1,19 @@
 <script lang="ts" setup>
+import { useBuilderStore } from "~/stores/builderStore";
+import { toRefs } from "vue";
 import LayoutThreeColumns from "../LayoutThreeColumns.vue";
 import DraggableArea from "./DraggableArea.vue";
+import DefaultArea from "./DefaultArea.vue";
 
 import ListComponents from "./ListComponents.vue";
 import FieldTabsOptions from "./FieldTabsOptions.vue";
 
-const area = ref<"view" | "edit" | "code">("edit");
+const store = useBuilderStore();
+const { viewMode } = toRefs(store);
 </script>
 
 <template>
-  <LayoutThreeColumns>
+  <LayoutThreeColumns :showLeft="viewMode === 'edition'">
     <template v-slot:sideLeft>
       <ListComponents />
     </template>
@@ -17,7 +21,8 @@ const area = ref<"view" | "edit" | "code">("edit");
       <FieldTabsOptions />
     </template>
     <template v-slot:container>
-      <DraggableArea v-if="area == 'edit'" />
+      <DraggableArea v-if="viewMode === 'edition'" />
+      <DefaultArea v-if="viewMode === 'default'" />
     </template>
   </LayoutThreeColumns>
 </template>

@@ -9,6 +9,7 @@ export const useBuilderStore = defineStore('counter', () => {
     const itemsPage = ref({})
     const itemsPageList = ref([])
     const areaMode = ref('dragable')
+    const viewMode = ref('edition')
     const itemOnHover = ref('')
     const itemOnSelect = ref({})
     const builderItems = ref<IItemBuilder[]>([] as IItemBuilder[])
@@ -120,6 +121,11 @@ export const useBuilderStore = defineStore('counter', () => {
 
     function updateAreaMode(newMode: string) {
         areaMode.value = newMode;
+    }
+
+
+    function updateViewMode(newMode: string) {
+        viewMode.value = newMode;
     }
 
     function deleteElementByPath(trees, path) {
@@ -383,6 +389,8 @@ export const useBuilderStore = defineStore('counter', () => {
         itemsPageList,
         areaMode,
         updateAreaMode,
+        updateViewMode,
+        viewMode,
         handlerChangeLayout,
         handlerChangeContainerPaddingMargin,
         handlerChangeContainerSettings,
