@@ -22,10 +22,12 @@ const allModules = computed(() => {
   const dd: any[] = [];
   const listModules = getAllLeafNodes(itemsPageList.value);
   listModules?.forEach((module) => {
-    dd.push({
-      id: module.id,
-      component: getComponentKey(module.item),
-    });
+    if (module.item) {
+      dd.push({
+        id: module.id,
+        component: getComponentKey(module.item),
+      });
+    }
   });
   return dd;
 });
