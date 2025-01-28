@@ -11,7 +11,11 @@ const props = defineProps({
 });
 
 const store = useBuilderStore();
-const { handlerChangeLayout, handlerAddEmptyContainerRow } = toRefs(store);
+const {
+  handlerChangeLayout,
+  handlerAddEmptyContainerRow,
+  handlerAddEmptyContainerSectionInSlot,
+} = toRefs(store);
 
 const handleAdd = (toAdd) => {
   console.log({ toAdd });
@@ -20,6 +24,9 @@ const handleAdd = (toAdd) => {
   }
   if (toAdd.type === "section") {
     handlerAddEmptyContainerRow.value(props);
+  }
+  if (toAdd.type === "slotSection") {
+    handlerAddEmptyContainerSectionInSlot.value(props);
   }
 };
 const dicTypesSectionInnerToAddLabeL = {

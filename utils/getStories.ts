@@ -15,3 +15,5 @@ export const getNameComponentKey = (keyName: string) => getStories()[keyName]?.c
 export const getComponentKey = (keyName: string) => getStories()[keyName]?.component
 
 export const getComponentByName = (nameFind: string) => getStories()[getAllComponents().find(keyName => getNameComponentKey(keyName) === nameFind)]
+
+export const getSlotsStorie = (keyName: string) => getStories()[keyName]?.argTypes?.default?.slots

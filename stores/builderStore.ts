@@ -78,7 +78,8 @@ export const useBuilderStore = defineStore('counter', () => {
                         ...baseSettings,
                         type: 'module',
                         id: idM,
-                        item: currentDragItem.value.keyName
+                        item: currentDragItem.value.keyName,
+                        items: []
                     }]
                 }]
             }]
@@ -258,6 +259,12 @@ export const useBuilderStore = defineStore('counter', () => {
         }
     }
 
+    function updateToogleShowSlotInForm({ id }: any, slotsToShow: string[]) {
+        const ruta = encontrarRutaPorIndice(itemsPageList.value, id);
+
+        updateNodeByPath(itemsPageList.value, ruta, 'slots', slotsToShow, true);
+    }
+
     function updateItemInForm({ id }: any, key: string, value: any) {
         const ruta = encontrarRutaPorIndice(itemsPageList.value, id);
 
@@ -302,6 +309,26 @@ export const useBuilderStore = defineStore('counter', () => {
         updateNodeByPath(itemsPageList.value, ruta, 'settings', newSettingsToAdd);
     }
 
+
+    function handlerAddEmptyContainerSectionInSlot({ id, type }) {
+        const ruta = encontrarRutaPorIndice(itemsPageList.value, id);
+
+        const emptyRow = {
+            id: uniqid('r'),
+            settings: {},
+            type: 'row',
+            items: []
+        }
+        const emptySection = {
+            id: uniqid('s'),
+            settings: {},
+            type: 'section',
+            items: [emptyRow]
+        }
+
+        updateNodeByPath(itemsPageList.value, ruta, 'items', [emptySection], true);
+    }
+
     function handlerAddEmptyContainerRow({ id, type }) {
         const emptyRow = {
             id: uniqid('r'),
@@ -340,6 +367,9 @@ export const useBuilderStore = defineStore('counter', () => {
         const ruta = encontrarRutaPorIndice(itemsPageList.value, id);
         const nodo = getNodeByPath(itemsPageList.value, ruta);
 
+        if (!nodo.items) {
+            nodo.items = []
+        }
         if (type === 'row') {
             const colsConfig = Array.isArray(newLayoutCols.mode) ? newLayoutCols.mode : newLayoutCols.mode.split(',').map(d => `col-span-${d}`)
             for (let index = 0; index < colsConfig.length; index++) {
@@ -394,6 +424,8 @@ export const useBuilderStore = defineStore('counter', () => {
         handlerChangeLayout,
         handlerChangeContainerPaddingMargin,
         handlerChangeContainerSettings,
-        handlerAddEmptyContainerRow
+        handlerAddEmptyContainerRow,
+        handlerAddEmptyContainerSectionInSlot,
+        updateToogleShowSlotInForm
     }
 })

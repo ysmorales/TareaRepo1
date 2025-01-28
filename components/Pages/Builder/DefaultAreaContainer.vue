@@ -24,7 +24,10 @@ const props = withDefaults(defineProps<IProp>(), {
     ]"
     :style="[getCustomStyleRow(node)]"
   >
-    <ModuleComponent v-if="node.type === 'module'" :element="node" />
-    <TreeNode v-if="node.items && node.items.length" :items="node.items" />
+    <ModuleComponent v-if="node.type === 'module'" :element="node" seeOnly />
+    <TreeNode
+      v-if="node.items && node.items.length && !node.item"
+      :items="node.items"
+    />
   </div>
 </template>

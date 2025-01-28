@@ -27,29 +27,53 @@ function handleChange() {
   console.log(props.item, props.fieldKey, valueField);
   updateItemInForm.value(props?.item, props.fieldKey, valueField);
 }
+
+const getType = () =>
+  props.fieldInfo?.control?.type
+    ? props.fieldInfo?.control?.type
+    : isNotEmpty(props.fieldInfo?.control)
+    ? props.fieldInfo?.control
+    : isNotEmpty(props.fieldInfo?.default)
+    ? isBoolean(props.fieldInfo?.default)
+      ? "boolean"
+      : "text"
+    : "text";
+
+let ttm;
+watch(valueField, () => {
+  clearTimeout(ttm);
+  ttm = setTimeout(() => {
+    handleChange();
+  }, 300);
+});
 </script>
 
 <template>
-  <div class="flex items-end w-full" v-if="fieldInfo?.control">
+  <div class="flex items-end w-full">
     <div class="flex-1">
       <DsInput
-        v-if="fieldInfo?.control === 'text'"
+        v-if="getType() === 'text'"
         v-model="valueField"
         :label="fieldKey"
-        @input="handleChange()"
+      />
+
+      <DsInput
+        v-if="getType() === 'number'"
+        type="number"
+        v-model="valueField"
+        :label="fieldKey"
       />
 
       <DsSelect
-        v-if="fieldInfo?.control === 'select'"
+        v-if="getType() === 'select'"
         v-model="valueField"
         :option="fieldInfo?.options.map((d) => ({ value: d, text: d }))"
         :label="fieldKey"
         :placeholder="`Select ${fieldKey}`"
-        @select="handleChange()"
       />
 
       <DsCheck
-        v-if="fieldInfo?.control === 'boolean'"
+        v-if="getType() === 'boolean'"
         v-model="valueField"
         :label="fieldKey"
       />

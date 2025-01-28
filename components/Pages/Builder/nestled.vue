@@ -26,7 +26,11 @@
           :area-mode="areaMode"
           :settings="element.settings"
         >
-          <modulec v-if="element.type === 'module'" :element="element" />
+          <modulec
+            v-if="element.type === 'module'"
+            :element="element"
+            :area-mode="areaMode"
+          />
         </OptionsContainer>
 
         <div class="hidden">{{ element?.items?.length }} {{ element.id }}</div>
@@ -42,7 +46,7 @@
         />
 
         <NesteDraggable
-          v-if="element.items"
+          v-if="element.items && !element.item"
           :items="element.items"
           :type="element.type"
           :area-mode="areaMode"

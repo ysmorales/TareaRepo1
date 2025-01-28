@@ -8,10 +8,10 @@ const { itemsPageList } = toRefs(store);
 const getAllLeafNodes = (trees) => {
   let leaves = [];
   function traverse(node) {
-    if (!node.items || node.items.length === 0) {
+    if (!node?.items || node?.items.length === 0) {
       leaves.push(node);
     } else {
-      node.items.forEach(traverse);
+      node?.items?.forEach(traverse);
     }
   }
   trees.forEach(traverse);
@@ -26,6 +26,7 @@ const allModules = computed(() => {
       dd.push({
         id: module.id,
         component: getComponentKey(module.item),
+        slots: getSlotsStorie(module.item),
       });
     }
   });

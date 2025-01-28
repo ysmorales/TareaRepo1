@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import Fields from "./FormBuilder/Fields.vue";
+import Slots from "./FormBuilder/Slots.vue";
 
 interface IProp {
   item: any;
@@ -15,6 +16,8 @@ const getAllInfoComponent = (keyNameProp) => ({
   ...props.item?.component?.props[keyNameProp],
   ...infoComponent?.argTypes[keyNameProp],
 });
+
+const slotsNames = ref({});
 </script>
 
 <template>
@@ -27,5 +30,6 @@ const getAllInfoComponent = (keyNameProp) => ({
         :item="item"
       />
     </div>
+    <Slots :item="item" />
   </div>
 </template>

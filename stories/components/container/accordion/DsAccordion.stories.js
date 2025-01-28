@@ -3,101 +3,100 @@ import DsAccordion from '../../../../components/DesignSystem/components/containe
 import { buildStory, commonArgTypes } from '../../../common/common';
 
 export default {
-	components: { DsAccordion },
-	title: 'Container/Accordion',
-	component: DsAccordion,
-	tags: ['autodocs'],
+    components: { DsAccordion },
+    title: 'Container/Accordion',
+    component: DsAccordion,
+    tags: ['autodocs'],
 
-	argTypes: {
-		...commonArgTypes,
-		default: { table: { disable: true } },
+    argTypes: {
+        ...commonArgTypes,
+        default: { table: { disable: true }, slots: ['default'] },
 
-		type: {
-			control: 'select',
-			options: ['standard', 'card'],
-			description: 'Accordion type',
-		},
+        type: {
+            control: 'select',
+            options: ['standard', 'card'],
+            description: 'Accordion type',
+        },
 
-		title: {
-			control: 'text',
-			description: 'Accordion title.',
-		},
+        title: {
+            control: 'text',
+            description: 'Accordion title.',
+        },
 
-		triggerText: {
-			control: 'text',
-			description: 'Text shown on the trigger, when type = \'card\'.',
-		},
+        triggerText: {
+            control: 'text',
+            description: 'Text shown on the trigger, when type = \'card\'.',
+        },
 
-		children: {
-			control: 'text',
-			description:
-        'Text shown in the content, if no inner HTML text is defined.',
-		},
+        children: {
+            control: 'text',
+            description: 'Text shown in the content, if no inner HTML text is defined.',
+        },
 
-		collapsed: {
-			control: 'boolean',
-			description: 'Accordion collapsed state.',
-		},
-	},
+        collapsed: {
+            control: 'boolean',
+            description: 'Accordion collapsed state.',
+        },
+    },
 };
 
 export const Default = {};
 
 export const Card = {
-	args: {
-		type: 'card',
-	},
+    args: {
+        type: 'card',
+    },
 };
 
 export const TriggerText = {
-	args: {
-		type: 'card',
-		triggerText: 'Custom trigger',
-	},
+    args: {
+        type: 'card',
+        triggerText: 'Custom trigger',
+    },
 };
 
 export const Title = {
-	args: {
-		title: 'Custom title',
-	},
+    args: {
+        title: 'Custom title',
+    },
 };
 
 export const NonCollapsed = {
-	args: {
-		collapsed: false,
-	},
+    args: {
+        collapsed: false,
+    },
 };
 
 export const Children = {
-	args: {
-		children: 'Custom content (on children property)',
-	},
+    args: {
+        children: 'Custom content (on children property)',
+    },
 };
 
 export const HtmlContent = buildStory({
-	components: { DsAccordion },
+    components: { DsAccordion },
 
-	code: {
-		template: `
+    code: {
+        template: `
       <DsAccordion>
         Custom content (on main HTML).
       </DsAccordion>
     `,
-	},
+    },
 });
 
 const Template = args => ({
-	components: { DsAccordion },
-	setup() {
-		const open = ref(false);
+    components: { DsAccordion },
+    setup() {
+        const open = ref(false);
 
-		function handleToggleCollapse() {
-			open.value = !open.value;
-		}
+        function handleToggleCollapse() {
+            open.value = !open.value;
+        }
 
-		return { args, open, handleToggleCollapse };
-	},
-	template: `
+        return { args, open, handleToggleCollapse };
+    },
+    template: `
         <DsAccordion
             title="example1"
             :collapsed="open"
@@ -119,9 +118,9 @@ export const CustomAction = Template.bind({});
 CustomAction.args = {};
 
 CustomAction.parameters = {
-	docs: {
-		source: {
-			code: `
+    docs: {
+        source: {
+            code: `
         <script setup lang="ts">
           const open = ref(false);
           function handleToggleCollapse() {
@@ -145,6 +144,6 @@ CustomAction.parameters = {
           </DsAccordion>
         </template>
       `,
-		},
-	},
+        },
+    },
 };
