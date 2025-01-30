@@ -8,6 +8,8 @@ const {
   handlerItemOnSelect,
   handlerRemoveItem,
   handlerCloneItem,
+  handlerCopyItem,
+  handlerPasteItem,
 } = toRefs(store);
 
 interface IProp {
@@ -22,6 +24,12 @@ const props = withDefaults(defineProps<IProp>(), {
   type: "module",
 });
 
+const containerUpper = {
+  module: "column",
+  column: "row",
+  row: "section",
+};
+
 const handlerAction = (mode) => {
   console.log({ mode });
   if (mode === "trash") {
@@ -29,6 +37,15 @@ const handlerAction = (mode) => {
   }
   if (mode === "clone") {
     handlerCloneItem.value(props);
+  }
+  if (mode === "copy") {
+    handlerCopyItem.value({
+      id: props.id,
+      type: containerUpper[props.type] ?? "section",
+    });
+  }
+  if (mode === "paste") {
+    handlerPasteItem.value(props);
   }
 };
 </script>
@@ -60,7 +77,12 @@ const handlerAction = (mode) => {
         class="absolute inset-0"
         v-if="areaMode === 'dragable' || type === 'module'"
       >
-        <IconArea :index="`idf${id}`" @handlerAction="handlerAction" />
+        <IconArea
+          :type="type"
+          :id="id"
+          :index="`idf${id}`"
+          @handlerAction="handlerAction"
+        />
       </div>
 
       <div

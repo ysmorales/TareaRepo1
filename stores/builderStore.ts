@@ -12,6 +12,7 @@ export const useBuilderStore = defineStore('counter', () => {
     const viewMode = ref('edition')
     const itemOnHover = ref('')
     const itemOnSelect = ref({})
+    const itemToCopy = ref({})
     const builderItems = ref<IItemBuilder[]>([] as IItemBuilder[])
     const currentDragItem = ref<null | IItemBuilder>(null)
     const currentEditItem = ref<any | IItemBuilder>({
@@ -183,7 +184,7 @@ export const useBuilderStore = defineStore('counter', () => {
         }
     }
 
-    function duplicateNodesByPath(trees, path) {
+    function duplicateNodesByPath(trees, path, forceWrite = {}) {
         if (!Array.isArray(path) || path.length === 0) {
             throw new Error('La ruta debe ser un array de índices no vacío.');
         }
@@ -201,7 +202,7 @@ export const useBuilderStore = defineStore('counter', () => {
             throw new Error('Índice final inválido.');
         }
 
-        const nodeToDuplicate = JSON.parse(JSON.stringify(current.items[lastIndex]));
+        const nodeToDuplicate = JSON.parse(JSON.stringify(isNotEmpty(forceWrite) ? forceWrite : current.items[lastIndex]));
         assignNewIds(nodeToDuplicate);
         current.items.splice(lastIndex + 1, 0, nodeToDuplicate);
     }
@@ -246,12 +247,10 @@ export const useBuilderStore = defineStore('counter', () => {
 
     function handlerRemoveItem({ id, type }) {
         let foundSectionInRoot = false;
-        if (type === 'section') {
-            const indexSection = itemsPageList.value.findIndex(d => d.id === id)
-            if (indexSection !== -1) {
-                foundSectionInRoot = true
-                itemsPageList.value.splice(indexSection, 1)
-            }
+        const indexSection = itemsPageList.value.findIndex(d => d.id === id)
+        if (indexSection !== -1) {
+            foundSectionInRoot = true
+            itemsPageList.value.splice(indexSection, 1)
         }
         if (!foundSectionInRoot) {
             const ruta = encontrarRutaPorIndice(itemsPageList.value, id);
@@ -269,25 +268,40 @@ export const useBuilderStore = defineStore('counter', () => {
         const ruta = encontrarRutaPorIndice(itemsPageList.value, id);
 
         updateNodeByPath(itemsPageList.value, ruta, 'props', { [key]: value.value });
-        // itemsPageList.value = itemsPageList.value
     }
 
-    function handlerCloneItem({ id, type }) {
+    function handlerCopyItem({ id, type }) {
+        itemToCopy.value = { id, type }
+    }
+
+    function handlerPasteItem({ id }) {
+        if (itemToCopy.value.id) {
+            handlerCloneItem({ id }, itemToCopy.value.id)
+        }
+    }
+
+    function handlerCloneItem({ id, type }, fromToClone) {
         let foundSectionInRoot = false;
-        if (type === 'section') {
-            const indexSection = itemsPageList.value.findIndex(d => d.id === id)
-            if (indexSection !== -1) {
-                foundSectionInRoot = true
 
-                const nodeToDuplicate = JSON.parse(JSON.stringify(itemsPageList.value[indexSection]));
-                assignNewIds(nodeToDuplicate);
-                itemsPageList.value.splice(indexSection + 1, 0, nodeToDuplicate);
+        let nodoClone = {}
+        if (fromToClone) {
+            const ruta = encontrarRutaPorIndice(itemsPageList.value, fromToClone);
+            nodoClone = getNodeByPath(itemsPageList.value, ruta);
+        }
 
-            }
+        const indexSection = itemsPageList.value.findIndex(d => d.id === id)
+        if (indexSection !== -1) {
+            foundSectionInRoot = true
+
+            const nodeToDuplicate: any = JSON.parse(JSON.stringify(isNotEmpty(nodoClone) ? nodoClone : itemsPageList.value[indexSection]));
+
+            assignNewIds(nodeToDuplicate);
+            itemsPageList.value.splice(indexSection + 1, 0, nodeToDuplicate);
+
         }
         if (!foundSectionInRoot) {
             const ruta = encontrarRutaPorIndice(itemsPageList.value, id);
-            duplicateNodesByPath(itemsPageList.value, ruta);
+            duplicateNodesByPath(itemsPageList.value, ruta, nodoClone);
         }
     }
 
@@ -432,6 +446,8 @@ export const useBuilderStore = defineStore('counter', () => {
         handlerItemOnSelect,
         handlerRemoveItem,
         handlerCloneItem,
+        handlerCopyItem,
+        handlerPasteItem,
         itemsPageList,
         areaMode,
         updateAreaMode,
@@ -443,6 +459,7 @@ export const useBuilderStore = defineStore('counter', () => {
         handlerAddEmptyContainerRow,
         handlerAddEmptyContainerSectionInSlot,
         updateToogleShowSlotInForm,
-        handlerAddModule
+        handlerAddModule,
+        itemToCopy
     }
 })

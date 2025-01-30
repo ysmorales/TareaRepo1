@@ -1,10 +1,18 @@
 <script lang="ts" setup>
 import { DsIcon } from "~/components/DesignSystem";
-import type { IItemBuilder } from "~/interfaces/interfaces";
+import { useBuilderStore } from "~/stores/builderStore";
 
-const props = defineProps({
-  index: Number,
+interface IProp {
+  type?: string;
+  id: string;
+}
+
+const props = withDefaults(defineProps<IProp>(), {
+  type: "module",
 });
+
+const store = useBuilderStore();
+const { itemToCopy } = toRefs(store);
 const emit = defineEmits(["handlerAction"]);
 
 function handlerAction(mode: string) {
@@ -34,6 +42,7 @@ function handlerAction(mode: string) {
         />
 
         <DsIcon
+          v-if="!isNotEmpty(itemToCopy) || itemToCopy?.type === type"
           color="primary"
           class="cursor-pointer"
           name="paste"
