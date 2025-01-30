@@ -1,13 +1,15 @@
 <script lang="ts" setup>
 import { DsIcon } from "~/components/DesignSystem";
 
-const emit = defineEmits(["dblClick"]);
+const emit = defineEmits(["dblClick", "handlerClick"]);
 
 interface IProp {
   name?: string;
   keyName?: string;
   icon?: string;
   draggable: boolean;
+  mode: string;
+  active: boolean;
 }
 
 const props = withDefaults(defineProps<IProp>(), {
@@ -16,9 +18,14 @@ const props = withDefaults(defineProps<IProp>(), {
   draggable: true,
 });
 
-function dblclick(nameKey: string) {
-  emit("dblClick", nameKey);
-}
+const handlerBblClick = () => {
+  emit("dblClick", props.keyName);
+};
+const handlerClick = () => {
+  if (props.mode === "full") {
+    emit("handlerClick", props.keyName);
+  }
+};
 </script>
 
 <template>
@@ -26,12 +33,19 @@ function dblclick(nameKey: string) {
     :class="[
       { 'opacity-50 cursor-not-allowed': !draggable },
       { 'cursor-pointer': draggable },
+      'flex overflow-hidden items-center p-2 bg-white hover:shadow-2xl border border-slate-300',
+      mode === 'side'
+        ? 'transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-105 '
+        : '',
+      {
+        'bg-blue-200': active,
+      },
     ]"
     :draggable="draggable"
-    class="flex overflow-hidden items-center p-2 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-105 bg-white hover:shadow-2xl border border-slate-300"
     role="option"
     tabindex="-1"
-    @dblclick="dblclick(keyName)"
+    @dblclick="handlerBblClick"
+    @click="handlerClick"
   >
     <div class="">
       <DsIcon name="bars" size="small" />

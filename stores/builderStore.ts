@@ -310,6 +310,22 @@ export const useBuilderStore = defineStore('counter', () => {
     }
 
 
+    function handlerAddModule({ id }, moduleKeyName) {
+        const ruta = encontrarRutaPorIndice(itemsPageList.value, id);
+
+        const emptyModule = {
+            settings: {},
+            sort: 1,
+            props: {},
+            type: 'module',
+            id: uniqid('m'),
+            item: moduleKeyName,
+            items: []
+        }
+
+        updateNodeByPath(itemsPageList.value, ruta, 'items', [emptyModule], true);
+    }
+
     function handlerAddEmptyContainerSectionInSlot({ id, type }) {
         const ruta = encontrarRutaPorIndice(itemsPageList.value, id);
 
@@ -426,6 +442,7 @@ export const useBuilderStore = defineStore('counter', () => {
         handlerChangeContainerSettings,
         handlerAddEmptyContainerRow,
         handlerAddEmptyContainerSectionInSlot,
-        updateToogleShowSlotInForm
+        updateToogleShowSlotInForm,
+        handlerAddModule
     }
 })
