@@ -2,13 +2,14 @@
   <draggable
     :class="[
       areaMode === 'dragable'
-        ? 'dragArea outline-blue-200 outline-dashed outline-[0.50px] pl-2 pb-2'
+        ? 'dragArea outline-blue-200 outline-dashed outline-[0.50px] p-2 pt-0'
         : '',
       `is-${type ?? 'section'}`,
       {
         grid: type === 'row',
       },
       getClassRow(),
+      adjustTop ? 'mt-[-70px]' : '',
     ]"
     :tag="type !== 'section' ? 'div' : type"
     :list="items"
@@ -18,13 +19,18 @@
     :style="[getCustomStyleRow()]"
     item-key="id"
   >
-    <template #item="{ element }">
-      <WrapperContainer :type="element.type" :settings="element.settings">
+    <template #item="{ element, index }">
+      <WrapperContainer
+        :type="element.type"
+        :settings="element.settings"
+        :id="element.id"
+      >
         <OptionsContainer
           :type="element.type"
           :id="element.id"
           :area-mode="areaMode"
           :settings="element.settings"
+          :idx="index"
         >
           <modulec
             v-if="element.type === 'module'"
@@ -33,8 +39,9 @@
           />
         </OptionsContainer>
 
-        <div class="hidden">{{ element?.items?.length }} {{ element.id }}</div>
-
+        <div class="hidden">
+          {{ element?.items?.length }} {{ element.id }} {{ index }}
+        </div>
         <AddBlock
           v-if="
             !isNotEmpty(element.items ?? []) &&
@@ -51,6 +58,12 @@
           :type="element.type"
           :area-mode="areaMode"
           :settings="element.settings"
+          :adjustTop="
+            !isNotEmpty(element.items ?? []) &&
+            element.type !== 'module' &&
+            areaMode === 'dragable'
+          "
+          :route="getCurrentRoute(index)"
         />
       </WrapperContainer>
     </template>
@@ -82,6 +95,14 @@ export default {
       required: false,
       type: Object,
     },
+    adjustTop: {
+      required: false,
+      type: Boolean,
+    },
+    route: {
+      required: true,
+      type: Array,
+    },
   },
   components: {
     draggable,
@@ -96,6 +117,9 @@ export default {
     },
     getClassRow: function () {
       return getClassRow(this);
+    },
+    getCurrentRoute: function (currentIndex) {
+      return (this.route ?? []).concat([currentIndex]);
     },
   },
   name: "NesteDraggable",

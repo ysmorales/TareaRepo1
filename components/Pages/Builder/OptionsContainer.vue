@@ -15,6 +15,7 @@ interface IProp {
   id: string;
   areaMode: string;
   settings: any;
+  idx: number;
 }
 
 const props = withDefaults(defineProps<IProp>(), {
@@ -47,8 +48,11 @@ const handlerAction = (mode) => {
         'border-transparent group-hover:border-blue-500',
       ]"
     >
-      <div v-if="type !== 'module' && areaMode === 'dragable'">
-        {{ type }} {{ id }}
+      <div
+        v-if="type !== 'module' && areaMode === 'dragable'"
+        class="text-center"
+      >
+        {{ type }} {{ idx }}
       </div>
       <slot></slot>
 
@@ -64,7 +68,7 @@ const handlerAction = (mode) => {
         :class="[
           'absolute inset-0 ',
           {
-            'bg-blue-500 opacity-20 border border-blue-500 ':
+            'bg-blue-500 opacity-20 border border-blue-500':
               itemOnSelect?.id === id,
           },
         ]"

@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { DsIcon, DsButton } from "~/components/DesignSystem";
 import { useBuilderStore } from "~/stores/builderStore";
 import FieldContainerLayout from "./FormBuilder/ContainerLayout/FieldContainerLayout.vue";
 import AddFieldOptions from "./FormBuilder/addFieldOptions.vue";
@@ -37,8 +36,8 @@ const dicTypesSectionInnerToAddLabeL = {
 </script>
 
 <template>
-  <div class="relative flex justify-center w-full">
-    <div class="absolute mt-4">
+  <div class="flex justify-center w-full z-10">
+    <div class="mt-4">
       <FieldContainerLayout v-if="type === 'row'" @handlerChange="handleAdd">
         <template v-slot:action>
           <AddFieldOptions :label="dicTypesSectionInnerToAddLabeL[type]" />

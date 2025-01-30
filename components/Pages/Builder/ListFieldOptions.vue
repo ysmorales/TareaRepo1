@@ -11,6 +11,9 @@ const getAllLeafNodes = (trees) => {
     if (!node?.items || node?.items.length === 0) {
       leaves.push(node);
     } else {
+      if (node?.item) {
+        leaves.push({ id: node.id, item: node.item, settings: node.settings });
+      }
       node?.items?.forEach(traverse);
     }
   }
