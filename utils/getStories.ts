@@ -17,3 +17,9 @@ export const getComponentKey = (keyName: string) => getStories()[keyName]?.compo
 export const getComponentByName = (nameFind: string) => getStories()[getAllComponents().find(keyName => getNameComponentKey(keyName) === nameFind)]
 
 export const getSlotsStorie = (keyName: string) => getStories()[keyName]?.argTypes?.default?.slots
+
+export const getInfoFieldsComponent = (module) => ({
+    id: module.id,
+    component: getComponentKey(module.item),
+    slots: getSlotsStorie(module.item)
+})

@@ -3,13 +3,26 @@ import { DsIcon } from "~/components/DesignSystem";
 import { useBuilderStore } from "~/stores/builderStore";
 
 const store = useBuilderStore();
-const { updateAreaMode, areaMode, updateViewMode, viewMode } = toRefs(store);
+const {
+  updateAreaMode,
+  areaMode,
+  updateViewMode,
+  viewMode,
+  updateViewModeFieldConfigs,
+  viewModeFieldConfigs,
+} = toRefs(store);
 
 const toogleMode = () => {
   updateAreaMode.value(areaMode.value === "dragable" ? "normal" : "dragable");
 };
 const toogleView = () => {
   updateViewMode.value(viewMode.value === "edition" ? "default" : "edition");
+};
+
+const toogleViewModeFieldConfigs = () => {
+  updateViewModeFieldConfigs.value(
+    viewModeFieldConfigs.value === "single" ? "full" : "single"
+  );
 };
 </script>
 
@@ -41,6 +54,7 @@ const toogleView = () => {
           class="cursor-pointer"
           name="window-maximize"
           title="Expandir area de trabajo"
+          @click="toogleViewModeFieldConfigs()"
         />
         <DsIcon
           color="primary"

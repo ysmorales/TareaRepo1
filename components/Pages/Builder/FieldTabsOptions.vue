@@ -1,11 +1,12 @@
 <script lang="ts" setup>
 import { useBuilderStore } from "~/stores/builderStore";
 import { DsTabs, DsTabItem } from "~/components/DesignSystem";
-import ListFieldOptions from "./ListFieldOptions.vue";
+import ListFieldOptions from "./FormBuilder/ListFieldOptions.vue";
 import ListContainerOptions from "./ListContainerOptions.vue";
+import SingleFieldOptions from "./FormBuilder/SingleFieldOptions.vue";
 
 const store = useBuilderStore();
-const { itemOnSelect } = toRefs(store);
+const { itemOnSelect, viewModeFieldConfigs } = toRefs(store);
 </script>
 
 <template>
@@ -22,8 +23,19 @@ const { itemOnSelect } = toRefs(store);
           <div
             class="overflow-auto min-h-[calc(100vh-145px)] max-h-[calc(100vh-145px)]"
           >
-            <ListFieldOptions v-if="itemOnSelect?.type === 'module'" />
+            <ListFieldOptions
+              v-if="
+                itemOnSelect?.type === 'module' &&
+                viewModeFieldConfigs === 'full'
+              "
+            />
             <ListContainerOptions v-if="itemOnSelect?.type !== 'module'" />
+            <SingleFieldOptions
+              v-if="
+                itemOnSelect?.type === 'module' &&
+                viewModeFieldConfigs === 'single'
+              "
+            />
           </div>
         </DsTabItem>
         <DsTabItem title="Desarrollo">
