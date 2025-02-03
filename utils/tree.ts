@@ -1,4 +1,6 @@
 
+import uniqid from "uniqid";
+
 export function deleteElementByPath(trees, path) {
     if (!Array.isArray(path) || path.length === 0) {
         throw new Error('La ruta debe ser un array de índices no vacío.');
