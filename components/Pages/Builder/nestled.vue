@@ -24,6 +24,7 @@
         :type="element.type"
         :settings="element.settings"
         :id="element.id"
+        v-if="indexShow === 'all' || indexShow === index"
       >
         <OptionsContainer
           :type="element.type"
@@ -102,6 +103,11 @@ export default {
     route: {
       required: true,
       type: Array,
+    },
+    indexShow: {
+      required: false,
+      type: Number,
+      default: "all",
     },
   },
   components: {

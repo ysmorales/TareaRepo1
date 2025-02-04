@@ -7,6 +7,7 @@ import {
   DsIcon,
 } from "~/components/DesignSystem";
 import { useAuthStore } from "~/stores/auth";
+import { useBuilderStore } from "~/stores/builderStore";
 
 const authStore = useAuthStore();
 
@@ -14,6 +15,10 @@ const handleCloseSession = () => {};
 
 const handleSave = () => {
   console.log("handleSave");
+
+  const store = useBuilderStore();
+  const { handlerSaveBoard } = toRefs(store);
+  handlerSaveBoard.value();
 };
 </script>
 

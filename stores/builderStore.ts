@@ -5,9 +5,11 @@ import { ref } from 'vue';
 
 type IModalType = 'property' | 'save' | 'validate' | 'formData' | 'infoPanel'
 
+const keyLocalStoreInfo = 'boardPreINfo'
+
 export const useBuilderStore = defineStore('counter', () => {
     const itemsPage = ref({})
-    const itemsPageList = ref([])
+    const itemsPageList = ref(JSON.parse(window.localStorage.getItem(keyLocalStoreInfo)) ?? [])
     const areaMode = ref('dragable')
     const viewMode = ref('edition')
     const viewModeFieldConfigs = ref('single')
@@ -311,6 +313,10 @@ export const useBuilderStore = defineStore('counter', () => {
         }
     }
 
+    function handlerSaveBoard() {
+        window.localStorage.setItem(keyLocalStoreInfo, JSON.stringify(itemsPageList.value))
+    }
+
     return {
         propertyCollapse,
         changePropertyCollapse,
@@ -350,6 +356,7 @@ export const useBuilderStore = defineStore('counter', () => {
         handlerAddEmptyContainerSectionInSlot,
         updateToogleShowSlotInForm,
         handlerAddModule,
-        itemToCopy
+        itemToCopy,
+        handlerSaveBoard
     }
 })

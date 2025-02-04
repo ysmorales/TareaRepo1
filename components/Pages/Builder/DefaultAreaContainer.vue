@@ -1,19 +1,20 @@
 <script lang="ts" setup>
-import TreeNode from "./DefaultAreaContainer.vue";
-import ModuleComponent from "./moduleComponent.vue";
 import { getClassRow, getCustomStyleRow } from "./helpers";
+import DefaultNodeAreaContainer from "./DefaultNodeAreaContainer.vue";
 
 interface IProp {
   items?: any;
+  indexShow: number | string;
 }
 const props = withDefaults(defineProps<IProp>(), {
   items: [],
+  indexShow: "all",
 });
 </script>
 
 <template>
   <div
-    v-for="node in items"
+    v-for="(node, index) in items"
     :key="node.id"
     :class="[
       {
@@ -24,10 +25,9 @@ const props = withDefaults(defineProps<IProp>(), {
     ]"
     :style="[getCustomStyleRow(node)]"
   >
-    <ModuleComponent v-if="node.type === 'module'" :element="node" seeOnly />
-    <TreeNode
-      v-if="node.items && node.items.length && !node.item"
-      :items="node.items"
+    <DefaultNodeAreaContainer
+      :node="node"
+      v-if="indexShow === 'all' || indexShow === index"
     />
   </div>
 </template>

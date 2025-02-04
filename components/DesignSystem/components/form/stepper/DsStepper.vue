@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import {ref, watch, toRef, computed, onMounted} from 'vue';
-import {filterClass} from '../../../utils/filterClass';
-import {predefinedClasses} from '../../../common/propsStyle';
-import generateUniqueId from '../../../utils/generateUniqueId';
-import DsButton from '../../basic/button/DsButton.vue';
+import { ref, watch, toRef, computed, onMounted } from "vue";
+import { filterClass } from "../../../utils/filterClass";
+import { predefinedClasses } from "../../../common/propsStyle";
+import generateUniqueId from "../../../utils/generateUniqueId";
+import DsButton from "../../basic/button/DsButton.vue";
 
 const props = defineProps({
   modelValue: {
@@ -28,11 +28,11 @@ const props = defineProps({
   },
   class: {
     type: String,
-    default: '',
+    default: "",
   },
   buttonMainText: {
     type: String,
-    default: 'Continuar',
+    default: "Continuar",
   },
   secondaryButton: {
     type: Boolean,
@@ -40,58 +40,63 @@ const props = defineProps({
   },
   textSecondaryButton: {
     type: String,
-    default: 'Volver',
+    default: "Volver",
   },
 });
 
 interface ISteps {
   step: number;
-  status: 'default' | 'blocked';
+  status: "default" | "blocked";
   selected: boolean;
 }
 
-const modelValueRef = toRef(props, 'modelValue');
-const handleStep = (newStep: 'sumar' | 'restar') => {
+const modelValueRef = toRef(props, "modelValue");
+const handleStep = (newStep: "sumar" | "restar") => {
   let newValue = props.modelValue;
-  if (newStep === 'sumar' && props.modelValue < props.totalSteps) {
+  if (newStep === "sumar" && props.modelValue < props.totalSteps) {
     newValue++;
-  } else if (newStep === 'restar' && props.modelValue > 1) {
+  } else if (newStep === "restar" && props.modelValue > 1) {
     newValue--;
   }
   if (newValue !== props.modelValue) {
-    emitChangeStep('changeStep', newValue, newStep === 'sumar' && 'mainButton');
+    emitChangeStep("changeStep", newValue, newStep === "sumar" && "mainButton");
   }
 };
 
-const emitChangeStep = defineEmits(['changeStep', 'update:modelValue', 'clickSecondaryButton']);
+const emitChangeStep = defineEmits([
+  "changeStep",
+  "update:modelValue",
+  "clickSecondaryButton",
+]);
 const filterClassComp = computed(() => {
   return filterClass(predefinedClasses, props.class);
 });
 
 function handleClick(item: any) {
-  if (item.status === 'blocked') return;
-  emitChangeStep('changeStep', item.step);
+  if (item.status === "blocked") return;
+  emitChangeStep("changeStep", item.step);
   // emitChangeStep("update:modelValue", item.step);
 }
 
-const stepStates = ref<ISteps[]>(
-  Array.from({length: props.totalSteps}, (_, i) => ({
+const stepStates = computed(() =>
+  Array.from({ length: props.totalSteps }, (_, i) => ({
     step: i + 1,
-    status: i + 1 === props.modelValue ? 'default' : 'blocked',
+    status: i + 1 === props.modelValue ? "default" : "blocked",
     selected: i + 1 === props.modelValue,
-  })),
+  }))
 );
 
 watch(modelValueRef, (newProps) => {
   stepStates.value = stepStates.value.map((step) => {
+    console.log({ step, newProps });
     if (step.step < newProps) {
-      return {...step, status: 'default', selected: false};
+      return { ...step, status: "default", selected: false };
     } else if (step.step === newProps) {
-      return {...step, status: 'default', selected: true};
-    } else if (step.status !== 'default') {
-      return {...step, status: 'blocked', selected: false};
+      return { ...step, status: "default", selected: true };
+    } else if (step.status !== "default") {
+      return { ...step, status: "blocked", selected: false };
     } else {
-      return {...step, selected: false};
+      return { ...step, selected: false };
     }
   });
 });
@@ -114,7 +119,7 @@ function computeAriaLabel(item: any) {
 
   if (item.selected) {
     return label + states.selected;
-  } else if (item.status === 'blocked') {
+  } else if (item.status === "blocked") {
     return label + states.blocked;
   } else if (item.step < props.modelValue) {
     return label + states.lowerValue;
@@ -123,9 +128,9 @@ function computeAriaLabel(item: any) {
   }
 }
 
-const uniqueID = ref('');
+const uniqueID = ref("");
 onMounted(() => {
-  uniqueID.value = generateUniqueId('typography');
+  uniqueID.value = generateUniqueId("typography");
 });
 </script>
 
@@ -134,12 +139,12 @@ onMounted(() => {
     <ol
       :id="uniqueID"
       :aria-label="
-				'Progreso del trámite. Estás en el paso '
-					+ modelValue
-					+ ' de '
-					+ totalSteps
-			"
-      class="flex items-center justify-center "
+        'Progreso del trámite. Estás en el paso ' +
+        modelValue +
+        ' de ' +
+        totalSteps
+      "
+      class="flex items-center justify-center"
       tabindex="0"
     >
       <li
@@ -152,21 +157,21 @@ onMounted(() => {
           <button
             :aria-label="computeAriaLabel(item)"
             :class="[
-							'h-10 w-10 md:h-14 md:w-14 font-inriaSans border border-neutral-300  text-dark-500 '
-								+ 'rounded-full flex align-middle justify-center items-center text-normal  mx-1 md:mx-2',
-							{
-								'border-transparent bg-primary-500 text-white cursor-pointer':
-									item.selected,
-							},
-							{
-								'border-primary-500 bg-white text-primary-500 cursor-pointer':
-									item.status === 'default' && !item.selected,
-							},
-							{
-								'border-dark-500 bg-white text-dark-500 cursor-not-allowed':
-									item.status === 'blocked',
-							},
-						]"
+              'h-10 w-10 md:h-14 md:w-14 font-inriaSans border border-neutral-300  text-dark-500 ' +
+                'rounded-full flex align-middle justify-center items-center text-normal  mx-1 md:mx-2',
+              {
+                'border-transparent bg-primary-500 text-white cursor-pointer':
+                  item.selected,
+              },
+              {
+                'border-primary-500 bg-white text-primary-500 cursor-pointer':
+                  item.status === 'default' && !item.selected,
+              },
+              {
+                'border-dark-500 bg-white text-dark-500 cursor-not-allowed':
+                  item.status === 'blocked',
+              },
+            ]"
             :disabled="error || modelValue === totalSteps"
           >
             {{ item.step }}
@@ -174,15 +179,15 @@ onMounted(() => {
           <span
             v-if="index !== steps.length - 1"
             :class="[
-							'h-[2px] w-[5px] md:w-[20px]',
-							`${item.step < modelValue ? 'bg-primary-500' : 'bg-gray-200'}`,
-						]"
+              'h-[2px] w-[5px] md:w-[20px]',
+              `${item.step < modelValue ? 'bg-primary-500' : 'bg-gray-200'}`,
+            ]"
           />
         </div>
       </li>
     </ol>
   </div>
-  <slot/>
+  <slot />
   <div
     v-if="!hideButton && modelValue !== totalSteps"
     class="cont-form-btn w-full"
@@ -193,14 +198,13 @@ onMounted(() => {
       size="large"
       @click="handleStep('sumar')"
     >
-			<span>{{
-          !loading
-            ? totalSteps - modelValue === 1
-              ? "Confirmar"
-              : "Continuar"
-            : "Enviando..."
-        }}</span>
-
+      <span>{{
+        !loading
+          ? totalSteps - modelValue === 1
+            ? "Confirmar"
+            : "Continuar"
+          : "Enviando..."
+      }}</span>
     </DsButton>
 
     <DsButton
@@ -209,9 +213,11 @@ onMounted(() => {
       class="m-1 mt-3"
       color="secondary"
       size="large"
-      @click="modelValue !== 1 ? handleStep('restar') : $emit('clickSecondaryButton')"
+      @click="
+        modelValue !== 1 ? handleStep('restar') : $emit('clickSecondaryButton')
+      "
     >
-      {{ modelValue !== 1 ? 'Volver' : (textSecondaryButton ?? 'volver') }}
+      {{ modelValue !== 1 ? "Volver" : textSecondaryButton ?? "volver" }}
     </DsButton>
   </div>
 </template>

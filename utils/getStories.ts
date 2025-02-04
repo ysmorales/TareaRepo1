@@ -1,5 +1,5 @@
 
-const modulesd = import.meta.glob(['../stories/**/*.stories.js', '../stories/**/*.stories.ts'], {
+const modulesd = import.meta.glob(['../stories/**/*.stories.js', '../stories/**/*.stories.ts', '../components/builder-extra/**/*.stories.ts', '../components/builder-extra/**/*.stories.js'], {
     import: 'default',
     eager: true,
 })
