@@ -10,6 +10,10 @@ const props = defineProps({
     type: Number,
     default: 1,
   },
+  editorInteractive: {
+    type: Boolean,
+    default: false,
+  },
   totalSteps: {
     type: Number,
     default: 4,
@@ -73,7 +77,7 @@ const filterClassComp = computed(() => {
 });
 
 function handleClick(item: any) {
-  if (item.status === "blocked") return;
+  if (item.status === "blocked" && !props.editorInteractive) return;
   emitChangeStep("changeStep", item.step);
   // emitChangeStep("update:modelValue", item.step);
 }
@@ -132,10 +136,15 @@ const uniqueID = ref("");
 onMounted(() => {
   uniqueID.value = generateUniqueId("typography");
 });
+
+const iteractiveEditor = () => ({
+  relative: props.editorInteractive,
+  "z-10": props.editorInteractive,
+});
 </script>
 
 <template>
-  <div :class="filterClassComp">
+  <div :class="[filterClassComp]">
     <ol
       :id="uniqueID"
       :aria-label="
@@ -150,7 +159,7 @@ onMounted(() => {
       <li
         v-for="(item, index) in steps"
         :key="item.step"
-        class="m-0"
+        :class="['m-0', iteractiveEditor()]"
         @click="handleClick(item)"
       >
         <div class="flex justify-center items-center">
@@ -168,11 +177,18 @@ onMounted(() => {
                   item.status === 'default' && !item.selected,
               },
               {
-                'border-dark-500 bg-white text-dark-500 cursor-not-allowed':
+                'border-dark-500 bg-white text-dark-500':
                   item.status === 'blocked',
               },
+              {
+                'cursor-not-allowed': editorInteractive
+                  ? false
+                  : item.status === 'blocked',
+              },
             ]"
-            :disabled="error || modelValue === totalSteps"
+            :disabled="
+              editorInteractive ? false : error || modelValue === totalSteps
+            "
           >
             {{ item.step }}
           </button>
@@ -189,14 +205,15 @@ onMounted(() => {
   </div>
   <slot />
   <div
-    v-if="!hideButton && modelValue !== totalSteps"
-    class="cont-form-btn w-full"
+    v-if="!hideButton && (modelValue !== totalSteps || editorInteractive)"
+    :class="['cont-form-btn w-full', iteractiveEditor()]"
   >
     <DsButton
       :loading="loading"
       class="m-1 mt-3"
       size="large"
       @click="handleStep('sumar')"
+      v-if="modelValue !== totalSteps"
     >
       <span>{{
         !loading

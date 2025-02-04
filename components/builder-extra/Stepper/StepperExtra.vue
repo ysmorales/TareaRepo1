@@ -6,8 +6,8 @@ interface IProp {
 }
 
 const props = withDefaults(defineProps<IProp>(), {
-  step: 2,
-  totalSteps: 4,
+  step: 1,
+  totalSteps: 3,
 });
 
 const internalStep = ref(props.step);
@@ -19,7 +19,6 @@ const handleStep = (newStep) => {
 watch(
   () => props.step,
   () => {
-    console.log("aquiii");
     internalStep.value = props.step;
   },
   { deep: true }
@@ -27,11 +26,11 @@ watch(
 </script>
 
 <template>
-  {{ step }}
   <DsStepper
     v-model="internalStep"
     @change-step="handleStep"
     :total-steps="totalSteps"
+    editor-interactive
   >
     <slot :indexShow="internalStep - 1">
       <div class="flex justify-center mt-10">

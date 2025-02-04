@@ -17,7 +17,6 @@ const props = withDefaults(defineProps<IProp>(), {});
     :is="getComponentKey(element.item)"
     v-bind="filterProps(element.props)"
   >
-    {{ element.slots }}
     <template v-for="name in element.slots" v-slot:[name]="slotData">
       <div class="min-h-[300px]">
         <AddBlock
