@@ -2,6 +2,7 @@
 import nestled from "./nestled.vue";
 import AddBlock from "./AddBlock.vue";
 import TreeNode from "./DefaultAreaContainer.vue";
+import SubscribeInternalNumChildren from "./SubscribeInternalNumChildren.vue";
 
 interface IProp {
   element?: any;
@@ -16,6 +17,7 @@ const props = withDefaults(defineProps<IProp>(), {});
   <component
     :is="getComponentKey(element.item)"
     v-bind="filterProps(element.props)"
+    :in-editor="!seeOnly"
   >
     <template v-for="name in element.slots" v-slot:[name]="slotData">
       <div class="min-h-[300px]">
@@ -32,6 +34,11 @@ const props = withDefaults(defineProps<IProp>(), {});
           :area-mode="areaMode"
           :settings="element.settings"
           :indexShow="slotData?.indexShow"
+        />
+
+        <SubscribeInternalNumChildren
+          v-if="isNotEmpty(slotData?.numChildrens)"
+          :numChildrens="slotData?.numChildrens"
         />
         <TreeNode
           v-if="element.items && seeOnly"
