@@ -12,6 +12,7 @@ const props = withDefaults(defineProps<IProp>(), {
 });
 
 const internalStep = ref(props.step);
+const action = ref({});
 
 const handleStep = (newStep) => {
   internalStep.value = newStep;
@@ -21,10 +22,18 @@ const internalTotalStep = ref(props.totalSteps);
 
 const handlerAddStep = () => {
   internalTotalStep.value = internalTotalStep.value + 1;
+  action.value = {
+    action: "addChildren",
+    params: { total: internalTotalStep.value },
+  };
 };
 
-const handlerRemoveStep = () => {
+const handlerRemoveStep = (stepToRemove) => {
   internalTotalStep.value = internalTotalStep.value - 1;
+  action.value = {
+    action: "removeChildren",
+    params: { index: stepToRemove.step - 1, total: internalTotalStep.value },
+  };
 };
 
 watch(
@@ -45,7 +54,7 @@ watch(
     :total-steps="internalTotalStep"
     :editor-interactive="inEditor"
   >
-    <slot :indexShow="internalStep - 1" :numChildrens="internalTotalStep">
+    <slot :indexShow="internalStep - 1" :action="action">
       <div class="flex justify-center mt-10">
         <h1 v-if="internalStep === 1">Componente1</h1>
         <h1 v-if="internalStep === 2">Componente2</h1>

@@ -2,7 +2,7 @@
 import nestled from "./nestled.vue";
 import AddBlock from "./AddBlock.vue";
 import TreeNode from "./DefaultAreaContainer.vue";
-import SubscribeInternalNumChildren from "./SubscribeInternalNumChildren.vue";
+import SubscribeInternalChanges from "./SubscribeInternalNumChildren.vue";
 
 interface IProp {
   element?: any;
@@ -36,9 +36,10 @@ const props = withDefaults(defineProps<IProp>(), {});
           :indexShow="slotData?.indexShow"
         />
 
-        <SubscribeInternalNumChildren
-          v-if="isNotEmpty(slotData?.numChildrens)"
-          :numChildrens="slotData?.numChildrens"
+        <SubscribeInternalChanges
+          v-if="isNotEmpty(slotData?.action)"
+          :action="slotData?.action"
+          :id="element.id"
         />
         <TreeNode
           v-if="element.items && seeOnly"

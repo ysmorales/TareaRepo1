@@ -2,21 +2,39 @@
 import { useBuilderStore } from "~/stores/builderStore";
 
 interface IProp {
-  numChildrens?: number;
+  action?: any;
   id: string;
 }
 
 const props = withDefaults(defineProps<IProp>(), {});
 
 const store = useBuilderStore();
-const { itemToCopy } = toRefs(store);
+const {
+  handlerChangeNumChildrensSections,
+  handlerChangeRemoveChildrensSections,
+} = toRefs(store);
 
-watch(
-  () => props.numChildrens,
-  (newVal) => {
-    console.log("aquiii", newVal);
+const dicActions = {
+  addChildren: ({ total }) => {
+    handlerChangeNumChildrensSections.value({ id: props.id }, total);
+  },
+  removeChildren: ({ index }) => {
+    handlerChangeRemoveChildrensSections.value({ id: props.id }, index);
+  },
+};
+
+const handlerAction = (newVal) => {
+  console.log("hanlder change to slot", { newVal });
+  if (dicActions[newVal.action]) {
+    dicActions[newVal.action](newVal.params);
   }
-);
+};
+
+watch(() => props.action, handlerAction);
+
+onMounted(() => {
+  handlerAction(props.action);
+});
 </script>
 
 <template>
