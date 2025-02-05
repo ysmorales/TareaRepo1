@@ -120,3 +120,16 @@ export function updateNodeByPath(trees, path, key, value, allReplace = false) {
 export function clone(item) {
     return JSON.parse(JSON.stringify(item))
 }
+
+
+export const getEmptySection = () => ({
+    id: uniqid('s'),
+    settings: {},
+    type: 'section',
+    items: [{
+        id: uniqid('r'),
+        settings: {},
+        type: 'row',
+        items: []
+    }]
+})

@@ -2,6 +2,7 @@ import type { IItemBuilder } from "~/interfaces/interfaces";
 import { defineStore } from 'pinia';
 import uniqid from "uniqid";
 import { ref } from 'vue';
+import { getEmptySection } from "~/utils/tree";
 
 type IModalType = 'property' | 'save' | 'validate' | 'formData' | 'infoPanel'
 
@@ -234,40 +235,23 @@ export const useBuilderStore = defineStore('counter', () => {
     function handlerAddEmptyContainerSectionInSlot({ id, type }) {
         const ruta = encontrarRutaPorIndice(itemsPageList.value, id);
 
-        const emptyRow = {
-            id: uniqid('r'),
-            settings: {},
-            type: 'row',
-            items: []
-        }
-        const emptySection = {
-            id: uniqid('s'),
-            settings: {},
-            type: 'section',
-            items: [emptyRow]
-        }
-
-        updateNodeByPath(itemsPageList.value, ruta, 'items', [emptySection], true);
+        updateNodeByPath(itemsPageList.value, ruta, 'items', [getEmptySection()], true);
     }
 
     function handlerAddEmptyContainerRow({ id, type }) {
-        const emptyRow = {
-            id: uniqid('r'),
-            settings: {},
-            type: 'row',
-            items: []
-        }
+
         if (!id) {
-            const emptySection = {
-                id: uniqid('s'),
-                settings: {},
-                type: 'section',
-                items: [emptyRow]
-            }
-            itemsPageList.value.push(emptySection)
+            itemsPageList.value.push(getEmptySection())
         } else {
 
             let foundSectionInRoot = false;
+
+            const emptyRow = {
+                id: uniqid('r'),
+                settings: {},
+                type: 'row',
+                items: []
+            }
 
             if (type === 'section') {
                 const indexSection = itemsPageList.value.findIndex(d => d.id === id)
@@ -314,7 +298,6 @@ export const useBuilderStore = defineStore('counter', () => {
         }
     }
 
-
     function handlerChangeNumChildrensSections({ id }, numChildrenSections) {
 
         const ruta = encontrarRutaPorIndice(itemsPageList.value, id);
@@ -324,25 +307,11 @@ export const useBuilderStore = defineStore('counter', () => {
             nodo.items = []
         }
         if (nodo.items.length < numChildrenSections) {
-            const emptyRow = {
-                id: uniqid('r'),
-                settings: {},
-                type: 'row',
-                items: []
-            }
-            const emptySection = {
-                id: uniqid('s'),
-                settings: {},
-                type: 'section',
-                items: [emptyRow]
-            }
-            nodo.items.push(emptySection)
+            nodo.items.push(getEmptySection())
         }
     }
 
-
     function handlerChangeRemoveChildrensSections({ id }, indexToRemove) {
-
         const ruta = encontrarRutaPorIndice(itemsPageList.value, id);
         const nodo = getNodeByPath(itemsPageList.value, ruta);
         nodo.items.splice(indexToRemove, 1)
