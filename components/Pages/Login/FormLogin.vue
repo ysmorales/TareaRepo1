@@ -29,7 +29,3 @@ const handleSubmit = () => {
         <DsLink>Olvidé mi contraseña</DsLink>
     </div>
 </template>
-
-<style scoped>
-/* Puedes agregar estilos adicionales aquí si es necesario */
-</style>
