@@ -9,6 +9,9 @@ const handleSubmit = () => {
     console.log('Email:', email.value);
     console.log('Password:', password.value);
 };
+function handleClickLink() {
+    navigateTo('/login/password-recovery');
+}
 </script>
 
 <template>
@@ -26,6 +29,6 @@ const handleSubmit = () => {
             </div>
             <DsButton type="submit" class="w-full"><span class="text-center w-full">Ingresar</span></DsButton>
         </form>
-        <DsLink>Olvidé mi contraseña</DsLink>
+        <DsLink @click="handleClickLink">Olvidé mi contraseña</DsLink>
     </div>
 </template>
