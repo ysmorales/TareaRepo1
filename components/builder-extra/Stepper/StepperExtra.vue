@@ -37,6 +37,14 @@ const handlerRemoveStep = (stepToRemove) => {
 };
 
 watch(
+  () => props.totalSteps,
+  () => {
+    internalTotalStep.value = props.totalSteps;
+  },
+  { deep: true }
+);
+
+watch(
   () => props.step,
   () => {
     internalStep.value = props.step;

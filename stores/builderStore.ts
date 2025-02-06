@@ -234,8 +234,10 @@ export const useBuilderStore = defineStore('counter', () => {
 
     function handlerAddEmptyContainerSectionInSlot({ id, type }) {
         const ruta = encontrarRutaPorIndice(itemsPageList.value, id);
-
-        updateNodeByPath(itemsPageList.value, ruta, 'items', [getEmptySection()], true);
+        const nodo = getNodeByPath(itemsPageList.value, ruta);
+        nodo.items = [getEmptySection()]
+        console.log('aquiiii')
+        nodo.props.totalSteps = nodo.items.length
     }
 
     function handlerAddEmptyContainerRow({ id, type }) {
@@ -308,6 +310,7 @@ export const useBuilderStore = defineStore('counter', () => {
         }
         if (nodo.items.length < numChildrenSections) {
             nodo.items.push(getEmptySection())
+            nodo.props.totalSteps = nodo.items.length
         }
     }
 
@@ -315,6 +318,7 @@ export const useBuilderStore = defineStore('counter', () => {
         const ruta = encontrarRutaPorIndice(itemsPageList.value, id);
         const nodo = getNodeByPath(itemsPageList.value, ruta);
         nodo.items.splice(indexToRemove, 1)
+        nodo.props.totalSteps = nodo.items.length
     }
 
     function handlerSaveBoard() {

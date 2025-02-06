@@ -30,7 +30,7 @@ watch(
 </script>
 
 <template>
-  <div class="m-2 mt-0">
+  <div class="m-2 mt-0" v-if="isNotEmpty(item.slots)">
     <div>Slots</div>
     <div v-for="slotName in item.slots">
       <DsCheck v-model="slotsNames[slotName]" :label="slotName" />
