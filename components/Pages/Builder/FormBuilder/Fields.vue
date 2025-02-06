@@ -3,6 +3,7 @@ import { DsInput, DsSelect, DsIcon, DsCheck } from "~/components/DesignSystem";
 
 import DsTooltip from "~/components/DesignSystem/components/basic/tooltip/DsTooltip.vue";
 import { useBuilderStore } from "~/stores/builderStore";
+import FieldLayout from "./fieldLayout.vue";
 
 interface IProp {
   fieldKey: string;
@@ -49,43 +50,32 @@ watch(valueField, () => {
 </script>
 
 <template>
-  <div class="flex items-end w-full">
-    <div class="flex-1">
-      <DsInput
-        v-if="getType() === 'text'"
-        v-model="valueField"
-        :label="fieldKey"
-      />
+  <FieldLayout :description="fieldInfo.description ?? 'no found description'">
+    <DsInput
+      v-if="getType() === 'text'"
+      v-model="valueField"
+      :label="fieldKey"
+    />
 
-      <DsInput
-        v-if="getType() === 'number'"
-        type="number"
-        v-model="valueField"
-        :label="fieldKey"
-      />
+    <DsInput
+      v-if="getType() === 'number'"
+      type="number"
+      v-model="valueField"
+      :label="fieldKey"
+    />
 
-      <DsSelect
-        v-if="getType() === 'select'"
-        v-model="valueField"
-        :option="fieldInfo?.options.map((d) => ({ value: d, text: d }))"
-        :label="fieldKey"
-        :placeholder="`Select ${fieldKey}`"
-      />
+    <DsSelect
+      v-if="getType() === 'select'"
+      v-model="valueField"
+      :option="fieldInfo?.options.map((d) => ({ value: d, text: d }))"
+      :label="fieldKey"
+      :placeholder="`Select ${fieldKey}`"
+    />
 
-      <DsCheck
-        v-if="getType() === 'boolean'"
-        v-model="valueField"
-        :label="fieldKey"
-      />
-    </div>
-
-    <div class="mb-4 ml-2">
-      <DsTooltip
-        :text="fieldInfo.description ?? 'no found description'"
-        position="right"
-      >
-        <DsIcon name="info-circle" size="default" />
-      </DsTooltip>
-    </div>
-  </div>
+    <DsCheck
+      v-if="getType() === 'boolean'"
+      v-model="valueField"
+      :label="fieldKey"
+    />
+  </FieldLayout>
 </template>

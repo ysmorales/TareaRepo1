@@ -35,6 +35,5 @@ watch(
     <div v-for="slotName in item.slots">
       <DsCheck v-model="slotsNames[slotName]" :label="slotName" />
     </div>
-    {{ slotsNames }}
   </div>
 </template>

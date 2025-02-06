@@ -9,6 +9,7 @@ import { useBuilderStore } from "~/stores/builderStore";
 import FieldContainerLayout from "./FormBuilder/ContainerLayout/FieldContainerLayout.vue";
 import SidesNums from "./FormBuilder/SidesNums/index.vue";
 import Color from "./FormBuilder/Color/index.vue";
+import FormConfig from "./FormBuilder/FormContainer/FormConfig.vue";
 
 const store = useBuilderStore();
 const {
@@ -71,6 +72,7 @@ const handlerChange = (change) => {
           key-name="margin"
         />
         <Color @handlerChange="handlerChange" />
+        <FormConfig v-if="itemOnSelect.type === 'section'" />
       </div>
       <div v-else>selecciona contenedor</div>
     </DsAccordion>

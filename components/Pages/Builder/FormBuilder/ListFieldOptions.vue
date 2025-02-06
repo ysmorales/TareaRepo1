@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { DsAccordion, DsIcon, DsTypography } from "~/components/DesignSystem";
 import { useBuilderStore } from "~/stores/builderStore";
 import CardFieldOptions from "./CardFieldOptions.vue";
 const store = useBuilderStore();
