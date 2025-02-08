@@ -31,6 +31,7 @@ class AuthController extends Controller
 
     /**
      * Handle user login and return a token.
+     * @throws ValidationException
      */
     public function login(Request $request)
     {
@@ -41,9 +42,15 @@ class AuthController extends Controller
 
         $user = User::where('email', $request->email)->first();
 
-        if (! $user || ! Hash::check($request->password, $user->password)) {
+        if (! $user) {
             throw ValidationException::withMessages([
-                'email' => ['The provided credentials are incorrect.'],
+                'email' => ['The provided email does not exist.'],
+            ]);
+        }
+
+        if (! Hash::check($request->password, $user->password)) {
+            throw ValidationException::withMessages([
+                'password' => ['The provided password is incorrect.'],
             ]);
         }
 
