@@ -33,6 +33,7 @@ export default defineNuxtConfig({
             PASSPHRASE_ENCRYPT: process.env.PASSPHRASE_ENCRYPT,
             GOOGLE_RECAPTCHA_SITE_KEY: process.env.GOOGLE_RECAPTCHA_SITE_KEY,
             GOOGLE_ANALYTICS_ID: process.env.GOOGLE_ANALYTICS_ID,
+            BACKEND_URL: process.env.BACKEND_URL,
         },
     },
 

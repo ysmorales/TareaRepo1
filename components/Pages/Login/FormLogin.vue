@@ -23,14 +23,7 @@ const handleSubmit = () => {
         loading.value = true;
         try {
             console.log("Sending to back")
-            // const response =
-            //     $props.mode !== FormMode.ADD
-            //         ? await service($props.config).users.update(`/user`, {
-            //             role: form.roles,
-            //             run: form.run,
-            //             regional_direction_id: form.regionalAddress,
-            //         })
-            //         : await service($props.config).users.createOne("/user", {
+            // const response = await service($props.config).users.createOne("/user", {
             //             run: form.run,
             //             role: form.roles,
             //             regional_direction_id: form.regionalAddress,

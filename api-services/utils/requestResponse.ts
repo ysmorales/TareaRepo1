@@ -4,8 +4,8 @@ import { getCacheConfig } from '~/utils/commonCache';
 import toArray from "~/utils/toArray";
 import { isValidResponse } from './isValidResponse.js';
 import { getUser } from "~/utils/getUser";
-import { useAuthStore } from '~/stores/auth';
-import type { IConfig, IErrorFetch, IErrorWithMessage, IMap, IQuery } from "../global-interface/interfaces";
+import { useAuthStore } from '~/store/auth';
+import type { IConfig, IErrorFetch, IErrorWithMessage, IMap, IQuery } from "~/global-interface/interfaces";
 
 interface RequestResponseParams {
     baseURL: string | undefined;
@@ -22,13 +22,10 @@ interface RequestResponseParams {
         useCache?: boolean;
         useWatchQuery?: boolean | string[]
     };
-    manifest?: IConfig,
-    simulateData?: any
+    manifest?: IConfig
 }
 
-const getLogDecript = (data: any) => {
-    showLog(data)
-}
+const getLogDecript = (data: any) => console.log(data, 'decript')
 
 export async function requestResponse(
     {
@@ -41,18 +38,10 @@ export async function requestResponse(
         query,
         decrypt = true,
         withAsyncData,
-        manifest,
-        simulateData
+        manifest
     }: RequestResponseParams): Promise<any> {
     const dataResponse = async (): Promise<any> => {
         try {
-            if (simulateData) {
-                return new Promise((resolve) => {
-                    setTimeout(() => {
-                        resolve(simulateData)
-                    }, 1000);
-                })
-            }
             let theQuery = query
 
             if (withAsyncData && withAsyncData?.useWatchQuery) {
