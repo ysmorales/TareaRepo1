@@ -1,10 +1,9 @@
 <script lang="ts" setup>
 import {DsButton, DsInput, DsLink, DsTypography} from "~/components/DesignSystem";
-import {required,email} from "@vuelidate/validators";
+import {required, email} from "@vuelidate/validators";
 import {useVuelidate} from "@vuelidate/core";
 import {getErrorMessage} from "~/components/DesignSystem/utils/translateErrorMessage";
 import useApplications from '~/api-services/applications';
-
 
 const form = reactive({
     email: "",
@@ -12,42 +11,47 @@ const form = reactive({
 });
 
 const formRules = reactive({
-    email: {required,email},
+    email: {required, email},
     password: {required},
 });
 const validateForm = useVuelidate(formRules, form);
 const loading = ref(false);
+const backendError = ref<string | null>(null);
 const applicationsService = useApplications();
+
 const handleSubmit = async () => {
     validateForm.value.$touch();
     if (!validateForm.value.$invalid) {
         loading.value = true;
+        backendError.value = null;
         try {
-            console.log("Sending to back")
+            console.log("Sending to back");
             const response = await applicationsService.procedure.createOne("/api/login", {
                 email: form.email,
                 password: form.password,
             });
 
             if (response.codigoRetorno == 200 || response.codigoRetorno == 201) {
-                console.log("Success")
+                console.log("Success");
                 // internalStatus.value = "success";
                 // $emit('cancel');
+            } else {
+                backendError.value = "Correo electrónico o contraseña incorrectos.";
             }
         } catch (e) {
+            backendError.value = "Error al comunicarse con el servidor.";
             console.log(e);
         }
 
         loading.value = false;
     } else {
-        console.log("Form is invalid")
+        console.log("Form is invalid");
     }
 };
+
 function handleClickLink() {
     navigateTo('/login/password-recovery');
 }
-
-
 </script>
 
 <template>
@@ -63,6 +67,7 @@ function handleClickLink() {
                     <DsInput v-model="form.password" label="Contraseña" :error="getErrorMessage(validateForm?.password.$errors[0])"/>
                 </div>
             </div>
+            <div v-if="backendError" class="text-red-500 mb-4">{{ backendError }}</div>
             <DsButton type="submit" class="w-full"><span class="text-center w-full">Ingresar</span></DsButton>
         </form>
         <DsLink @click="handleClickLink">Olvidé mi contraseña</DsLink>
