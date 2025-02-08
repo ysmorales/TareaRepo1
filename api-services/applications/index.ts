@@ -1,8 +1,8 @@
 import {requestResponse} from '../utils';
 
-export default function (config?: any | undefined) {
+export default function () {
     const runtimeConfig = useRuntimeConfig();
-    const baseURL = config ? runtimeConfig.public[config.api] as string : runtimeConfig.public.API_FRANJAS_HORARIAS as string;
+    const baseURL = runtimeConfig.public.BACKEND_URL;
 
     return {
         procedure: {

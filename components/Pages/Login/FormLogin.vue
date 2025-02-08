@@ -3,6 +3,7 @@ import {DsButton, DsInput, DsLink, DsTypography} from "~/components/DesignSystem
 import {required,email} from "@vuelidate/validators";
 import {useVuelidate} from "@vuelidate/core";
 import {getErrorMessage} from "~/components/DesignSystem/utils/translateErrorMessage";
+import service from "~/api-services/applications";
 
 
 const form = reactive({
@@ -17,28 +18,30 @@ const formRules = reactive({
 const validateForm = useVuelidate(formRules, form);
 const loading = ref(false);
 
-const handleSubmit = () => {
+const handleSubmit = async () => {
     validateForm.value.$touch();
     if (!validateForm.value.$invalid) {
         loading.value = true;
         try {
             console.log("Sending to back")
-            // const response = await service($props.config).users.createOne("/user", {
-            //             run: form.run,
-            //             role: form.roles,
-            //             regional_direction_id: form.regionalAddress,
-            //         });
-            //
-            // if (response.codigoRetorno == 200 || response.codigoRetorno == 201) {
-            //     internalStatus.value = "success";
-            //     // $emit('cancel');
-            // }
+            const response = await service.procedure.createOne("/user", {
+                run: 2,
+                role: 2,
+                regional_direction_id: 2,
+            });
+            debugger
+
+            if (response.codigoRetorno == 200 || response.codigoRetorno == 201) {
+                console.log("Success")
+                // internalStatus.value = "success";
+                // $emit('cancel');
+            }
         } catch (e) {
-            handleError(e);
+            console.log(e);
         }
 
         loading.value = false;
-    }else{
+    } else {
         console.log("Form is invalid")
     }
 };
