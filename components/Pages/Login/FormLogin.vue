@@ -24,12 +24,10 @@ const handleSubmit = async () => {
         loading.value = true;
         try {
             console.log("Sending to back")
-            const response = await applicationsService.procedure.createOne("/user", {
-                run: 2,
-                role: 2,
-                regional_direction_id: 2,
+            const response = await applicationsService.procedure.createOne("/api/login", {
+                email: form.email,
+                password: form.password,
             });
-            debugger
 
             if (response.codigoRetorno == 200 || response.codigoRetorno == 201) {
                 console.log("Success")
