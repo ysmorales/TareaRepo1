@@ -3,7 +3,7 @@ import {DsButton, DsInput, DsLink, DsTypography} from "~/components/DesignSystem
 import {required,email} from "@vuelidate/validators";
 import {useVuelidate} from "@vuelidate/core";
 import {getErrorMessage} from "~/components/DesignSystem/utils/translateErrorMessage";
-import service from "~/api-services/applications";
+import useApplications from '~/api-services/applications';
 
 
 const form = reactive({
@@ -17,14 +17,14 @@ const formRules = reactive({
 });
 const validateForm = useVuelidate(formRules, form);
 const loading = ref(false);
-
+const applicationsService = useApplications();
 const handleSubmit = async () => {
     validateForm.value.$touch();
     if (!validateForm.value.$invalid) {
         loading.value = true;
         try {
             console.log("Sending to back")
-            const response = await service.procedure.createOne("/user", {
+            const response = await applicationsService.procedure.createOne("/user", {
                 run: 2,
                 role: 2,
                 regional_direction_id: 2,
