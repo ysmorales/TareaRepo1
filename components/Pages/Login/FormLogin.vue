@@ -15,6 +15,7 @@ const formRules = reactive({
     password: {required},
 });
 const validateForm = useVuelidate(formRules, form);
+const loading = ref(false);
 
 const handleSubmit = () => {
     validateForm.value.$touch();
