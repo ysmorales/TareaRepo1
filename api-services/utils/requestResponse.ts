@@ -4,8 +4,8 @@ import { getCacheConfig } from '~/utils/commonCache';
 import toArray from "~/utils/toArray";
 import { isValidResponse } from './isValidResponse.js';
 import { getUser } from "~/utils/getUser";
-import { useAuthStore } from '~/store/auth';
-import type { IConfig, IErrorFetch, IErrorWithMessage, IMap, IQuery } from "~/global-interface/interfaces";
+import { useAuthStore } from '~/stores/auth';
+import type { IConfig, IErrorFetch, IErrorWithMessage, IMap, IQuery } from "~/interfaces/interfaces";
 
 interface RequestResponseParams {
     baseURL: string | undefined;

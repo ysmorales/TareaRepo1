@@ -24,7 +24,6 @@ export default function () {
                     baseURL,
                     body: procedure,
                     method: 'PUT',
-                    manifest: config,
                     headers: {'Accept': 'application/json'}
                 }),
             updatePost: async (path: string, procedure: any) =>
@@ -33,7 +32,6 @@ export default function () {
                     baseURL,
                     body: procedure,
                     method: 'POST',
-                    manifest: config,
                     headers: {'Accept': 'application/json'}
                 }),
             createOne: async (path: string, procedure: any) =>
@@ -42,7 +40,6 @@ export default function () {
                     baseURL,
                     body: procedure,
                     method: 'POST',
-                    manifest: config
                 }),
             deleteMulti: async (path: string, body: any) =>
                 requestResponse({
@@ -50,10 +47,9 @@ export default function () {
                     baseURL,
                     body: body,
                     method: 'DELETE',
-                    manifest: config
                 }),
         }
     }
 }
 
-export * from './certificate-devolution/types';
+// export * from './certificate-devolution/types';
