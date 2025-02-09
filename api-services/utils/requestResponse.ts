@@ -1,8 +1,8 @@
-import { decryptResponse } from './decryptResponse.js';
+import { decryptResponse } from './decryptResponse';
 import { fetchHeader } from './fetchHeaders.js';
 import { getCacheConfig } from '~/utils/commonCache';
 import toArray from "~/utils/toArray";
-import { isValidResponse } from './isValidResponse.js';
+import { isValidResponse } from './isValidResponse';
 import { getUser } from "~/utils/getUser";
 import { useAuthStore } from '~/stores/auth';
 import type { IConfig, IErrorFetch, IErrorWithMessage, IMap, IQuery } from "~/interfaces/interfaces";

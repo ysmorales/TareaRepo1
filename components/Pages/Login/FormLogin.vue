@@ -40,7 +40,7 @@ const handleSubmit = async () => {
             }
         } catch (e) {
             backendError.value = "Error al comunicarse con el servidor.";
-            console.log(e);
+            console.log('Viendo error en consola.',e);
         }
 
         loading.value = false;

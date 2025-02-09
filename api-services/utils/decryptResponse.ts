@@ -1,4 +1,4 @@
-import type {DecryptedResponse} from '~/global-interface/interfaces';
+import type {DecryptedResponse} from '../global-interface/interfaces';
 
 export function decryptResponse(response: string): DecryptedResponse {
     const {$cryptojsDecrypt} = useNuxtApp();
