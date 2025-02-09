@@ -89,7 +89,7 @@ export const useAuthStore = defineStore('auth', {
             params.append('grant_type', 'refresh_token');
             params.append('refresh_token', this.refresh_token || '');
             params.append('client_id', runtimeConfig.public.PASSPORT_CLIENT_ID);
-            params.append('client_secret', runtimeConfig.public.PASSPORT_CLIENT_SECRET || '');
+            params.append('client_secret', runtimeConfig.public.PASSPORT_CLIENT_SECRET as string);
             params.append('redirect', runtimeConfig.public.PASSPORT_CALLBACK || '');
 
             try {
