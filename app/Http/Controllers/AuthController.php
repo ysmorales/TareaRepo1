@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ResponseHelper;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
@@ -43,15 +44,11 @@ class AuthController extends Controller
         $user = User::where('email', $request->email)->first();
 
         if (! $user) {
-            throw ValidationException::withMessages([
-                'email' => ['The provided email does not exist.'],
-            ]);
+            return ResponseHelper::returnResponse(404, "The provided email does not exist.");
         }
 
         if (! Hash::check($request->password, $user->password)) {
-            throw ValidationException::withMessages([
-                'password' => ['The provided password is incorrect.'],
-            ]);
+            return ResponseHelper::returnResponse(401, 'The provided password is incorrect.');
         }
 
         $token = $user->createToken('auth_token')->plainTextToken;
