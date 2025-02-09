@@ -30,8 +30,8 @@ const handleSubmit = async () => {
                 email: form.email,
                 password: form.password,
             });
-            if (response.codigoRetorno == 200 || response.codigoRetorno == 201) {
-                console.log("Success");
+            if (response.codigoRetorno == 200) {
+                navigateTo('/');
                 // internalStatus.value = "success";
                 // $emit('cancel');
             }
@@ -69,7 +69,7 @@ function handleClickLink() {
                 </div>
             </div>
             <div v-if="backendError" class="text-red-500 mb-4">{{ backendError }}</div>
-            <DsButton type="submit" class="w-full"><span class="text-center w-full">Ingresar</span></DsButton>
+            <DsButton :loading="loading" type="submit" class="w-full"><span class="text-center w-full">Ingresar</span></DsButton>
         </form>
         <DsLink @click="handleClickLink">Olvidé mi contraseña</DsLink>
     </div>
