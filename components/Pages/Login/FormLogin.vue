@@ -30,13 +30,16 @@ const handleSubmit = async () => {
                 email: form.email,
                 password: form.password,
             });
-
             if (response.codigoRetorno == 200 || response.codigoRetorno == 201) {
                 console.log("Success");
                 // internalStatus.value = "success";
                 // $emit('cancel');
-            } else {
-                backendError.value = "Correo electrónico o contraseña incorrectos.";
+            }
+            if(response.codigoRetorno==404){
+                backendError.value = "El correo electrónico no existe en el sistema";
+            }
+            if(response.codigoRetorno==401){
+                backendError.value = "La contraseña es incorrecta";
             }
         } catch (e) {
             backendError.value = "Error al comunicarse con el servidor.";
@@ -44,8 +47,6 @@ const handleSubmit = async () => {
         }
 
         loading.value = false;
-    } else {
-        console.log("Form is invalid");
     }
 };
 

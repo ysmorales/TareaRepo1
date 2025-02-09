@@ -2,7 +2,6 @@ import { decryptResponse } from './decryptResponse';
 import { fetchHeader } from './fetchHeaders.js';
 import { getCacheConfig } from '~/utils/commonCache';
 import toArray from "~/utils/toArray";
-import { isValidResponse } from './isValidResponse';
 import { getUser } from "~/utils/getUser";
 import { useAuthStore } from '~/stores/auth';
 import type { IConfig, IErrorFetch, IErrorWithMessage, IMap, IQuery } from "~/interfaces/interfaces";
@@ -43,7 +42,6 @@ export async function requestResponse(
     const dataResponse = async (): Promise<any> => {
         try {
             let theQuery = query
-
             if (withAsyncData && withAsyncData?.useWatchQuery) {
                 const isArrayQuery = Array.isArray(withAsyncData?.useWatchQuery)
                 if (withAsyncData?.watch && !isArrayQuery) {
@@ -72,11 +70,11 @@ export async function requestResponse(
             if (decrypt && data) {
                 const info = decryptResponse(data as string)
                 getLogDecript(info)
-                if (isValidResponse(info.codigoRetorno)) {
-                    return info
-                }
+                // if (isValidResponse(info.codigoRetorno)) {
+                //     return info
+                // }
 
-                throw info?.glosaRetorno
+                return info
             }
             return data
         } catch (err: unknown) {
