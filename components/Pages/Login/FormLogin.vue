@@ -4,6 +4,7 @@ import {required, email} from "@vuelidate/validators";
 import {useVuelidate} from "@vuelidate/core";
 import {getErrorMessage} from "~/components/DesignSystem/utils/translateErrorMessage";
 import useApplications from '~/api-services/applications';
+import { useAuthStore } from '~/stores/auth';
 
 const form = reactive({
     email: "",
@@ -18,6 +19,7 @@ const validateForm = useVuelidate(formRules, form);
 const loading = ref(false);
 const backendError = ref<string | null>(null);
 const applicationsService = useApplications();
+const authStore = useAuthStore();
 
 const handleSubmit = async () => {
     validateForm.value.$touch();
@@ -31,6 +33,7 @@ const handleSubmit = async () => {
                 password: form.password,
             });
             if (response.codigoRetorno == 200) {
+                await authStore.login(response.user, response.access_token);
                 navigateTo('/');
                 // internalStatus.value = "success";
                 // $emit('cancel');
