@@ -48,6 +48,7 @@ const model = computed({
           :area-mode="areaMode"
           :settings="element.settings"
           :indexShow="slotData?.indexShow"
+          no-actions
         />
 
         <SubscribeInternalChanges

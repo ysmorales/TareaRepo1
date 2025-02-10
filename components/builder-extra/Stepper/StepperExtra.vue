@@ -1,17 +1,17 @@
 <script lang="ts" setup>
 import { DsStepper } from "~/components/DesignSystem";
 interface IProp {
-  step: number;
+  modelValue: number;
   totalSteps: number;
   inEditor: boolean;
 }
 
 const props = withDefaults(defineProps<IProp>(), {
-  step: 1,
+  modelValue: 1,
   totalSteps: 3,
 });
 
-const internalStep = ref(props.step);
+const internalStep = ref(props.modelValue);
 const action = ref({});
 
 const handleStep = (newStep) => {
@@ -45,9 +45,9 @@ watch(
 );
 
 watch(
-  () => props.step,
+  () => props.modelValue,
   () => {
-    internalStep.value = props.step;
+    internalStep.value = props.modelValue;
   },
   { deep: true }
 );

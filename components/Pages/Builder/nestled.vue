@@ -31,6 +31,7 @@
           :id="element.id"
           :area-mode="areaMode"
           :settings="element.settings"
+          :noActions="noActions"
           :idx="index"
         >
           <modulec
@@ -98,6 +99,10 @@ export default {
       type: Object,
     },
     adjustTop: {
+      required: false,
+      type: Boolean,
+    },
+    noActions: {
       required: false,
       type: Boolean,
     },

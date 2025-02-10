@@ -18,6 +18,7 @@ interface IProp {
   areaMode: string;
   settings: any;
   idx: number;
+  noActions: boolean;
 }
 
 const props = withDefaults(defineProps<IProp>(), {
@@ -78,6 +79,7 @@ const handlerAction = (mode) => {
         v-if="areaMode === 'dragable' || type === 'module'"
       >
         <IconArea
+          v-if="!noActions"
           :type="type"
           :id="id"
           :index="`idf${id}`"
