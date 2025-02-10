@@ -37,6 +37,7 @@
             v-if="element.type === 'module'"
             :element="element"
             :area-mode="areaMode"
+            v-model="element.data"
           />
         </OptionsContainer>
 

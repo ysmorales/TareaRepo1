@@ -8,9 +8,22 @@ interface IProp {
   element?: any;
   areaMode: boolean;
   seeOnly: boolean;
+  modelValue: any;
 }
 
 const props = withDefaults(defineProps<IProp>(), {});
+
+const emit = defineEmits(["update:modelValue"]);
+
+const model = computed({
+  get() {
+    return props.element.props.modelValue ?? props.modelValue;
+  },
+
+  set(value) {
+    emit("update:modelValue", value);
+  },
+});
 </script>
 
 <template>
@@ -18,6 +31,7 @@ const props = withDefaults(defineProps<IProp>(), {});
     :is="getComponentKey(element.item)"
     v-bind="filterProps(element.props)"
     :in-editor="!seeOnly"
+    v-model="model"
   >
     <template v-for="name in element.slots" v-slot:[name]="slotData">
       <div class="min-h-[300px]">

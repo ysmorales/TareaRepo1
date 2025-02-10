@@ -3,6 +3,7 @@ import { DsCheck, DsSelect, DsInput } from "~/components/DesignSystem";
 import { useBuilderStore } from "~/stores/builderStore";
 import FieldLayout from "../fieldLayout.vue";
 import ModalValidations from "../Validations/ModalValidations.vue";
+import CurrentFormData from "../Validations/CurrentFormData.vue";
 
 interface IProp {
   item: any;
@@ -100,6 +101,13 @@ watch(
       <div class="mt-2">Validaciones:</div>
       <div class="m-2">
         <ModalValidations @handlerChange="handlerChangeValidations" />
+      </div>
+    </FieldLayout>
+
+    <FieldLayout description="Current scope Form Values">
+      <div class="mt-2">Valores actuales en el formulario:</div>
+      <div class="m-2">
+        <CurrentFormData />
       </div>
     </FieldLayout>
   </div>
