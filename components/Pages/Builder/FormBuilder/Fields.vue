@@ -1,7 +1,6 @@
 <script lang="ts" setup>
-import { DsInput, DsSelect, DsIcon, DsCheck } from "~/components/DesignSystem";
+import { DsInput, DsSelect, DsCheck } from "~/components/DesignSystem";
 
-import DsTooltip from "~/components/DesignSystem/components/basic/tooltip/DsTooltip.vue";
 import { useBuilderStore } from "~/stores/builderStore";
 import FieldLayout from "./fieldLayout.vue";
 

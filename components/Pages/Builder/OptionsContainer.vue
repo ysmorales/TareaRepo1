@@ -69,7 +69,7 @@ const handlerAction = (mode) => {
         v-if="type !== 'module' && areaMode === 'dragable'"
         class="text-center"
       >
-        {{ type }} {{ idx }}
+        {{ type }} {{ idx }} {{ settings }}
       </div>
       <slot></slot>
 

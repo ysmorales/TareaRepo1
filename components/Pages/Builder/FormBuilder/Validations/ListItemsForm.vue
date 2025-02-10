@@ -1,0 +1,57 @@
+<script lang="ts" setup>
+import { ref, defineExpose } from "vue";
+import uniqid from "uniqid";
+import { useBuilderStore } from "~/stores/builderStore";
+import ItemField from "./ItemField.vue";
+import AddFieldOptions from "../addFieldOptions.vue";
+
+interface IProp {
+  item: any;
+}
+
+const props = withDefaults(defineProps<IProp>(), {
+  item: {},
+});
+
+const store = useBuilderStore();
+const { itemOnSelect, itemsPageList } = toRefs(store);
+
+const getFormFields = () =>
+  getFormFieldsNodes(itemsPageList.value, itemOnSelect.value.id);
+
+const listFieldsOptions = getFormFields().map((d) => ({
+  value: d.id,
+  text: d.item,
+}));
+
+const listValidations = ref([]);
+
+const handleAdd = () => {
+  listValidations.value.push({
+    id: uniqid("v"),
+  });
+};
+
+const handlerRemove = (index) => {
+  listValidations.value.splice(index, 1);
+};
+
+defineExpose({
+  listValidations,
+});
+</script>
+
+<template>
+  <div class="m-2 mt-0 min-h-[400px]">
+    <div :key="`t-${index}`" v-for="(ii, index) in listValidations">
+      <ItemField
+        :info="ii"
+        :fields="listFieldsOptions"
+        :index="index"
+        @remove="handlerRemove"
+        :key="`v-${index}`"
+      />
+    </div>
+    <AddFieldOptions label="Add validation" @add="handleAdd" />
+  </div>
+</template>

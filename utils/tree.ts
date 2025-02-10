@@ -133,3 +133,32 @@ export const getEmptySection = () => ({
         items: []
     }]
 })
+
+
+
+export const getFormFieldsNodes = (listTree, id) => {
+    const path = encontrarRutaPorIndice(listTree, id);
+    const trees = [getNodeByPath(listTree, path)];
+    let leaves = [];
+    const addNode = (node) => {
+        if (node.item.indexOf("form") !== -1) {
+            leaves.push({
+                id: node.id,
+                item: node.item,
+                settings: node.settings,
+            });
+        }
+    };
+    function traverse(node) {
+        if (!node?.items || node?.items.length === 0) {
+            addNode(node);
+        } else {
+            if (node?.item) {
+                addNode(node);
+            }
+            node?.items?.forEach(traverse);
+        }
+    }
+    trees.forEach(traverse);
+    return leaves;
+};

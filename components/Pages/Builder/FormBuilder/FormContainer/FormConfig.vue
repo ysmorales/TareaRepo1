@@ -2,6 +2,7 @@
 import { DsCheck, DsSelect, DsInput } from "~/components/DesignSystem";
 import { useBuilderStore } from "~/stores/builderStore";
 import FieldLayout from "../fieldLayout.vue";
+import ModalValidations from "../Validations/ModalValidations.vue";
 
 interface IProp {
   item: any;
@@ -11,6 +12,8 @@ const props = withDefaults(defineProps<IProp>(), {
   item: {},
 });
 
+const emit = defineEmits(["handlerChange"]);
+
 const isForm = ref(false);
 const formConfig = ref({
   isForm: false,
@@ -18,6 +21,7 @@ const formConfig = ref({
   sendToServer: false,
   endpoint: "",
   handlerEventSubmit: "",
+  validations: [],
 });
 
 const handlersEventSubmit = [
@@ -33,6 +37,18 @@ const handlersEventSubmit = [
 
 const store = useBuilderStore();
 const { itemOnSelect } = toRefs(store);
+
+const handlerChangeValidations = (newVals) => {
+  formConfig.value.validations = newVals;
+};
+
+watch(
+  formConfig,
+  () => {
+    emit("handlerChange", { form: formConfig.value });
+  },
+  { deep: true }
+);
 </script>
 
 <template>
@@ -82,7 +98,9 @@ const { itemOnSelect } = toRefs(store);
       description="Listado de validaciones a ejecutar"
     >
       <div class="mt-2">Validaciones:</div>
-      <div class="m-2">Listado validaciones aquí</div>
+      <div class="m-2">
+        <ModalValidations @handlerChange="handlerChangeValidations" />
+      </div>
     </FieldLayout>
   </div>
 </template>

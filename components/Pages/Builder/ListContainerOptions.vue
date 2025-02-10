@@ -27,7 +27,7 @@ const handlerChange = (change) => {
   if (change.margin || change.padding) {
     handlerChangeContainerPaddingMargin.value(itemOnSelect.value, change);
   }
-  if (change.backgroundColor) {
+  if (change.backgroundColor || change.form) {
     handlerChangeContainerSettings.value(itemOnSelect.value, change);
   }
 };
@@ -72,7 +72,10 @@ const handlerChange = (change) => {
           key-name="margin"
         />
         <Color @handlerChange="handlerChange" />
-        <FormConfig v-if="itemOnSelect.type === 'section'" />
+        <FormConfig
+          v-if="itemOnSelect.type === 'section'"
+          @handlerChange="handlerChange"
+        />
       </div>
       <div v-else>selecciona contenedor</div>
     </DsAccordion>
