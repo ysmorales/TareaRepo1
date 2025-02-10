@@ -33,7 +33,7 @@ const handleSubmit = async () => {
                 password: form.password,
             });
             if (response.codigoRetorno == 200) {
-                await authStore.login(response.user, response.access_token);
+                await authStore.login(response.user, response.access_token, response.expires_at);
                 navigateTo('/');
                 // internalStatus.value = "success";
                 // $emit('cancel');
