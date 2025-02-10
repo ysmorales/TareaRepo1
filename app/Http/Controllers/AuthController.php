@@ -53,12 +53,15 @@ class AuthController extends Controller
 
         $tokenResult = $user->createToken('auth_token');
         $accessToken = $tokenResult->plainTextToken;
-        $expiration = $tokenResult->accessToken->expires_at;
+
+        // Update the expires_at column
+        $tokenResult->accessToken->expires_at = now()->addHour();
+        $tokenResult->accessToken->save();
 
         return response()->json([
             'access_token' => $accessToken,
             'token_type' => 'Bearer',
-            'expires_at' => $expiration,
+            'expires_at' => $tokenResult->accessToken->expires_at,
             'codigoRetorno' => 200,
             'message' => 'User logged in successfully',
             'user' => $user
