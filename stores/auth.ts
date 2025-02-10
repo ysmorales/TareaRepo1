@@ -52,6 +52,7 @@ export const useAuthStore = defineStore('auth', {
             //     setItemInLocalStorage('expiration_token', response_expiration_token);
             // }
             const timestamp = new Date(response_expiration_token).getTime();
+            this.expiration_token = timestamp;
             setItemInLocalStorage('expiration_token',timestamp);
         },
         setRefreshToken(refreshToken: string) {
