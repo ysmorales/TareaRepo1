@@ -51,8 +51,17 @@ class AuthController extends Controller
             return ResponseHelper::returnResponse(401, 'The provided password is incorrect.');
         }
 
-        $token = $user->createToken('auth_token')->plainTextToken;
+        $tokenResult = $user->createToken('auth_token');
+        $accessToken = $tokenResult->plainTextToken;
+        $expiration = $tokenResult->accessToken->expires_at;
 
-        return response()->json(['access_token' => $token, 'token_type' => 'Bearer','codigoRetorno' => 200, 'message' => 'User logged in successfully', 'user' => $user]);
+        return response()->json([
+            'access_token' => $accessToken,
+            'token_type' => 'Bearer',
+            'expires_at' => $expiration,
+            'codigoRetorno' => 200,
+            'message' => 'User logged in successfully',
+            'user' => $user
+        ]);
     }
 }
