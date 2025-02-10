@@ -40,7 +40,7 @@ export const useAuthStore = defineStore('auth', {
         },
         async login(userDetails: IUser, token: string,expiration_token:string) {
             this.setUser(userDetails);
-            await this.setToken(token,expiration_token);
+            this.setToken(token,expiration_token);
         },
         setToken(token: string, response_expiration_token:string) {
             this.auth_token = token;
