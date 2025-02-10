@@ -38,20 +38,21 @@ export const useAuthStore = defineStore('auth', {
             this.user.roles = roles;
             setItemInLocalStorage('user', this.user);
         },
-        async login(userDetails: IUser, token: string, refreshToken: string) {
+        async login(userDetails: IUser, token: string,expiration_token:string) {
             this.setUser(userDetails);
-            this.setToken(token);
-            this.setRefreshToken(refreshToken);
+            this.setToken(token,expiration_token);
         },
-        setToken(token: string) {
+        setToken(token: string, response_expiration_token:string) {
             this.auth_token = token;
             setItemInLocalStorage('token', token);
 
-            const decodedToken = decodeTokenCHA(token);
-            if (decodedToken && decodedToken.exp) {
-                this.expiration_token = decodedToken.exp * 1000; // Convertir a milisegundos
-                setItemInLocalStorage('expiration_token', this.expiration_token);
-            }
+            // const decodedToken = decodeTokenCHA(token);
+            // if (decodedToken && decodedToken.exp) {
+            //     this.expiration_token = decodedToken.exp * 1000; // Convertir a milisegundos
+            //     setItemInLocalStorage('expiration_token', response_expiration_token);
+            // }
+            const timestamp = new Date(response_expiration_token).getTime();
+            setItemInLocalStorage('expiration_token',timestamp);
         },
         setRefreshToken(refreshToken: string) {
             this.refresh_token = refreshToken;
