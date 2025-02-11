@@ -17,6 +17,7 @@ const {
   handlerChangeLayout,
   handlerChangeContainerPaddingMargin,
   handlerChangeContainerSettings,
+  itemsPageList,
 } = toRefs(store);
 
 const handlerChange = (change) => {
@@ -31,10 +32,22 @@ const handlerChange = (change) => {
     handlerChangeContainerSettings.value(itemOnSelect.value, change);
   }
 };
+
+const item = computed(() => {
+  if (itemOnSelect.value.id) {
+    const ruta = encontrarRutaPorIndice(
+      itemsPageList.value,
+      itemOnSelect.value.id
+    );
+    const nodo = getNodeByPath(itemsPageList.value, ruta);
+    return { settings: nodo.settings, type: nodo.type, id: nodo.id };
+  }
+});
 </script>
 
 <template>
   <div class="mt-5">
+    {{ item }}
     <DsAccordion class="mt-2">
       <template v-slot:header>
         <div class="flex w-full items-center">
@@ -65,16 +78,24 @@ const handlerChange = (change) => {
             </div>
           </div>
         </div>
-        <SidesNums @handlerChange="handlerChange" />
+        <SidesNums
+          @handlerChange="handlerChange"
+          :sides-default="item?.settings.padding"
+        />
         <SidesNums
           @handlerChange="handlerChange"
           label="Marging"
           key-name="margin"
+          :sides-default="item?.settings.margin"
         />
-        <Color @handlerChange="handlerChange" />
+        <Color
+          @handlerChange="handlerChange"
+          :color-default="item?.settings.backgroundColor"
+        />
         <FormConfig
           v-if="itemOnSelect.type === 'section'"
           @handlerChange="handlerChange"
+          :form-default="item?.settings?.form"
         />
       </div>
       <div v-else>selecciona contenedor</div>

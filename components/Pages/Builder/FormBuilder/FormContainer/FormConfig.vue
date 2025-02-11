@@ -1,30 +1,26 @@
 <script lang="ts" setup>
 import { DsCheck, DsSelect, DsInput } from "~/components/DesignSystem";
-import { useBuilderStore } from "~/stores/builderStore";
 import FieldLayout from "../fieldLayout.vue";
 import ModalValidations from "../Validations/ModalValidations.vue";
 import CurrentFormData from "../Validations/CurrentFormData.vue";
 
 interface IProp {
-  item: any;
+  formDefault: Record<string, any>;
 }
 
 const props = withDefaults(defineProps<IProp>(), {
-  item: {},
+  formDefault: {
+    isForm: false,
+    runValidations: false,
+    sendToServer: false,
+    endpoint: "",
+    handlerEventSubmit: "",
+    validations: [],
+  },
 });
 
 const emit = defineEmits(["handlerChange"]);
-
-const isForm = ref(false);
-const formConfig = ref({
-  isForm: false,
-  runValidations: false,
-  sendToServer: false,
-  endpoint: "",
-  handlerEventSubmit: "",
-  validations: [],
-});
-
+const formConfig = ref(props.formDefault);
 const handlersEventSubmit = [
   {
     value: "submit",
@@ -35,9 +31,6 @@ const handlersEventSubmit = [
     text: "Step Change",
   },
 ];
-
-const store = useBuilderStore();
-const { itemOnSelect } = toRefs(store);
 
 const handlerChangeValidations = (newVals) => {
   formConfig.value.validations = newVals;
@@ -100,7 +93,10 @@ watch(
     >
       <div class="mt-2">Validaciones:</div>
       <div class="m-2">
-        <ModalValidations @handlerChange="handlerChangeValidations" />
+        <ModalValidations
+          @handlerChange="handlerChangeValidations"
+          :validationsDefault="formConfig.validations"
+        />
       </div>
     </FieldLayout>
 

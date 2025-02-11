@@ -236,7 +236,6 @@ export const useBuilderStore = defineStore('counter', () => {
         const ruta = encontrarRutaPorIndice(itemsPageList.value, id);
         const nodo = getNodeByPath(itemsPageList.value, ruta);
         nodo.items = [getEmptySection()]
-        console.log('aquiiii')
         nodo.props.totalSteps = nodo.items.length
     }
 

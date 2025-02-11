@@ -21,5 +21,6 @@ export const getSlotsStorie = (keyName: string) => getStories()[keyName]?.argTyp
 export const getInfoFieldsComponent = (module) => ({
     id: module.id,
     component: getComponentKey(module.item),
-    slots: getSlotsStorie(module.item)
+    slots: getSlotsStorie(module.item),
+    props: module.props,
 })

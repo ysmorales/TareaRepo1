@@ -6,11 +6,11 @@ import ItemField from "./ItemField.vue";
 import AddFieldOptions from "../addFieldOptions.vue";
 
 interface IProp {
-  item: any;
+  validationsDefault: any;
 }
 
 const props = withDefaults(defineProps<IProp>(), {
-  item: {},
+  validationsDefault: [],
 });
 
 const store = useBuilderStore();
@@ -24,7 +24,7 @@ const listFieldsOptions = getFormFields().map((d) => ({
   text: d.item,
 }));
 
-const listValidations = ref([]);
+const listValidations = ref(props.validationsDefault);
 
 const handleAdd = () => {
   listValidations.value.push({

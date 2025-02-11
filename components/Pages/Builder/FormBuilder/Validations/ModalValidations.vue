@@ -1,13 +1,13 @@
 <script lang="ts" setup>
-import { DsModal, DsButton } from "~/components/DesignSystem";
+import { DsModal, DsButton, DsCard } from "~/components/DesignSystem";
 import ListItemsForm from "./ListItemsForm.vue";
 
 interface IProp {
-  item?: any;
+  validationsDefault?: any;
 }
 
 const props = withDefaults(defineProps<IProp>(), {
-  item: {},
+  validationsDefault: [],
 });
 const emit = defineEmits(["handlerChange"]);
 const showModalValidations = ref(false);
@@ -34,11 +34,14 @@ const addValidation = () => {
     @close="showModalValidations = false"
     @accept="addValidation"
   >
-    <div class="mt-2 p-2"><ListItemsForm ref="child" /></div>
+    <div class="mt-2 p-2">
+      <ListItemsForm ref="child" :validations-default="validationsDefault" />
+    </div>
   </DsModal>
   <div class="w-full">
-    <div class="">Listado validaciones</div>
-
+    <div v-for="vv in validationsDefault">
+      <DsCard :headerTitle="vv.validation" :textInfo="vv.id" />
+    </div>
     <div class="mb-4 ml-2">
       <DsButton color="primary" @click="handlerAddValidations"
         >Adicionar

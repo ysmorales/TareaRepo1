@@ -4,6 +4,7 @@ import { DsTypography } from "~/components/DesignSystem";
 interface IProp {
   label?: string;
   keyName?: string;
+  colorDefault?: string;
 }
 
 const props = withDefaults(defineProps<IProp>(), {
@@ -80,7 +81,7 @@ const colorsSelects = [
   "rgb(131, 0, 233)",
 ];
 
-const value = ref("");
+const value = ref(props.colorDefault ?? "");
 
 const emit = defineEmits(["handlerChange"]);
 

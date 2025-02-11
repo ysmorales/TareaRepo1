@@ -21,7 +21,7 @@ const { updateItemInForm } = toRefs(store);
 
 const emit = defineEmits(["input", "update:modelValue"]);
 
-const valueField = ref("");
+const valueField = ref(props.item.props[props.fieldKey]);
 
 function handleChange() {
   console.log(props.item, props.fieldKey, valueField);
