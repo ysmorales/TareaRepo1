@@ -24,11 +24,11 @@ Route::get('password/reset/{token}', function ($token) {
 
 Route::get('/test-email', function () {
     Mail::raw('This is a test email', function ($message) {
-        $message->to('your_email@example.com')
+        $message->to('perezguedesmaikel@gmail.com')
             ->subject('Test Email');
     });
 
-    return 'Email sent';
+    return 'Email sent to perezguedesmaikel@gmail.com';
 });
 
 
