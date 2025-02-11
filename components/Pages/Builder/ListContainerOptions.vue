@@ -1,10 +1,5 @@
 <script lang="ts" setup>
-import {
-  DsAccordion,
-  DsIcon,
-  DsTypography,
-  DsInput,
-} from "~/components/DesignSystem";
+import { DsAccordion, DsIcon, DsTypography } from "~/components/DesignSystem";
 import { useBuilderStore } from "~/stores/builderStore";
 import FieldContainerLayout from "./FormBuilder/ContainerLayout/FieldContainerLayout.vue";
 import SidesNums from "./FormBuilder/SidesNums/index.vue";
@@ -47,7 +42,6 @@ const item = computed(() => {
 
 <template>
   <div class="mt-5">
-    {{ item }}
     <DsAccordion class="mt-2">
       <template v-slot:header>
         <div class="flex w-full items-center">

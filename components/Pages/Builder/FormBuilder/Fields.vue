@@ -21,7 +21,11 @@ const { updateItemInForm } = toRefs(store);
 
 const emit = defineEmits(["input", "update:modelValue"]);
 
-const valueField = ref(props.item.props[props.fieldKey]);
+const getDefaulValue = () => {
+  return (props.item?.props && props.item?.props[props.fieldKey]) ?? "";
+};
+
+const valueField = ref(getDefaulValue());
 
 function handleChange() {
   console.log(props.item, props.fieldKey, valueField);
