@@ -49,6 +49,7 @@ const model = computed({
           :settings="element.settings"
           :indexShow="slotData?.indexShow"
           no-actions
+          :adjust-top="!isNotEmpty(element.items)"
         />
 
         <SubscribeInternalChanges

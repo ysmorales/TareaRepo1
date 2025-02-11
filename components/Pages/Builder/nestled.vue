@@ -32,6 +32,7 @@
           :area-mode="areaMode"
           :settings="element.settings"
           :noActions="noActions"
+          :slots="element.slots"
           :idx="index"
         >
           <modulec
