@@ -202,10 +202,7 @@ export const useBuilderStore = defineStore('counter', () => {
     function handlerChangeContainerPaddingMargin({ id }, paddingMargin) {
         const ruta = encontrarRutaPorIndice(itemsPageList.value, id);
         const nodo = getNodeByPath(itemsPageList.value, ruta);
-        updateNodeByPath(itemsPageList.value, ruta, 'settings', {
-            margin: paddingMargin?.margin ?? nodo.settings.margin ?? {},
-            padding: paddingMargin?.padding ?? nodo.settings.padding ?? {},
-        });
+        nodo.settings.margin = { ...nodo.settings.margin, ...paddingMargin?.margin }
     }
 
     function handlerChangeContainerSettings({ id }, newSettingsToAdd) {

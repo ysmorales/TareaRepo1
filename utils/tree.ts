@@ -111,7 +111,7 @@ export function updateNodeByPath(trees, path, key, value, allReplace = false) {
         if (allReplace) {
             current[key] = value;
         } else {
-            current[key] = { ...current[key], ...value };
+            current[key] = clone({ ...current[key], ...value });
         }
     }
 }

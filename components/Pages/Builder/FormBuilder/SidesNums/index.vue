@@ -19,7 +19,7 @@ const props = withDefaults(defineProps<IProp>(), {
   },
 });
 
-const sides = ref(props.sidesDefault);
+const sides = ref(clone(props.sidesDefault));
 const emit = defineEmits(["handlerChange"]);
 
 watch(

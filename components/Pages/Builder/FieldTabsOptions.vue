@@ -29,8 +29,12 @@ const { itemOnSelect, viewModeFieldConfigs } = toRefs(store);
                 viewModeFieldConfigs === 'full'
               "
             />
-            <ListContainerOptions v-if="itemOnSelect?.type !== 'module'" />
+            <ListContainerOptions
+              :key="`container${itemOnSelect.id}`"
+              v-if="itemOnSelect?.type !== 'module'"
+            />
             <SingleFieldOptions
+              :key="`module${itemOnSelect.id}`"
               v-if="
                 itemOnSelect?.type === 'module' &&
                 viewModeFieldConfigs === 'single'

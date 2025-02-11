@@ -19,11 +19,7 @@ const handlerChange = (change) => {
   console.log({ change });
   if (change.layout) {
     handlerChangeLayout.value(itemOnSelect.value, change.layout);
-  }
-  if (change.margin || change.padding) {
-    handlerChangeContainerPaddingMargin.value(itemOnSelect.value, change);
-  }
-  if (change.backgroundColor || change.form) {
+  } else {
     handlerChangeContainerSettings.value(itemOnSelect.value, change);
   }
 };
@@ -74,7 +70,7 @@ const item = computed(() => {
         </div>
         <SidesNums
           @handlerChange="handlerChange"
-          :sides-default="item?.settings.padding"
+          :sides-default="item?.settings?.padding"
         />
         <SidesNums
           @handlerChange="handlerChange"
