@@ -1,11 +1,16 @@
 <script setup lang="ts">
 
+import FormResetPassword from "~/components/Pages/Login/FormResetPassword.vue";
+
+definePageMeta({
+    layout: false,
+});
+
 </script>
 
 <template>
-Aquí se resetea el password!!!
+    <NuxtLayout name="auth-layout">
+        <FormResetPassword/>
+    </NuxtLayout>
 </template>
 
-<style scoped>
-
-</style>
