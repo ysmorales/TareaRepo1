@@ -59,7 +59,7 @@ function handleClickLink() {
 <template>
     <div class="max-w-md mt-10 p-6 bg-white">
         <DsTypography variant="h2">Recuperar Contraseña</DsTypography>
-        <DsTypography>Para recuperar su contraseña, por favor ingrese su contraseña actual y la nueva contraseña.</DsTypography>
+        <DsTypography>Para recuperar su contraseña, por favor ingrese la nueva contraseña y confírmela.</DsTypography>
         <form class="mb-5" @submit.prevent="handleSubmit">
             <div class="mb-4">
                 <DsInput type="password" v-model="form.newPassword" label="Nueva Contraseña" :error="getErrorMessage(validateForm?.newPassword.$errors[0])"/>
@@ -70,6 +70,5 @@ function handleClickLink() {
             <div v-if="backendError" class="text-red-500 mb-4">{{ backendError }}</div>
             <DsButton :loading="loading" type="submit" class="w-full"><span class="text-center w-full">Cambiar Contraseña</span></DsButton>
         </form>
-        <DsLink @click="handleClickLink">Olvidé mi contraseña</DsLink>
     </div>
 </template>
