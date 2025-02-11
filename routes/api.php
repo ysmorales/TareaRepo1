@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Mail;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -20,5 +21,14 @@ Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('
 Route::get('password/reset/{token}', function ($token) {
     return view('auth.passwords.reset', ['token' => $token]);
 })->name('password.reset');
+
+Route::get('/test-email', function () {
+    Mail::raw('This is a test email', function ($message) {
+        $message->to('your_email@example.com')
+            ->subject('Test Email');
+    });
+
+    return 'Email sent';
+});
 
 
