@@ -17,7 +17,9 @@ const emit = defineEmits(["update:modelValue"]);
 
 const model = computed({
   get() {
-    return props.element?.props?.modelValue ?? props.modelValue;
+    return isNotEmpty(props.element?.props?.modelValue)
+      ? props.element?.props?.modelValue
+      : props.modelValue;
   },
 
   set(value) {

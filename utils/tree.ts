@@ -141,7 +141,7 @@ export const getFormFieldsNodes = (listTree, id) => {
     const trees = [getNodeByPath(listTree, path)];
     let leaves = [];
     const addNode = (node) => {
-        if (node.item.indexOf("form") !== -1) {
+        if (node?.item?.indexOf("form") !== -1) {
             leaves.push({
                 id: node.id,
                 item: node.item,
