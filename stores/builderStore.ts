@@ -139,8 +139,6 @@ export const useBuilderStore = defineStore('counter', () => {
         viewModeFieldConfigs.value = newMode;
     }
 
-
-
     function handlerRemoveItem({ id, type }) {
         let foundSectionInRoot = false;
         const indexSection = itemsPageList.value.findIndex(d => d.id === id)
@@ -215,11 +213,8 @@ export const useBuilderStore = defineStore('counter', () => {
         updateNodeByPath(itemsPageList.value, ruta, 'settings', newSettingsToAdd);
     }
 
-
-    function handlerAddModule({ id }, moduleKeyName) {
-        const ruta = encontrarRutaPorIndice(itemsPageList.value, id);
-
-        const emptyModule = {
+    function getEmptyModule(moduleKeyName) {
+        return {
             settings: {},
             sort: 1,
             props: {},
@@ -228,8 +223,12 @@ export const useBuilderStore = defineStore('counter', () => {
             item: moduleKeyName,
             items: []
         }
+    }
 
-        updateNodeByPath(itemsPageList.value, ruta, 'items', [emptyModule], true);
+    function handlerAddModule({ id }, moduleKeyName) {
+        const ruta = encontrarRutaPorIndice(itemsPageList.value, id);
+
+        updateNodeByPath(itemsPageList.value, ruta, 'items', [getEmptyModule(moduleKeyName)], true);
     }
 
     function handlerAddEmptyContainerSectionInSlot({ id, type }) {
@@ -263,7 +262,11 @@ export const useBuilderStore = defineStore('counter', () => {
             }
             if (!foundSectionInRoot) {
                 const ruta = encontrarRutaPorIndice(itemsPageList.value, id);
-                updateNodeByPath(itemsPageList.value, ruta, 'items', emptyRow, true);
+                const nodo = getNodeByPath(itemsPageList.value, ruta);
+                if (!nodo.items) {
+                    nodo.items = []
+                }
+                nodo.items = [emptyRow]
             }
         }
     }
