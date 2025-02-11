@@ -1,25 +1,23 @@
 <script lang="ts" setup>
 import {DsButton, DsInput, DsLink, DsTypography} from "~/components/DesignSystem";
-import {required, email} from "@vuelidate/validators";
+import {required, minLength} from "@vuelidate/validators";
 import {useVuelidate} from "@vuelidate/core";
 import {getErrorMessage} from "~/components/DesignSystem/utils/translateErrorMessage";
 import useApplications from '~/api-services/applications';
-import { useAuthStore } from '~/stores/auth';
 
 const form = reactive({
-    email: "",
-    password: "",
+    newPassword: "",
+    confirmPassword: "",
 });
 
 const formRules = reactive({
-    email: {required, email},
-    password: {required},
+    newPassword: {required, minLength: minLength(8)},
+    confirmPassword: {required, sameAsNewPassword: (value: string) => value === form.newPassword || 'Las contraseñas no coinciden'},
 });
 const validateForm = useVuelidate(formRules, form);
 const loading = ref(false);
 const backendError = ref<string | null>(null);
 const applicationsService = useApplications();
-const authStore = useAuthStore();
 
 const handleSubmit = async () => {
     validateForm.value.$touch();
@@ -28,21 +26,16 @@ const handleSubmit = async () => {
         backendError.value = null;
         try {
             console.log("Sending to back");
-            const response = await applicationsService.procedure.createOne("/api/login", {
-                email: form.email,
-                password: form.password,
+            const response = await applicationsService.procedure.createOne("/api/change-password", {
+                newPassword: form.newPassword,
             });
             if (response.codigoRetorno == 200) {
-                await authStore.login(response.user, response.access_token, response.expires_at);
                 navigateTo('/');
                 // internalStatus.value = "success";
                 // $emit('cancel');
             }
-            if(response.codigoRetorno==404){
-                backendError.value = "El correo electrónico no existe en el sistema";
-            }
-            if(response.codigoRetorno==401){
-                backendError.value = "La contraseña es incorrecta";
+            if(response.codigoRetorno==400){
+                backendError.value = "La contraseña actual es incorrecta";
             }
         } catch (e) {
             backendError.value = "Error al comunicarse con el servidor.";
@@ -60,47 +53,18 @@ function handleClickLink() {
 
 <template>
     <div class="max-w-md mt-10 p-6 bg-white">
-        <DsTypography variant="h2">Inicio de sesión</DsTypography>
-        <DsTypography>Para entrar al creador por favor ingrese sus credenciales de inicio.</DsTypography>
+        <DsTypography variant="h2">Recuperar Contraseña</DsTypography>
+        <DsTypography>Para recuperar su contraseña, por favor ingrese su contraseña actual y la nueva contraseña.</DsTypography>
         <form class="mb-5" @submit.prevent="handleSubmit">
             <div class="mb-4">
-                <DsInput v-model="form.email" label="Correo electrónico" :error="getErrorMessage(validateForm?.email.$errors[0])"/>
+                <DsInput type="password" v-model="form.newPassword" label="Nueva Contraseña" :error="getErrorMessage(validateForm?.newPassword.$errors[0])"/>
             </div>
             <div class="mb-6">
-                <div class="mb-4">
-                    <DsInput v-model="form.password" label="Contraseña" :error="getErrorMessage(validateForm?.password.$errors[0])"/>
-                </div>
+                <DsInput type="password" v-model="form.confirmPassword" label="Confirmar Nueva Contraseña" :error="getErrorMessage(validateForm?.confirmPassword.$errors[0])"/>
             </div>
             <div v-if="backendError" class="text-red-500 mb-4">{{ backendError }}</div>
-            <DsButton :loading="loading" type="submit" class="w-full"><span class="text-center w-full">Ingresar</span></DsButton>
+            <DsButton :loading="loading" type="submit" class="w-full"><span class="text-center w-full">Cambiar Contraseña</span></DsButton>
         </form>
         <DsLink @click="handleClickLink">Olvidé mi contraseña</DsLink>
     </div>
 </template>
-
-<!--<script>-->
-<!--export default {-->
-<!--    data() {-->
-<!--        return {-->
-<!--            password: '',-->
-<!--            passwordConfirmation: '',-->
-<!--            token: this.$route.query.token,-->
-<!--        };-->
-<!--    },-->
-<!--    methods: {-->
-<!--        async resetPassword() {-->
-<!--            try {-->
-<!--                const response = await this.$axios.post('/api/password/reset', {-->
-<!--                    token: this.token,-->
-<!--                    password: this.password,-->
-<!--                    password_confirmation: this.passwordConfirmation,-->
-<!--                });-->
-<!--                alert('Password reset successful');-->
-<!--                this.$router.push('/login');-->
-<!--            } catch (error) {-->
-<!--                alert('Error resetting password');-->
-<!--            }-->
-<!--        },-->
-<!--    },-->
-<!--};-->
-<!--</script>-->
