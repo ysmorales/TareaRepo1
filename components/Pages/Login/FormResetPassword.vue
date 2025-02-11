@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import {DsButton, DsInput, DsLink, DsTypography} from "~/components/DesignSystem";
-import {required, minLength} from "@vuelidate/validators";
+import {required, minLength, helpers} from "@vuelidate/validators";
 import {useVuelidate} from "@vuelidate/core";
 import {getErrorMessage} from "~/components/DesignSystem/utils/translateErrorMessage";
 import useApplications from '~/api-services/applications';
@@ -10,9 +10,14 @@ const form = reactive({
     confirmPassword: "",
 });
 
+const sameAsNewPassword = helpers.withMessage(
+    'Las contraseñas no coinciden',
+    (value: string) => value === form.newPassword
+);
+
 const formRules = reactive({
     newPassword: {required, minLength: minLength(8)},
-    confirmPassword: {required, sameAsNewPassword: (value: string) => value === form.newPassword || 'Las contraseñas no coinciden'},
+    confirmPassword: {required, sameAsNewPassword},
 });
 const validateForm = useVuelidate(formRules, form);
 const loading = ref(false);
