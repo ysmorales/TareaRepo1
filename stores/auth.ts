@@ -25,7 +25,7 @@ export const useAuthStore = defineStore('auth', {
         isTokenExpiringSoon: (state): boolean => !!state.expiration_token && (state.expiration_token - Date.now()) <= (2.5 * 60 * 1000),
         getToken: (state): string | null => state.auth_token,
         getUser: (state): IUser => state.user,
-        getFullNameUser: (state): string => state.user?.nombre_funcionario ? state.user.nombre_funcionario : `${state.user.first_name} ${state.user.last_name}`,
+        getFullNameUser: (state): string => state.user?.name,
         isModalTokenVisible: (state): boolean => state.show_modal_token,
     },
 
