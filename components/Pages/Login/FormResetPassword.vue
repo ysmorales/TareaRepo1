@@ -1,12 +1,13 @@
 <script lang="ts" setup>
-import {DsButton, DsInput, DsTypography} from "~/components/DesignSystem";
+import {DsAlert, DsButton, DsInput, DsTypography} from "~/components/DesignSystem";
 import {required, minLength, helpers} from "@vuelidate/validators";
 import {useVuelidate} from "@vuelidate/core";
 import {getErrorMessage} from "~/components/DesignSystem/utils/translateErrorMessage";
 import useApplications from '~/api-services/applications';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
 const route = useRoute();
+const router = useRouter();
 const token = route.query.token as string;
 const email = route.query.email as string;
 
@@ -27,6 +28,7 @@ const formRules = reactive({
 const validateForm = useVuelidate(formRules, form);
 const loading = ref(false);
 const backendError = ref<string | null>(null);
+const successMessage = ref<string | null>(null);
 const applicationsService = useApplications();
 
 const handleSubmit = async () => {
@@ -42,7 +44,10 @@ const handleSubmit = async () => {
                 password_confirmation: form.confirmPassword,
             });
             if (response.codigoRetorno == 200) {
-                navigateTo('/login');
+                successMessage.value = "Contraseña cambiada exitosamente. Redirigiendo al login...";
+                setTimeout(() => {
+                    router.push('/login');
+                }, 2000);
             }
         } catch (e) {
             backendError.value = "Error al comunicarse con el servidor.";
@@ -52,7 +57,6 @@ const handleSubmit = async () => {
         loading.value = false;
     }
 };
-
 </script>
 
 <template>
@@ -67,6 +71,7 @@ const handleSubmit = async () => {
                 <DsInput type="password" v-model="form.confirmPassword" label="Confirmar Nueva Contraseña" :error="getErrorMessage(validateForm?.confirmPassword.$errors[0])"/>
             </div>
             <div v-if="backendError" class="text-red-500 mb-4">{{ backendError }}</div>
+            <DsAlert v-if="successMessage" class="mb-5" title="Operación exitosa" type="success">{{ successMessage }}</DsAlert>
             <DsButton :loading="loading" type="submit" class="w-full"><span class="text-center w-full">Cambiar Contraseña</span></DsButton>
         </form>
     </div>
