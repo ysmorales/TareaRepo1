@@ -68,7 +68,7 @@ function handleClickLink() {
             </div>
             <div class="mb-6">
                 <div class="mb-4">
-                    <DsInput v-model="form.password" label="Contraseña" :error="getErrorMessage(validateForm?.password.$errors[0])"/>
+                    <DsInput type="password" v-model="form.password" label="Contraseña" :error="getErrorMessage(validateForm?.password.$errors[0])"/>
                 </div>
             </div>
             <div v-if="backendError" class="text-red-500 mb-4">{{ backendError }}</div>

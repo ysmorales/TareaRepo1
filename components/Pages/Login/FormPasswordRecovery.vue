@@ -50,10 +50,10 @@ const handleSubmit = async () => {
 <template>
     <form class="mb-5" @submit.prevent="handleSubmit">
         <div class="mb-4">
-            <DsInput @input="handleInput" v-model="form.email" label="Correo electrónico" :error="getErrorMessage(validateForm?.email.$errors[0])" :disabled="successMessage"/>
+            <DsInput @input="handleInput" v-model="form.email" label="Correo electrónico" :error="getErrorMessage(validateForm?.email.$errors[0])" :disabled="!!successMessage"/>
         </div>
         <div v-if="backendError" class="text-red-500 mb-4">{{ backendError }}</div>
         <div v-if="successMessage" class="text-green-500 mb-4">{{ successMessage }}</div>
-        <DsButton :loading="loading" type="submit" class="w-full" :disabled="successMessage"><span class="text-center w-full">Enviar</span></DsButton>
+        <DsButton :loading="loading" type="submit" class="w-full" :disabled="!!successMessage"><span class="text-center w-full">Enviar</span></DsButton>
     </form>
 </template>
