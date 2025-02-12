@@ -7,16 +7,16 @@ export const competitionStage: ITableColumnData[] = [
         size: "w-[10%]",
     },
     {
-        title: "Run",
-        key: "start_date",
+        title: "Empresa",
+        key: "empresa",
         size: "w-[10%]",
     },
-    { title: "Correo Electrónico", key: "end_date", size: "w-[10%]" },
+    { title: "Correo Electrónico", key: "email", size: "w-[10%]" },
     {
-        title: "Permisos",
-        key: "status_text",
+        title: "Rol",
+        key: "role",
         size: "w-[10%]",
     },
     { title: "Última modificación", key: "dead_line", size: "w-[10%]" },
-    { title: "Acción", key: "dead_line", size: "w-[10%]" },
+    {title: "Acciones", actions: {edit: true, labels: {edit: 'Editar perfil'}}, size: "w-[5%]"},
 ];
