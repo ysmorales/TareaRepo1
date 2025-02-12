@@ -30,9 +30,11 @@ const handleSubmit = async () => {
         loading.value = true;
         backendError.value = null;
         try {
-            console.log("Sending to back");
-            const response = await applicationsService.procedure.createOne("/api/change-password", {
-                newPassword: form.newPassword,
+            const response = await applicationsService.procedure.createOne("/api/password/reset", {
+                token: "c9cfbb155c3e52c468237a8d8102dc2cc5513de1",
+                email: "perezguedesmaikel@gmail.com",
+                password: form.newPassword,
+                password_confirmation: form.confirmPassword,
             });
             if (response.codigoRetorno == 200) {
                 navigateTo('/');
