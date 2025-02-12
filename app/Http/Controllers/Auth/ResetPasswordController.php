@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Helpers\ResponseHelper;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
@@ -28,7 +29,7 @@ class ResetPasswordController extends Controller
         );
 
         return $status === Password::PASSWORD_RESET
-            ? response()->json(['message' => __($status)], 200)
-            : response()->json(['message' => __($status)], 400);
+            ? ResponseHelper::returnResponse(200, __($status))
+            : ResponseHelper::returnResponse(400, __($status));
     }
 }

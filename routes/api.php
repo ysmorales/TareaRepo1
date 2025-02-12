@@ -18,9 +18,6 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register'])->middleware('auth:sanctum');
 Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
 Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
-Route::get('password/reset/{token}', function ($token) {
-    return view('auth.passwords.reset', ['token' => $token]);
-})->name('password.reset');
 
 Route::get('/test-email', function () {
     Mail::raw('This is a test email', function ($message) {
