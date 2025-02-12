@@ -1,9 +1,14 @@
 <script lang="ts" setup>
-import {DsButton, DsInput, DsLink, DsTypography} from "~/components/DesignSystem";
+import {DsButton, DsInput, DsTypography} from "~/components/DesignSystem";
 import {required, minLength, helpers} from "@vuelidate/validators";
 import {useVuelidate} from "@vuelidate/core";
 import {getErrorMessage} from "~/components/DesignSystem/utils/translateErrorMessage";
 import useApplications from '~/api-services/applications';
+import { useRoute } from 'vue-router';
+
+const route = useRoute();
+const token = route.query.token as string;
+const email = route.query.email as string;
 
 const form = reactive({
     newPassword: "",
@@ -31,18 +36,13 @@ const handleSubmit = async () => {
         backendError.value = null;
         try {
             const response = await applicationsService.procedure.createOne("/api/password/reset", {
-                token: "c9cfbb155c3e52c468237a8d8102dc2cc5513de1",
-                email: "perezguedesmaikel@gmail.com",
+                token: token,
+                email: email,
                 password: form.newPassword,
                 password_confirmation: form.confirmPassword,
             });
             if (response.codigoRetorno == 200) {
-                navigateTo('/');
-                // internalStatus.value = "success";
-                // $emit('cancel');
-            }
-            if(response.codigoRetorno==400){
-                backendError.value = "La contraseña actual es incorrecta";
+                navigateTo('/login');
             }
         } catch (e) {
             backendError.value = "Error al comunicarse con el servidor.";
@@ -53,9 +53,6 @@ const handleSubmit = async () => {
     }
 };
 
-function handleClickLink() {
-    navigateTo('/login/password-recovery');
-}
 </script>
 
 <template>
