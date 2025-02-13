@@ -35,10 +35,10 @@ class UserController extends Controller
         return response()->json($user);
     }
 
-    public function destroy($id): JsonResponse
+    public function destroy($id): array
     {
         $user = User::findOrFail($id);
         $user->delete();
-        return response()->json(null, 204);
+        return ResponseHelper::returnResponse(204, 'Eliminación exitosa.');
     }
 }
