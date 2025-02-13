@@ -2,21 +2,25 @@
 import {competitionStage} from "~/components/Pages/user-list/tableColumn";
 import type {ITableColumnData} from "~/components/DesignSystem/components/basic/table/interface";
 import TableWrapper from "~/components/Pages/tableWrapper.vue";
+import type {IMeta} from "~/interfaces/interfaces";
 defineProps({
     data:{
-        type: Array,
+        type: Object,
         required: true
     }
 })
 const loading=ref(false)
 
 function getData(data:any){
-    return data
+    return data?.data
 }
 const othersProps = {
     checkboxSelection: true,
     addButtonLabel:"Nuevo usuario(a)",
 };
+function getPaginator(detail: any): IMeta {
+    return detail?.meta
+}
 function handleEdit() {
     alert('Hello world!!!')
 }

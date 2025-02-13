@@ -53,6 +53,7 @@ onBeforeMount(async () => {
 </script>
 
 <template>
+    {{response?.data}}
     <div class="p-5">
         <div class="flex">
             <DsIcon class="mr-5" name="arrow-right" size="medium"/>
@@ -60,7 +61,7 @@ onBeforeMount(async () => {
         </div>
         <DsTypography>Gestiona roles y edita usuarios.</DsTypography>
         <div class="mt-10">
-            <UserListTable :data="response?.data.data!"/>
+            <UserListTable :data="response?.data!"/>
         </div>
     </div>
 </template>

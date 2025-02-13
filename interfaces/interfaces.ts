@@ -60,5 +60,15 @@ export interface IConfig {
     menu: IMenu[]
     isDone?: boolean
 }
+export interface IMeta {
+    current_page: number
+    from: number
+    last_page: number
+    links: Array<{ url: string | null, label: string, active: boolean }>
+    path: string
+    per_page: number
+    to: number
+    total: number
+}
 
 export type role = 'USER' | 'OPERATOR' | 'ADMIN'
