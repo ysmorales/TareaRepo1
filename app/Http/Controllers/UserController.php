@@ -10,10 +10,18 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function index(): array
+    public function index(): JsonResponse
     {
-        $users = User::all()->toArray();
-        return ResponseHelper::returnResponse(200, 'User list.',response()->json($users));
+        $users = User::paginate(10); // Cambia 10 por el número de elementos por página que desees
+        return response()->json([
+            'data' => $users->items(),
+            'meta' => [
+                'current_page' => $users->currentPage(),
+                'last_page' => $users->lastPage(),
+                'per_page' => $users->perPage(),
+                'total' => $users->total(),
+            ],
+        ]);
     }
 
     public function store(UserRequest $request): JsonResponse
