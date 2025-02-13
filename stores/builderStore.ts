@@ -4,6 +4,11 @@ import uniqid from "uniqid";
 import { ref } from 'vue';
 import { getEmptySection } from "~/utils/tree";
 
+
+import { useVuelidate } from "@vuelidate/core";
+import { email, helpers, numeric, required } from "@vuelidate/validators";
+
+
 type IModalType = 'property' | 'save' | 'validate' | 'formData' | 'infoPanel'
 
 const keyLocalStoreInfo = '55t'
@@ -33,6 +38,23 @@ export const useBuilderStore = defineStore('counter', () => {
     const propertyCollapse = ref(
         true
     )
+
+    const $externalResults = ref({});
+    const form = computed(() => {
+        return { ...getFormFieldValues(itemsPageList.value) }
+    });
+
+    const formRules = computed(() => {
+        const step1 = {}
+        Object.keys(getFormFieldValues(itemsPageList.value)).forEach(element => {
+            step1[element] = { required }
+        });
+
+        return step1
+    });
+
+    const validateForm = useVuelidate(formRules, form, { $externalResults });
+
 
     let idCounter = 0; // Agrega un contador para los IDs
 
@@ -366,6 +388,7 @@ export const useBuilderStore = defineStore('counter', () => {
         itemToCopy,
         handlerSaveBoard,
         handlerChangeNumChildrensSections,
-        handlerChangeRemoveChildrensSections
+        handlerChangeRemoveChildrensSections,
+        validateForm
     }
 })

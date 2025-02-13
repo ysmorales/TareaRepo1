@@ -75,11 +75,11 @@ const item = computed(() => {
           @handlerChange="handlerChange"
           label="Marging"
           key-name="margin"
-          :sides-default="item?.settings.margin"
+          :sides-default="item?.settings?.margin"
         />
         <Color
           @handlerChange="handlerChange"
-          :color-default="item?.settings.backgroundColor"
+          :color-default="item?.settings?.backgroundColor"
         />
         <FormConfig
           v-if="itemOnSelect.type === 'section'"

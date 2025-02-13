@@ -1,8 +1,11 @@
 <script lang="ts" setup>
+import { useBuilderStore } from "~/stores/builderStore";
 import nestled from "./nestled.vue";
 import AddBlock from "./AddBlock.vue";
 import TreeNode from "./DefaultAreaContainer.vue";
 import SubscribeInternalChanges from "./SubscribeInternalNumChildren.vue";
+
+import { getErrorMessage } from "./helpers";
 
 interface IProp {
   element?: any;
@@ -14,6 +17,9 @@ interface IProp {
 const props = withDefaults(defineProps<IProp>(), {});
 
 const emit = defineEmits(["update:modelValue"]);
+
+const store = useBuilderStore();
+const { validateForm } = toRefs(store);
 
 const model = computed({
   get() {
@@ -31,6 +37,13 @@ const model = computed({
     :is="getComponentKey(element.item)"
     v-bind="filterProps(element.props)"
     :in-editor="!seeOnly"
+    :error="
+      validateForm
+        ? getErrorMessage(
+            validateForm[getNameFieldFormNode(element)]?.$errors[0]
+          )
+        : null
+    "
     v-model="model"
   >
     <template v-for="name in element.slots" v-slot:[name]="slotData">

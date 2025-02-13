@@ -24,6 +24,8 @@ export function useNodeValidator(items) {
 
     return {
         validateForm,
+        formRules,
+        form,
         $externalResults
     }
 }

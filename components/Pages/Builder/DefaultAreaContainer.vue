@@ -6,7 +6,10 @@ import {
   getEventsVariant,
 } from "./helpers";
 import DefaultNodeAreaContainer from "./DefaultNodeAreaContainer.vue";
-import ValidationContext from "./FormBuilder/Validations/ValidationContext.vue";
+import { useBuilderStore } from "~/stores/builderStore";
+
+const store = useBuilderStore();
+const { validateForm } = toRefs(store);
 
 interface IProp {
   items?: any;
@@ -19,28 +22,21 @@ const props = withDefaults(defineProps<IProp>(), {
 </script>
 
 <template>
-  <ValidationContext :items="items">
-    <template #form="{ validateForm }">
-      <component
-        v-for="(node, index) in items"
-        :is="getTypeVariant(node)"
-        :key="node.id"
-        :class="[
-          getClassRow(node),
-          node.type === 'column'
-            ? node.settings.columnSpan ?? 'col-span-12'
-            : '',
-          node.type,
-        ]"
-        :style="[getCustomStyleRow(node)]"
-        v-on="getEventsVariant(node, validateForm)"
-      >
-        <DefaultNodeAreaContainer
-          :node="node"
-          :validateForm="validateForm"
-          v-if="indexShow === 'all' || indexShow === index"
-        />
-      </component>
-    </template>
-  </ValidationContext>
+  <component
+    v-for="(node, index) in items"
+    :is="getTypeVariant(node)"
+    :key="node.id"
+    :class="[
+      getClassRow(node),
+      node.type === 'column' ? node.settings.columnSpan ?? 'col-span-12' : '',
+      node.type,
+    ]"
+    :style="[getCustomStyleRow(node)]"
+    v-on="getEventsVariant(node, validateForm)"
+  >
+    <DefaultNodeAreaContainer
+      :node="node"
+      v-if="indexShow === 'all' || indexShow === index"
+    />
+  </component>
 </template>

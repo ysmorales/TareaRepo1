@@ -31,6 +31,7 @@ const handleAdd = () => {
   if (isNotEmpty(id)) {
     listValidations.value.push({
       id,
+      validation: "isNotEmpty",
     });
   }
 };

@@ -26,10 +26,6 @@ const listValidationsOptions = [
     value: "isEmpty",
     text: "is empty",
   },
-  {
-    value: "isEqualTo",
-    text: "is equal to",
-  },
 ];
 </script>
 
@@ -38,7 +34,7 @@ const listValidationsOptions = [
     <div>{{ index + 1 }}.</div>
     <div class="max-w-[200px]">
       <DsSelect
-        v-model="info.field"
+        v-model="info.id"
         :option="fields"
         label=""
         placeholder="Select field"

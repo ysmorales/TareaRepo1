@@ -22,7 +22,7 @@ const getValues = () => {
       itemOnSelect.value.id
     );
     const nodo = getNodeByPath(itemsPageList.value, ruta);
-    return nodo.settings.extra ?? { name: "" };
+    return nodo?.settings?.extra ?? { name: "" };
   }
 };
 

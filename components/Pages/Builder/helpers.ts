@@ -45,8 +45,6 @@ const handleSubmit = (theNode, validateForm) => {
     } catch (error) {
         validateForm.$touch()
     }
-
-    console.log("aquiiiiiii", validateForm);
 };
 
 export const getEventsVariant = (node, validateForm) => {

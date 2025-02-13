@@ -9,7 +9,7 @@ const props = withDefaults(defineProps<IProp>(), {
   items: [],
 });
 
-const { validateForm } = useNodeValidator(props.items);
+const { validateForm, form, formRules } = useNodeValidator(props.items);
 </script>
 
 <template>
