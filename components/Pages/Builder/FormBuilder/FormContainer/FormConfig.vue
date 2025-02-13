@@ -12,6 +12,7 @@ const props = withDefaults(defineProps<IProp>(), {
   formDefault: {
     isForm: false,
     runValidations: false,
+    handlerEventValidations: false,
     sendToServer: false,
     endpoint: "",
     handlerEventSubmit: "",
@@ -61,6 +62,18 @@ watch(
       <DsCheck
         v-model="formConfig.runValidations"
         label="Ejecutar validaciones"
+      />
+    </FieldLayout>
+
+    <FieldLayout
+      v-if="formConfig.runValidations"
+      description="Evento que ejecuta las validaciones"
+    >
+      <DsSelect
+        v-model="formConfig.handlerEventValidations"
+        :option="handlersEventSubmit"
+        label="Selecciona evento previo a ejecutar las validaciones"
+        :placeholder="`Select event`"
       />
     </FieldLayout>
 

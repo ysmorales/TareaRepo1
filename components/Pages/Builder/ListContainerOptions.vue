@@ -10,7 +10,6 @@ const store = useBuilderStore();
 const {
   itemOnSelect,
   handlerChangeLayout,
-  handlerChangeContainerPaddingMargin,
   handlerChangeContainerSettings,
   itemsPageList,
 } = toRefs(store);

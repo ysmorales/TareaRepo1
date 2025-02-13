@@ -158,23 +158,22 @@ export const getFormFieldsNodes = (listTree, id) => {
     return leaves;
 };
 
+const fieldsForm = ['DsInput']
+
 export const getFormFieldValues = (listTree, id) => {
     const trees = id ? [getNodeByPath(listTree, encontrarRutaPorIndice(listTree, id))] : listTree;
     let leaves = {};
     const addNode = (node) => {
-        if (isNotEmpty(node.data)) {
-            leaves[node.id] = node.data
+        if (fieldsForm.includes(getNameComponentKey(node.item))) {
+            leaves[node.id] = node.data ?? ''
         }
     };
     function traverse(node) {
-        if (!node?.items || node?.items.length === 0) {
+        if (node?.item) {
             addNode(node);
-        } else {
-            if (node?.item) {
-                addNode(node);
-            }
-            node?.items?.forEach(traverse);
         }
+        if (node?.items)
+            node?.items?.forEach(traverse);
     }
     trees.forEach(traverse);
     return leaves;

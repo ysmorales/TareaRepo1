@@ -21,7 +21,7 @@ const getFormFields = () =>
 
 const listFieldsOptions = getFormFields().map((d) => ({
   value: d.id,
-  text: d.item,
+  text: getNameComponentKey(d.item),
 }));
 
 const listValidations = ref(props.validationsDefault);
