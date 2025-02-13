@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import Fields from "./FormBuilder/Fields.vue";
 import Slots from "./FormBuilder/Slots.vue";
+import ExtraFields from "./FormBuilder/ExtraFields.vue";
 
 interface IProp {
   item: any;
@@ -31,5 +32,6 @@ const slotsNames = ref({});
       />
     </div>
     <Slots :item="item" />
+    <ExtraFields :item="item" />
   </div>
 </template>

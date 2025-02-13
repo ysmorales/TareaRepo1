@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { ref, defineExpose } from "vue";
-import uniqid from "uniqid";
 import { useBuilderStore } from "~/stores/builderStore";
 import ItemField from "./ItemField.vue";
 import AddFieldOptions from "../addFieldOptions.vue";
@@ -21,15 +20,19 @@ const getFormFields = () =>
 
 const listFieldsOptions = getFormFields().map((d) => ({
   value: d.id,
-  text: getNameComponentKey(d.item),
+  text: `${getNameComponentKey(d?.item)}.${getNameFieldFormNode(d)}`,
 }));
 
 const listValidations = ref(props.validationsDefault);
 
 const handleAdd = () => {
-  listValidations.value.push({
-    id: uniqid("v"),
-  });
+  const fieldsFound = getFormFields();
+  const id = isNotEmpty(fieldsFound) ? fieldsFound[0].id : null;
+  if (isNotEmpty(id)) {
+    listValidations.value.push({
+      id,
+    });
+  }
 };
 
 const handlerRemove = (index) => {

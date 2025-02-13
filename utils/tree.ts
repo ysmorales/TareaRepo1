@@ -160,12 +160,14 @@ export const getFormFieldsNodes = (listTree, id) => {
 
 const fieldsForm = ['DsInput']
 
+export const getNameFieldFormNode = (node) => node?.settings?.extra?.name ?? node.id
+
 export const getFormFieldValues = (listTree, id) => {
     const trees = id ? [getNodeByPath(listTree, encontrarRutaPorIndice(listTree, id))] : listTree;
     let leaves = {};
     const addNode = (node) => {
         if (fieldsForm.includes(getNameComponentKey(node.item))) {
-            leaves[node.id] = node.data ?? ''
+            leaves[getNameFieldFormNode(node)] = node.data ?? ''
         }
     };
     function traverse(node) {
