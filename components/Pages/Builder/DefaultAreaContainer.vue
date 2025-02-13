@@ -10,11 +10,19 @@ const props = withDefaults(defineProps<IProp>(), {
   items: [],
   indexShow: "all",
 });
+
+const getTypeVariant = (node) =>
+  node?.settings?.form?.isForm
+    ? "form"
+    : node?.type === "section"
+    ? "section"
+    : "div";
 </script>
 
 <template>
-  <div
+  <component
     v-for="(node, index) in items"
+    :is="getTypeVariant(node)"
     :key="node.id"
     :class="[
       {
@@ -22,6 +30,7 @@ const props = withDefaults(defineProps<IProp>(), {
       },
       getClassRow(node),
       node.type === 'column' ? node.settings.columnSpan ?? 'col-span-12' : '',
+      node.type,
     ]"
     :style="[getCustomStyleRow(node)]"
   >
@@ -29,5 +38,5 @@ const props = withDefaults(defineProps<IProp>(), {
       :node="node"
       v-if="indexShow === 'all' || indexShow === index"
     />
-  </div>
+  </component>
 </template>

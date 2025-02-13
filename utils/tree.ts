@@ -1,4 +1,3 @@
-
 import uniqid from "uniqid";
 
 export function deleteElementByPath(trees, path) {
@@ -116,11 +115,9 @@ export function updateNodeByPath(trees, path, key, value, allReplace = false) {
     }
 }
 
-
 export function clone(item) {
     return JSON.parse(JSON.stringify(item))
 }
-
 
 export const getEmptySection = () => ({
     id: uniqid('s'),
@@ -133,8 +130,6 @@ export const getEmptySection = () => ({
         items: []
     }]
 })
-
-
 
 export const getFormFieldsNodes = (listTree, id) => {
     const path = encontrarRutaPorIndice(listTree, id);
@@ -162,7 +157,6 @@ export const getFormFieldsNodes = (listTree, id) => {
     trees.forEach(traverse);
     return leaves;
 };
-
 
 export const getFormFieldValues = (listTree, id) => {
     const trees = id ? [getNodeByPath(listTree, encontrarRutaPorIndice(listTree, id))] : listTree;
