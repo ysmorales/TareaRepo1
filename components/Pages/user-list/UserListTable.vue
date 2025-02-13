@@ -40,8 +40,8 @@ function handleAddRow() {
 
 <template>
     <!--    <DsTable :data="data" checkbox-selection :columns="competitionStage" add-button-label="Nuevo usuario(a)"/>-->
-    <DsModal v-model="showModal" title="Nuevo usuario(a)">
-        <UserForm/>
+    <DsModal v-model="showModal" :show-footer="false" title="Nuevo usuario(a)">
+        <UserForm @cancel="()=>showModal=false"/>
     </DsModal>
     <TableWrapper
         :columns="competitionStage as ITableColumnData[]"
