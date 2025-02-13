@@ -53,7 +53,6 @@ onBeforeMount(async () => {
 </script>
 
 <template>
-    {{response?.data}}
     <div class="p-5">
         <div class="flex">
             <DsIcon class="mr-5" name="arrow-right" size="medium"/>
