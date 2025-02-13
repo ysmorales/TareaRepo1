@@ -4,6 +4,7 @@ import type {ITableColumnData} from "~/components/DesignSystem/components/basic/
 import TableWrapper from "~/components/Pages/tableWrapper.vue";
 import type {IMeta} from "~/interfaces/interfaces";
 import {DsModal} from "~/components/DesignSystem";
+import UserForm from "~/components/Pages/user-list/UserForm.vue";
 
 defineProps({
     data: {
@@ -40,7 +41,7 @@ function handleAddRow() {
 <template>
     <!--    <DsTable :data="data" checkbox-selection :columns="competitionStage" add-button-label="Nuevo usuario(a)"/>-->
     <DsModal v-model="showModal" title="Nuevo usuario(a)">
-        Hello!!!
+        <UserForm/>
     </DsModal>
     <TableWrapper
         :columns="competitionStage as ITableColumnData[]"
