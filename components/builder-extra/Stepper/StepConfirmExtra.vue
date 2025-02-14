@@ -1,8 +1,6 @@
 <script lang="ts" setup>
 import ResumeConfirmNew from "./Resume/ResumeConfirmNew.vue";
-interface IProp {
-  loading: false;
-}
+interface IProp {}
 
 const props = withDefaults(defineProps<IProp>(), {});
 
@@ -75,4 +73,5 @@ const theItems = computed(() =>
 
 <template>
   <ResumeConfirmNew :items="theItems" />
+  <slot></slot>
 </template>
