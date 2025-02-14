@@ -3,11 +3,10 @@ import { defineStore } from 'pinia';
 import uniqid from "uniqid";
 import { ref } from 'vue';
 import { getEmptySection } from "~/utils/tree";
-
+import { getErrorMessage } from "~/components/Pages/Builder/helpers";
 
 import { useVuelidate } from "@vuelidate/core";
 import { email, helpers, numeric, required } from "@vuelidate/validators";
-
 
 type IModalType = 'property' | 'save' | 'validate' | 'formData' | 'infoPanel'
 
@@ -53,8 +52,12 @@ export const useBuilderStore = defineStore('counter', () => {
         return step1
     });
 
+    const isLoadingForm = ref(false)
     const validateForm = useVuelidate(formRules, form, { $externalResults });
 
+    function setLoadingForm(newState) {
+        isLoadingForm.value = newState
+    }
 
     let idCounter = 0; // Agrega un contador para los IDs
 
@@ -389,6 +392,8 @@ export const useBuilderStore = defineStore('counter', () => {
         handlerSaveBoard,
         handlerChangeNumChildrensSections,
         handlerChangeRemoveChildrensSections,
-        validateForm
+        validateForm,
+        setLoadingForm,
+        isLoadingForm
     }
 })

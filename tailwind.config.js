@@ -28,10 +28,14 @@ export default {
                 robotoSlab: ["Roboto Slab"],
                 robotoBold: ["Roboto Bold"],
                 robotoSlabBold: ["Roboto Slab Bold"],
+                inriaSans: ["InriaSans"],
+                inriaSansItalic: ["InriaSans Italic"],
+                inriaSansBold: ["InriaSans Bold"],
+                inriaSansBoldItalic: ["InriaSans Bold Italic"],
             },
             colors: {
                 primary: {
-                    500: "#0f69b4", //Default
+                    500: "#0063af", //Default
                     900: "#0e4b7e", // Dark
                 },
                 dark: {
@@ -43,12 +47,13 @@ export default {
                     900: "#c5262c",
                 },
                 success: {
-                    100: "#caeabe",
-                    500: "#2b822b", //Default
+                    100: "#EEFFE0",
+                    500: "#2EB000", //Default
                     900: "#206420",
                 },
                 warning: {
-                    500: "#bd5b00", //Default
+                    100: "#FFF0E0",
+                    500: "#BD5F00", //Default
                 },
                 cyan: {
                     500: "#f1f8ff", //Default

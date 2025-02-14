@@ -1,5 +1,7 @@
 <script lang="ts" setup>
 import { DsStepper } from "~/components/DesignSystem";
+import { useBuilderStore } from "~/stores/builderStore";
+
 interface IProp {
   modelValue: number;
   totalSteps: number;
@@ -11,11 +13,34 @@ const props = withDefaults(defineProps<IProp>(), {
   totalSteps: 3,
 });
 
+const store = useBuilderStore();
+const { validateForm, isLoadingForm, setLoadingForm } = toRefs(store);
+
 const internalStep = ref(props.modelValue);
 const action = ref({});
 
-const handleStep = (newStep) => {
-  internalStep.value = newStep;
+const handleStep = (stepTemp) => {
+  if (props.inEditor) {
+    internalStep.value = stepTemp;
+    return;
+  }
+  const isLess = stepTemp < internalTotalStep.value;
+  if (stepTemp === 1 && isLess) {
+    internalStep.value = stepTemp;
+  } else {
+    validateForm.value.$touch();
+    if (!validateForm.value.$invalid) {
+      if (isLess) {
+        internalStep.value = stepTemp;
+      } else {
+        setLoadingForm.value(true);
+        setTimeout(() => {
+          setLoadingForm.value(false);
+          internalStep.value = stepTemp;
+        }, 3000);
+      }
+    }
+  }
 };
 
 const internalTotalStep = ref(props.totalSteps);
@@ -56,6 +81,7 @@ watch(
 <template>
   <DsStepper
     v-model="internalStep"
+    :loading="isLoadingForm"
     @change-step="handleStep"
     @handler-add-new-step="handlerAddStep"
     @handler-remove-step="handlerRemoveStep"

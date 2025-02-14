@@ -49,6 +49,9 @@ export function encontrarRutaPorIndice(arbol, idBuscado, ruta = []) {
 
 export function assignNewIds(node) {
     node.id = uniqid();
+    if (node?.settings?.extra?.name) {
+        node.settings.extra.name = `${node.settings.extra.name}-${uniqid()}`
+    }
     if (Array.isArray(node.items)) {
         node.items.forEach(assignNewIds);
     }

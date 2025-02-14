@@ -4,7 +4,7 @@ import { toRefs } from "vue";
 import GlobalActions from "./GlobalActions.vue";
 import DefaultAreaContainer from "./DefaultAreaContainer.vue";
 const store = useBuilderStore();
-const { itemsPageList, validateForm } = toRefs(store);
+const { itemsPageList } = toRefs(store);
 </script>
 
 <template>

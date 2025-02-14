@@ -47,7 +47,11 @@ const model = computed({
     v-model="model"
   >
     <template v-for="name in element.slots" v-slot:[name]="slotData">
-      <div class="min-h-[300px]">
+      <div
+        :class="{
+          'min-h-[300px]': !isNotEmpty(element.items ?? []) && !seeOnly,
+        }"
+      >
         <AddBlock
           v-if="!isNotEmpty(element.items ?? []) && !seeOnly"
           type="slotSection"
