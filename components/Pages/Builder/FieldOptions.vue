@@ -17,8 +17,6 @@ const getAllInfoComponent = (keyNameProp) => ({
   ...props.item?.component?.props[keyNameProp],
   ...infoComponent?.argTypes[keyNameProp],
 });
-
-const slotsNames = ref({});
 </script>
 
 <template>

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { DsModal, DsButton, DsCard } from "~/components/DesignSystem";
+import { DsModal, DsCard } from "~/components/DesignSystem";
 import { useBuilderStore } from "~/stores/builderStore";
 import ListItemsForm from "./ListItemsForm.vue";
 import AddFieldOptions from "../addFieldOptions.vue";

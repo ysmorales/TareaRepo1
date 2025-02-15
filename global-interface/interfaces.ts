@@ -1,5 +1,5 @@
-import type {RoleName} from '~/roles/roles'
-import type {IUser} from "~/components/unidos/button-avatar/generalInterfaces";
+import type { RoleName } from '~/roles/roles'
+import type { IUser } from "~/components/unidos/button-avatar/generalInterfaces";
 
 export interface DecryptedResponse {
   glosaRetorno: string;
@@ -8,7 +8,6 @@ export interface DecryptedResponse {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   respuesta: { data: any, respuesta?: any };
 }
-
 
 export interface IQuery {
   paginate: number | string,
@@ -119,14 +118,14 @@ export type IUserRequest = IApiResponseWrapper<IUserProfile>
 export type IRoles = RoleName[] | RoleName
 
 export interface IMenu {
-    link: string
-    id: number
-    text: string
-    roles: IRoles
-    onInit?: boolean
-    sideRight: boolean
-    centerFull?: boolean
-    hiddenSideRight?: boolean
+  link: string
+  id: number
+  text: string
+  roles: IRoles
+  onInit?: boolean
+  sideRight: boolean
+  centerFull?: boolean
+  hiddenSideRight?: boolean
   activeOnInmediate?: boolean
 }
 

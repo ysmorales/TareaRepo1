@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { useBuilderStore } from "~/stores/builderStore";
-import { toRefs } from "vue";
+import { toRefs, provide } from "vue";
 import GlobalActions from "./GlobalActions.vue";
 import DefaultAreaContainer from "./DefaultAreaContainer.vue";
 const store = useBuilderStore();

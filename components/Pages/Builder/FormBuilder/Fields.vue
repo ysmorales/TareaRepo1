@@ -3,6 +3,7 @@ import { DsInput, DsSelect, DsCheck } from "~/components/DesignSystem";
 
 import { useBuilderStore } from "~/stores/builderStore";
 import FieldLayout from "./fieldLayout.vue";
+import FieldObjectRecord from "./FieldObjectRecord/index.vue";
 
 interface IProp {
   fieldKey: string;
@@ -79,6 +80,13 @@ watch(valueField, () => {
       v-if="getType() === 'boolean'"
       v-model="valueField"
       :label="fieldKey"
+    />
+
+    <FieldObjectRecord
+      v-model="valueField"
+      v-if="getType() === 'object'"
+      :label="fieldKey"
+      :fieldInfo="fieldInfo"
     />
   </FieldLayout>
 </template>

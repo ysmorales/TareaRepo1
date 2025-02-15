@@ -1,9 +1,11 @@
-import { ref } from 'vue';
 import RadioGroupExtra from './RadioGroupExtra.vue'
 import {
     commonArgTypes,
     commonInputArgTypes,
 } from '../../../stories/common/common.ts';
+
+//https://www.npmjs.com/package/ts-json-schema-generator
+//https://typia.io/docs/random/
 
 export default {
     title: 'Form/RadioGroupExtra',
@@ -14,11 +16,21 @@ export default {
         ...commonArgTypes,
         ...commonInputArgTypes,
         default: { table: { disable: true } },
-        class: {
-            control: 'text',
-                description:
-                'The `class` property allows you to apply CSS class(es) to the component. You can utilize this to style and customize the appearance of the component in alignment with the rest of your application\'s design.',
-        },
+        items: {
+            control: {
+                type: 'object',
+                iType: 'ListOptions',
+                labels: {
+                    first: 'First Option',
+                    second: 'Second Option'
+                }
+            },
+            options: ['first', 'second'],
+            mapping: {
+                first: { id: 1, value: 'value 1' },
+                second: { id: 2, value: 'value 2' },
+            }
+        }
     },
 };
 

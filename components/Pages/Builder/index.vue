@@ -7,7 +7,6 @@ import DefaultArea from "./DefaultArea.vue";
 
 import ListComponents from "./ListComponents.vue";
 import FieldTabsOptions from "./FieldTabsOptions.vue";
-
 const store = useBuilderStore();
 const { viewMode } = toRefs(store);
 </script>

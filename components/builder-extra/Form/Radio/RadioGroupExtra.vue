@@ -1,8 +1,9 @@
 <script lang="ts" setup>
 import { DsRadioGroup, DsRadio } from "~/components/DesignSystem";
+import type { ListOptions } from "~/global-interface/common";
 interface IProp {
   error: any;
-  items: any;
+  items: ListOptions;
 }
 
 const props = withDefaults(defineProps<IProp>(), {
