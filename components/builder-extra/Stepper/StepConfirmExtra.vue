@@ -4,8 +4,6 @@ import ResumeConfirmNew from "./Resume/ResumeConfirmNew.vue";
 import type { ListItems } from "~/global-interface/common";
 interface IProp {
   items: ListItems;
-  title?: string;
-  subTitle?: string;
 }
 
 const props = withDefaults(defineProps<IProp>(), {

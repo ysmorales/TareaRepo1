@@ -1,6 +1,8 @@
 <script lang="ts" setup>
-import { DsInput, DsCheck } from "~/components/DesignSystem";
+import { DsInput, DsCheck, DsIcon } from "~/components/DesignSystem";
+import DsTooltip from "~/components/DesignSystem/components/basic/tooltip/DsTooltip.vue";
 import EditionRecord from "./EditionRecord.vue";
+import FieldAdvanceEdition from "./FieldAdvanceEdition.vue";
 
 import Field from "./Field.vue";
 
@@ -43,13 +45,13 @@ const handlerUpdate = ({ index, newState, field }) => {
 </script>
 
 <template>
-  <DsInput
+  <FieldAdvanceEdition
     v-if="
       type && Array.isArray(type) ? type?.includes('string') : type === 'string'
     "
-    v-model="model"
-    :label="`${fieldKey}:`"
-  />
+  >
+    <DsInput v-model="model" :label="`${fieldKey}:`" />
+  </FieldAdvanceEdition>
 
   <DsCheck v-if="type === 'boolean'" v-model="model" :label="`${fieldKey}`" />
 
@@ -63,7 +65,7 @@ const handlerUpdate = ({ index, newState, field }) => {
     />
   </div>
 
-  <div v-if="type === 'array'" class="">
+  <div v-if="type === 'array'">
     <label>{{ fieldKey }}:</label>
     <EditionRecord
       :schema="schema"

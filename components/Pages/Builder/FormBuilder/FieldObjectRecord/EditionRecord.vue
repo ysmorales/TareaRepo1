@@ -50,7 +50,7 @@ const handlerUpdate = ({ index, newState }) => {
 </script>
 
 <template>
-  <div>
+  <div class="border border-gray-300 shadow-md rounded-md">
     <div v-if="getTypeRecord(schema, refType) === 'array' || isArray">
       <div v-for="(ii, index) in model">
         <div
@@ -84,7 +84,7 @@ const handlerUpdate = ({ index, newState }) => {
 
       <AddFieldOptions label="Add item" @add="handleAdd" />
     </div>
-    <div v-if="getTypeRecord(schema, refType) === 'object'">
+    <div v-if="getTypeRecord(schema, refType) === 'object' && !isArray">
       <Item
         v-model="model"
         :index="index"
