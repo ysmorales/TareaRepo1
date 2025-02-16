@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { ref } from "vue";
-import AddFieldOptions from "../addFieldOptions.vue";
 import EditionRecord from "./EditionRecord.vue";
 
 interface IProp {
@@ -30,10 +29,6 @@ const fieldData = ref(
 
 const getIType = () => props.fieldInfo.control.iType;
 
-const handleAdd = () => {
-  fieldData.value.push({});
-};
-
 const handlerUpdate = ({ index, newState }) => {
   if (index) {
     fieldData.value[index] = newState;
@@ -53,7 +48,7 @@ watch(
 </script>
 
 <template>
-  <div class="m-2 mt-0 min-h-[400px]">
+  <div class="m-2 mt-0 max-h-[73vh] min-h-[400px]">
     <div v-if="status === 'pending' && !theSchema?.$schema">loading ...</div>
     <EditionRecord
       v-if="theSchema?.$schema || status !== 'pending'"
@@ -63,6 +58,5 @@ watch(
       :refType="getIType()"
       @handlerUpdate="handlerUpdate"
     />
-    <AddFieldOptions label="Add row" @add="handleAdd" />
   </div>
 </template>

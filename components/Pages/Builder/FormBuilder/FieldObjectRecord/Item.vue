@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import Field from "./Field.vue";
-import { getSchemaInfoRecord } from "./utils";
+import { getSchemaInfoRecord, getSchemaDefinition } from "./utils";
 
 interface IProp {
   schema: any;
@@ -10,8 +10,18 @@ interface IProp {
 
 const emit = defineEmits(["update:modelValue"]);
 
+const props = withDefaults(defineProps<IProp>(), {});
+const properties = getSchemaInfoRecord(props.schema, props.refType).properties;
 const model = computed({
   get() {
+    if (!isNotEmpty(props.modelValue)) {
+      const dd = {};
+      Object.keys(properties).forEach((d) => {
+        dd[d] = "";
+      });
+      return dd;
+    }
+
     return props.modelValue;
   },
 
@@ -20,10 +30,7 @@ const model = computed({
   },
 });
 
-const props = withDefaults(defineProps<IProp>(), {});
-const properties = getSchemaInfoRecord(props.schema, props.refType).properties;
-
-const handlerUpdate = ({ field, newState }) => {
+const handlerUpdate = ({ field, newState, index }) => {
   model.value[field] = newState;
 };
 </script>
@@ -32,9 +39,12 @@ const handlerUpdate = ({ field, newState }) => {
   <div v-for="ii in Object.keys(properties)">
     <Field
       @handlerUpdate="handlerUpdate"
-      :type="properties[ii].type"
+      :type="properties[ii].type ?? []"
+      :anyOf="properties[ii].anyOf"
+      :refTypeSub="getSchemaDefinition(properties[ii]?.items?.$ref)"
       :valueField="model[ii]"
       :fieldKey="ii"
+      :schema="schema"
     />
   </div>
 </template>

@@ -20,7 +20,7 @@ withDefaults(defineProps<IProp>(), {
 </script>
 
 <template>
-  <div v-if="resume && isNotEmpty(foundValue(subItems!))" class="mb-10">
+  <div v-if="resume && isNotEmpty(foundValue(subItems!))" class="mb-5">
     <DsTypography class="font-inriaSansBold text-xl">{{ title }}</DsTypography>
     <div
       v-for="(subItem, index) in subItems"

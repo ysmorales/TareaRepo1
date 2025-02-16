@@ -33,7 +33,6 @@ const model = computed({
 </script>
 
 <template>
-  {{ element.props }}
   <component
     :is="getComponentKey(element.item)"
     v-bind="filterProps(element.props)"
