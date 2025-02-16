@@ -41,17 +41,17 @@ const handlerEdit = () => {
 </script>
 
 <template>
-  <div class="m-2 mt-0">
+  <div class="mt-0">
     <DsModal
       v-if="showModal"
       :title="label"
       :model-value="showModal"
-      accept-text="Adicionar"
+      accept-text="Guardar"
       color-button-ok="primary"
       @close="showModal = false"
       @accept="handlerEdit"
     >
-      <div class="mt-2 p-2">
+      <div class="mt-2">
         <ListItems
           @handler-update="handlerStoreChanges"
           :defaultValues="clone(model)"
@@ -59,8 +59,9 @@ const handlerEdit = () => {
         />
       </div>
     </DsModal>
-    <DsButton color="primary" @click="handlerEditRecord"
-      >{{ label }} Editar
-    </DsButton>
+    <div class="mb-4">
+      <label>{{ label }}</label>
+      <DsButton color="primary" @click="handlerEditRecord">Editar </DsButton>
+    </div>
   </div>
 </template>

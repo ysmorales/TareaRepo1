@@ -183,3 +183,40 @@ export const getFormFieldValues = (listTree, id) => {
     trees.forEach(traverse);
     return leaves;
 };
+
+
+export const getScopeFieldValues = (listTree, id) => {
+    const trees = id ? [getNodeByPath(listTree, encontrarRutaPorIndice(listTree, id))] : listTree;
+    let leaves = {};
+    const addNode = (node) => {
+        if (node.settings?.extra?.name)
+            leaves[node.id] = node.settings?.extra?.name
+    };
+    function traverse(node) {
+        if (node?.settings?.extra?.scope) {
+            addNode(node);
+        }
+        if (node?.items)
+            node?.items?.forEach(traverse);
+    }
+    trees.forEach(traverse);
+    return leaves;
+};
+
+
+export const getFieldSubcribeTo = (listTree, id) => {
+    let leaves = [];
+    const addNode = (node) => {
+        if (node.settings?.extra?.scopeSubscribe && node.settings?.extra?.scopeSubscribe === id)
+            leaves.push({ id: node.id, path: encontrarRutaPorIndice(listTree, node.id) })
+    };
+    function traverse(node) {
+        if (node?.settings?.extra?.scope) {
+            addNode(node);
+        }
+        if (node?.items)
+            node?.items?.forEach(traverse);
+    }
+    listTree.forEach(traverse);
+    return leaves;
+};

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { DsInput, DsSelect, DsCheck } from "~/components/DesignSystem";
+import { DsInput, DsCheck, DsSelect } from "~/components/DesignSystem";
 import FieldLayout from "./fieldLayout.vue";
 import { useBuilderStore } from "~/stores/builderStore";
 
@@ -45,10 +45,35 @@ watch(
   },
   { deep: true }
 );
+const getFieldsToScope = () => {
+  const items = getScopeFieldValues(itemsPageList.value);
+  return Object.keys(items).map((d) => ({
+    value: d,
+    text: items[d],
+  }));
+};
 </script>
 
 <template>
   <FieldLayout description="Nombre a aplicar al field al enviar en el modelo">
     <DsInput v-model="valueField.name" label="Field name" />
+  </FieldLayout>
+  <FieldLayout description="Prepara escribir o leer del estado global">
+    <DsCheck
+      v-model="valueField.scope"
+      label="Subscribir estado global"
+      class="mb-4"
+    />
+  </FieldLayout>
+  <FieldLayout
+    description="La propiedad seleccionada cambiará cuando el objeto al que está subscrito cambie"
+    v-if="valueField.scope"
+  >
+    <DsSelect
+      v-model="valueField.scopeSubscribe"
+      :option="getFieldsToScope()"
+      label="Selecciona field"
+      :placeholder="`Select`"
+    />
   </FieldLayout>
 </template>

@@ -20,6 +20,7 @@ export const useBuilderStore = defineStore('counter', () => {
     const viewModeFieldConfigs = ref('single')
     const itemOnHover = ref('')
     const itemOnSelect = ref({})
+    const scopeModel = ref({})
     const itemToCopy = ref({})
     const builderItems = ref<IItemBuilder[]>([] as IItemBuilder[])
     const currentDragItem = ref<null | IItemBuilder>(null)
@@ -188,6 +189,14 @@ export const useBuilderStore = defineStore('counter', () => {
         updateNodeByPath(itemsPageList.value, ruta, 'props', { [key]: value.value });
     }
 
+    function updateSubscribeItemInForm({ id }: any, newStateProp: any) {
+        const listSubscribe = getFieldSubcribeTo(itemsPageList.value, id);
+
+        listSubscribe.forEach(nodeDic => {
+            updateNodeByPath(itemsPageList.value, nodeDic.path, 'props', newStateProp);
+        });
+    }
+
     function handlerCopyItem({ id, type }) {
         itemToCopy.value = { id, type }
     }
@@ -348,6 +357,10 @@ export const useBuilderStore = defineStore('counter', () => {
         window.localStorage.setItem(keyLocalStoreInfo, JSON.stringify(itemsPageList.value))
     }
 
+    function updateScopeModel(newEntryState) {
+        scopeModel.value = { ...scopeModel.value, ...newEntryState }
+    }
+
     return {
         propertyCollapse,
         changePropertyCollapse,
@@ -393,6 +406,7 @@ export const useBuilderStore = defineStore('counter', () => {
         handlerChangeRemoveChildrensSections,
         validateForm,
         setLoadingForm,
-        isLoadingForm
+        isLoadingForm,
+        updateSubscribeItemInForm
     }
 })
