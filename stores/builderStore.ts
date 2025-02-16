@@ -193,7 +193,11 @@ export const useBuilderStore = defineStore('counter', () => {
         const listSubscribe = getFieldSubcribeTo(itemsPageList.value, id);
 
         listSubscribe.forEach(nodeDic => {
-            updateNodeByPath(itemsPageList.value, nodeDic.path, 'props', newStateProp);
+            const nodo = getNodeByPath(itemsPageList.value, nodeDic.path);
+            if (!nodo.props) {
+                nodo.props = {}
+            }
+            nodo.props[nodo.settings?.extra?.scopeProp] = newStateProp
         });
     }
 

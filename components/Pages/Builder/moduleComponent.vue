@@ -28,11 +28,7 @@ const model = computed({
 
   set(value) {
     if (props.element?.settings?.extra?.scope) {
-      const keyName = props.element?.settings?.extra?.name || props.element.id;
-      updateSubscribeItemInForm.value(
-        { id: props.element.id },
-        { [props.element?.settings?.extra?.scopeField ?? "text"]: value }
-      );
+      updateSubscribeItemInForm.value({ id: props.element.id }, value);
     }
     emit("update:modelValue", value);
   },

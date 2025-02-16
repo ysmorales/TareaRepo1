@@ -52,6 +52,12 @@ const getFieldsToScope = () => {
     text: items[d],
   }));
 };
+
+const getProps = () =>
+  Object.keys(props.item?.component?.props ?? {}).map((d) => ({
+    value: d,
+    text: d,
+  }));
 </script>
 
 <template>
@@ -73,6 +79,18 @@ const getFieldsToScope = () => {
       v-model="valueField.scopeSubscribe"
       :option="getFieldsToScope()"
       label="Selecciona field"
+      :placeholder="`Select`"
+    />
+  </FieldLayout>
+  <FieldLayout
+    description="La propiedad seleccionada cambiará cuando el objeto al que está subscrito cambie"
+    v-if="valueField.scope"
+  >
+    <DsSelect
+      v-if="isNotEmpty(valueField.scopeSubscribe)"
+      v-model="valueField.scopeProp"
+      :option="getProps()"
+      label="Selecciona propiedad"
       :placeholder="`Select`"
     />
   </FieldLayout>
