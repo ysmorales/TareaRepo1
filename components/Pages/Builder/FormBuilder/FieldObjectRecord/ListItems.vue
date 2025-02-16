@@ -3,8 +3,6 @@ import { ref } from "vue";
 import AddFieldOptions from "../addFieldOptions.vue";
 import EditionRecord from "./EditionRecord.vue";
 
-import { getSchemaInfoRecord } from "./utils";
-
 interface IProp {
   defaultValues: any;
   fieldInfo: any;
@@ -32,7 +30,26 @@ const fieldData = ref(
 
 const getIType = () => props.fieldInfo.control.iType;
 
-const handleAdd = () => {};
+const handleAdd = () => {
+  fieldData.value.push({});
+};
+
+const handlerUpdate = ({ index, newState }) => {
+  if (index) {
+    fieldData.value[index] = newState;
+  } else {
+    fieldData.value = newState;
+  }
+};
+const emit = defineEmits(["handlerUpdate"]);
+
+watch(
+  fieldData,
+  (newState) => {
+    emit("handlerUpdate", newState);
+  },
+  { deep: true }
+);
 </script>
 
 <template>
@@ -44,6 +61,7 @@ const handleAdd = () => {};
       :default-values="fieldData"
       :index="1"
       :refType="getIType()"
+      @handlerUpdate="handlerUpdate"
     />
     <AddFieldOptions label="Add row" @add="handleAdd" />
   </div>

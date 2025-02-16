@@ -12,13 +12,23 @@ const props = withDefaults(defineProps<IProp>(), {
   type: "text",
 });
 
-const currentModelValue = ref(props.valueField);
+const emit = defineEmits(["handlerUpdate"]);
+
+const model = computed({
+  get() {
+    return props.valueField;
+  },
+
+  set(value) {
+    emit("handlerUpdate", { field: props.fieldKey, newState: value });
+  },
+});
 </script>
 
 <template>
   <DsInput
     v-if="type.includes('string')"
-    v-model="currentModelValue"
+    v-model="model"
     :label="`${fieldKey}:`"
   />
 </template>

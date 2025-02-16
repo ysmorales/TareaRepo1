@@ -10,7 +10,7 @@ interface IProp {
 
 const props = withDefaults(defineProps<IProp>(), {});
 
-const emit = defineEmits(["update:modelValue", "blur", "input"]);
+const emit = defineEmits(["update:modelValue"]);
 
 const model = computed({
   get() {
@@ -18,7 +18,7 @@ const model = computed({
   },
 
   set(value) {
-    emit("update:modelValue", value);
+    emit("update:modelValue", clone(value));
   },
 });
 
@@ -27,8 +27,16 @@ const showModal = ref(false);
 const handlerEditRecord = () => {
   showModal.value = true;
 };
+
+let currentState = {};
+const handlerStoreChanges = (newState) => {
+  currentState = clone(newState);
+};
 const handlerEdit = () => {
   showModal.value = false;
+  if (isNotEmpty(currentState)) {
+    model.value = currentState;
+  }
 };
 </script>
 
@@ -44,7 +52,11 @@ const handlerEdit = () => {
       @accept="handlerEdit"
     >
       <div class="mt-2 p-2">
-        <ListItems :defaultValues="modelValue" :fieldInfo="fieldInfo" />
+        <ListItems
+          @handler-update="handlerStoreChanges"
+          :defaultValues="clone(model)"
+          :fieldInfo="fieldInfo"
+        />
       </div>
     </DsModal>
     <DsButton color="primary" @click="handlerEditRecord"
