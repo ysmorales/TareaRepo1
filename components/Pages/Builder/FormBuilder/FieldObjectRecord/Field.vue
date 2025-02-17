@@ -13,6 +13,7 @@ interface IProp {
   schema: any;
   anyOf?: any;
   fieldInfo: any;
+  index: number;
 }
 
 const props = withDefaults(defineProps<IProp>(), {
@@ -31,20 +32,24 @@ const model = computed({
   },
 });
 
-const handlerUpdate = ({ index, newState, field }) => {
-  try {
-    if (index || (field && model.value)) {
-      model.value[field ?? index] = newState;
-    } else {
+const handlerUpdate = ({ index, newState, field, newConfig }) => {
+  if (newConfig) {
+    handlerUpdateSettingsField({ index, newConfig });
+  } else {
+    try {
+      if (index || (field && model.value)) {
+        model.value[field ?? index] = newState;
+      } else {
+        model.value = newState;
+      }
+    } catch (error) {
       model.value = newState;
     }
-  } catch (error) {
-    model.value = newState;
   }
 };
 
-const handlerUpdateSettingsField = (newState) => {
-  console.log({ newState }, "newState");
+const handlerUpdateSettingsField = (newConfig) => {
+  emit("handlerUpdate", { field: props.fieldKey, newConfig });
 };
 </script>
 
@@ -67,6 +72,7 @@ const handlerUpdateSettingsField = (newState) => {
       :schema="schema"
       :valueField="valueField"
       @handlerUpdate="handlerUpdate"
+      :index="index"
     />
   </div>
 
@@ -77,6 +83,7 @@ const handlerUpdateSettingsField = (newState) => {
       :refType="refTypeSub"
       @handlerUpdate="handlerUpdate"
       :defaultValues="model"
+      :index="index"
       is-array
     />
   </div>

@@ -29,11 +29,15 @@ const fieldData = ref(
 
 const getIType = () => props.fieldInfo.control.iType;
 
-const handlerUpdate = ({ index, newState }) => {
-  if (index) {
-    fieldData.value[index] = newState;
+const handlerUpdate = ({ index, newState, newConfig }) => {
+  if (newConfig) {
+    console.log({ index, newState, newConfig });
   } else {
-    fieldData.value = newState;
+    if (index) {
+      fieldData.value[index] = newState;
+    } else {
+      fieldData.value = newState;
+    }
   }
 };
 const emit = defineEmits(["handlerUpdate"]);
@@ -54,7 +58,6 @@ watch(
       v-if="theSchema?.$schema || status !== 'pending'"
       :schema="theSchema"
       :default-values="fieldData"
-      :index="1"
       :refType="getIType()"
       @handlerUpdate="handlerUpdate"
     />

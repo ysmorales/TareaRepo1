@@ -15,9 +15,7 @@ interface IProp {
   fieldInfo: any;
 }
 
-const props = withDefaults(defineProps<IProp>(), {
-  index: 0,
-});
+const props = withDefaults(defineProps<IProp>(), {});
 const emit = defineEmits(["handlerUpdate"]);
 
 const model = computed({
@@ -41,23 +39,32 @@ const handleAdd = () => {
   }
 };
 
-const handlerUpdate = ({ index, newState }) => {
-  if (index) {
-    model.value[index] = newState;
-  } else {
-    model.value = newState;
+const handlerUpdate = ({ index, newState, newConfig }) => {
+  if (newConfig) {
+    handlerUpdateConfig({ index, newConfig });
   }
+  if (newState) {
+    if (index) {
+      model.value[index] = newState;
+    } else {
+      model.value = newState;
+    }
+  }
+};
+
+const handlerUpdateConfig = (newConfig) => {
+  emit("handlerUpdate", newConfig);
 };
 </script>
 
 <template>
-  <div class="border border-gray-300 shadow-md rounded-md mt-1 p-1">
+  <div
+    class="border border-gray-300 shadow-md rounded-md mt-1 p-1 hover:border-gray-400"
+  >
     <div v-if="getTypeRecord(schema, refType) === 'array' || isArray">
-      <div v-for="(ii, index) in model">
-        <div
-          class="flex items-center gap-3 bg-blue-100 mb-2 pl-2 hover:bg-blue-200"
-        >
-          <div>{{ index + 1 }}.</div>
+      <div v-for="(ii, idx) in model">
+        <div class="flex items-center gap-3 bg-blue-100 mb-2 pl-2">
+          <div>{{ idx + 1 }}.</div>
           <div class="grow">
             <EditionRecord
               :refType="
@@ -65,20 +72,20 @@ const handlerUpdate = ({ index, newState }) => {
                   ? refType
                   : getSchemaDefinition(getItemsRecord(schema, refType))
               "
-              @handlerUpdate="handlerUpdate"
+              @handlerUpdate="(newD) => handlerUpdate({ index: idx, ...newD })"
               :defaultValues="ii"
-              :index="index"
+              :index="idx"
               :schema="schema"
               :fieldInfo="fieldInfo"
             />
           </div>
-          <div class="">
-            <DsIcon name="clone" size="default" class="mr-4 cursor-pointer" />
+          <div class="mr-2">
+            <DsIcon name="clone" size="default" class="cursor-pointer" />
             <DsIcon
               name="trash"
               size="default"
-              class="mr-4 cursor-pointer"
-              @click="() => handlerRemove(index)"
+              class="ml-2 cursor-pointer"
+              @click="() => handlerRemove(idx)"
             />
           </div>
         </div>
@@ -89,10 +96,13 @@ const handlerUpdate = ({ index, newState }) => {
     <div v-if="getTypeRecord(schema, refType) === 'object' && !isArray">
       <Item
         v-model="model"
-        :index="index"
         :schema="schema"
         :refType="refType"
         :fieldInfo="fieldInfo"
+        :index="index"
+        @handlerUpdateConfig="
+          (newConfig) => handlerUpdateConfig({ index, newConfig })
+        "
       />
     </div>
   </div>

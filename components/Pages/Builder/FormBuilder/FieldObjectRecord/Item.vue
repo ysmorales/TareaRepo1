@@ -6,9 +6,10 @@ interface IProp {
   schema: any;
   modelValue: any;
   refType: string;
+  index: number;
 }
 
-const emit = defineEmits(["update:modelValue"]);
+const emit = defineEmits(["update:modelValue", "handlerUpdateConfig"]);
 
 const props = withDefaults(defineProps<IProp>(), {});
 const properties = getSchemaInfoRecord(props.schema, props.refType).properties;
@@ -30,8 +31,12 @@ const model = computed({
   },
 });
 
-const handlerUpdate = ({ field, newState, index }) => {
-  model.value[field] = newState;
+const handlerUpdate = ({ field, newState, newConfig }) => {
+  if (newConfig) {
+    emit("handlerUpdateConfig", { field, newConfig });
+  } else {
+    model.value[field] = newState;
+  }
 };
 </script>
 
@@ -45,6 +50,7 @@ const handlerUpdate = ({ field, newState, index }) => {
       :valueField="model[ii]"
       :fieldKey="ii"
       :schema="schema"
+      :index="index"
     />
   </div>
 </template>

@@ -42,8 +42,10 @@ watch(
     <div class="flex-1">
       <slot></slot>
 
-      <div v-if="inAdvanceMode" class="ml-4 pl-2 bg-blue-300">
-        {{ fieldKey }}
+      <div
+        v-if="inAdvanceMode"
+        class="ml-4 pl-2 border border-gray-300 hover:border-gray-400"
+      >
         <FieldLayout description="Subscribir a estado global">
           <DsCheck
             v-model="currentConfig.scope"
