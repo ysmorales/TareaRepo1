@@ -42,6 +42,7 @@ async function handleSubmit() {
                 role: "visual",
                 empresa: "Chile Atiende"
             });
+
             if (response.codigoRetorno == 201) {
                 // await authStore.login(response.user, response.access_token, response.expires_at);
                 emit('success')
