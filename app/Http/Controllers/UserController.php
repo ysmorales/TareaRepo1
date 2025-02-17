@@ -7,6 +7,7 @@ use App\Http\Requests\UserRequest;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
 {
@@ -26,8 +27,12 @@ class UserController extends Controller
 
     public function store(UserRequest $request): array
     {
-        $user = User::create($request->validated());
-        return ResponseHelper::returnResponse(201, "The user was created successfully.", $user);
+        try {
+            $user = User::create($request->validated());
+            return ResponseHelper::returnResponse(201, "The user was created successfully.", $user);
+        } catch (ValidationException $e) {
+            return ResponseHelper::returnResponse(422, "Validation error.", $e->errors());
+        }
     }
 
     public function show($id): JsonResponse
@@ -43,10 +48,15 @@ class UserController extends Controller
         return response()->json($user);
     }
 
-    public function destroy($id): array
+    public function destroy(Request $request): array
     {
-        $user = User::findOrFail($id);
-        $user->delete();
+        $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'exists:users,id',
+        ]);
+
+        User::destroy($request->ids);
+
         return ResponseHelper::returnResponse(204, 'Eliminación exitosa.');
     }
 }

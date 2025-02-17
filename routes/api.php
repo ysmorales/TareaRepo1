@@ -22,7 +22,7 @@ Route::get('/users', [UserController::class, 'index'])->middleware('auth:sanctum
 Route::post('/users', [UserController::class, 'store'])->middleware('auth:sanctum');
 Route::get('/users/{user}', [UserController::class, 'show'])->middleware('auth:sanctum');
 Route::put('/users/{user}', [UserController::class, 'update'])->middleware('auth:sanctum');
-Route::delete('/users/{user}', [UserController::class, 'destroy'])->middleware('auth:sanctum');
+Route::delete('/users', [UserController::class, 'destroy'])->middleware('auth:sanctum');
 
 //Route::get('/test-email', function () {
 //    Mail::raw('This is a test email', function ($message) {
