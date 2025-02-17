@@ -26,6 +26,7 @@ function getData(data: any) {
 const othersProps = {
     checkboxSelection: true,
     addButtonLabel: "Nuevo usuario(a)",
+    modalDelete: {title: "Eliminación de usuarios", message: "¿Está seguro de eliminar los usuarios seleccionado(s)?"},
 };
 
 function getPaginator(detail: any): IMeta {
