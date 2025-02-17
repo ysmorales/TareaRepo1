@@ -16,6 +16,7 @@ defineProps({
 const loading = ref(false)
 const showModal = ref(false)
 const applicationsService = useApplications();
+const emit = defineEmits(['deleteSuccess'])
 
 
 function getData(data: any) {
@@ -39,12 +40,13 @@ function handleAddRow() {
     showModal.value = true
 }
 
-async function handleMultiDelete(items: any) {
+async function handleMultiDelete(items: { id: number }[]) {
     loading.value = true;
     try {
-        const response = await applicationsService.procedure.deleteMulti("/api/users", items);
-        if (response.codigoRetorno == 200) {
-            alert('Usuarios eliminados exitosamente');
+        const parseIds = items.map(item => item.id);
+        const response = await applicationsService.procedure.deleteMulti("/api/users", {ids: parseIds});
+        if (response.codigoRetorno == 204) {
+            emit('deleteSuccess')
             // Aquí puedes agregar lógica para actualizar la lista de usuarios después de la eliminación
             // Por ejemplo, podrías volver a cargar los datos de la tabla
             // response.value = await applicationsService.procedure.getAll(

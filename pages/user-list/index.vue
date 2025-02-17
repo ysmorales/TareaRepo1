@@ -37,10 +37,11 @@ interface UserResponse {
 
 const route = useRoute();
 const query = computed(() => route.query);
+const router = useRouter();
 const applicationsService = useApplications();
 const response = ref<UserResponse | null>(null);
 
-onBeforeMount(async () => {
+const fetchData = async () => {
     response.value = await applicationsService.procedure.getAll(
         "/api/users",
         "users",
@@ -49,7 +50,24 @@ onBeforeMount(async () => {
         {},
         true
     );
+};
+
+onBeforeMount(async () => {
+    if (!query.value.paginate || !query.value.page) {
+        await router.replace({
+            query: {
+                ...query.value,
+                paginate: query.value.paginate || '10',
+                page: query.value.page || '1',
+            },
+        });
+    }
+    await fetchData();
 });
+
+function handleDeleteSuccess() {
+    fetchData();
+}
 </script>
 
 <template>
@@ -60,7 +78,7 @@ onBeforeMount(async () => {
         </div>
         <DsTypography>Gestiona roles y edita usuarios.</DsTypography>
         <div class="mt-10">
-            <UserListTable :data="response?.data!"/>
+            <UserListTable :data="response?.data!" @delete-success="handleDeleteSuccess"/>
         </div>
     </div>
 </template>
