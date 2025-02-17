@@ -6,7 +6,7 @@ import {email, required} from "@vuelidate/validators";
 import {useVuelidate} from "@vuelidate/core";
 import {companyOption, rolOption} from "~/components/Pages/user-list/selcectOptions";
 
-const emit = defineEmits(["cancel"]);
+const emit = defineEmits(["cancel", "success"]);
 
 const form = reactive({
     name: "",
@@ -22,6 +22,7 @@ const formRules = reactive({
     rol: {required},
     empresa: {required},
 });
+
 const validateForm = useVuelidate(formRules, form);
 const loading = ref(false)
 const backendError = ref<string | null>(null)
@@ -41,9 +42,9 @@ async function handleSubmit() {
                 role: "visual",
                 empresa: "Chile Atiende"
             });
-            if (response.codigoRetorno == 200) {
+            if (response.codigoRetorno == 201) {
                 // await authStore.login(response.user, response.access_token, response.expires_at);
-                navigateTo('/');
+                emit('success')
                 // internalStatus.value = "success";
                 // $emit('cancel');
             }
@@ -73,8 +74,8 @@ async function handleSubmit() {
         <DsSelect v-model="form.empresa" :error="getErrorMessage(validateForm?.empresa.$errors[0])"
                   :option="companyOption" label="Empresa:"/>
         <div class="flex justify-end mt-5 p-2">
-            <DsButton class="mr-2" color="secondary" text="cancelar" type="button" @click="$emit('cancel')"/>
-            <DsButton text="Guardar" type="submit"/>
+            <DsButton class="mr-2" color="secondary" text="Cancelar" type="button" @click="$emit('cancel')"/>
+            <DsButton :loading="loading" text="Guardar" type="submit"/>
         </div>
     </form>
 </template>
