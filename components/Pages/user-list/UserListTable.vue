@@ -36,6 +36,10 @@ function handleAddRow() {
     showModal.value = true
 }
 
+function handleMultiDelete(items: any) {
+    alert(JSON.stringify(items))
+}
+
 </script>
 
 <template>
@@ -53,5 +57,6 @@ function handleAddRow() {
         :others-props="othersProps"
         @addRow="handleAddRow"
         @edit="handleEdit"
+        @multi-delete="handleMultiDelete"
     />
 </template>
