@@ -24,10 +24,10 @@ class UserController extends Controller
         ]);
     }
 
-    public function store(UserRequest $request): JsonResponse
+    public function store(UserRequest $request): array
     {
         $user = User::create($request->validated());
-        return response()->json($user, 201);
+        return ResponseHelper::returnResponse(201, "The user was created successfully.", $user);
     }
 
     public function show($id): JsonResponse
