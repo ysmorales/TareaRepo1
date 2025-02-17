@@ -7,7 +7,10 @@ import { useBuilderStore } from "~/stores/builderStore";
 const store = useBuilderStore();
 const { handlerChangeContainerSettings, itemsPageList } = toRefs(store);
 
-interface IProp {}
+interface IProp {
+  path: any;
+  handlerUpdateSettings: any;
+}
 
 const props = withDefaults(defineProps<IProp>(), {});
 const inAdvanceMode = ref(false);
@@ -31,7 +34,7 @@ const emit = defineEmits(["handlerUpdate"]);
 watch(
   currentConfig,
   (newState) => {
-    emit("handlerUpdate", newState);
+    props.handlerUpdateSettings({ path: props.path, newState });
   },
   { deep: true }
 );

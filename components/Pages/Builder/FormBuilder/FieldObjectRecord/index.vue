@@ -10,7 +10,7 @@ interface IProp {
 
 const props = withDefaults(defineProps<IProp>(), {});
 
-const emit = defineEmits(["update:modelValue"]);
+const emit = defineEmits(["update:modelValue", "handlerUpdateConfig"]);
 
 const model = computed({
   get() {
@@ -32,10 +32,17 @@ let currentState = {};
 const handlerStoreChanges = (newState) => {
   currentState = clone(newState);
 };
+let currentConfig = {};
+const handlerStoreChangesConfig = (newConfig) => {
+  currentConfig = clone(newConfig);
+};
 const handlerEdit = () => {
   showModal.value = false;
   if (isNotEmpty(currentState)) {
     model.value = currentState;
+  }
+  if (isNotEmpty(currentConfig)) {
+    emit("handlerUpdateConfig", clone(currentConfig));
   }
 };
 </script>
@@ -54,6 +61,7 @@ const handlerEdit = () => {
       <div class="mt-2">
         <ListItems
           @handler-update="handlerStoreChanges"
+          @onHandlerUpdateConfig="handlerStoreChangesConfig"
           :defaultValues="clone(model)"
           :fieldInfo="fieldInfo"
         />

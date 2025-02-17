@@ -18,7 +18,8 @@ const props = withDefaults(defineProps<IProp>(), {
 });
 
 const store = useBuilderStore();
-const { updateItemInForm } = toRefs(store);
+const { updateItemInForm, handlerChangeContainerSettings, itemOnSelect } =
+  toRefs(store);
 
 const emit = defineEmits(["input", "update:modelValue"]);
 
@@ -32,6 +33,13 @@ function handleChange() {
   console.log(props.item, props.fieldKey, valueField);
   updateItemInForm.value(props?.item, props.fieldKey, valueField);
 }
+
+const handlerUpdateConfig = (newExtraConfig) => {
+  // handlerChangeContainerSettings.value(itemOnSelect.value, {
+  //   extra: { ...props.item.settings?.extra, ...newExtraConfig },
+  // });
+  console.log({ newExtraConfig });
+};
 
 const getType = () =>
   props.fieldInfo?.control?.type
@@ -87,6 +95,7 @@ watch(valueField, () => {
       v-if="getType() === 'object'"
       :label="fieldKey"
       :fieldInfo="fieldInfo"
+      @handlerUpdateConfig="handlerUpdateConfig"
     />
   </FieldLayout>
 </template>

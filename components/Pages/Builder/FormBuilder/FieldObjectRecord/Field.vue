@@ -14,6 +14,8 @@ interface IProp {
   anyOf?: any;
   fieldInfo: any;
   index: number;
+  path: any;
+  handlerUpdateSettings: any;
 }
 
 const props = withDefaults(defineProps<IProp>(), {
@@ -32,24 +34,16 @@ const model = computed({
   },
 });
 
-const handlerUpdate = ({ index, newState, field, newConfig }) => {
-  if (newConfig) {
-    handlerUpdateSettingsField({ index, newConfig });
-  } else {
-    try {
-      if (index || (field && model.value)) {
-        model.value[field ?? index] = newState;
-      } else {
-        model.value = newState;
-      }
-    } catch (error) {
+const handlerUpdate = ({ index, newState, field }) => {
+  try {
+    if (index || (field && model.value)) {
+      model.value[field ?? index] = newState;
+    } else {
       model.value = newState;
     }
+  } catch (error) {
+    model.value = newState;
   }
-};
-
-const handlerUpdateSettingsField = (newConfig) => {
-  emit("handlerUpdate", { field: props.fieldKey, newConfig });
 };
 </script>
 
@@ -58,7 +52,8 @@ const handlerUpdateSettingsField = (newConfig) => {
     v-if="
       type && Array.isArray(type) ? type?.includes('string') : type === 'string'
     "
-    @handlerUpdate="handlerUpdateSettingsField"
+    :path="path"
+    :handlerUpdateSettings="handlerUpdateSettings"
   >
     <DsInput v-model="model" :label="`${fieldKey}:`" />
   </FieldAdvanceEdition>
@@ -72,7 +67,9 @@ const handlerUpdateSettingsField = (newConfig) => {
       :schema="schema"
       :valueField="valueField"
       @handlerUpdate="handlerUpdate"
+      :handler-update-settings="handlerUpdateSettings"
       :index="index"
+      :path="path ?? []"
     />
   </div>
 
@@ -82,8 +79,10 @@ const handlerUpdateSettingsField = (newConfig) => {
       :schema="schema"
       :refType="refTypeSub"
       @handlerUpdate="handlerUpdate"
+      :handlerUpdateSettings="handlerUpdateSettings"
       :defaultValues="model"
       :index="index"
+      :path="path ?? []"
       is-array
     />
   </div>

@@ -13,9 +13,13 @@ interface IProp {
   defaultValues: any;
   isArray: boolean;
   fieldInfo: any;
+  path: number;
+  handlerUpdateSettings: any;
 }
 
-const props = withDefaults(defineProps<IProp>(), {});
+const props = withDefaults(defineProps<IProp>(), {
+  index: 0,
+});
 const emit = defineEmits(["handlerUpdate"]);
 
 const model = computed({
@@ -39,10 +43,7 @@ const handleAdd = () => {
   }
 };
 
-const handlerUpdate = ({ index, newState, newConfig }) => {
-  if (newConfig) {
-    handlerUpdateConfig({ index, newConfig });
-  }
+const handlerUpdate = ({ index, newState }) => {
   if (newState) {
     if (index) {
       model.value[index] = newState;
@@ -50,10 +51,6 @@ const handlerUpdate = ({ index, newState, newConfig }) => {
       model.value = newState;
     }
   }
-};
-
-const handlerUpdateConfig = (newConfig) => {
-  emit("handlerUpdate", newConfig);
 };
 </script>
 
@@ -73,8 +70,11 @@ const handlerUpdateConfig = (newConfig) => {
                   : getSchemaDefinition(getItemsRecord(schema, refType))
               "
               @handlerUpdate="(newD) => handlerUpdate({ index: idx, ...newD })"
+              :handlerUpdateSettings="handlerUpdateSettings"
               :defaultValues="ii"
               :index="idx"
+              :path="(path ?? []).concat([idx])"
+              :parent="index"
               :schema="schema"
               :fieldInfo="fieldInfo"
             />
@@ -99,10 +99,9 @@ const handlerUpdateConfig = (newConfig) => {
         :schema="schema"
         :refType="refType"
         :fieldInfo="fieldInfo"
+        :path="path ?? []"
         :index="index"
-        @handlerUpdateConfig="
-          (newConfig) => handlerUpdateConfig({ index, newConfig })
-        "
+        :handlerUpdateSettings="handlerUpdateSettings"
       />
     </div>
   </div>

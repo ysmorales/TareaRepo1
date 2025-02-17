@@ -17,6 +17,7 @@ const { data, status } = await useAsyncData(
   }
 );
 
+const emit = defineEmits(["handlerUpdate, onHandlerUpdateConfig"]);
 const theSchema = computed(() => {
   return data.value?.schema;
 });
@@ -30,17 +31,17 @@ const fieldData = ref(
 const getIType = () => props.fieldInfo.control.iType;
 
 const handlerUpdate = ({ index, newState, newConfig }) => {
-  if (newConfig) {
-    console.log({ index, newState, newConfig });
+  if (index) {
+    fieldData.value[index] = newState;
   } else {
-    if (index) {
-      fieldData.value[index] = newState;
-    } else {
-      fieldData.value = newState;
-    }
+    fieldData.value = newState;
   }
 };
-const emit = defineEmits(["handlerUpdate"]);
+
+const handlerUpdateSettings = (newConfig) => {
+  console.log(newConfig, "aquiii");
+  emit("handlerUpdateConfig", newConfig);
+};
 
 watch(
   fieldData,
@@ -60,6 +61,7 @@ watch(
       :default-values="fieldData"
       :refType="getIType()"
       @handlerUpdate="handlerUpdate"
+      :handlerUpdateSettings="handlerUpdateSettings"
     />
   </div>
 </template>

@@ -7,9 +7,11 @@ interface IProp {
   modelValue: any;
   refType: string;
   index: number;
+  path: any;
+  handlerUpdateSettings: any;
 }
 
-const emit = defineEmits(["update:modelValue", "handlerUpdateConfig"]);
+const emit = defineEmits(["update:modelValue"]);
 
 const props = withDefaults(defineProps<IProp>(), {});
 const properties = getSchemaInfoRecord(props.schema, props.refType).properties;
@@ -31,12 +33,8 @@ const model = computed({
   },
 });
 
-const handlerUpdate = ({ field, newState, newConfig }) => {
-  if (newConfig) {
-    emit("handlerUpdateConfig", { field, newConfig });
-  } else {
-    model.value[field] = newState;
-  }
+const handlerUpdate = ({ field, newState }) => {
+  model.value[field] = newState;
 };
 </script>
 
@@ -44,11 +42,13 @@ const handlerUpdate = ({ field, newState, newConfig }) => {
   <div v-for="ii in Object.keys(properties)">
     <Field
       @handlerUpdate="handlerUpdate"
+      :handlerUpdateSettings="handlerUpdateSettings"
       :type="properties[ii].type ?? []"
       :anyOf="properties[ii].anyOf"
       :refTypeSub="getSchemaDefinition(properties[ii]?.items?.$ref)"
       :valueField="model[ii]"
       :fieldKey="ii"
+      :path="(path ?? []).concat([ii])"
       :schema="schema"
       :index="index"
     />
