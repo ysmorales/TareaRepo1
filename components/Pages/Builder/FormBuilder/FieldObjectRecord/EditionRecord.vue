@@ -12,6 +12,7 @@ interface IProp {
   index?: number;
   defaultValues: any;
   isArray: boolean;
+  fieldInfo: any;
 }
 
 const props = withDefaults(defineProps<IProp>(), {
@@ -50,7 +51,7 @@ const handlerUpdate = ({ index, newState }) => {
 </script>
 
 <template>
-  <div class="border border-gray-300 shadow-md rounded-md">
+  <div class="border border-gray-300 shadow-md rounded-md mt-1 p-1">
     <div v-if="getTypeRecord(schema, refType) === 'array' || isArray">
       <div v-for="(ii, index) in model">
         <div
@@ -68,6 +69,7 @@ const handlerUpdate = ({ index, newState }) => {
               :defaultValues="ii"
               :index="index"
               :schema="schema"
+              :fieldInfo="fieldInfo"
             />
           </div>
           <div class="">
@@ -90,6 +92,7 @@ const handlerUpdate = ({ index, newState }) => {
         :index="index"
         :schema="schema"
         :refType="refType"
+        :fieldInfo="fieldInfo"
       />
     </div>
   </div>

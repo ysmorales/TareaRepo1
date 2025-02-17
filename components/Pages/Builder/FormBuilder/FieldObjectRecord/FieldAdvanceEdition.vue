@@ -5,8 +5,7 @@ import FieldLayout from "../fieldLayout.vue";
 import { useBuilderStore } from "~/stores/builderStore";
 
 const store = useBuilderStore();
-const { itemOnSelect, handlerChangeContainerSettings, itemsPageList } =
-  toRefs(store);
+const { handlerChangeContainerSettings, itemsPageList } = toRefs(store);
 
 interface IProp {}
 
@@ -28,6 +27,14 @@ const getFieldsToScope = () => {
     text: items[d],
   }));
 };
+const emit = defineEmits(["handlerUpdate"]);
+watch(
+  currentConfig,
+  (newState) => {
+    emit("handlerUpdate", newState);
+  },
+  { deep: true }
+);
 </script>
 
 <template>
@@ -35,8 +42,9 @@ const getFieldsToScope = () => {
     <div class="flex-1">
       <slot></slot>
 
-      <div v-if="inAdvanceMode" class="pl-2 bg-blue-300">
-        <FieldLayout description="Prepara escribir o leer del estado global">
+      <div v-if="inAdvanceMode" class="ml-4 pl-2 bg-blue-300">
+        {{ fieldKey }}
+        <FieldLayout description="Subscribir a estado global">
           <DsCheck
             v-model="currentConfig.scope"
             label="Subscribir estado global"

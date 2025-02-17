@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { DsInput, DsCheck, DsIcon } from "~/components/DesignSystem";
-import DsTooltip from "~/components/DesignSystem/components/basic/tooltip/DsTooltip.vue";
 import EditionRecord from "./EditionRecord.vue";
 import FieldAdvanceEdition from "./FieldAdvanceEdition.vue";
 
@@ -13,6 +12,7 @@ interface IProp {
   refTypeSub: string;
   schema: any;
   anyOf?: any;
+  fieldInfo: any;
 }
 
 const props = withDefaults(defineProps<IProp>(), {
@@ -42,6 +42,10 @@ const handlerUpdate = ({ index, newState, field }) => {
     model.value = newState;
   }
 };
+
+const handlerUpdateSettingsField = (newState) => {
+  console.log({ newState }, "newState");
+};
 </script>
 
 <template>
@@ -49,6 +53,7 @@ const handlerUpdate = ({ index, newState, field }) => {
     v-if="
       type && Array.isArray(type) ? type?.includes('string') : type === 'string'
     "
+    @handlerUpdate="handlerUpdateSettingsField"
   >
     <DsInput v-model="model" :label="`${fieldKey}:`" />
   </FieldAdvanceEdition>
