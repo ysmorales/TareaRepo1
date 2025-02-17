@@ -48,6 +48,7 @@ function handleAddRow() {
         :data="data"
         :getData="getData"
         :getPaginator="getPaginator"
+        :itemsPerPageOptions="[10]"
         :loading="loading"
         :others-props="othersProps"
         @addRow="handleAddRow"
