@@ -5,6 +5,7 @@
     "scripts": {
         "build": "nuxt build",
         "dev": "nuxt dev",
+        "start": "NITRO_PORT=3200 node .output/server/index.mjs",
         "dev-local": "nuxt dev --host builder.loc --port 31010",
         "generate": "nuxt generate",
         "preview": "nuxt preview",

@@ -4,6 +4,7 @@ import type { ListOptions } from "~/global-interface/common";
 interface IProp {
   error: any;
   items: ListOptions;
+  label: string;
 }
 
 const props = withDefaults(defineProps<IProp>(), {
@@ -23,11 +24,7 @@ const modelValue = ref("");
 </script>
 
 <template>
-  <DsRadioGroup
-    v-model="modelValue"
-    label="Selecciona la franja*"
-    :error="error"
-  >
+  <DsRadioGroup v-model="modelValue" :label="label" :error="error">
     <DsRadio v-for="item in items" :value="item.id">{{ item.value }} </DsRadio>
   </DsRadioGroup>
 </template>
