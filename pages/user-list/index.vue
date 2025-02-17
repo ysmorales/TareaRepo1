@@ -1,13 +1,13 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import {DsIcon, DsTypography} from "~/components/DesignSystem";
 import UserListTable from "~/components/Pages/user-list/UserListTable.vue";
 import useApplications from '~/api-services/applications';
-import { useRoute } from 'vue-router';
-import { ref, computed, onBeforeMount } from 'vue';
+import {useRoute} from 'vue-router';
+import {ref, computed, onBeforeMount} from 'vue';
 
 interface UserResponse {
     headers: Record<string, any>;
-    data:{
+    data: {
         data: Array<{
             id: number;
             name: string;
@@ -18,7 +18,7 @@ interface UserResponse {
             role: string | null;
             empresa: string | null;
         }>;
-        respuesta:{
+        respuesta: {
             original: Array<{
                 id: number;
                 name: string;

@@ -5,6 +5,7 @@ import TableWrapper from "~/components/Pages/tableWrapper.vue";
 import type {IMeta} from "~/interfaces/interfaces";
 import {DsModal} from "~/components/DesignSystem";
 import UserForm from "~/components/Pages/user-list/UserForm.vue";
+import useApplications from '~/api-services/applications';
 
 defineProps({
     data: {
@@ -14,6 +15,8 @@ defineProps({
 })
 const loading = ref(false)
 const showModal = ref(false)
+const applicationsService = useApplications();
+
 
 function getData(data: any) {
     return data?.data
@@ -36,8 +39,31 @@ function handleAddRow() {
     showModal.value = true
 }
 
-function handleMultiDelete(items: any) {
-    alert(JSON.stringify(items))
+async function handleMultiDelete(items: any) {
+    loading.value = true;
+    try {
+        const response = await applicationsService.procedure.deleteMulti("/api/users", items);
+        if (response.codigoRetorno == 200) {
+            alert('Usuarios eliminados exitosamente');
+            // Aquí puedes agregar lógica para actualizar la lista de usuarios después de la eliminación
+            // Por ejemplo, podrías volver a cargar los datos de la tabla
+            // response.value = await applicationsService.procedure.getAll(
+            //     "/api/users",
+            //     "users",
+            //     [query],
+            //     false,
+            //     {},
+            //     true
+            // );
+        } else {
+            console.log('Error al eliminar usuarios');
+        }
+    } catch (e) {
+        console.log('Error al comunicarse con el servidor.');
+        console.log('Viendo error en consola.', e);
+    } finally {
+        loading.value = false;
+    }
 }
 
 </script>
