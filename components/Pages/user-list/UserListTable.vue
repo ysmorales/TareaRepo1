@@ -13,10 +13,13 @@ defineProps({
         required: true
     }
 })
+
 const loading = ref(false)
 const showModal = ref(false)
 const applicationsService = useApplications();
 const emit = defineEmits(['deleteSuccess'])
+const mode = ref<'edit' | 'create'>('create')
+const user = ref(null)
 
 
 function getData(data: any) {
@@ -33,11 +36,14 @@ function getPaginator(detail: any): IMeta {
     return detail?.meta
 }
 
-function handleEdit() {
-    alert('Hello world!!!')
+function handleEdit(item: any) {
+    mode.value = 'edit'
+    user.value = item
+    showModal.value = true
 }
 
 function handleAddRow() {
+    mode.value = 'create'
     showModal.value = true
 }
 
@@ -74,7 +80,7 @@ async function handleMultiDelete(items: { id: number }[]) {
 <template>
     <!--    <DsTable :data="data" checkbox-selection :columns="competitionStage" add-button-label="Nuevo usuario(a)"/>-->
     <DsModal v-model="showModal" :show-footer="false" title="Nuevo usuario(a)">
-        <UserForm @cancel="()=>showModal=false" @success="()=>showModal=false"/>
+        <UserForm :mode="mode" :user="user" @cancel="()=>showModal=false" @success="()=>showModal=false"/>
     </DsModal>
     <TableWrapper
         :columns="competitionStage as ITableColumnData[]"
@@ -87,5 +93,6 @@ async function handleMultiDelete(items: { id: number }[]) {
         @addRow="handleAddRow"
         @edit="handleEdit"
         @multi-delete="handleMultiDelete"
+
     />
 </template>

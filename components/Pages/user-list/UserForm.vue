@@ -6,6 +6,16 @@ import {email, required} from "@vuelidate/validators";
 import {useVuelidate} from "@vuelidate/core";
 import {companyOption, rolOption} from "~/components/Pages/user-list/selcectOptions";
 
+defineProps({
+    mode: {
+        type: String as () => 'edit' | 'create',
+        required: true
+    },
+    user: {
+        type: Object as () => object | null,
+        required: true
+    }
+})
 const emit = defineEmits(["cancel", "success"]);
 
 const form = reactive({
