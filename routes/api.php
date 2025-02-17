@@ -19,7 +19,7 @@ Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEm
 Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
 
 Route::get('/users', [UserController::class, 'index'])->middleware('auth:sanctum');
-Route::post('/users', [UserController::class, 'store'])->middleware('auth:sanctum');
+Route::post('/users', [UserController::class, 'store']);
 Route::get('/users/{user}', [UserController::class, 'show'])->middleware('auth:sanctum');
 Route::put('/users/{user}', [UserController::class, 'update'])->middleware('auth:sanctum');
 Route::delete('/users', [UserController::class, 'destroy'])->middleware('auth:sanctum');
