@@ -12,8 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('groups', function (Blueprint $table) {
-            $table->id();
+            $table->id('group_id');
+            $table->string('name');
+            $table->text('description')->nullable();
+            $table->unsignedBigInteger('creator_id')->nullable();
+            $table->unsignedBigInteger('owner_id')->nullable();
+            $table->enum('status', ['active', 'deleted'])->default('active');
             $table->timestamps();
+
+            $table->foreign('creator_id')->references('id')->on('users');
+            $table->foreign('owner_id')->references('id')->on('users');
         });
     }
 
