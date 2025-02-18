@@ -17,6 +17,7 @@
         "@vuelidate/validators": "^2.0.4",
         "axios": "^1.6.8",
         "crypto-js": "^4.2.0",
+        "deepmerge": "^4.3.1",
         "js-beautify": "^1.15.1",
         "js-cookie": "^3.0.5",
         "jwt-decode": "^4.0.0",

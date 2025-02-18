@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import deepmerge from "deepmerge";
 import { DsInput, DsSelect, DsCheck } from "~/components/DesignSystem";
 
 import { useBuilderStore } from "~/stores/builderStore";
@@ -18,8 +19,12 @@ const props = withDefaults(defineProps<IProp>(), {
 });
 
 const store = useBuilderStore();
-const { updateItemInForm, handlerChangeContainerSettings, itemOnSelect } =
-  toRefs(store);
+const {
+  updateItemInForm,
+  handlerChangeContainerSettings,
+  itemOnSelect,
+  itemsPageList,
+} = toRefs(store);
 
 const emit = defineEmits(["input", "update:modelValue"]);
 
@@ -34,11 +39,37 @@ function handleChange() {
   updateItemInForm.value(props?.item, props.fieldKey, valueField);
 }
 
+function applyPathTransformation(input) {
+  let result = {};
+  let current = result;
+
+  input.path.forEach((key, index) => {
+    if (index === input.path.length - 1) {
+      current[key] = { extra: input.newState };
+    } else {
+      current[key] = current[key] || {};
+      current = current[key];
+    }
+  });
+
+  return result;
+}
+
 const handlerUpdateConfig = (newExtraConfig) => {
-  // handlerChangeContainerSettings.value(itemOnSelect.value, {
-  //   extra: { ...props.item.settings?.extra, ...newExtraConfig },
-  // });
-  console.log({ newExtraConfig });
+  const ruta = encontrarRutaPorIndice(
+    itemsPageList.value,
+    itemOnSelect.value.id
+  );
+  const nodo = getNodeByPath(itemsPageList.value, ruta);
+  handlerChangeContainerSettings.value(itemOnSelect.value, {
+    extra: {
+      ...(nodo.settings?.extra ?? {}),
+      subFields: deepmerge(
+        nodo.settings?.extra.subFields,
+        applyPathTransformation(newExtraConfig)
+      ),
+    },
+  });
 };
 
 const getType = () =>
@@ -89,7 +120,6 @@ watch(valueField, () => {
       v-model="valueField"
       :label="fieldKey"
     />
-
     <FieldObjectRecord
       v-model="valueField"
       v-if="getType() === 'object'"

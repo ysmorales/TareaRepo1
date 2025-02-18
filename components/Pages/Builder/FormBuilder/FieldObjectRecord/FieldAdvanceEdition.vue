@@ -5,7 +5,7 @@ import FieldLayout from "../fieldLayout.vue";
 import { useBuilderStore } from "~/stores/builderStore";
 
 const store = useBuilderStore();
-const { handlerChangeContainerSettings, itemsPageList } = toRefs(store);
+const { itemsPageList, itemOnSelect } = toRefs(store);
 
 interface IProp {
   path: any;
@@ -38,6 +38,35 @@ watch(
   },
   { deep: true }
 );
+function getPathValue(path, objectDictionary) {
+  let dictCurrent = objectDictionary;
+  for (let key of path) {
+    if (dictCurrent[key] === undefined) {
+      return undefined;
+    }
+    dictCurrent = dictCurrent[key];
+  }
+  return dictCurrent;
+}
+
+watch(inAdvanceMode, (isActive) => {
+  if (isActive) {
+    const ruta = encontrarRutaPorIndice(
+      itemsPageList.value,
+      itemOnSelect.value.id
+    );
+    const nodo = getNodeByPath(itemsPageList.value, ruta);
+    if (nodo.settings?.extra?.subFields) {
+      const foundEdition = getPathValue(
+        props.path,
+        nodo.settings?.extra?.subFields
+      );
+      if (foundEdition) {
+        currentConfig.value = foundEdition.extra;
+      }
+    }
+  }
+});
 </script>
 
 <template>

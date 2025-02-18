@@ -8,6 +8,7 @@ interface IProp {
 }
 
 const props = withDefaults(defineProps<IProp>(), {});
+const emit = defineEmits(["handlerUpdate, handlerUpdateConfig"]);
 
 const { data, status } = await useAsyncData(
   "tschema",
@@ -16,8 +17,6 @@ const { data, status } = await useAsyncData(
     lazy: true,
   }
 );
-
-const emit = defineEmits(["handlerUpdate, onHandlerUpdateConfig"]);
 const theSchema = computed(() => {
   return data.value?.schema;
 });
@@ -30,7 +29,7 @@ const fieldData = ref(
 
 const getIType = () => props.fieldInfo.control.iType;
 
-const handlerUpdate = ({ index, newState, newConfig }) => {
+const handlerUpdate = ({ index, newState }) => {
   if (index) {
     fieldData.value[index] = newState;
   } else {
@@ -39,7 +38,6 @@ const handlerUpdate = ({ index, newState, newConfig }) => {
 };
 
 const handlerUpdateSettings = (newConfig) => {
-  console.log(newConfig, "aquiii");
   emit("handlerUpdateConfig", newConfig);
 };
 

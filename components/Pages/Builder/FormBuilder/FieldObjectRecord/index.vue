@@ -61,7 +61,7 @@ const handlerEdit = () => {
       <div class="mt-2">
         <ListItems
           @handler-update="handlerStoreChanges"
-          @onHandlerUpdateConfig="handlerStoreChangesConfig"
+          @handler-update-config="handlerStoreChangesConfig"
           :defaultValues="clone(model)"
           :fieldInfo="fieldInfo"
         />
