@@ -6,24 +6,23 @@ import {email, required} from "@vuelidate/validators";
 import {useVuelidate} from "@vuelidate/core";
 import {companyOption, rolOption} from "~/components/Pages/user-list/selcectOptions";
 
-defineProps({
+const props = defineProps({
     mode: {
         type: String as () => 'edit' | 'create',
         required: true
     },
     user: {
-        type: Object as () => object | null,
+        type: Object as () => { name: string, email: string, role: string, empresa: string } | null,
         required: true
     }
 })
 const emit = defineEmits(["cancel", "success"]);
 
 const form = reactive({
-    name: "",
-    email: "",
-    rol: "",
-    empresa: "",
-
+    name: props.mode === 'edit' ? props.user?.name : "",
+    email: props.mode === 'edit' ? props.user?.email : "",
+    rol: props.mode === 'edit' ? props.user?.role : "",
+    empresa: props.mode === 'edit' ? props.user?.empresa : "",
 });
 
 const formRules = reactive({

@@ -79,7 +79,7 @@ async function handleMultiDelete(items: { id: number }[]) {
 
 <template>
     <!--    <DsTable :data="data" checkbox-selection :columns="competitionStage" add-button-label="Nuevo usuario(a)"/>-->
-    <DsModal v-model="showModal" :show-footer="false" title="Nuevo usuario(a)">
+    <DsModal v-model="showModal" :show-footer="false" :title="mode=='edit'?'Editar usuario':'Nuevo usuario(a)'">
         <UserForm :mode="mode" :user="user" @cancel="()=>showModal=false" @success="()=>showModal=false"/>
     </DsModal>
     <TableWrapper
