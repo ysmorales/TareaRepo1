@@ -1,4 +1,7 @@
 export interface ISelect {
-    value: string;
-    text: string;
+    value: string | number;
+    text: string | number;
 }
+
+export type IDropDirection = 'dropdown' | 'dropup';
+export type IDropType = 'tertiary' | 'primary';

@@ -1,42 +1,57 @@
 <script lang="ts" setup>
-import { colorClasses, predefinedClasses } from "../../../common/propsStyle";
-import type { IColor } from "../../../interfaces/elements";
-import { filterClass } from "../../../utils/filterClass";
-import { computed } from "vue";
+import {computed} from 'vue';
+import {colorClasses, outlineColorClasses} from '../../../common/propsStyle';
+import DsIcon from '../icon/DsIcon.vue';
+import type {IComponentBaseProp} from '../../../interfaces/props';
+import type {IIconName} from '../icon/types';
+import type {IDsTagType} from './types';
 
-const props = defineProps({
-  text: {
-    default: "Neutral",
-  },
+interface IProp extends /* @vue-ignore */ IComponentBaseProp {
+    text: string;
+    color: IDsTagType;
+    outline?: boolean;
+    icon?: IIconName;
+    class?: string;
+}
 
-  color: {
-    type: String as () => IColor,
-    default: "neutral",
-  },
-
-  class: {
-    default: "",
-  },
+const $props
+    = withDefaults(defineProps<IProp>(), {
+    color: 'neutral',
+    icon: undefined,
+    text: 'Tag',
 });
+
 
 const filterClassComp = computed(() => {
-  return filterClass(predefinedClasses, props.class, ["font-robotoSlab"]);
+    return $props.class;
 });
 
-const cssClasses = computed(() =>
-  [
-    filterClassComp.value,
-    colorClasses[props.color],
-    "rounded",
-    "text-xs",
-    "px-2",
-    "py-1",
-  ].join(" "),
+const cssClasses = computed<string[]>(() => {
+        const classArray: string[] = [
+            'rounded',
+            'text-xs',
+            'px-2',
+            'py-1',
+        ];
+
+        if ($props.outline) {
+            classArray.push(outlineColorClasses[$props.color]);
+        } else
+            classArray.push(colorClasses[$props.color]);
+
+        return classArray;
+    },
 );
 </script>
 
 <template>
-  <span :class="cssClasses">
-    {{ text }}
-  </span>
+	<span :class="[cssClasses,filterClassComp]">
+		<DsIcon
+            v-if="icon"
+            :name="icon"
+            class="align-middle"
+            size="small"
+        />
+		{{ text }}
+	</span>
 </template>

@@ -1,14 +1,15 @@
 @import 'line-awesome.css';
 @import './roboto.css';
+@import './inria-sans.css';
 
 @tailwind base;
 
 body {
-    @apply font-roboto text-base text-left text-dark-500
+    @apply font-inriaSans text-base text-left text-dark-500
 }
 
 a {
-    @apply font-roboto text-base text-dark-500 underline hover:text-primary-500 hover:no-underline
+    @apply font-inriaSans text-base text-dark-500 underline hover:text-primary-500 hover:no-underline
 }
 
 /*Estados*/
@@ -51,28 +52,28 @@ h1.font-robotoSlab.font-normal, h2.font-robotoSlab.font-normal, h3.font-robotoSl
 }
 
 h1 {
-    @apply text-3xl font-robotoBold mb-2;
+    @apply text-4xl font-inriaSansBold mb-2;
 }
 
 
 h2 {
-    @apply text-2xl font-robotoBold mb-2;
+    @apply text-[28px] font-inriaSansBold mb-2;
 }
 
 h3 {
-    @apply text-xl font-robotoBold mb-2;
+    @apply text-2xl font-inriaSansBold mb-2;
 }
 
 h4 {
-    @apply text-base font-robotoBold mb-2;
+    @apply text-xl font-inriaSansBold mb-2;
 }
 
 h5 {
-    @apply text-base font-robotoBold mb-2;
+    @apply text-base font-inriaSansBold mb-2;
 }
 
 h6 {
-    @apply text-base font-robotoBold mb-2;
+    @apply text-base font-inriaSansBold mb-2;
 }
 
 p {
@@ -80,11 +81,11 @@ p {
 }
 
 ul.ul {
-    @apply font-roboto text-base list-disc ml-4
+    @apply font-inriaSansBold text-base list-disc ml-4
 }
 
 ol.ol {
-    @apply font-roboto text-base list-decimal ml-4
+    @apply font-inriaSansBold text-base list-decimal ml-4
 }
 
 /*Forms*/
@@ -93,7 +94,7 @@ label {
 }
 
 input, select, textarea {
-    @apply font-roboto text-base border p-2 block hover:border-dark-500 rounded border-neutral-300 w-full
+    @apply font-inriaSansBold text-base border p-2 block hover:border-dark-500 rounded border-neutral-300 w-full
 }
 
 input.error, select.error, textarea.error {
@@ -146,12 +147,22 @@ input[type="radio"] {
 .tag-dark-alpha {
     @apply bg-[#00000078] rounded inline-block text-white text-xs px-2 py-1 mb-2
 }
-
+table {
+    @apply bg-white outline outline-neutral-300 overflow-hidden rounded-md outline-1
+}
+table tr th:first-child,
+table tr td:first-child{
+    @apply pl-3
+}
+table tr th:last-child,
+table tr td:last-child{
+    @apply pr-3
+}
 @tailwind components;
 
 /*Botones*/
 button, .btn {
-    @apply cursor-pointer px-3 py-2 border rounded no-underline hover:ring
+    @apply cursor-pointer px-3 py-2 border rounded no-underline
 }
 
 .btn-primary, a.btn-primary {
@@ -159,7 +170,7 @@ button, .btn {
 }
 
 .btn-secondary, a.btn-secondary {
-    @apply bg-cyan-500 border-primary-500 text-primary-500 hover:bg-cyan-900
+    @apply bg-white border-primary-500 text-primary-500 hover:bg-blue-100
 }
 
 .btn-tertiary, a.btn-tertiary {
@@ -174,6 +185,46 @@ button, .btn {
     @apply bg-success-500 border-success-500 text-white hover:text-white hover:bg-success-900
 }
 
+.btn-navSecondary {
+    @apply bg-white border-blue-100 hover:bg-blue-100 active:bg-primary-500 active:text-white hover:underline flex align-middle
+}
+
+.btn-navSecondary svg,
+.btn-navSecondaryActive svg{
+    @apply w-full h-[36px] md:w-[18px] md:h-[18px] xl:w-[24px] xl:h-[24px]
+}
+.btn-navSecondary svg path {
+    @apply stroke-primary-500
+}
+.btn-navSecondaryActive{
+    @apply border-blue-100 flex bg-primary-500 text-white active:text-white
+}
+
+.btn-navSecondaryActive svg path{
+    @apply stroke-white
+}
+.btn-navSecondary:active:hover {
+    @apply text-white
+}
+
+.btn-navSecondary:active svg path {
+    @apply stroke-white
+}
+
+.btn-navTertiary {
+    @apply bg-blue-50 border border-blue-100 text-primary-500 hover:bg-blue-100 active:bg-blue-100 rounded mr-2
+}
+
+.btn-navMobilSecondary {
+    @apply px-0 py-5 border-transparent border-b-gray-200 border bg-transparent rounded-none hover:bg-gray-100 hover:text-primary-500 active:text-primary-500 text-dark-500
+}
+
+.btn-navMobilSecondary:last-child {
+    @apply border-b-0
+}
+.btn-simple{
+    @apply border-0 hover:ring-0 underline text-[12px]
+}
 button[disabled], .btn[disabled],
 button[readonly], .btn[readonly] {
     @apply cursor-not-allowed opacity-70
@@ -188,7 +239,7 @@ button[readonly], .btn[readonly] {
 }
 
 .btn-large, a.btn-large {
-    @apply text-xl
+    @apply text-xl px-[20px] font-bold
 }
 
 .btn-modal-close {
@@ -199,6 +250,51 @@ button[readonly], .btn[readonly] {
     @apply rounded-s-none
 }
 
+.btn-link {
+    @apply bg-transparent border-none underline hover:bg-transparent hover:text-primary-900
+}
+
+.btn-menu-mobile{
+    @apply flex no-underline pl-3 py-7 justify-between content-center
+}
+.btn-menu-mobile.open{
+    @apply border-b border-l-4 border-b-primary-500 border-primary-500 text-primary-500
+}
+.btn-menu-mobile svg{
+    @apply w-6 mr-4
+}
+.btn-menu-mobile.active svg polygon{
+    @apply fill-primary-500 stroke-primary-500
+}
+.btn-menu-mobile.open svg{
+    @apply rotate-180 fill-primary-500 stroke-primary-500
+}
+.btn-menu-mobile-l2{
+    @apply pl-4 border-l-8 border-l-blue-100 border-b border-b-blue-100 border-neutral-300 text-sm
+}
+.btn-menu-mobile-l2.open{
+    @apply  border-l-8 border-l-primary-500 border-b border-b-primary-500 border-primary-500 text-sm
+}
+.btn-menu-mobile-l3{
+    @apply  pl-6 border-l-[12px] border-l-blue-200 border-b border-b-blue-200 border-blue-100 bg-blue-50 text-sm
+}
+.btn-menu-mobile-l3 span svg{
+    @apply  fill-none stroke-dark-500 inline mr-3
+}
+.btn-menu-mobile-l3:hover svg{
+    @apply  stroke-primary-500
+}
+.btn-menu-mobile.active,
+.btn-menu-mobile-l2.active,
+.btn-menu-mobile-l3.active{
+    @apply text-primary-500 border-l-primary-500
+}
+.btn-menu-mobile-l1.active{
+    @apply border-l-4 border-primary-500
+}
+.btn-menu-mobile-l3.active svg{
+    @apply stroke-primary-500
+}
 /*Alertas*/
 .alert-primary {
     @apply p-4 bg-cyan-500 rounded-lg
@@ -294,11 +390,7 @@ nav.menu-horizontal ul li .relative .dropdownlv1 .dropdownlv2 button.subDropdown
 }
 
 .cont-form-sector {
-    @apply p-4 rounded-lg md:p-7 bg-neutral-100
-}
-
-.cont-form-sector h2 {
-    @apply text-stone-600
+    @apply p-3 rounded-md md:p-5 bg-blue-100
 }
 
 .cont-form-btn {
@@ -328,13 +420,9 @@ nav.menu-horizontal ul li .relative .dropdownlv1 .dropdownlv2 button.subDropdown
     width: 1px;
 }
 
-.icon-blue {
-    filter: invert(26%) sepia(95%) saturate(1191%) hue-rotate(184deg) brightness(101%) contrast(91%);
-}
 
-a:hover .icon-blue,
-button:hover .icon-blue {
-    filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(238deg) brightness(104%) contrast(101%);
+.icon-blue {
+    stroke: #0069b1 !important;
 }
 
 .icon-white {

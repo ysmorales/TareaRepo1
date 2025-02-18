@@ -1,29 +1,47 @@
 <script lang="ts" setup>
-import DsButton from "../button/DsButton.vue";
-import DsIcon from "../icon/DsIcon.vue";
+import DsButton from '../button/DsButton.vue';
+import DsIcon from '../icon/DsIcon.vue';
 
-const emit = defineEmits(["reload"]);
+const emit = defineEmits(['reload']);
 defineProps({
-  loading: {
-    type: Boolean,
-    default: false,
-  },
+	loading: {
+		type: Boolean,
+		default: false,
+	},
+	isReloadButton: {
+		type: Boolean,
+		default: true,
+	},
+	message: {
+		type: String,
+		default: 'No hay datos disponibles',
+	},
+	icon: {
+		type: String,
+		default: 'box',
+	},
 });
 
 function handleReload() {
-  emit("reload");
+	emit('reload');
 }
 </script>
 
 <template>
-  <div class="flex flex-col items-center justify-center space-y-2 w-full">
-    <DsIcon class="m-4" name="box" size="xlarge" />
-    <p class="text-lg text-gray-500 m-4">No hay datos disponibles</p>
-    <DsButton
-      v-if="!loading"
-      color="primary"
-      text="Recargar"
-      @click="handleReload"
-    />
-  </div>
+	<div class="flex flex-col items-center justify-center space-y-2 w-full">
+		<DsIcon
+			:name="icon"
+			class="m-4"
+			size="xlarge"
+		/>
+		<p class="text-lg text-gray-500 m-4">
+			{{ message }}
+		</p>
+		<DsButton
+			v-if="!loading && !isReloadButton"
+			color="primary"
+			text="Recargar"
+			@click="handleReload"
+		/>
+	</div>
 </template>

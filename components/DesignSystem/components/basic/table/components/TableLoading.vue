@@ -4,7 +4,7 @@ import DsLoading from "../../loading/DsLoading.vue";
 
 <template>
   <div
-    class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center"
+    class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center w-full"
   >
     <p class="text-white text-2xl">
       <DsLoading />

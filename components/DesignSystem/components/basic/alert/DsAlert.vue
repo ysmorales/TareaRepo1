@@ -1,66 +1,59 @@
 <script lang="ts" setup>
-import DsTypography from "../typography/DsTypography.vue";
-import DsIcon from "../icon/DsIcon.vue";
+import { computed } from "vue";
 import { predefinedClasses } from "../../../common/propsStyle";
 import { filterClass } from "../../../utils/filterClass";
+import DsTypography from "../typography/DsTypography.vue";
+import DsIcon from "../icon/DsIcon.vue";
 
-import { computed } from "vue";
+import type { IIconName } from "../icon/types";
+import type { IAlertType } from "./types";
 import { alertConfig } from "./library";
 
-const props = defineProps({
-  type: {
-    type: String as () => IAlertType,
-    default: "info",
-  },
+interface IProp {
+  icon?: IIconName | string;
+  showIcon?: boolean;
+  type?: IAlertType;
+  title?: string;
+  rounded?: boolean;
+  text?: string;
+}
 
-  rounded: {
-    type: Boolean,
-    default: true,
-  },
-
-  title: {
-    type: String,
-    default: null,
-  },
-
-  text: {
-    type: String,
-    default: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil harum assumenda fugiat consequatur sunt,
-     labore, inventore cumque illo deleniti itaque, provident excepturi. Dicta nulla nesciunt eaque iste repudiandae tempora quod?`,
-  },
-
-  showIcon: {
-    type: Boolean,
-    default: true,
-  },
-  class: {
-    type: String,
-    default: "",
-  },
+const $props = withDefaults(defineProps<IProp>(), {
+  type: "info",
+  showIcon: true,
+  title: "Información",
 });
 
+const alertStyle = computed(() => alertConfig[$props.type]);
+const icon = computed<string | IIconName>(
+  () => $props.icon ?? alertStyle.value?.icon,
+);
+
 const cssClasses = computed(() => {
-  const filterClassComp = filterClass(predefinedClasses, props.class);
+  const filterClassComp = filterClass(predefinedClasses, "");
   const baseClass = {
-    rounded: props.rounded,
+    rounded: $props.rounded,
     [filterClassComp]: true,
   };
-  const typeClass = alertConfig[props.type] ?? {};
+  const typeClass = alertConfig[$props.type] ?? {};
 
   return {
-    component: ["p-4 mb-2", typeClass.bg, baseClass],
-    title: [typeClass.title].join(" "),
-    icon: typeClass.icon,
+    component: [typeClass.bg ?? "border-primary-500", baseClass, "px-3 py-2"],
+    title: typeClass?.title,
+    icon: typeClass?.icon,
     defaultText: typeClass.defaultText,
   };
 });
 </script>
 
 <template>
-  <div :class="cssClasses.component" class="rounded-lg">
-    <DsTypography :class="cssClasses.title" variant="h3">
-      <DsIcon v-if="showIcon" :name="cssClasses.icon" size="medium" />
-      {{ title ?? cssClasses.defaultText }}
+  <div :class="cssClasses.component">
+    <DsTypography
+      :class="[alertStyle?.title, 'flex items-center gap-1'].join(' ')"
+      variant="h3"
+    >
+      <DsIcon v-if="showIcon" :name="icon" size="medium" />
+      {{ title ?? alertStyle.defaultText }}
     </DsTypography>
 
     <slot>

@@ -1,14 +1,32 @@
 export interface ITableColumnData {
-    title: string;
+    id?: number;
+    title?: string;
     key?: string;
-    filter?: { filterType: 'date' | 'select' | 'text' | 'number' | 'run', config?: any };
+    dataType?: string;
+    noShow?: boolean;
+    customComponent?: object;
+    filter?: {
+        title?: string;
+        filterType?: 'date' | 'select' | 'text' | 'number' | 'run';
+        config?: {
+            options: { value: string; text: string }[];
+        };
+        placeholder?: string;
+    };
+    customStyle?: string;
     size?: string;
-    type?: 'link' | 'default' | 'avatar'
+    type?: 'link' | 'default' | 'avatar' | 'tag';
     actions?: {
         delete?: boolean;
         edit?: boolean;
         view?: boolean;
         custom?: boolean;
+        type?: 'link' | 'button'
+        labels?: {
+            delete?: string;
+            edit?: string;
+            view?: string;
+        }
     };
 }
 
@@ -16,5 +34,12 @@ export interface IPagination {
     totalItems: number;
     itemsPerPage: number;
     currentPage: number;
-    itemsPerPageOptions: number[];
+    noUpdateDataOnPagination?: 'yes' | 'no'
+}
+
+export interface IFilterInfo {
+    title: string,
+    buttonOkText: string,
+    buttonCancelText: string
+    extraFilters: any[]
 }

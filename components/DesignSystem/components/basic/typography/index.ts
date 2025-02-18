@@ -1,1 +1,1 @@
-export { default as DsTypography } from "./DsTypography.vue";
+export { default as DsTypography } from './DsTypography.vue';

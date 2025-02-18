@@ -1,11 +1,10 @@
 <!-- @vue-docgen-ignore -->
 <script lang="ts" setup>
-import { ref } from "vue";
+import { ref, computed, onMounted, provide, watch } from "vue";
 import generateUniqueId from "../../../utils/generateUniqueId";
 import useFocus from "../../../composables/useFocus";
 import { filterClass } from "../../../utils/filterClass";
 import { predefinedClasses } from "../../../common/propsStyle";
-import { computed, onMounted, provide, watch } from "vue";
 
 const props = defineProps({
   modelValue: {
@@ -52,7 +51,7 @@ onMounted(() => {
   uniqueID.value = generateUniqueId("check");
 });
 const initialValue = ref(props.modelValue);
-const checkGroup = ref(initialValue ?? []);
+const checkGroup = ref(initialValue.value ?? []);
 provide("checkGroup", checkGroup);
 provide("disabled", props.disabled);
 const emit = defineEmits(["update:modelValue"]);
@@ -61,7 +60,7 @@ watch(
   (newValue) => {
     emit("update:modelValue", newValue);
   },
-  { immediate: true },
+  { immediate: true }
 );
 const hasError = computed(() => !!props.error);
 </script>
@@ -77,7 +76,7 @@ const hasError = computed(() => !!props.error);
       {{ label }}
       <span v-if="required" aria-hidden="true" class="required-marker">*</span>
     </label>
-    <slot></slot>
+    <slot />
     <label v-if="hasError" class="error-message block mb-0">
       {{ error }}
     </label>
