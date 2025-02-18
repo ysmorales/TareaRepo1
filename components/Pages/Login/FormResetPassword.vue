@@ -4,7 +4,7 @@ import {required, minLength, helpers} from "@vuelidate/validators";
 import {useVuelidate} from "@vuelidate/core";
 import {getErrorMessage} from "~/components/DesignSystem/utils/translateErrorMessage";
 import useApplications from '~/api-services/applications';
-import { useRoute, useRouter } from 'vue-router';
+import {useRoute, useRouter} from 'vue-router';
 
 const route = useRoute();
 const router = useRouter();
@@ -37,7 +37,7 @@ const handleSubmit = async () => {
         loading.value = true;
         backendError.value = null;
         try {
-            const response = await applicationsService.procedure.createOne("/api/password/reset", {
+            const response = await applicationsService.procedure.resetPassword({
                 token: token,
                 email: email,
                 password: form.newPassword,
@@ -51,7 +51,7 @@ const handleSubmit = async () => {
             }
         } catch (e) {
             backendError.value = "Error al comunicarse con el servidor.";
-            console.log('Viendo error en consola.',e);
+            console.log('Viendo error en consola.', e);
         }
 
         loading.value = false;
@@ -65,14 +65,20 @@ const handleSubmit = async () => {
         <DsTypography>Para recuperar su contraseña, por favor ingrese la nueva contraseña y confírmela.</DsTypography>
         <form class="mb-5" @submit.prevent="handleSubmit">
             <div class="mb-4">
-                <DsInput type="password" v-model="form.newPassword" label="Nueva Contraseña" :error="getErrorMessage(validateForm?.newPassword.$errors[0])"/>
+                <DsInput v-model="form.newPassword" :error="getErrorMessage(validateForm?.newPassword.$errors[0])" label="Nueva Contraseña"
+                         type="password"/>
             </div>
             <div class="mb-6">
-                <DsInput type="password" v-model="form.confirmPassword" label="Confirmar Nueva Contraseña" :error="getErrorMessage(validateForm?.confirmPassword.$errors[0])"/>
+                <DsInput v-model="form.confirmPassword" :error="getErrorMessage(validateForm?.confirmPassword.$errors[0])" label="Confirmar Nueva Contraseña"
+                         type="password"/>
             </div>
             <div v-if="backendError" class="text-red-500 mb-4">{{ backendError }}</div>
-            <DsAlert v-if="successMessage" class="mb-5" title="Operación exitosa" type="success">{{ successMessage }}</DsAlert>
-            <DsButton :loading="loading" type="submit" class="w-full"><span class="text-center w-full">Cambiar Contraseña</span></DsButton>
+            <DsAlert v-if="successMessage" class="mb-5" title="Operación exitosa" type="success">{{
+                    successMessage
+                }}
+            </DsAlert>
+            <DsButton :loading="loading" class="w-full" type="submit"><span class="text-center w-full">Cambiar Contraseña</span>
+            </DsButton>
         </form>
     </div>
 </template>

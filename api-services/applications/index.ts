@@ -41,6 +41,13 @@ export default function () {
                     body: procedure,
                     method: 'POST',
                 }),
+            resetPassword: async (procedure: any) =>
+                requestResponse({
+                    path: "/api/password/reset",
+                    baseURL,
+                    body: procedure,
+                    method: 'POST',
+                }),
             deleteMulti: async (path: string, body: any) =>
                 requestResponse({
                     path: path,
