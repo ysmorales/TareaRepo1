@@ -1,4 +1,3 @@
-
 import uniqid from "uniqid";
 
 export function deleteElementByPath(trees, path) {
@@ -50,6 +49,9 @@ export function encontrarRutaPorIndice(arbol, idBuscado, ruta = []) {
 
 export function assignNewIds(node) {
     node.id = uniqid();
+    if (node?.settings?.extra?.name) {
+        node.settings.extra.name = `${node.settings.extra.name}-${uniqid()}`
+    }
     if (Array.isArray(node.items)) {
         node.items.forEach(assignNewIds);
     }
@@ -111,12 +113,110 @@ export function updateNodeByPath(trees, path, key, value, allReplace = false) {
         if (allReplace) {
             current[key] = value;
         } else {
-            current[key] = { ...current[key], ...value };
+            current[key] = clone({ ...current[key], ...value });
         }
     }
 }
 
-
 export function clone(item) {
     return JSON.parse(JSON.stringify(item))
 }
+
+export const getEmptySection = () => ({
+    id: uniqid('s'),
+    settings: {},
+    type: 'section',
+    items: [{
+        id: uniqid('r'),
+        settings: {},
+        type: 'row',
+        items: []
+    }]
+})
+
+export const getFormFieldsNodes = (listTree, id) => {
+    const path = encontrarRutaPorIndice(listTree, id);
+    const trees = [getNodeByPath(listTree, path)];
+    let leaves = [];
+    const addNode = (node) => {
+        if (node?.item?.indexOf("form") !== -1) {
+            leaves.push({
+                id: node.id,
+                item: node.item,
+                settings: node.settings,
+            });
+        }
+    };
+    function traverse(node) {
+        if (!node?.items || node?.items.length === 0) {
+            addNode(node);
+        } else {
+            if (node?.item) {
+                addNode(node);
+            }
+            node?.items?.forEach(traverse);
+        }
+    }
+    trees.forEach(traverse);
+    return leaves;
+};
+
+const fieldsForm = ['DsInput']
+
+export const getNameFieldFormNode = (node) => node?.settings?.extra?.name ?? node.id
+
+export const getFormFieldValues = (listTree, id) => {
+    const trees = id ? [getNodeByPath(listTree, encontrarRutaPorIndice(listTree, id))] : listTree;
+    let leaves = {};
+    const addNode = (node) => {
+        if (fieldsForm.includes(getNameComponentKey(node.item))) {
+            leaves[getNameFieldFormNode(node)] = node.data ?? ''
+        }
+    };
+    function traverse(node) {
+        if (node?.item) {
+            addNode(node);
+        }
+        if (node?.items)
+            node?.items?.forEach(traverse);
+    }
+    trees.forEach(traverse);
+    return leaves;
+};
+
+
+export const getScopeFieldValues = (listTree, id) => {
+    const trees = id ? [getNodeByPath(listTree, encontrarRutaPorIndice(listTree, id))] : listTree;
+    let leaves = {};
+    const addNode = (node) => {
+        if (node.settings?.extra?.name)
+            leaves[node.id] = node.settings?.extra?.name
+    };
+    function traverse(node) {
+        if (node?.settings?.extra?.scope) {
+            addNode(node);
+        }
+        if (node?.items)
+            node?.items?.forEach(traverse);
+    }
+    trees.forEach(traverse);
+    return leaves;
+};
+
+
+export const getFieldSubcribeTo = (listTree, id) => {
+    let leaves = [];
+    const addNode = (node) => {
+        if (node.settings?.extra?.scopeSubscribe && node.settings?.extra?.scopeSubscribe === id)
+            leaves.push({ id: node.id, path: encontrarRutaPorIndice(listTree, node.id) })
+    };
+    function traverse(node) {
+        if (node?.settings?.extra?.scope) {
+            addNode(node);
+        }
+        if (node?.items)
+            node?.items?.forEach(traverse);
+    }
+    listTree.forEach(traverse);
+    return leaves;
+};

@@ -11,7 +11,12 @@ const props = withDefaults(defineProps<IProp>(), {
 </script>
 
 <template>
-  <ModuleComponent v-if="node.type === 'module'" :element="node" seeOnly />
+  <ModuleComponent
+    v-if="node.type === 'module'"
+    :element="node"
+    seeOnly
+    v-model="node.data"
+  />
   <TreeNode
     v-if="node.items && node.items.length && !node.item"
     :items="node.items"

@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import Fields from "./FormBuilder/Fields.vue";
 import Slots from "./FormBuilder/Slots.vue";
+import ExtraFields from "./FormBuilder/ExtraFields.vue";
 
 interface IProp {
   item: any;
@@ -16,8 +17,6 @@ const getAllInfoComponent = (keyNameProp) => ({
   ...props.item?.component?.props[keyNameProp],
   ...infoComponent?.argTypes[keyNameProp],
 });
-
-const slotsNames = ref({});
 </script>
 
 <template>
@@ -31,5 +30,6 @@ const slotsNames = ref({});
       />
     </div>
     <Slots :item="item" />
+    <ExtraFields :item="item" />
   </div>
 </template>

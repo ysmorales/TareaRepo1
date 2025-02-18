@@ -3,6 +3,7 @@ import { ref, watch, toRef, computed, onMounted } from "vue";
 import { filterClass } from "../../../utils/filterClass";
 import { predefinedClasses } from "../../../common/propsStyle";
 import generateUniqueId from "../../../utils/generateUniqueId";
+import DsIcon from "../../basic/icon/DsIcon.vue";
 import DsButton from "../../basic/button/DsButton.vue";
 
 const props = defineProps({
@@ -71,6 +72,8 @@ const emitChangeStep = defineEmits([
   "changeStep",
   "update:modelValue",
   "clickSecondaryButton",
+  "handlerAddNewStep",
+  "handlerRemoveStep",
 ]);
 const filterClassComp = computed(() => {
   return filterClass(predefinedClasses, props.class);
@@ -141,6 +144,14 @@ const iteractiveEditor = () => ({
   relative: props.editorInteractive,
   "z-10": props.editorInteractive,
 });
+
+const handlerAddNew = () => {
+  emitChangeStep("handlerAddNewStep");
+};
+
+const handlerRemoveStep = (item) => {
+  emitChangeStep("handlerRemoveStep", item);
+};
 </script>
 
 <template>
@@ -160,11 +171,19 @@ const iteractiveEditor = () => ({
         v-for="(item, index) in steps"
         :key="item.step"
         :class="['m-0', iteractiveEditor()]"
-        @click="handleClick(item)"
       >
+        <DsIcon
+          color="danger"
+          class="cursor-pointer ml-12 mt-[-10px] absolute"
+          name="trash"
+          title="trash"
+          @click="handlerRemoveStep(item)"
+          v-if="editorInteractive"
+        />
         <div class="flex justify-center items-center">
           <button
             :aria-label="computeAriaLabel(item)"
+            @click="handleClick(item)"
             :class="[
               'h-10 w-10 md:h-14 md:w-14 font-inriaSans border border-neutral-300  text-dark-500 ' +
                 'rounded-full flex align-middle justify-center items-center text-normal  mx-1 md:mx-2',
@@ -199,6 +218,25 @@ const iteractiveEditor = () => ({
               `${item.step < modelValue ? 'bg-primary-500' : 'bg-gray-200'}`,
             ]"
           />
+        </div>
+      </li>
+
+      <li :class="['m-0', iteractiveEditor()]" @click="handlerAddNew()">
+        <div class="flex justify-center items-center">
+          <button
+            :class="[
+              'h-10 w-10 md:h-14 md:w-14 font-inriaSans border border-neutral-300  text-dark-500 ' +
+                'rounded-full flex align-middle justify-center items-center text-normal  mx-1 md:mx-2',
+            ]"
+            v-if="editorInteractive"
+          >
+            <DsIcon
+              color="primary"
+              class="cursor-pointer"
+              name="plus"
+              title="Ir hacia adelante"
+            />
+          </button>
         </div>
       </li>
     </ol>

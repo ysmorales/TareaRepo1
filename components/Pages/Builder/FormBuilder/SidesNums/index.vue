@@ -5,19 +5,21 @@ import SideForm from "./form.vue";
 interface IProp {
   label?: string;
   keyName?: string;
+  sidesDefault: Record<string, number>;
 }
 
 const props = withDefaults(defineProps<IProp>(), {
   label: "Padding",
   keyName: "padding",
+  sidesDefault: {
+    top: 0,
+    bottom: 0,
+    right: 0,
+    left: 0,
+  },
 });
 
-const sides = ref({
-  top: 0,
-  bottom: 0,
-  right: 0,
-  left: 0,
-});
+const sides = ref(clone(props.sidesDefault));
 const emit = defineEmits(["handlerChange"]);
 
 watch(

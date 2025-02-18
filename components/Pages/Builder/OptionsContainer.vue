@@ -18,6 +18,8 @@ interface IProp {
   areaMode: string;
   settings: any;
   idx: number;
+  noActions: boolean;
+  slots?: string[];
 }
 
 const props = withDefaults(defineProps<IProp>(), {
@@ -66,18 +68,19 @@ const handlerAction = (mode) => {
       ]"
     >
       <div
-        v-if="type !== 'module' && areaMode === 'dragable'"
+        v-if="(type !== 'module' || slots) && areaMode === 'dragable'"
         class="text-center"
       >
         {{ type }} {{ idx }}
       </div>
-      <slot></slot>
+      <slot v-if="!slots"></slot>
 
       <div
         class="absolute inset-0"
         v-if="areaMode === 'dragable' || type === 'module'"
       >
         <IconArea
+          v-if="!noActions"
           :type="type"
           :id="id"
           :index="`idf${id}`"
@@ -96,6 +99,7 @@ const handlerAction = (mode) => {
         ]"
       ></div>
     </div>
+    <slot v-if="slots"></slot>
   </div>
   <!-- </template>
   </draggable> -->

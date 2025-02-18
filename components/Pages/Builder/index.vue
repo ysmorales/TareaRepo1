@@ -1,13 +1,12 @@
 <script lang="ts" setup>
 import { useBuilderStore } from "~/stores/builderStore";
-import { toRefs } from "vue";
+import { toRefs, provide } from "vue";
 import LayoutThreeColumns from "../LayoutThreeColumns.vue";
 import DraggableArea from "./DraggableArea.vue";
 import DefaultArea from "./DefaultArea.vue";
 
 import ListComponents from "./ListComponents.vue";
 import FieldTabsOptions from "./FieldTabsOptions.vue";
-
 const store = useBuilderStore();
 const { viewMode } = toRefs(store);
 </script>

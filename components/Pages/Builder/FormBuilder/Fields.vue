@@ -1,8 +1,10 @@
 <script lang="ts" setup>
-import { DsInput, DsSelect, DsIcon, DsCheck } from "~/components/DesignSystem";
+import deepmerge from "deepmerge";
+import { DsInput, DsSelect, DsCheck } from "~/components/DesignSystem";
 
-import DsTooltip from "~/components/DesignSystem/components/basic/tooltip/DsTooltip.vue";
 import { useBuilderStore } from "~/stores/builderStore";
+import FieldLayout from "./fieldLayout.vue";
+import FieldObjectRecord from "./FieldObjectRecord/index.vue";
 
 interface IProp {
   fieldKey: string;
@@ -17,16 +19,58 @@ const props = withDefaults(defineProps<IProp>(), {
 });
 
 const store = useBuilderStore();
-const { updateItemInForm } = toRefs(store);
+const {
+  updateItemInForm,
+  handlerChangeContainerSettings,
+  itemOnSelect,
+  itemsPageList,
+} = toRefs(store);
 
 const emit = defineEmits(["input", "update:modelValue"]);
 
-const valueField = ref("");
+const getDefaulValue = () => {
+  return (props.item?.props && props.item?.props[props.fieldKey]) ?? "";
+};
+
+const valueField = ref(getDefaulValue());
 
 function handleChange() {
   console.log(props.item, props.fieldKey, valueField);
   updateItemInForm.value(props?.item, props.fieldKey, valueField);
 }
+
+function applyPathTransformation(input) {
+  let result = {};
+  let current = result;
+
+  input.path.forEach((key, index) => {
+    if (index === input.path.length - 1) {
+      current[key] = { extra: input.newState };
+    } else {
+      current[key] = current[key] || {};
+      current = current[key];
+    }
+  });
+
+  return result;
+}
+
+const handlerUpdateConfig = (newExtraConfig) => {
+  const ruta = encontrarRutaPorIndice(
+    itemsPageList.value,
+    itemOnSelect.value.id
+  );
+  const nodo = getNodeByPath(itemsPageList.value, ruta);
+  handlerChangeContainerSettings.value(itemOnSelect.value, {
+    extra: {
+      ...(nodo.settings?.extra ?? {}),
+      subFields: deepmerge(
+        nodo.settings?.extra.subFields,
+        applyPathTransformation(newExtraConfig)
+      ),
+    },
+  });
+};
 
 const getType = () =>
   props.fieldInfo?.control?.type
@@ -49,43 +93,39 @@ watch(valueField, () => {
 </script>
 
 <template>
-  <div class="flex items-end w-full">
-    <div class="flex-1">
-      <DsInput
-        v-if="getType() === 'text'"
-        v-model="valueField"
-        :label="fieldKey"
-      />
+  <FieldLayout :description="fieldInfo.description ?? 'no found description'">
+    <DsInput
+      v-if="getType() === 'text'"
+      v-model="valueField"
+      :label="fieldKey"
+    />
 
-      <DsInput
-        v-if="getType() === 'number'"
-        type="number"
-        v-model="valueField"
-        :label="fieldKey"
-      />
+    <DsInput
+      v-if="getType() === 'number'"
+      type="number"
+      v-model="valueField"
+      :label="fieldKey"
+    />
 
-      <DsSelect
-        v-if="getType() === 'select'"
-        v-model="valueField"
-        :option="fieldInfo?.options.map((d) => ({ value: d, text: d }))"
-        :label="fieldKey"
-        :placeholder="`Select ${fieldKey}`"
-      />
+    <DsSelect
+      v-if="getType() === 'select'"
+      v-model="valueField"
+      :option="fieldInfo?.options.map((d) => ({ value: d, text: d }))"
+      :label="fieldKey"
+      :placeholder="`Select ${fieldKey}`"
+    />
 
-      <DsCheck
-        v-if="getType() === 'boolean'"
-        v-model="valueField"
-        :label="fieldKey"
-      />
-    </div>
-
-    <div class="mb-4 ml-2">
-      <DsTooltip
-        :text="fieldInfo.description ?? 'no found description'"
-        position="right"
-      >
-        <DsIcon name="info-circle" size="default" />
-      </DsTooltip>
-    </div>
-  </div>
+    <DsCheck
+      v-if="getType() === 'boolean'"
+      v-model="valueField"
+      :label="fieldKey"
+    />
+    <FieldObjectRecord
+      v-model="valueField"
+      v-if="getType() === 'object'"
+      :label="fieldKey"
+      :fieldInfo="fieldInfo"
+      @handlerUpdateConfig="handlerUpdateConfig"
+    />
+  </FieldLayout>
 </template>

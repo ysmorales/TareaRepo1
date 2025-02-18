@@ -2,11 +2,15 @@ import type { IItemBuilder } from "~/interfaces/interfaces";
 import { defineStore } from 'pinia';
 import uniqid from "uniqid";
 import { ref } from 'vue';
+import { getEmptySection } from "~/utils/tree";
+
+import { useVuelidate } from "@vuelidate/core";
+import { email, helpers, numeric, required } from "@vuelidate/validators";
 
 type IModalType = 'property' | 'save' | 'validate' | 'formData' | 'infoPanel'
 
-const keyLocalStoreInfo = 'fftr'
-const defaultBoard = [{ "settings": {}, "sort": 1, "props": {}, "type": "section", "id": "sm6pzyw33", "items": [{ "settings": {}, "sort": 1, "props": {}, "type": "row", "id": "rm6pzyw34", "items": [{ "settings": {}, "sort": 1, "props": {}, "type": "column", "id": "cm6pzyw35", "items": [{ "settings": {}, "sort": 1, "props": { "step": "3" }, "type": "module", "id": "mm6pzyw36", "item": "../components/builder-extra/Stepper/StepperExtra.stories.js", "items": [{ "id": "sm6pzz3cf", "settings": {}, "type": "section", "items": [{ "id": "rm6pzz3ce", "settings": { "rowNumCols": 3 }, "type": "row", "items": [{ "id": "cm6pzz757", "settings": { "columnSpan": "col-span-1" }, "type": "column", "items": [{ "settings": {}, "sort": 1, "props": {}, "type": "module", "id": "mm6pzzaou", "item": "../stories/components/basic/alerts/DsAlert.stories.ts", "items": [] }] }, { "id": "cm6pzz75a", "settings": { "columnSpan": "col-span-1" }, "type": "column", "items": [] }, { "id": "cm6pzz75d", "settings": { "columnSpan": "col-span-1", "backgroundColor": "#c71f1f" }, "type": "column", "items": [] }] }] }, { "id": "m6q00kgf", "settings": {}, "type": "section", "items": [{ "id": "m6q00kgg", "settings": { "rowNumCols": 3 }, "type": "row", "items": [{ "id": "m6q00kgh", "settings": { "columnSpan": "col-span-1" }, "type": "column", "items": [{ "settings": {}, "sort": 1, "props": { "title": "wwwwwww" }, "type": "module", "id": "m6q00kgi", "item": "../stories/components/basic/alerts/DsAlert.stories.ts", "items": [] }] }, { "id": "m6q00kgj", "settings": { "columnSpan": "col-span-1", "backgroundColor": "#25247f" }, "type": "column", "items": [] }, { "id": "m6q00kgk", "settings": { "columnSpan": "col-span-1" }, "type": "column", "items": [{ "settings": {}, "sort": 1, "props": {}, "type": "module", "id": "m6q00kgl", "item": "../stories/components/basic/pagination/Pagination.stories.js", "items": [] }] }] }] }, { "id": "m6q00k3b", "settings": {}, "type": "section", "items": [{ "id": "m6q00k3c", "settings": { "rowNumCols": 3 }, "type": "row", "items": [{ "id": "m6q00k3d", "settings": { "columnSpan": "col-span-1" }, "type": "column", "items": [{ "settings": {}, "sort": 1, "props": { "type": "danger", "title": "w2er24" }, "type": "module", "id": "m6q00k3e", "item": "../stories/components/basic/alerts/DsAlert.stories.ts", "items": [] }] }, { "id": "m6q00k3f", "settings": { "columnSpan": "col-span-1" }, "type": "column", "items": [] }, { "id": "m6q00k3g", "settings": { "columnSpan": "col-span-1" }, "type": "column", "items": [{ "settings": {}, "sort": 1, "props": {}, "type": "module", "id": "m6q00k3h", "item": "../stories/components/basic/pagination/Pagination.stories.js", "items": [] }] }] }] }, { "id": "m6q00j82", "settings": {}, "type": "section", "items": [{ "id": "m6q00j83", "settings": { "rowNumCols": 3 }, "type": "row", "items": [{ "id": "m6q00j84", "settings": { "columnSpan": "col-span-1" }, "type": "column", "items": [{ "settings": {}, "sort": 1, "props": {}, "type": "module", "id": "m6q00j85", "item": "../stories/components/basic/alerts/DsAlert.stories.ts", "items": [] }] }, { "id": "m6q00j86", "settings": { "columnSpan": "col-span-1" }, "type": "column", "items": [] }, { "id": "m6q00j87", "settings": { "columnSpan": "col-span-1" }, "type": "column", "items": [{ "settings": {}, "sort": 1, "props": {}, "type": "module", "id": "m6q00j88", "item": "../stories/components/basic/pagination/Pagination.stories.js", "items": [] }] }] }] }], "slots": ["default"] }] }] }] }, { "settings": {}, "sort": 1, "props": {}, "type": "section", "id": "sm6qwqujj", "items": [{ "settings": {}, "sort": 1, "props": {}, "type": "row", "id": "rm6qwqujk", "items": [{ "settings": {}, "sort": 1, "props": {}, "type": "column", "id": "cm6qwqujl", "items": [{ "settings": {}, "sort": 1, "props": { "text": "typography editions", "variant": "h4", "color": "danger" }, "type": "module", "id": "mm6qwqujm", "item": "../stories/components/basic/typography/DsTypography.stories.js", "items": [] }] }] }] }]
+const keyLocalStoreInfo = '667yuu'
+const defaultBoard = [{ "settings": {}, "sort": 1, "props": { "totalSteps": 2 }, "type": "section", "id": "sm74o4ku4", "items": [{ "settings": {}, "sort": 1, "props": { "totalSteps": 2 }, "type": "row", "id": "rm74o4ku5", "items": [{ "settings": {}, "sort": 1, "props": { "totalSteps": 2 }, "type": "column", "id": "cm74o4ku6", "items": [{ "settings": {}, "sort": 1, "props": { "totalSteps": 3 }, "type": "module", "id": "mm74o4ku7", "item": "../components/builder-extra/Stepper/StepperExtra.stories.js", "items": [{ "id": "sm74o4vk6", "settings": {}, "type": "section", "items": [{ "id": "rm74o4vk7", "settings": { "rowNumCols": 12 }, "type": "row", "items": [{ "id": "cm74o4ycg", "settings": { "columnSpan": "col-span-12" }, "type": "column", "items": [{ "type": "module", "id": "mm74o4zlh", "item": "../components/builder-extra/Stepper/StepExtra.stories.js", "slots": ["default"], "items": [{ "id": "sm74o55q0", "settings": {}, "type": "section", "items": [{ "id": "rm74o55q1", "settings": { "rowNumCols": 12 }, "type": "row", "items": [{ "id": "cm74o57fi", "settings": { "columnSpan": "col-span-12" }, "type": "column", "items": [{ "type": "module", "id": "mm74o5d66", "item": "../components/builder-extra/Stepper/FieldInfoGroupExtra.stories.js" }] }, { "id": "m74o5gv8", "settings": { "columnSpan": "col-span-12" }, "type": "column", "items": [{ "type": "module", "id": "m74o5gv9", "item": "../components/builder-extra/Stepper/FieldInfoGroupExtra.stories.js" }] }, { "id": "m74o5g6f", "settings": { "columnSpan": "col-span-12" }, "type": "column", "items": [{ "type": "module", "id": "m74o5g6g", "item": "../components/builder-extra/Stepper/FieldInfoGroupExtra.stories.js", "slots": ["default"], "items": [{ "id": "sm74o5kel", "settings": {}, "type": "section", "items": [{ "id": "rm74o5kem", "settings": { "rowNumCols": 12 }, "type": "row", "items": [{ "id": "cm74o5lvb", "settings": { "columnSpan": "col-span-12" }, "type": "column", "items": [{ "type": "module", "id": "mm74pfk3p", "item": "../stories/components/basic/typography/DsTypography.stories.js", "props": { "text": "Selecciona la franja*" } }, { "type": "module", "id": "mm74pdumg", "item": "../stories/components/form/check/DsCheck.stories.ts", "props": { "label": "8:30 a 17:30" }, "data": false }, { "type": "module", "id": "m74pf14f", "item": "../stories/components/form/check/DsCheck.stories.ts", "props": { "label": "9:00 a 18:00" }, "data": false }, { "type": "module", "id": "m74pbm3f", "item": "../stories/components/form/input/Input.stories.ts", "data": "", "props": { "helpMessage": "other ramdon input here", "placeholder": "some" } }] }] }] }], "props": { "title": "Franja horaria solicitada" } }, { "type": "module", "id": "m74pgmxj", "item": "../components/builder-extra/Stepper/FieldInfoGroupExtra.stories.js", "slots": ["default"], "items": [{ "id": "m74pgmxk", "settings": {}, "type": "section", "items": [{ "id": "m74pgmxl", "settings": { "rowNumCols": 12 }, "type": "row", "items": [{ "id": "m74pgmxm", "settings": { "columnSpan": "col-span-12" }, "type": "column", "items": [{ "type": "module", "id": "mm74q18n8", "item": "../components/builder-extra/Form/Radio/RadioGroupExtra.stories.js" }] }] }] }], "props": { "title": "Inicio de la franja horaria solicitada" } }] }] }] }] }] }] }] }, { "id": "sm74o5uru", "settings": {}, "type": "section", "items": [{ "id": "rm74o5urv", "settings": { "rowNumCols": 12 }, "type": "row", "items": [{ "id": "cm74o8iht", "settings": { "columnSpan": "col-span-12" }, "type": "column", "items": [{ "type": "module", "id": "mm74o8jvd", "item": "../components/builder-extra/Stepper/StepConfirmExtra.stories.js", "slots": ["default"], "items": [{ "id": "sm74p81rd", "settings": {}, "type": "section", "items": [{ "id": "rm74p81re", "settings": { "rowNumCols": 12 }, "type": "row", "items": [{ "id": "cm74p84o0", "settings": { "columnSpan": "col-span-12", "margin": { "top": "13.0801687763713", "bottom": 0, "right": 0, "left": 0 } }, "type": "column", "items": [{ "settings": {}, "sort": 1, "props": {}, "type": "module", "id": "mm74p9i2e", "item": "../stories/components/container/accordion/DsAccordion.stories.js", "items": [] }] }] }] }] }] }] }] }, { "id": "sm74o8nyj", "settings": {}, "type": "section", "items": [{ "id": "rm74o8nyk", "settings": { "rowNumCols": 12 }, "type": "row", "items": [{ "id": "cm74o8v6a", "settings": { "columnSpan": "col-span-12" }, "type": "column", "items": [{ "type": "module", "id": "mm74o8wy3", "item": "../components/builder-extra/Stepper/StepResumeExtra.stories.js" }] }] }] }], "slots": ["default"] }] }] }] }]
 
 export const useBuilderStore = defineStore('counter', () => {
     const itemsPage = ref({})
@@ -16,6 +20,7 @@ export const useBuilderStore = defineStore('counter', () => {
     const viewModeFieldConfigs = ref('single')
     const itemOnHover = ref('')
     const itemOnSelect = ref({})
+    const scopeModel = ref({})
     const itemToCopy = ref({})
     const builderItems = ref<IItemBuilder[]>([] as IItemBuilder[])
     const currentDragItem = ref<null | IItemBuilder>(null)
@@ -32,6 +37,27 @@ export const useBuilderStore = defineStore('counter', () => {
     const propertyCollapse = ref(
         true
     )
+
+    const $externalResults = ref({});
+    const form = computed(() => {
+        return { ...getFormFieldValues(itemsPageList.value) }
+    });
+
+    const formRules = computed(() => {
+        const step1 = {}
+        Object.keys(getFormFieldValues(itemsPageList.value)).forEach(element => {
+            step1[element] = { required }
+        });
+
+        return step1
+    });
+
+    const isLoadingForm = ref(false)
+    const validateForm = useVuelidate(formRules, form, { $externalResults });
+
+    function setLoadingForm(newState) {
+        isLoadingForm.value = newState
+    }
 
     let idCounter = 0; // Agrega un contador para los IDs
 
@@ -138,8 +164,6 @@ export const useBuilderStore = defineStore('counter', () => {
         viewModeFieldConfigs.value = newMode;
     }
 
-
-
     function handlerRemoveItem({ id, type }) {
         let foundSectionInRoot = false;
         const indexSection = itemsPageList.value.findIndex(d => d.id === id)
@@ -163,6 +187,18 @@ export const useBuilderStore = defineStore('counter', () => {
         const ruta = encontrarRutaPorIndice(itemsPageList.value, id);
 
         updateNodeByPath(itemsPageList.value, ruta, 'props', { [key]: value.value });
+    }
+
+    function updateSubscribeItemInForm({ id }: any, newStateProp: any) {
+        const listSubscribe = getFieldSubcribeTo(itemsPageList.value, id);
+
+        listSubscribe.forEach(nodeDic => {
+            const nodo = getNodeByPath(itemsPageList.value, nodeDic.path);
+            if (!nodo.props) {
+                nodo.props = {}
+            }
+            nodo.props[nodo.settings?.extra?.scopeProp] = newStateProp
+        });
     }
 
     function handlerCopyItem({ id, type }) {
@@ -203,10 +239,7 @@ export const useBuilderStore = defineStore('counter', () => {
     function handlerChangeContainerPaddingMargin({ id }, paddingMargin) {
         const ruta = encontrarRutaPorIndice(itemsPageList.value, id);
         const nodo = getNodeByPath(itemsPageList.value, ruta);
-        updateNodeByPath(itemsPageList.value, ruta, 'settings', {
-            margin: paddingMargin?.margin ?? nodo.settings.margin ?? {},
-            padding: paddingMargin?.padding ?? nodo.settings.padding ?? {},
-        });
+        nodo.settings.margin = { ...nodo.settings.margin, ...paddingMargin?.margin }
     }
 
     function handlerChangeContainerSettings({ id }, newSettingsToAdd) {
@@ -214,11 +247,8 @@ export const useBuilderStore = defineStore('counter', () => {
         updateNodeByPath(itemsPageList.value, ruta, 'settings', newSettingsToAdd);
     }
 
-
-    function handlerAddModule({ id }, moduleKeyName) {
-        const ruta = encontrarRutaPorIndice(itemsPageList.value, id);
-
-        const emptyModule = {
+    function getEmptyModule(moduleKeyName) {
+        return {
             settings: {},
             sort: 1,
             props: {},
@@ -227,47 +257,35 @@ export const useBuilderStore = defineStore('counter', () => {
             item: moduleKeyName,
             items: []
         }
+    }
 
-        updateNodeByPath(itemsPageList.value, ruta, 'items', [emptyModule], true);
+    function handlerAddModule({ id }, moduleKeyName) {
+        const ruta = encontrarRutaPorIndice(itemsPageList.value, id);
+
+        updateNodeByPath(itemsPageList.value, ruta, 'items', [getEmptyModule(moduleKeyName)], true);
     }
 
     function handlerAddEmptyContainerSectionInSlot({ id, type }) {
         const ruta = encontrarRutaPorIndice(itemsPageList.value, id);
-
-        const emptyRow = {
-            id: uniqid('r'),
-            settings: {},
-            type: 'row',
-            items: []
-        }
-        const emptySection = {
-            id: uniqid('s'),
-            settings: {},
-            type: 'section',
-            items: [emptyRow]
-        }
-
-        updateNodeByPath(itemsPageList.value, ruta, 'items', [emptySection], true);
+        const nodo = getNodeByPath(itemsPageList.value, ruta);
+        nodo.items = [getEmptySection()]
+        nodo.props.totalSteps = nodo.items.length
     }
 
     function handlerAddEmptyContainerRow({ id, type }) {
-        const emptyRow = {
-            id: uniqid('r'),
-            settings: {},
-            type: 'row',
-            items: []
-        }
+
         if (!id) {
-            const emptySection = {
-                id: uniqid('s'),
-                settings: {},
-                type: 'section',
-                items: [emptyRow]
-            }
-            itemsPageList.value.push(emptySection)
+            itemsPageList.value.push(getEmptySection())
         } else {
 
             let foundSectionInRoot = false;
+
+            const emptyRow = {
+                id: uniqid('r'),
+                settings: {},
+                type: 'row',
+                items: []
+            }
 
             if (type === 'section') {
                 const indexSection = itemsPageList.value.findIndex(d => d.id === id)
@@ -278,7 +296,11 @@ export const useBuilderStore = defineStore('counter', () => {
             }
             if (!foundSectionInRoot) {
                 const ruta = encontrarRutaPorIndice(itemsPageList.value, id);
-                updateNodeByPath(itemsPageList.value, ruta, 'items', emptyRow, true);
+                const nodo = getNodeByPath(itemsPageList.value, ruta);
+                if (!nodo.items) {
+                    nodo.items = []
+                }
+                nodo.items = [emptyRow]
             }
         }
     }
@@ -314,8 +336,33 @@ export const useBuilderStore = defineStore('counter', () => {
         }
     }
 
+    function handlerChangeNumChildrensSections({ id }, numChildrenSections) {
+
+        const ruta = encontrarRutaPorIndice(itemsPageList.value, id);
+        const nodo = getNodeByPath(itemsPageList.value, ruta);
+
+        if (!nodo.items) {
+            nodo.items = []
+        }
+        if (nodo.items.length < numChildrenSections) {
+            nodo.items.push(getEmptySection())
+            nodo.props.totalSteps = nodo.items.length
+        }
+    }
+
+    function handlerChangeRemoveChildrensSections({ id }, indexToRemove) {
+        const ruta = encontrarRutaPorIndice(itemsPageList.value, id);
+        const nodo = getNodeByPath(itemsPageList.value, ruta);
+        nodo.items.splice(indexToRemove, 1)
+        nodo.props.totalSteps = nodo.items.length
+    }
+
     function handlerSaveBoard() {
         window.localStorage.setItem(keyLocalStoreInfo, JSON.stringify(itemsPageList.value))
+    }
+
+    function updateScopeModel(newEntryState) {
+        scopeModel.value = { ...scopeModel.value, ...newEntryState }
     }
 
     return {
@@ -358,6 +405,12 @@ export const useBuilderStore = defineStore('counter', () => {
         updateToogleShowSlotInForm,
         handlerAddModule,
         itemToCopy,
-        handlerSaveBoard
+        handlerSaveBoard,
+        handlerChangeNumChildrensSections,
+        handlerChangeRemoveChildrensSections,
+        validateForm,
+        setLoadingForm,
+        isLoadingForm,
+        updateSubscribeItemInForm
     }
 })

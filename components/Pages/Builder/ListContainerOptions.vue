@@ -1,35 +1,38 @@
 <script lang="ts" setup>
-import {
-  DsAccordion,
-  DsIcon,
-  DsTypography,
-  DsInput,
-} from "~/components/DesignSystem";
+import { DsAccordion, DsIcon, DsTypography } from "~/components/DesignSystem";
 import { useBuilderStore } from "~/stores/builderStore";
 import FieldContainerLayout from "./FormBuilder/ContainerLayout/FieldContainerLayout.vue";
 import SidesNums from "./FormBuilder/SidesNums/index.vue";
 import Color from "./FormBuilder/Color/index.vue";
+import FormConfig from "./FormBuilder/FormContainer/FormConfig.vue";
 
 const store = useBuilderStore();
 const {
   itemOnSelect,
   handlerChangeLayout,
-  handlerChangeContainerPaddingMargin,
   handlerChangeContainerSettings,
+  itemsPageList,
 } = toRefs(store);
 
 const handlerChange = (change) => {
   console.log({ change });
   if (change.layout) {
     handlerChangeLayout.value(itemOnSelect.value, change.layout);
-  }
-  if (change.margin || change.padding) {
-    handlerChangeContainerPaddingMargin.value(itemOnSelect.value, change);
-  }
-  if (change.backgroundColor) {
+  } else {
     handlerChangeContainerSettings.value(itemOnSelect.value, change);
   }
 };
+
+const item = computed(() => {
+  if (itemOnSelect.value.id) {
+    const ruta = encontrarRutaPorIndice(
+      itemsPageList.value,
+      itemOnSelect.value.id
+    );
+    const nodo = getNodeByPath(itemsPageList.value, ruta);
+    return { settings: nodo.settings, type: nodo.type, id: nodo.id };
+  }
+});
 </script>
 
 <template>
@@ -64,13 +67,25 @@ const handlerChange = (change) => {
             </div>
           </div>
         </div>
-        <SidesNums @handlerChange="handlerChange" />
+        <SidesNums
+          @handlerChange="handlerChange"
+          :sides-default="item?.settings?.padding"
+        />
         <SidesNums
           @handlerChange="handlerChange"
           label="Marging"
           key-name="margin"
+          :sides-default="item?.settings?.margin"
         />
-        <Color @handlerChange="handlerChange" />
+        <Color
+          @handlerChange="handlerChange"
+          :color-default="item?.settings?.backgroundColor"
+        />
+        <FormConfig
+          v-if="itemOnSelect.type === 'section'"
+          @handlerChange="handlerChange"
+          :form-default="item?.settings?.form"
+        />
       </div>
       <div v-else>selecciona contenedor</div>
     </DsAccordion>

@@ -31,12 +31,15 @@
           :id="element.id"
           :area-mode="areaMode"
           :settings="element.settings"
+          :noActions="noActions"
+          :slots="element.slots"
           :idx="index"
         >
           <modulec
             v-if="element.type === 'module'"
             :element="element"
             :area-mode="areaMode"
+            v-model="element.data"
           />
         </OptionsContainer>
 
@@ -97,6 +100,10 @@ export default {
       type: Object,
     },
     adjustTop: {
+      required: false,
+      type: Boolean,
+    },
+    noActions: {
       required: false,
       type: Boolean,
     },
