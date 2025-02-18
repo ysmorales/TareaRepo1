@@ -1,1 +1,1 @@
-type IAccordionType = "standard" | "card";
+type IAccordionType = 'standard' | 'card';

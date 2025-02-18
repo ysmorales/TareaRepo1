@@ -1,9 +1,9 @@
 <script lang="ts" setup>
+import { computed, ref } from "vue";
 import DsIcon from "../../basic/icon/DsIcon.vue";
-import type { IBreadcrumbItem } from "./interface";
 import { filterClass } from "../../../utils/filterClass";
 import { predefinedClasses } from "../../../common/propsStyle";
-import { computed, ref } from "vue";
+import type { IBreadcrumbItem } from "./interface";
 
 const props = defineProps({
   items: {
@@ -92,7 +92,7 @@ const itemLocation = (item: IBreadcrumbItem): any => {
 
 <template>
   <nav :class="['my-3 block', filterClassComp]" role="navigation">
-    <ol class="flex">
+    <ol class="flex flex-wrap">
       <div v-if="!hasItems">[No items defined in breadcrumb]</div>
 
       <li v-for="item in normalizedItems">

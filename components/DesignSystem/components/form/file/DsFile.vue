@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import type { Ref, PropType } from "vue";
+import { computed, ref, onMounted } from "vue";
 import DsButton from "../../basic/button/DsButton.vue";
 import generateUniqueId from "../../../utils/generateUniqueId";
 import { filterClass } from "../../../utils/filterClass";
@@ -9,16 +11,14 @@ import useFocus from "../../../composables/useFocus";
 import type { IButtonColor } from "../../basic/button/interfaces";
 import { translateError } from "../../../utils/translateErrorMessage";
 import buildAriaLabels from "../../../utils/buildAriaLabels";
-import type { Ref } from "vue";
-import { computed, ref, onMounted} from "vue";
-import type{ PropType } from "vue";
+import { createObjectUrl } from "../../../../DesignSystem/utils/createObjectUrl";
 
-//new change defile
-interface FileInputRef extends Ref<HTMLInputElement | null> {}
+// new change defile
+type FileInputRef = Ref<HTMLInputElement | null>;
 
 const props = defineProps({
   modelValue: {
-    type: Object as () => { name: string } | object,
+    type: Object as () => { name: string } | object | File | null,
     default: null,
   },
   hideLabel: {
@@ -87,6 +87,18 @@ const props = defineProps({
     type: String,
     default: "",
   },
+  enablePreview: {
+    type: Boolean,
+    default: false,
+  },
+  onlyView: {
+    type: Boolean,
+    default: false,
+  },
+  externPreviewUrl: {
+    type: String,
+    default: null,
+  },
 });
 const elementSizeComputed = computed(() => {
   const size = props.size || "normal"; // Si props.size es undefined, usamos 'normal'
@@ -104,9 +116,10 @@ const filterClassComp = computed(() => {
   return filterClass(predefinedClasses, props.class);
 });
 
-const emit = defineEmits(["fileSelected", "update:modelValue"]);
+const emit = defineEmits(["fileSelected", "update:modelValue", "change"]);
 const selectedFileName = ref<string | null>(null);
 const refFileName: FileInputRef = ref(null);
+const previewUrl = ref<string | null>(null);
 
 const { elementRef: fileRef } = useFocus(
   () => props.focus,
@@ -114,7 +127,6 @@ const { elementRef: fileRef } = useFocus(
 );
 
 const openFilePicker = () => {
-  // document.getElementById("file").click();
   refFileName.value?.click();
 };
 
@@ -123,7 +135,11 @@ const handleFileChange = (event: Event) => {
   const file = target.files ? target.files[0] : null;
   if (file) {
     selectedFileName.value = file.name;
-    emit("fileSelected", file);
+    if (props.enablePreview) {
+      previewUrl.value = URL.createObjectURL(file);
+    }
+    emit("change", event);
+    emit("fileSelected", previewUrl.value);
     emit("update:modelValue", file);
   }
 };
@@ -133,6 +149,7 @@ function handleKeyEvent(event: KeyboardEvent) {
 }
 
 const hasError = computed(() => !!props.error);
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const errorMessage = computed(() => translateError(props.error as any));
 
 const ariaLabels = computed(() =>
@@ -142,16 +159,23 @@ const ariaLabels = computed(() =>
     helpMessage: helpMessageId.value,
   }),
 );
+
+const isImageFile = computed(() => {
+  return (
+    props.modelValue instanceof File &&
+    props.modelValue.type.startsWith("image/")
+  );
+});
 </script>
 
 <template>
-  <div :class="filterClassComp">
+  <div :class="filterClassComp" class="w-full">
     <label v-if="!hideLabel" :id="labelId" :for="uniqueID" class="block mb-1">
       {{ label }}
       <span v-if="required" aria-hidden="true" class="required-marker">*</span>
     </label>
 
-    <div class="flex">
+    <div v-if="!props.onlyView" class="flex">
       <input
         ref="refFileName"
         :disabled="disabled"
@@ -185,7 +209,7 @@ const ariaLabels = computed(() =>
         :color="buttonColor"
         :rounded="false"
         :text="buttonText"
-        startImage="file"
+        start-image="file"
         text-color="white"
         variant="buttonFile"
         @click="openFilePicker"
@@ -200,8 +224,17 @@ const ariaLabels = computed(() =>
       {{ errorMessage }}
     </label>
 
-    <label v-if="helpMessage" :id="helpMessageId" class="help-message block">
-      {{ helpMessage }}
-    </label>
+    <label
+      v-if="helpMessage"
+      :id="helpMessageId"
+      class="help-message block"
+      v-html="helpMessage"
+    />
   </div>
+  <img
+    v-if="(enablePreview && isImageFile) || onlyView"
+    :src="createObjectUrl(modelValue as File)"
+    alt="Image Preview"
+    class="mt-4 max-w-[200px] h-auto"
+  />
 </template>

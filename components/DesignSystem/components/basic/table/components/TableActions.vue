@@ -1,60 +1,57 @@
 <script lang="ts" setup>
-
-
 import type {ITableColumnData} from "../interface";
 import {exampleColumn} from "../exampleColumn";
 import DsButton from "../../button/DsButton.vue";
 
-defineProps({
-  column: {
-    type: Object as () => ITableColumnData,
-    default: () => [...exampleColumn],
-  },
-  row: {
-    required: true,
-  },
+const props = defineProps({
+    column: {
+        type: Object as () => ITableColumnData,
+        default: () => [...exampleColumn],
+    },
+    row: {
+        required: true,
+    },
 });
 const emit = defineEmits(["delete", "edit", "view"]);
 
 function handleClick(type: "edit" | "view" | "delete") {
-  switch (type) {
-    case "delete":
-      emit("delete");
-      break;
-    case "edit":
-      emit("edit");
-      break;
-    case "view":
-      emit("view");
-      break;
-  }
+    emit(type);
 }
+
+const actions = {
+    view: "Ver",
+    edit: "Editar",
+    delete: "Eliminar",
+};
+
+interface IMap {
+    [key: string]: string | undefined | boolean;
+}
+
+const foundAction = (keyName: string) =>
+    (props.column.actions as unknown as IMap)[keyName];
+
+const getLabel = (key: string, value: string) => {
+    const label =
+        props.column.actions?.labels &&
+        (props.column.actions?.labels as unknown as IMap)[key];
+    return label ? label : value;
+};
 </script>
 
 <template>
-  <div class="flex justify-end">
-    <DsButton
-        v-if="column.actions?.view"
-        class="mr-1"
-        color="tertiary"
-        @click="handleClick('view')"
-    >Ver
-    </DsButton>
-    <DsButton
-        v-if="column.actions?.edit"
-        class="mr-1"
-        color="tertiary"
-        @click="handleClick('edit')"
-    >Editar
-    </DsButton>
-    <DsButton
-        v-if="column.actions?.delete"
-        class="mr-1"
-        color="tertiary"
-        @click="handleClick('delete')"
-    >Borrar
-    </DsButton>
-  </div>
+    <div v-for="(value, key) in actions" :class="['flex', column.customStyle ? column.customStyle : 'justify-end']">
+        <div v-if="foundAction(key)" class="mt-1 mb-1">
+            <DsButton
+                :key="key"
+                class="mr-1 btn-link"
+                color="tertiary"
+                @click="handleClick(key)"
+            >
+                {{ getLabel(key, value) }}
+            </DsButton>
+        </div>
+    </div>
 </template>
 
 <style scoped></style>

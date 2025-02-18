@@ -9,14 +9,14 @@
 //   | "text-4xl"
 //   | "text-5xl";
 
-export type ILinkVariant = "dark" | "primary" | "white" | "danger" | "gray";
+export type ILinkVariant = 'dark' | 'primary' | 'white' | 'danger' | 'gray';
 export type ILinkSize =
-    | "xs"
-    | "sm"
-    | "base"
-    | "lg"
-    | "xl"
-    | "2xl"
-    | "3xl"
-    | "4xl"
-    | "5xl";
+	| 'xs'
+	| 'sm'
+	| 'base'
+	| 'lg'
+	| 'xl'
+	| '2xl'
+	| '3xl'
+	| '4xl'
+	| '5xl';

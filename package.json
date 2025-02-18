@@ -1,35 +1,42 @@
 {
-  "name": "nuxt-app",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "build": "nuxt build",
-    "dev": "nuxt dev",
-    "generate": "nuxt generate",
-    "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
-  },
-  "dependencies": {
-    "@pinia/nuxt": "^0.5.1",
-    "@vuelidate/core": "^2.0.3",
-    "@vuelidate/validators": "^2.0.4",
-    "axios": "^1.6.8",
-    "js-beautify": "^1.15.1",
-    "js-cookie": "^3.0.5",
-    "jwt-decode": "^4.0.0",
-    "nuxt": "^3.11.1",
-    "pinia": "^2.1.7",
-    "prismjs": "^1.29.0",
-    "vue": "^3.4.21",
-    "vue-router": "^4.3.0"
-  },
-  "devDependencies": {
-    "@types/js-beautify": "^1.14.3",
-    "@types/js-cookie": "^3.0.6",
-    "@types/jwt-decode": "^3.1.0",
-    "@types/prismjs": "^1.26.4",
-    "autoprefixer": "^10.4.19",
-    "postcss": "^8.4.38",
-    "tailwindcss": "^3.4.3"
-  }
+    "name": "nuxt-app",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "build": "nuxt build",
+        "dev": "nuxt dev",
+        "start": "NITRO_PORT=3200 node .output/server/index.mjs",
+        "dev-local": "nuxt dev --host builder.loc --port 31010",
+        "generate": "nuxt generate",
+        "preview": "nuxt preview",
+        "postinstall": "nuxt prepare"
+    },
+    "dependencies": {
+        "@pinia/nuxt": "^0.5.1",
+        "@vuelidate/core": "^2.0.3",
+        "@vuelidate/validators": "^2.0.4",
+        "axios": "^1.6.8",
+        "crypto-js": "^4.2.0",
+        "deepmerge": "^4.3.1",
+        "js-beautify": "^1.15.1",
+        "js-cookie": "^3.0.5",
+        "jwt-decode": "^4.0.0",
+        "nuxt": "^3.11.1",
+        "pinia": "^2.1.7",
+        "prismjs": "^1.29.0",
+        "ts-json-schema-generator": "^2.3.0",
+        "uniqid": "^5.4.0",
+        "vue": "^3.4.21",
+        "vue-router": "^4.3.0",
+        "vuedraggable": "^4.1.0"
+    },
+    "devDependencies": {
+        "@types/js-beautify": "^1.14.3",
+        "@types/js-cookie": "^3.0.6",
+        "@types/jwt-decode": "^3.1.0",
+        "@types/prismjs": "^1.26.4",
+        "autoprefixer": "^10.4.19",
+        "postcss": "^8.4.38",
+        "tailwindcss": "^3.4.3"
+    }
 }

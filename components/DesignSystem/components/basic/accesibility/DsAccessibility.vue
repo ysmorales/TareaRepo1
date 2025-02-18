@@ -1,26 +1,31 @@
 <script lang="ts" setup>
-
-import {DsButton} from "~/components/DesignSystem";
+import {ref, onMounted, watchEffect, watch} from 'vue';
+import DsButton from '../button/DsButton.vue';
 
 const zoomLevel = ref(1);
 const grayscale = ref(false);
+const isVisible = ref(true);
 
-function adjustFontSize(adjust: "increase" | "decrease" | "default" | "gray") {
+function adjustFontSize(adjust: 'increase' | 'decrease' | 'default' | 'gray') {
     switch (adjust) {
-        case "increase":
+        case 'increase':
             zoomLevel.value += 0.1;
             break;
-        case "decrease":
+        case 'decrease':
             zoomLevel.value -= 0.1;
             break;
-        case "gray":
+        case 'gray':
             grayscale.value = !grayscale.value;
             break;
-        case "default":
+        case 'default':
             zoomLevel.value = 1;
             grayscale.value = false;
             break;
     }
+}
+
+function checkResolution() {
+    isVisible.value = window.innerWidth >= 800; // Adjust the resolution threshold as needed
 }
 
 onMounted(() => {
@@ -28,21 +33,24 @@ onMounted(() => {
         (document.body.style as any).zoom = zoomLevel.value;
         document.body.style.filter = grayscale.value ? 'grayscale(100%)' : '';
     });
+    checkResolution();
+    window.addEventListener('resize', checkResolution);
 });
 
+watch(() => window.innerWidth, checkResolution);
 </script>
 
 <template>
-    <div class="flex-wrap justify-end h-[31px] hidden lg:flex">
+    <div v-if="isVisible" class="flex-wrap justify-end h-[31px] flex">
         <DsButton
             color="simple"
             icon-color="dark"
             icon-size="small"
             icon-style="mr-0"
-            size="small"
             start-image="/images/accessibility/icon-disminuir.svg"
             @click="adjustFontSize('decrease')"
-        >Disminuir textos
+        >
+            Disminuir textos
         </DsButton>
         <DsButton
             class="text-black"
@@ -50,10 +58,10 @@ onMounted(() => {
             icon-color="dark"
             icon-size="small"
             icon-style="mr-0"
-            size="small"
             start-image="/images/accessibility/icon-aumentar.svg"
             @click="adjustFontSize('increase')"
-        >Aumentar textos
+        >
+            Aumentar textos
         </DsButton>
         <DsButton
             class="text-black"
@@ -61,10 +69,10 @@ onMounted(() => {
             icon-color="dark"
             icon-size="small"
             icon-style="mr-0"
-            size="small"
             start-image="/images/accessibility/icon-gris.svg"
             @click="adjustFontSize('gray')"
-        >Ver sitio en gris
+        >
+            Ver sitio en gris
         </DsButton>
         <DsButton
             class="text-black"
@@ -72,11 +80,10 @@ onMounted(() => {
             icon-color="dark"
             icon-size="small"
             icon-style="mr-0"
-            size="small"
             start-image="/images/accessibility/icon-restablecer.svg"
             @click="adjustFontSize('default')"
-        >Restablecer
+        >
+            Restablecer
         </DsButton>
     </div>
 </template>
-

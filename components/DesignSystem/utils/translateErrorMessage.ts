@@ -5,10 +5,13 @@ export function translateError(
 ): string | Ref<string> | null {
   // Define your custom error messages
   if (errorCode) {
-    let errorMessages: { [key: string]: string } = {
+    const errorMessages: { [key: string]: string } = {
       "Value is not a valid email address": "El valor no es un correo válido",
       "Value is required": "Campo requerido",
       "Value must be numeric": "El valor debe ser un número",
+      "The maximum length allowed is 1000":
+        "El máximo de caracteres permitidos es 1000",
+      "This field should be at least 8 characters long":"Este campo debe tener al menos 8 caracteres",
       // Add as many as you need
     };
 

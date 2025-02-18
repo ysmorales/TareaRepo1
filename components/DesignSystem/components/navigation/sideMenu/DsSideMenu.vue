@@ -1,10 +1,10 @@
 <script lang="ts">
 import { ref, computed } from "vue";
 import DsIcon from "../../basic/icon/DsIcon.vue";
-import { menuItems } from "./data";
 import { predefinedClasses } from "../../../common/propsStyle";
 import { filterClass } from "../../../utils/filterClass";
-import type{ ISideMenuData } from "./interfaces";
+import { menuItems } from "./data";
+import type { ISideMenuData } from "./interfaces";
 
 export default {
   components: {
@@ -63,6 +63,7 @@ export default {
   },
 };
 </script>
+
 <template>
   <div
     :class="[
@@ -81,10 +82,12 @@ export default {
               'block text-base py-3 px-3 border-b border-gray-300 w-full text-left hover:text-primary-500 cursor-pointer',
               {
                 'text-primary-900 border-primary-500': isSubMenuVisible(
-                  item.id,
+                  item.id
                 ),
               },
               { underline: item.isUnderline },
+              { 'no-underline': !item.isUnderline },
+              { 'bg-blue-500 text-white': item.active },
             ]"
             :target="item.isTargetBlank ? '_blank' : '_self'"
             :to="item.link"
@@ -106,7 +109,7 @@ export default {
               size="small"
             />
           </NuxtLink>
-          <!--            second level-->
+          <!--            second level -->
           <ul
             v-if="isHasMenu(item) && isSubMenuVisible(item?.id)"
             :id="item?.id"
@@ -122,7 +125,7 @@ export default {
                 :to="subItem.link"
                 @click="toggleSubSubMenu(subItem.id!)"
               >
-                <!--                <DsIcon class="mr-1" name="angle-right" size="base"/>-->
+                <!--                <DsIcon class="mr-1" name="angle-right" size="base"/> -->
 
                 <DsIcon
                   v-if="subItem?.icon"
@@ -145,7 +148,7 @@ export default {
                 v-if="isHasMenu(subItem) && isSubSubMenuVisible(subItem.id!)"
                 :id="subItem.id"
               >
-                <!--                third level-->
+                <!--                third level -->
                 <li
                   v-for="subSubItem in subItem?.subMenu"
                   :key="subSubItem?.id"
