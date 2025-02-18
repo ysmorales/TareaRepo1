@@ -68,6 +68,10 @@ onBeforeMount(async () => {
 function handleDeleteSuccess() {
     fetchData();
 }
+
+function handleUpdate() {
+    fetchData()
+}
 </script>
 
 <template>
@@ -78,7 +82,7 @@ function handleDeleteSuccess() {
         </div>
         <DsTypography>Gestiona roles y edita usuarios.</DsTypography>
         <div class="mt-10">
-            <UserListTable :data="response?.data!" @delete-success="handleDeleteSuccess"/>
+            <UserListTable :data="response?.data!" @update="handleUpdate" @delete-success="handleDeleteSuccess"/>
         </div>
     </div>
 </template>

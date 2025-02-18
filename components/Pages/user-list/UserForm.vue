@@ -12,11 +12,11 @@ const props = defineProps({
         required: true
     },
     user: {
-        type: Object as () => { name: string, email: string, role: string, empresa: string } | null,
+        type: Object as () => { id: string, name: string, email: string, role: string, empresa: string } | null,
         required: true
     }
 })
-const emit = defineEmits(["cancel", "success"]);
+const emit = defineEmits(["cancel", "success", "update"]);
 
 const form = reactive({
     name: props.mode === 'edit' ? props.user?.name : "",
@@ -43,20 +43,37 @@ async function handleSubmit() {
         loading.value = true;
         backendError.value = null;
         try {
-            const response = await applicationsService.procedure.createOne("/api/users", {
-                name: form.name,
-                email: form.email,
-                password: "password123",
-                password_confirmation: "password123",
-                role: "visual",
-                empresa: "Chile Atiende"
-            });
+            let response;
+            if (props.mode == 'edit') {
+                response = await applicationsService.procedure.update(`/api/users/${props.user?.id}`, {
+                    name: form.name,
+                    email: form.email,
+                    password: "password123",
+                    password_confirmation: "password123",
+                    role: form.rol,
+                    empresa: form.empresa
+                });
+            } else {
+                response = await applicationsService.procedure.createOne("/api/users", {
+                    name: form.name,
+                    email: form.email,
+                    password: "password123",
+                    password_confirmation: "password123",
+                    role: form.rol,
+                    empresa: form.empresa
+                });
+            }
+
 
             if (response.codigoRetorno == 201) {
                 // await authStore.login(response.user, response.access_token, response.expires_at);
                 emit('success')
                 // internalStatus.value = "success";
                 // $emit('cancel');
+            }
+            if (response.codigoRetorno == 200) {
+                emit('update')
+
             }
             if (response.codigoRetorno == 404) {
                 backendError.value = "El correo electrónico no existe en el sistema";

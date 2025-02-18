@@ -17,7 +17,7 @@ defineProps({
 const loading = ref(false)
 const showModal = ref(false)
 const applicationsService = useApplications();
-const emit = defineEmits(['deleteSuccess'])
+const emit = defineEmits(['deleteSuccess', 'update'])
 const mode = ref<'edit' | 'create'>('create')
 const user = ref(null)
 
@@ -75,12 +75,18 @@ async function handleMultiDelete(items: { id: number }[]) {
     }
 }
 
+function handleUpdate() {
+    showModal.value = false
+    emit('update')
+}
+
 </script>
 
 <template>
     <!--    <DsTable :data="data" checkbox-selection :columns="competitionStage" add-button-label="Nuevo usuario(a)"/>-->
     <DsModal v-model="showModal" :show-footer="false" :title="mode=='edit'?'Editar usuario':'Nuevo usuario(a)'">
-        <UserForm :mode="mode" :user="user" @cancel="()=>showModal=false" @success="()=>showModal=false"/>
+        <UserForm :mode="mode" :user="user" @cancel="()=>showModal=false" @success="()=>showModal=false"
+                  @update="handleUpdate"/>
     </DsModal>
     <TableWrapper
         :columns="competitionStage as ITableColumnData[]"
