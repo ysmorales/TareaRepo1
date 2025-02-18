@@ -11,7 +11,9 @@ import { useBuilderStore } from "~/stores/builderStore";
 
 const authStore = useAuthStore();
 
-const handleCloseSession = () => {};
+const handleCloseSession = () => {
+    authStore.logout();
+};
 
 const handleSave = () => {
   console.log("handleSave");

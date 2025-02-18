@@ -25,7 +25,7 @@ export const useAuthStore = defineStore('auth', {
         isTokenExpiringSoon: (state): boolean => !!state.expiration_token && (state.expiration_token - Date.now()) <= (2.5 * 60 * 1000),
         getToken: (state): string | null => state.auth_token,
         getUser: (state): IUser => state.user,
-        getFullNameUser: (state): string => state.user?.nombre_funcionario ? state.user.nombre_funcionario : `${state.user.first_name} ${state.user.last_name}`,
+        getFullNameUser: (state): string => state.user?.name,
         isModalTokenVisible: (state): boolean => state.show_modal_token,
     },
 
@@ -38,20 +38,22 @@ export const useAuthStore = defineStore('auth', {
             this.user.roles = roles;
             setItemInLocalStorage('user', this.user);
         },
-        async login(userDetails: IUser, token: string, refreshToken: string) {
+        async login(userDetails: IUser, token: string,expiration_token:string) {
             this.setUser(userDetails);
-            this.setToken(token);
-            this.setRefreshToken(refreshToken);
+            this.setToken(token,expiration_token);
         },
-        setToken(token: string) {
+        setToken(token: string, response_expiration_token:string) {
             this.auth_token = token;
             setItemInLocalStorage('token', token);
 
-            const decodedToken = decodeTokenCHA(token);
-            if (decodedToken && decodedToken.exp) {
-                this.expiration_token = decodedToken.exp * 1000; // Convertir a milisegundos
-                setItemInLocalStorage('expiration_token', this.expiration_token);
-            }
+            // const decodedToken = decodeTokenCHA(token);
+            // if (decodedToken && decodedToken.exp) {
+            //     this.expiration_token = decodedToken.exp * 1000; // Convertir a milisegundos
+            //     setItemInLocalStorage('expiration_token', response_expiration_token);
+            // }
+            const timestamp = new Date(response_expiration_token).getTime();
+            this.expiration_token = timestamp;
+            setItemInLocalStorage('expiration_token',timestamp);
         },
         setRefreshToken(refreshToken: string) {
             this.refresh_token = refreshToken;
@@ -89,7 +91,7 @@ export const useAuthStore = defineStore('auth', {
             params.append('grant_type', 'refresh_token');
             params.append('refresh_token', this.refresh_token || '');
             params.append('client_id', runtimeConfig.public.PASSPORT_CLIENT_ID);
-            params.append('client_secret', runtimeConfig.public.PASSPORT_CLIENT_SECRET || '');
+            params.append('client_secret', runtimeConfig.public.PASSPORT_CLIENT_SECRET as string);
             params.append('redirect', runtimeConfig.public.PASSPORT_CALLBACK || '');
 
             try {

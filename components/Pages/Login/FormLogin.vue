@@ -1,75 +1,79 @@
 <script lang="ts" setup>
-import { DsButton, DsTypography } from "~/components/DesignSystem";
-import { useAuthStore } from "~/stores/auth";
-import crypto from "crypto-js";
+import {DsButton, DsInput, DsLink, DsTypography} from "~/components/DesignSystem";
+import {required, email} from "@vuelidate/validators";
+import {useVuelidate} from "@vuelidate/core";
+import {getErrorMessage} from "~/components/DesignSystem/utils/translateErrorMessage";
+import useApplications from '~/api-services/applications';
+import { useAuthStore } from '~/stores/auth';
 
-const runtimeConfig = useRuntimeConfig();
-
-const loginUrlAzure = ref("");
-const loginUrlClaveUnica = ref("");
-
-let state = "";
-let challenge = "";
-let verifier = "";
-const { clear } = useAuthStore();
-
-const createRandomString = (num: number): string => {
-  return [...Array(num)].map(() => Math.random().toString(36)[2]).join("");
-};
-
-const base64Url = (string: crypto.WordArray): string => {
-  return string
-    .toString(crypto.enc.Base64)
-    .replace(/\+/g, "-")
-    .replace(/\//g, "_")
-    .replace(/=/g, "");
-};
-
-const setupLoginUrl = (): void => {
-  clear();
-  state = createRandomString(40);
-  verifier = createRandomString(128);
-  challenge = base64Url(crypto.SHA256(verifier));
-
-  localStorage.setItem("state", state);
-  localStorage.setItem("verifier", verifier);
-
-  loginUrlAzure.value =
-    `${runtimeConfig.public.PASSPORT_AUT}?client_id=${runtimeConfig.public.PASSPORT_CLIENT_ID}` +
-    `&redirect_uri=${runtimeConfig.public.PASSPORT_CALLBACK}` +
-    `&response_type=code&scope=*&state=${state}` +
-    `&code_challenge=${challenge}&code_challenge_method=S256&provider=azure`;
-
-  loginUrlClaveUnica.value =
-    `${runtimeConfig.public.PASSPORT_AUT}?client_id=${runtimeConfig.public.PASSPORT_CLIENT_ID}` +
-    `&redirect_uri=${runtimeConfig.public.PASSPORT_CALLBACK}` +
-    `&response_type=code&scope=*&state=${state}` +
-    `&code_challenge=${challenge}&code_challenge_method=S256&provider=claveunica`;
-};
-
-onMounted(() => {
-  setupLoginUrl();
+const form = reactive({
+    email: "",
+    password: "",
 });
 
-const openLoginAzure = () => {
-  window.location.href = loginUrlAzure.value;
+const formRules = reactive({
+    email: {required, email},
+    password: {required},
+});
+const validateForm = useVuelidate(formRules, form);
+const loading = ref(false);
+const backendError = ref<string | null>(null);
+const applicationsService = useApplications();
+const authStore = useAuthStore();
+
+const handleSubmit = async () => {
+    validateForm.value.$touch();
+    if (!validateForm.value.$invalid) {
+        loading.value = true;
+        backendError.value = null;
+        try {
+            console.log("Sending to back");
+            const response = await applicationsService.procedure.createOne("/api/login", {
+                email: form.email,
+                password: form.password,
+            });
+            if (response.codigoRetorno == 200) {
+                await authStore.login(response.user, response.access_token, response.expires_at);
+                navigateTo('/');
+                // internalStatus.value = "success";
+                // $emit('cancel');
+            }
+            if(response.codigoRetorno==404){
+                backendError.value = "El correo electrónico no existe en el sistema";
+            }
+            if(response.codigoRetorno==401){
+                backendError.value = "La contraseña es incorrecta";
+            }
+        } catch (e) {
+            backendError.value = "Error al comunicarse con el servidor.";
+            console.log('Viendo error en consola.',e);
+        }
+
+        loading.value = false;
+    }
 };
+
+function handleClickLink() {
+    navigateTo('/login/password-recovery');
+}
 </script>
+
 <template>
-  <div class="w-[350px]">
-    <DsTypography variant="h1"> Inicio de sesión </DsTypography>
-
-    <DsTypography class="mb-5 block" size="small">
-      Para entrar al creador ingrese sus credenciales de Microsoft
-    </DsTypography>
-
-    <DsButton
-      class="size-full mb-2 flex justify-center py-4"
-      color="primary"
-      type="submit"
-      @click="openLoginAzure"
-    >
-      <strong>Ingresar con Microsoft</strong>
-    </DsButton>
-  </div>
+    <div class="max-w-md mt-10 p-6 bg-white">
+        <DsTypography variant="h2">Inicio de sesión</DsTypography>
+        <DsTypography>Para entrar al creador por favor ingrese sus credenciales de inicio.</DsTypography>
+        <form class="mb-5" @submit.prevent="handleSubmit">
+            <div class="mb-4">
+                <DsInput v-model="form.email" label="Correo electrónico" :error="getErrorMessage(validateForm?.email.$errors[0])"/>
+            </div>
+            <div class="mb-6">
+                <div class="mb-4">
+                    <DsInput type="password" v-model="form.password" label="Contraseña" :error="getErrorMessage(validateForm?.password.$errors[0])"/>
+                </div>
+            </div>
+            <div v-if="backendError" class="text-red-500 mb-4">{{ backendError }}</div>
+            <DsButton :loading="loading" type="submit" class="w-full"><span class="text-center w-full">Ingresar</span></DsButton>
+        </form>
+        <DsLink @click="handleClickLink">Olvidé mi contraseña</DsLink>
+    </div>
 </template>

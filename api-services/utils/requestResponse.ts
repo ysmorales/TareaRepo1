@@ -1,11 +1,10 @@
-import { decryptResponse } from './decryptResponse.js';
+import { decryptResponse } from './decryptResponse';
 import { fetchHeader } from './fetchHeaders.js';
 import { getCacheConfig } from '~/utils/commonCache';
 import toArray from "~/utils/toArray";
-import { isValidResponse } from './isValidResponse.js';
 import { getUser } from "~/utils/getUser";
 import { useAuthStore } from '~/stores/auth';
-import type { IConfig, IErrorFetch, IErrorWithMessage, IMap, IQuery } from "../global-interface/interfaces";
+import type { IConfig, IErrorFetch, IErrorWithMessage, IMap, IQuery } from "~/interfaces/interfaces";
 
 interface RequestResponseParams {
     baseURL: string | undefined;
@@ -22,13 +21,10 @@ interface RequestResponseParams {
         useCache?: boolean;
         useWatchQuery?: boolean | string[]
     };
-    manifest?: IConfig,
-    simulateData?: any
+    manifest?: IConfig
 }
 
-const getLogDecript = (data: any) => {
-    showLog(data)
-}
+const getLogDecript = (data: any) => console.log(data, 'decript')
 
 export async function requestResponse(
     {
@@ -41,20 +37,11 @@ export async function requestResponse(
         query,
         decrypt = true,
         withAsyncData,
-        manifest,
-        simulateData
+        manifest
     }: RequestResponseParams): Promise<any> {
     const dataResponse = async (): Promise<any> => {
         try {
-            if (simulateData) {
-                return new Promise((resolve) => {
-                    setTimeout(() => {
-                        resolve(simulateData)
-                    }, 1000);
-                })
-            }
             let theQuery = query
-
             if (withAsyncData && withAsyncData?.useWatchQuery) {
                 const isArrayQuery = Array.isArray(withAsyncData?.useWatchQuery)
                 if (withAsyncData?.watch && !isArrayQuery) {
@@ -83,11 +70,11 @@ export async function requestResponse(
             if (decrypt && data) {
                 const info = decryptResponse(data as string)
                 getLogDecript(info)
-                if (isValidResponse(info.codigoRetorno)) {
-                    return info
-                }
+                // if (isValidResponse(info.codigoRetorno)) {
+                //     return info
+                // }
 
-                throw info?.glosaRetorno
+                return info
             }
             return data
         } catch (err: unknown) {

@@ -11,6 +11,7 @@ export function translateError(
       "Value must be numeric": "El valor debe ser un número",
       "The maximum length allowed is 1000":
         "El máximo de caracteres permitidos es 1000",
+      "This field should be at least 8 characters long":"Este campo debe tener al menos 8 caracteres",
       // Add as many as you need
     };
 
