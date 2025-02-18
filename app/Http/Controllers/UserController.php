@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\ResponseHelper;
+use App\Http\Requests\UpdateUserRequest;
 use App\Http\Requests\UserRequest;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
@@ -41,11 +42,11 @@ class UserController extends Controller
         return response()->json($user);
     }
 
-    public function update(UserRequest $request, $id): JsonResponse
+    public function update(UpdateUserRequest $request, $id): array
     {
         $user = User::findOrFail($id);
         $user->update($request->validated());
-        return response()->json($user);
+        return ResponseHelper::returnResponse(200, 'Actualización exitosa.');
     }
 
     public function destroy(Request $request): array
